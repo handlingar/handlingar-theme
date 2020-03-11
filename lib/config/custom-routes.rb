@@ -12,7 +12,7 @@ end
 # Here you can override or add to the pages in the core website
 
 Rails.application.routes.draw do
-  get '/help/för_ideella' => 'help#för_ideella'
+  get '/help/for_nonprofits' => 'help#for_nonprofits'
 end
 
 
