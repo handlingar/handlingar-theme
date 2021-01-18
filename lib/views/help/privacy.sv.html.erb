@@ -1,241 +1,468 @@
-<% @title = "Din integritet" %>
+<% @title = "Din integritet och GDPR" %>
 
 <%= render :partial => 'sidebar' %>
 
-<div id="left_column_flip">
-<h1 id="privacy"><%= @title %> <a href="#privacy">#</a> </h1>
-<dl>
-
-<dt id="email_address">Vem är det som får se min e-postadress?<a href="#email_address">#</a> </dt>
-
-<dd><p>Vi kommer inte att ge ut din e-postadress till någon förutom om vi blir tvugna
-enligt lag eller om du ber oss att göra det. Detta inkluderar den offentliga myndighet
-som du skickar en begäran till. De får endast se den e-postadress @handlingar.se som
-är specifik för den begäran. </p>
-<p>Om du skickar ett meddelande till en annan användare på plattformen, då kommer det att
-visa din e-postadress till denne. Du kommer att bli informerad att detta kommer hända.</p>
-</dd>
-
-<dt id="nasty_spam">Kommer ni skicka ohyggliga, brutala spammängder e-post till min e-postadress? <a href="#nasty_spam">#</a> </dt>
-<dd><p>Nej. Efter att du registrerat dig på Handlingar.se kommer vi endast att
-skicka e-postmeddelanden relaterade till en begäran om allmän handling som
-du gjort, en e-postnotifiering du har registrerat för, eller för andra
-anledningar som du specifikt själv har valt. Vi kommer aldrig ge eller
-sälja din e-postadress till någon annan, med undantaget om att vi är tvugna
-enligt lag eller om du ber oss.
-</p></dd>
-
-<dt id="public_request">Varför kommer mitt namn och min begäran om allmän handling publiceras offentligt på hemsidan? <a href="#public_request">#</a> </dt>
-
-<dd>
-<p>Vi publicerar din begäran på Internet så att vem som helst kan läsa den och
-få användning av informationen som du har funnit. Du har rätt att använda pseudonym
-för att få vara anonym då Offentlighetsprincipen innehåller ett Eftersökningsskydd
-och därför behöver du inte få ditt riktiga namn publicerat. Vi tar normalt inte bort
-förfrågningar, se för (<a href="#delete_requests">mer detaljer</a>).
-</p>
-<p>
-Enligt svensk grundlag har du den fulla rättigheten att inte behöva
-använda ditt riktiga namn för att din begäran ska vara en giltig
-begäran om allmän handling. Det är till och med en kriminell handling av myndigheter att aktivt eftersöka vem som begärt ett dokument och t.ex. försöka finna ditt riktiga namn.
-Se nästa fråga för alternativ om du inte vill publicera ditt riktiga namn.
-</p>
-<p>Ditt namn är icke-relevant för din begäran så det måste inte också publiceras.
-Däremot kan det vara mer rättvist att använda ditt eget namn, då vi kommer
-publicera namnet på tjänstepersonen som skriver ett svar till din begäran.
-Genom att använda ditt riktiga namn hjälper du också människor komma i kontakt
-med dig för att assistera dig med din granskning, forskning eller för att driva
-på samhällsförändring med dig.
-</p>
-</dd>
-
-<dt id="real_name">Kan jag göra en begäran om allmän handling om jag använder en pseudonym? <a href="#real_name">#</a> </dt>
-
-
-<dd>
-<p>Ja, genom att använda en pseudonym utnyttjar du din fullständiga rätt
-att begära ut en allmän handling enligt Tryckfrihetsförordningen och Offentlighetsprincipen som du kan läsa om
-<a href="https://www.regeringen.se/sa-styrs-sverige/det-demokratiska-systemet-i-sverige/offentlighetsprincipen/">här</a>.
-Genom att använda Handlingar.se kan du bättre nyttja din rätt till anonymitet än via exempelvis det formulär som finns
-på Regeringskansliets hemsida <a href="https://www.regeringen.se/regeringskansliet/ta-del-av-allman-handling/">här</a>
-</p>
-
-<p>I flera fall är det bra överväga att göra en begäran med hjälp av en uppenbar pseudonym.
-Du bör hänvisa till denna rättighet vid överklagan om en offentlig myndighet vägrar en begäran om du
-använde en pseudonym.</p>
-
-<p>Men var försiktig, även om myndigheten följer god praxis,
-kommer en pseudonym förmodligen att göra det omöjligt för dig att överklaga myndighetens beslut senare om hanteringen av din begäran.
-</p>
-
-<p>Det finns flera bra alternativ till att använda en pseudonym.</p>
-
-<ul>
-<li>Använd en annan form av ditt namn. En vägledning berättar
-att "Mr Arthur Thomas Roberts" kan göra en giltig begäran som "Arthur Roberts",
-"A. T. Roberts", eller "Mr Roberts", men <strong>inte</strong> som "Arthur" eller "A.T.R.". </li>
-<li>I de flesta fall kan du använda något namn som du är "allmänt känt och / eller
-används regelbundet ". </li>
-<li>Använd namnet på en organisation, namnet på ett företag, firma
-ett företag, eller firmanamn på en enskild näringsidkare. </li>
-<li>Be någon annan att göra begäran för din räkning. </li>
-<li>Du kan, om du är verkligen fastnat, be oss att göra begäran om
-din räkning. Vänligen <a href="<%= help_contact_path %>">kontakta oss</a> med
-en bra anledning till varför du inte kan göra begäran själv och kan inte
-be en vän till. Vi har sällan resurser att göra detta.</li>
-</ul>
-
-<p>Försök inte att imitera någon annan. Sådant beteende accepteras ej och stängs av.</p>
-
-</dd>
-
-<dt id="anonymous">Varför finns det anonyma förfrågningar på sajten? <a href="#anonymous">#</a> </dt>
-<dd>
-Vissa myndigheter kan måhända använda programvaran för <a href="https://github.com/mysociety/foi-register">automatiserad diarieföring</a> för att kunna använda Handlingar.se som en redovisningslogg för alla eller delar av sin aktivitet för allmänna handlingar.
-När människor gör förfrågningar till myndigheten kommer deras namn vanligen inte offentliggöras precis som de skulle i en myndighet redovisningslogg på en myndighets webbplats.
-</dd>
-
-<dt id="full_address">De har bett om min postadress! <a href="#full_address">#</a> </dt>
-
-<dd>
-<p>Om en myndighet ber dig för din fullständiga, fysisk adress, svara på dem att den e-postadress du använder är tillräckligt.</p>
-</dd>
-
-<dt id="postal_answer">Nej nej, de behöver en postadress att skicka papperssvaret! <a href="#postal_answer">#</a> </dt>
-
-<dd>
-<p>Om en myndighet bara har en papperskopia av den information som du vill,
-kan de be dig om en postadress. Till att börja med kan du försöka övertala dem
-att scanna in dokumenten för dig. Du kan även <a href="https://www.whatdotheyknow.com/request/car_parking_charges_policy_and_a#outgoing-532">erbjuda att ge dem en scanner</a> som i detta särskilda internationella fallet
-generade myndigheten till att hitta en de redan hade.</p>
-
-<p>Om det inte fungerar, och du vill ge din postadress privat
-för att få handlingarna, markera din begäran som "De kommer att svara med post", och det kommer att
-ge dig en e-postadress som ska användas för detta ändamål.</p>
-</dd>
-
-<dt id="cookies">Hur arbetar ni med cookies och tredjepartstjänster?<a href="#cookies">#</a> </dt>
-
-<dd>
-   <p> <strong>Vår användning av cookies och externa tjänster: vad du bör veta, och hur du hoppar av från dem om du vill. </strong> </p>
-
-   <p> Sammanfattning: Vi bryr oss mycket om våra användares integritet.
+<div id="left_column_flip" class="left_column_flip">
+  <h1 id="privacy"><%= @title %> <a href="#privacy">#</a></h1>
+  <dl>
     
-<p> <strong> Kakor </strong> </p>
+  <p>
+Handlingar.se är ansvarig för att hantera dina personuppgifter på ett korrekt sätt och i enlighet med lagar och förordningar. Det innebär att Handlingar.se är personuppgiftsansvarig.
+  </p>
+  <p>
+    Om du har frågor <a
+    href="https://www.handlingar.se/sv/help/contact">kontakta oss</a>.
+  </p>
 
-  <p> För att göra vår tjänst lättare eller mer användbar, lägger vi ibland små datafiler på din dator eller mobiltelefon,
-    så kallade cookies; många webbplatser gör detta. Vi använder denna information för att, till exempel,
-    komma ihåg att du har loggat in så att du inte behöver göra det på varje sida,
-    eller att mäta hur människor använder webbplatsen så att vi kan förbättra det och se till att den fungerar ordentligt.
-    Nedan listar vi cookies och tjänster som denna webbplats kan använda.
+  <h2 id="personal_information">
+    Vilka personuppgifter behandlar vi om dig? 
+    <a href="#personal_information">#</a>
+  </h2>
 
-  <table>
-  <tr> <th scope="col"> Enw </th> <th scope="col"> Typiskt innehåll </th> <th scope="col"> Utgår </th> </tr>
-  <tr> <td> _wdtk_cookie_session </td> <td> En slumpmässigt unik identifierare </td> <td> När webbläsaren stängs, eller en månad om "Kom ihåg mig" används </td> </tr>
-  <tr> <td> seen_foi2 </td> <td> Nummer 1 om du har sett ett meddelande </td> <td> 7 dagar </td> </tr>
-  <tr> <td> last_request_id </td> <td> Ett nummer, identifierar den sista begäran om allmän handling du tittat på på webbplatsen </td> <td> När webbläsaren stängs </td> </tr>
-  <tr> <td> last_body_id </td> <td> Ett nummer, identifierar den sista myndighet du tittat på på webbplatsen </td> <td> När webbläsaren stängs </td> </tr>
-  </table>
+  <h3 id="personal_information_foi">
+    Vad är en personuppgift?
+    <a href="#personal_information_foi">#</a>
+  </h3>
+    
+  <p>
+Enligt GDPR är en personuppgift all slags information som direkt eller indirekt kan anknytas till en levande, fysisk person. Typiska personuppgifter är personnummer, namn och adress, men till exempel krypterade uppgifter och olika slags elektroniska identiteter är också personuppgifter om de kan kopplas till en fysisk person.
+Även uppgifter som har avidentifierats (pseudonymiserats), men som kan hänföras till en fysisk person med hjälp av andra uppgifter är personuppgifter.
 
-
-<p> <strong> Vår egen loggning </strong> </p>
-
-<p> Utöver den information du ger oss om dig själv för att kunna använda webbplatsen (t.ex. ditt namn
-och e-postadress), samlar vi in och loggar viss ytterligare information för att analysera och lösa problem
-med webbplatsen. Våra webbserver-loggar upprätthåller en historia av sidförfrågningar. Detta innehåller information om
-förfrågningar, inklusive användarens IP-adress, uppgifter som lämnats (som kan inkludera din e-postadress när
-du loggar in på sajten), begäran datum och tid, begärd sida, webbläsarversion och
-<a href="https://en.wikipedia.org/wiki/HTTP_referer">hänvisare</a>. Vi håller regelbundet denna information
-under 28 dagar.
-
-
-  <p> <strong> Tack till </strong> </p>
-
-  <p> Bitar av formuleringar lånade från <a href="https://www.pts.se/sv/Bransch/Regler/Lagar/Lag-om-elektronisk-kommunikation/Cookies-kakor/Fragor-och-svar-om-kakor-for-webbplatsinnehavare/"> PTS.se kakor </a>.
-</dd>
-
-<dt id="delete_requests">Kan du ta bort min begäran, eller ändra mitt namn? <a href="#delete_requests">#</a> </dt>
-
-<dd>
-
-<p>Handlingar.se är en permanent offentligt arkiv av förfrågningar om allmänna handlingar. Även om du inte kan finna svaret på
-en begäran användbar längre, kan det vara av intresse för andra. För denna
-anledning kommer vi inte att ta bort förfrågningar.
-</p>
-
-<p>I undantagsfall kan vi ta bort eller ändra namn
-på hemsidan, <a href="#takedown">se nästa fråga</a>. På samma sätt kan vi också ta bort annan personlig information.
-</p>
-
-<p>Om du är orolig för detta innan du gör din förfrågan,
-se avsnittet om <a href="#real_name">pseudonymer</a>.</p>
-
-</dd>
-
-<dt id="takedown">Kan ni ta ned personlig information om mig?<a href="#takedown">#</a> </dt>
-
-<dd>
-
-<p>Om du ser någon personlig information om dig på webbplatsen som du vill
-oss att ta bort eller dölja, vänligen <a href="<%= help_contact_path %>">låt oss veta</a>. Ange exakt vilken information du anser vara problematiska och varför, och
-där det visas på webbplatsen.</p>
-
-<p>Om det är känslig personlig information som av misstag har
-publicerats, då tar vi vanligtvis bort det. Normalt kommer vi bara att överväga
-begäran om att ta bort personlig information som kommer från de enskilt
-berörda, men för känslig information skulle vi uppskatta att alla
-påpekar all känslig information de finner.</p>
-
-<p>Vi anser att det finns ett starkt allmänintresse i
-att behålla namnen på tjänstemän eller anställda inom offentliga myndigheter. Vi kommer bara
-avlägsna sådana namn i undantagsfall, till exempel där utlämnandet av
-ett namn och position av sysselsättningen avsevärt skulle kunna riskera en individs
-säkerhet. Om du är en sådan tjänsteman och du önskar att få ditt namn borttaget för
-ett sådant brådskande skäl måste du förse oss med en begäran om att göra det från din
-linjechef. Denna begäran måste visa att risken har upplevts
-som har företräde framför allmänintresset, och måste visa att åtgärder har
-vidtagits för att dölja namnet på organisationens egen webbplats.</p>
-
-<p>Du har rätt enligt <a
-href="https://www.datainspektionen.se/lagar-och-regler/personuppgiftslagen/dina-rattigheter/">Personuppgiftslagen (PUL)</a>
-att begära att vi tar bort din personliga information om
-motiveringen är att det orsakar dig betydande och omotiverade skador eller
-nöd. Vi kommer att överväga något sådant meddelande, som inte uttryckligen behöver
-nämna lagen och balansera det mot något allmänintresse i att publicera
-material. Det finns en viss vägledning om dessa meddelanden <a
-href="https://www.datainspektionen.se/lagar-och-regler/personuppgiftslagen/anmala-behandling/">på Datainspektionens hemsida</p>
-
-</dd>
-
-<dt id="public_servant_takedown"> Jag är en offentlig tjänsteman - kan ni ta ner personlig information om mig? <a href="#public_servant_takedown">#</a></dt>
-
-<dd>
-
-<p>Även om vi har ett allmänt antagande att mer öppenhet är bättre, kommer vi
-överväga begäran om att ta bort namnen på tjänstemän när det verkar osannolikt
-att det allmänna intresset kommer att skadas genom att göra så.</p>
-
-<p>Det innebär att:
+  </p>     
+    
+    <h3 id="personal_information_foi">
+    När du gör en förfrågan om allmän handling
+    <a href="#personal_information_foi">#</a>
+  </h3>
+    
+    
+  <p>
+Om du använder Handlingar.se för att göra en begäran om allmän handling, tillhandahåller du oss med följande information:
+  </p>
   <ul>
-    <li>Om du är en beslutsfattare i någon nivå, eller om du svarar på
-en begäran om allmän handling kommer vi normalt inte ta bort dina uppgifter från dokument och
-e-postmeddelanden som skickas av en offentlig institution. Ansvarighet i beslutsfattandet är i centrum
-av ett gott styre.</li>
-    <li>Om du håller en junior, icke-beslutsfattande position kommer vi att överväga förfrågningar om att
-ta bort dina uppgifter. Att ta bort dessa uppgifter är svårt för våra volontärer att
-göra, så låt oss veta varför detta verkligen är viktigt för dig. Om vi ​​är överens om att ta bort
-dina uppgifter kommer vi att vidta rimliga åtgärder för att göra så, men i vissa fall kanske inte
-kunna av tekniska skäl.</li>
+    <li>Ditt namn</li>
+    <li>Din e-postadress</li>
+    <li>Din IP-adress</li>
   </ul>
-</p>
+  <p>
+   En del av denna information vidarebefordras till den offentliga myndighet som tar emot din begäran och publiceras på webbplatsen. Denna sida förklarar:
+  </p>
+  <ul>
+    <li>vad vi gör med varje typ av information</li>
+    <li>vem ser det</li>
+    <li>hur den används</li>
+    <li>hur länge den behålls</li>
+    <li>våra protokoll för att ändra eller ta bort information</li>
+    <li>
+      vad du ska göra om du är missnöjd med hur vi har hanterat dina uppgifter
+    </li>
+  </ul>
 
-</dd>
+  <h3 id="personal_information_contact">
+   När du skickar e-post till Handlingar.se via vårt kontaktformulär.
+    <a href="#personal_information_contact">#</a>
+  </h3>
+  <p>
+    Supportmejl hanteras av Handlingar.se volontäradministratör via en central epost.
+  </p>
+  <p>
+    Som med alla andra e-postmeddelanden resulterar detta i att vi får din e-postadress och, om det anges, ditt namn, tillsammans med innehållet i ditt meddelande.
+  </p>
 
-</dl>
+  <h2 id="personal_information_who">
+   Dina personuppgifter
+    <a href="#personal_information_who">#</a>
+  </h2>
 
-<p><strong>Läs mer</strong> vid hjälpen för <a href="<%= help_officers_path %>">registratorer och offentliga tjänstemän</a> --&gt;
+  <h3 id="name">
+   Ditt namn
+    <a href="#name">#</a>
+  </h3>
 
-<div id="hash_link_padding"></div>
+  <p>
+ Om du använder Handlingar.se för att göra en begäran om allmän handling, ditt namn (eller pseudonym) är:
+  </p>
+
+  <ol type="a">
+    <li>skickad till den offentliga organisationen, och</li>
+    <li>publiceras på webbplatsen Handlingar.se tillsammans med din begäran.</li>
+  </ol>
+
+
+  <h3 id="email_address">
+    Din e-postadress
+    <a href="#email_address">#</a>
+  </h3>
+  <p>
+   Din e-postadress delas inte med den offentliga organisationen och publiceras inte heller på webbplatsen. Handlingar.se genererar automatiskt en e-postadress @ handlingar.se som är specifik för varje förfrågan - ditt meddelande kommer att ha den här adressen i "från" -raden och det är också adressen som svaren skickas till.
+  </p>
+  <p>
+När den offentliga organisationen svarar via den här anpassade e-postadressen publiceras deras svar på din begärans sida på Handlingar.se. Samtidigt pingar vårt system dig genom att skicka ett mejl till den personliga e-postadress som du har angett när du skapade ditt konto för att meddela att det finns ett svar: även detta är en automatiserad process.
+  </p>
+  <p>
+  Så din e-postadress hålls till stor del privat. Det finns två undantag till detta. För det första kan webbplatsadministratörer komma åt din e-postadress i adminprocesser och kan använda din e-postadress för att kontakta dig om din användning av webbplatsen. Vi kontaktar också ibland användare som har gjort en särskilt intressant begäran, eftersom vi vill skriva om dessa på Handlingar-bloggen.
+  </p>
+  <p>
+Om du skickar ett meddelande till en annan användare på plattformen, då kommer det att visa din e-postadress till denne. Du kommer att bli informerad att detta kommer hända. Din epost syns annars inte på plattformen.
+  </p>
+  <p>
+Vi kommer inte att avslöja din e-postadress till någon annan om vi inte är skyldiga enligt lag, eller om du ber oss om det.
+  </p>
+    
+  <h4>
+   Kommer min e-postadress att användas för andra ändamål?
+  </h4>
+  <p>
+Nej. När du har registrerat dig på Handlingar.se skickar vi bara e-postmeddelanden som rör din begäran, en e-postavisering som du har registrerat dig för eller av andra skäl som du specifikt godkänner. Vi kommer aldrig att ge eller sälja dina e-postadresser till någon annan, såvida vi inte är skyldiga enligt lag, eller om du ber oss om det.
+  </p>
+  <p>
+      I teorin kan skräppost tas emot via funktionen "skicka den här användaren ett e-postmeddelande". Missbruk av denna tjänst är inte vanligt och du kan rapportera alla meddelanden som du anser vara olämpliga till oss via formuläret
+    <a href="https://www.handlingar.se/help/contact">kontakta oss</a> 
+      Vi kan stänga av användare som har missbrukat den här tjänsten.
+
+  </p>
+    
+
+
+  <h3 id="request">
+   Din begäran
+    <a href="#request">#</a>
+  </h3>
+  <p>
+  Din begäran skickas till den offentliga organisationen som du begär information från. Samtidigt publiceras den på denna webbplats där vem som helst kan se den.
+  </p>
+
+  <h3 id="ip_address">
+    Din IP-adress
+    <a href="#ip_address">#</a>
+  </h3>
+  <p>
+IP-adressen som är kopplad till din användning av webbplatsen (vilket kanske eller inte är tillräckligt för att identifiera dig, beroende på omständigheterna), registreras automatiskt i våra loggar. Det kommer normalt inte att ses av någon.
+  </p>
+  <p>
+   Vi delar inte IP-adresser med någon annan såvida det inte krävs enligt lag (till exempel i samband med en polisutredning som ett domstolsbeslut har mottagits för).
+  </p>
+
+ 
+  <h4 id="postal_answer">
+   Din postadress
+    <a href="#postal_answer">#</a>
+  </h4>
+  <p>
+   Om en myndighet bara har en papperskopia av den information som du vill ha, kan de be dig om en postadress. Till att börja med kan du försöka övertala dem att scanna in dokumenten för dig. 
+  </p>
+  <p>
+Om det inte fungerar, och du vill ge din postadress privat för att få handlingarna, markera din begäran som "De kommer att svara med post", och det kommer att ge dig en e-postadress som ska användas för detta ändamål och din postadress syns inte på plattformen.
+  </p>
+
+  <h3 id="our_logging">
+  Egen loggning
+    <a href="#our_logging">#</a>
+  </h3>
+  <p>
+ Förutom den information du ger oss om dig själv för att kunna använda
+     webbplatsen (t.ex. ditt namn och din e-postadress), samlar vi in och loggar in
+     ytterligare information för att analysera och åtgärda problem med webbplatsen.
+  </p>
+  <p>
+
+    
+    Våra webbserverloggar håller en historik över sidförfrågningar. Detta inkluderar
+     information om förfrågningar, inklusive klientens IP-adress, inlämnad data
+     (som kan innehålla din e-postadress när du loggar in på webbplatsen),
+     begärandedatum och tid, begärd sida, webbläsarversion och <a
+     href = "https://en.wikipedia.org/wiki/HTTP_referer"> hänvisare </a>. Rutinmässigt
+     behålls denna information i 60 dagar. Observera att under normala omständigheter
+     nås datan sällan av en människa, men när vi behöver, bedömer vi det i bulk för att förstå ett problem med webbplatsen,
+     snarare än på en detaljerad nivå för enskilda användare.
+  </p>
+
+  <h3 id="research">
+   Forskning och analyser
+    <a href="#research">#</a>
+  </h3>
+  <p>
+  Handlingar.se kan komma att analysera data som förfrågningar och svar från Handlingar.se för forskning. Vi följer strikta interna integritetspolicys som innebär att all personlig information hålls säker. Data som namn och e-postadresser utesluts från datamängderna och redigeras om möjligt från texten.
+  </p>
+
+
+
+
+  <h2 id="Names">
+    Namn
+    <a href="#Names">#</a>
+  </h2>
+
+  <a name="public_request"></a>
+  <h3 id="public_names">
+Varför visas användarnas namn och förfrågningar offentligt på webbplatsen?
+    <a href="#public_names">#</a>
+  </h3>
+
+  <p>
+   Ditt namn är en integrerad del av din begäran, och behöver publiceras tillsammans. Det är rättvist, då vi också kommer att publicera namnet på de tjänstepersoner som skriver svaret på din begäran. Att använda ditt riktiga namn hjälper också människor att komma i kontakt med dig för att hjälpa dig med din forskning eller hjälpa dig i ditt arbete.
+  </p>
+  <p>
+  Men kanske viktigast av allt betyder det att våra användare tänker två gånger innan de gör en begäran: om du vet att ditt namn kommer att vara permanent kopplat till det för alla att se, är det mycket mer sannolikt att du gör en ansvarsfull, giltig och användbar begäran.
+  </p>
+
+  <p>
+ Dina förfrågningar kommer att grupperas och visas i din profil på webbplatsen.
+  </p>
+
+  <h3 id="real_name">
+Kan jag göra en begäran om allmän handling om jag använder en pseudonym? 
+    <a href="#real_name">#</a>
+  </h3>
+  <p>
+Ja, genom att använda en pseudonym utnyttjar du din fullständiga rätt att begära ut en allmän handling enligt Tryckfrihetsförordningen och Offentlighetsprincipen som du kan läsa om här. Genom att använda Handlingar.se kan du bättre nyttja din rätt till anonymitet än via exempelvis det formulär som finns på Regeringskansliets hemsida här
+
+  </p>
+  <p>
+I flera fall är det bra överväga att göra en begäran med hjälp av en uppenbar pseudonym. Du bör hänvisa till denna rättighet vid överklagan om en offentlig myndighet vägrar en begäran om du använde en pseudonym.
+Men var försiktig, även om myndigheten följer god praxis, kommer en pseudonym förmodligen att göra det omöjligt för dig att överklaga myndighetens beslut senare om hanteringen av din begäran.
+
+  </p>
+  <p>
+Det finns flera bra alternativ till att använda en pseudonym.
+  </p>
+  <ul>
+    <li>
+Använd en annan form av ditt namn. En vägledning berättar att "Mr Arthur Thomas Roberts" kan göra en giltig begäran som "Arthur Roberts", "A. T. Roberts", eller "Mr Roberts", men inte som "Arthur" eller "A.T.R.".
+    </li>
+    <li>
+I de flesta fall kan du använda något namn som du är "allmänt känt och / eller används regelbundet ".
+    </li>
+    <li>
+Använd namnet på en organisation, namnet på ett företag, firma ett företag, eller firmanamn på en enskild näringsidkare.
+    </li>
+    <li>
+Be någon annan att göra begäran för din räkning.
+    </li>
+
+    <li>
+   Du kan, om du verkligen fastnat, be oss att göra begäran för din räkning. Vänligen kontakta oss med en bra anledning till varför du inte kan göra begäran själv och kan inte be en vän. Vi har sällan resurser att göra detta.
+    </li>
+  </ul>
+  <p>
+ Försök inte att medvetet imitera någon annan. Sådant beteende accepteras ej och stängs av.
+  </p>
+  <p>
+Ibland, av olika skäl, inklusive bevisad fara för individen, tar vi bort en användares namn från webbplatsen; när vi gör det gör vi det tydligt; vanligtvis genom att ersätta namnet med “[namn borttaget]”. För mer information, se vårt avsnitt om din rätt till radering.
+  </p>
+
+  <h2 id="consequences">
+Vilka är de möjliga eller definitiva konsekvenserna av att använda Handlingar.se?
+    <a href="#consequences">#</a>
+  </h2>
+  <h3 id="consequences_making_a_request">
+När du gör en begäran om allmän handling
+    <a href="#consequences_making_a_request">#</a>
+  </h3>
+  <p>
+Som du har sett från punkterna ovan resulterar användning av Handlingar.se i publiceringen av ditt namn och din begäran på Internet, i de flesta fall permanent. Några möjliga konsekvenser av detta är:
+  </p>
+  <ul>
+    <li>
+     Din begäran visas i resultat när någon söker på ditt namn i sökmotorer.
+    </li>
+    <li>
+ Kontakt från andra med intresse för din förfrågan, inklusive press och media.
+    </li>
+  </ul>
+  <h3 id="consequences_registering">
+ När du registrerar dig på webbplatsen
+    <a href="#consequences_registering">#</a>
+  </h3>
+  <p>
+Genom att skapa ett konto på webbplatsen kan du göra förfrågningar om allmänna handlingar, men det är också ett nödvändigt steg för dem som vill registrera sig för e-post notifikationer ("följa" en specifik begäran, användare eller auktoritet) eller lägga till kommentarer till förfrågningssidor.
+  </p>
+
+  <ul>
+    <li>
+  Vi samlar in ditt namn och din e-postadress; dessa kontrolleras bara om det finns ett problem med ett konto.
+    </li>
+    <li>
+Användare med konton får en offentlig profilsida på webbplatsen: den kan kommas åt av alla som klickar på namnet som finns på alla förfrågningar som du har skickat via webbplatsen eller någon kommentar du har gjort.
+    </li>
+    <li>
+   Din profilsida visar:
+      <ul>
+        <li>
+          Ditt namn
+        </li>
+        <li>
+       Datumet då du gick med på webbplatsen
+        </li>
+        <li>
+         All text du själv ger för att beskriva dig själv
+        </li>
+        <li>
+       En lista över de förfrågningar och kommentarer du har gjort
+        </li>
+      </ul>
+      <p>
+      Sidan visar inte din e-postadress, men låter andra komma i kontakt med dig via ett meddelandesystem.
+      </p>
+      <p>
+  Sidan visar inte information om förfrågningar du har prenumererat på, även om dessa är synliga för dig (och endast dig) när du är inloggad.
+      </p>
+    </li>
+  </ul>
+  <p>
+Dessa uppgifter (ditt namn, e-postadress, notiser) används inte för något annat syfte än att driva webbplatsen och kommer inte att delas externt.
+  </p>
+
+  <h2 id="retention_periods">
+Lagringsperioder
+    <a href="#retention_periods">#</a>
+  </h2>
+
+  <h3 id="retention_requests">
+Förfrågningar om allmänna handlingar
+    <a href="#retention_requests">#</a>
+  </h3>
+  <p>
+Som beskrivs ovan, skickar du en begäran via den här webbplatsen resulterar i att ditt namn och e-postadress lagras tillsammans med din begäran på våra servrar. Din e-postadress är endast tillgänglig för webbplatsadministratörer. För närvarande är policyn att behålla denna information på obestämd tid.
+  </p>
+
+
+  <h3 id="retention_support">
+  Support e-post
+    <a href="#retention_support">#</a>
+  </h3>
+  <p>
+Vi behåller e-postmeddelanden som skickas till och från den centrala eposten i två år - korrespondens raderas automatiskt och permanent efter den tidpunkten. Alla e-postmeddelanden som behöver sparas av specifika juridiska skäl, såsom pågående polisutredningar eller rättegångar, behålls separat. Felaktig epost av känslig natur, såsom en begäran om hjälp med personliga omständigheter, förvaras under en kortare period på trettio dagar.
+  </p>
+
+  <h2 id="legal_basis">
+ Rättslig grund för behandling 
+    <a href="#legal_basis">#</a>
+  </h2>
+  <p>
+I de flesta fall är vår rättsliga grund för behandling av personlig information "allmänintresse" (detta är som anges i 6 (1) (f) - i GDPR. Vi anser att vi eftersträvar ett allmänt intresse av att behandla personuppgifter för att tillhandahålla vår tjänst till förmån för våra användare och samhällets fördel. Det finns en fördel för våra användare genom att vi erbjuder ett enkelt sätt att göra, spåra och publicera förfrågningar om allmänna handlingar. Tjänsten har också en fördel för allmänheten eftersom all information som släpps som svar på begäran är tillgänglig i ett arkiv för alla att använda. Det finns också en fördel för myndigheter som svarar på förfrågningar genom att den automatiska publiceringen av förfrågningarna minskar dubbla begäranden.
+
+  </p>
+  <p>
+ Vi anser att vår behandling av användarnas data är som de förväntar sig när de använder vår tjänst. Om du använder Handlingar.se för att göra en begäran om allmän handling samtycker du till att dina uppgifter behandlas enligt beskrivningen på den här sidan. Vi klargör hur vi hanterar användardata och länkar till den här sidan på lämpliga platser inom vår tjänst, inklusive under processen för att registrera dig och göra en begäran.
+  </p>
+  <p>
+  I sällsynta fall gäller den rättsliga grunden för "efterlevnad av en rättslig skyldighet" när vi är lagligt skyldiga att hålla material (<a
+    href="https://gdpr-info.eu/art-6-gdpr/">6(1)(c)</a> GDPR).
+  </p>
+  <p>
+I nästan alla fall är vår behandling av personlig information laglig enligt artikel 6 i GDPR men vi kan också förlita oss på undantagen för "speciella ändamål" i dataskyddslagen 2018, särskilt de som gäller akademiska och journalistiska ändamål. Ofta är användningen av vår tjänst akademisk eller journalistisk, och tillhandahållandet av vår tjänst som helhet kan betraktas som en journalistisk strävan.
+  </p>
+
+  <h2 id="your_rights">
+Dina rättigheter
+    <a href="#your_rights">#</a>
+  </h2>
+
+  <h3 id="erasure">
+Rätt till radering 
+    <a href="#erasure">#</a>
+  </h3>
+
+  <h4>
+Dina egna förfrågningar, kommentarer och användarprofil
+  </h4>
+
+  <p>
+Handlingar.se tillhandahåller en tjänst genom vilken du enkelt kan göra en begäran om allmän handling. Webbplatsen fungerar också som ett Internet-arkiv med information.
+  </p>
+  <p>
+    <strong>Förfrågningar</strong> Vi publicerar din förfrågan på internet så att människor kan läsa den och använda den information som du har hittat. Även om du kanske inte tycker att svaret på en förfrågan är användbart längre kan det vara av intresse för andra och kan ha använts för att stödja forskning, nyhetsartiklar, lobbyverksamhet eller andra aktiviteter. Av denna anledning raderar vi normalt inte innehållet i förfrågningar och svar.
+
+  </p>
+  <p>
+    <strong>Namn</strong> Namn Om du har gjort förfrågningar via vår webbplats och funderar på att be oss ta bort ditt namn, vänligen ta en stund att reflektera över det. Vanligtvis begärs information som görs via vår tjänst och blir en positiv del av individens onlineavtryck; ett offentligt register över medborgerlig aktivism är något att vara stolt över.
+  </p>
+  <p>
+Med det sagt, förstår vi att det kan finnas goda skäl till varför du vill att vi ska ta bort ditt namn och vi kommer att göra vårt bästa med att göra det om du ber oss om det. På samma sätt kan vi också ta bort annan personlig information. Observera att om ditt namn har släppts som en del av en myndighets svar, kanske vi inte kan ta bort det enkelt, men vi kommer naturligtvis att överväga formella "rätt att glömmas bort" / "rätt till radering" och ta bort material om vi kan inte motivera att fortsätta att hålla och bearbeta det.
+  </p>
+  <p>
+Om du är orolig för att ditt namn ska kopplas till din begäran och inte har gjort det ännu, se våra råd om hur du använder pseudonymer.
+  </p>
+  <p>
+    <strong>E-postadresser</strong> Vi har också din e-postadress. Om du ber oss att radera  din e-postadress medan du väntar på ett svar, kommer vi inte att kunna meddela dig när ett svar på din begäran kommer in. Av denna anledning rekommenderar vi att du håller en aktiv e-postadress kopplad till ditt konto medan du har pågående korrespondens. Som användare kan du när som helst ändra e-postadressen som är kopplad till ditt konto, eller så kan du kontakta oss och be oss ta bort din e-postadress från ditt konto.
+  </p>
+
+  <h4>
+Att ta bort personlig information från förfrågningar och svar
+  </h4>
+  <p>
+Om du ser någon personlig information om dig på webbplatsen som du vill att vi ska ta bort eller dölja, vänligen kontakta oss. Ange exakt vilken information du anser vara problematisk och varför och låt oss veta var den visas på webbplatsen.
+  </p>
+  <p>
+    Vi kommer att överväga alla sådana meddelanden och balansera det mot allmänhetens intresse av att publicera materialet. 
+   </p>
+   <p>
+  Om det är känslig personlig information som av misstag har publicerats, tar vi bort den. Normalt kommer vi bara att överväga förfrågningar om att ta bort personlig information som kommer från den berörda individen, men för annan känslig information eller stora volymer personuppgifter skulle vi uppskatta att vem som helst kontaktar oss.
+  </p>
+  <h4>
+Radering av offentliga anställdas personliga information från svaren
+  </h4>
+  <p>
+Vi publicerar automatiskt svar på förfrågningar som görs via webbplatsen i sin helhet. Om dessa svar inkluderar personuppgifter för offentliga anställda anser vi att den rättsliga grunden för vår behandling av denna information är att vi har ett allmänt intresse enligt beskrivningen i artikel 6.1 f GDPR). Vårt allmänna intresse är att dra nytta av samhället genom att bevara och främja transparens och öppenhet, och ansvarsskyldighet för dem som befinner sig i maktpositioner och att upprätthålla ett historiskt offentligt arkiv med begäranden och svar om allmänna handlingar. Vi kommer att överväga begäran av radering om att ta bort namnen på offentliga anställda när det verkar som att intresset, rättigheter och friheter överväger allmänhetens intresse av publicering.
+  </p>
+  <p>
+Detta innebär att:
+  </p>
+  <ul>
+    <li>
+   Om du är beslutsfattare, eller om du svarar på en begäran, tar vi normalt inte bort dina uppgifter från dokument och e-postmeddelanden som skickas av en offentligt organisation eller från förfrågningar. Ansvarsskyldighet vid beslutsfattande är kärnan av fungerande styre.
+    </li>
+    <li>
+   Om du har en juniorpost som inte fattar beslut kommer vi att överväga begäranden om att ta bort dina uppgifter. Att ta bort dessa detaljer är tidskrävande för våra volontärer, så vänligen låt oss veta varför detta verkligen betyder något för dig. Om vi inte är skyldiga att agera enligt lag men samtycker till att ta bort dina uppgifter kommer vi att vidta rimliga åtgärder för att göra det - men i vissa fall kanske vi inte kan det eftersom det kan vara svårt att ta bort material från vissa typer av dokument, till exempel bilder och PDF-filer.
+    </li>
+  </ul>
+  <p>
+ Vi kan försöka hjälpa tjänstepersoner som vill att vi ska hjälpa dem att ta bort sina signaturer från webbplatsen, men i allmänhet under sådana omständigheter kräver vi att ersättningssvar förbereds och skickas till begäran innan vi tar bort originaldokumenten. Vi kan i allmänhet inte redigera bilagor som har släppts via vår tjänst.
+  </p>
+  <p>
+
+  <h3 id="right_to_access">
+Din rätt till registerutdrag
+    <a href="#right_to_access">#</a>
+  </h3>
+  <p>
+Du kan när som helst kontakta oss för att fråga vilka personuppgifter vi har om dig. Om du har använt vår tjänst för att göra en begäran visas den stora majoriteten av informationen vi har om dig offentligt på vår webbplats eller synlig för dig i din användarprofil.
+  </p>
+  <h3 id="right_to_object">
+    
+Din rätt för invändning
+    <a href="#right_to_object">#</a>  </h3>
+    <p>
+Dataskyddsförordningen ger dig rätt att invända mot vår behandling av din personliga information och be oss att sluta behandla den. Det ger oss också rätten att fortsätta bearbeta det om vi kan bevisa legitima grunder för behandlingen som åsidosätter dina intressen, rättigheter och friheter. För att utöva din rätt till invändningar måste du <a href="https://www.handlingar.se/sv/help/contact">kontakta oss</a> och ange specifika skäl till varför du invänder mot behandlingen av dina personuppgifter. Dessa skäl bör baseras på din speciella situation.
+    </p>
+
+  </h3>
+  <h3 id="right_to_complain">
+Anmälan till Integritetsskyddsmyndigheten
+    <a href="#right_to_complain">#</a>
+  </h3>
+  <p>
+Om du anser att vi bryter mot GDPR har du rätt att kontakta Integritetsskyddsmyndigheten för att göra en anmälan eller ge klagomål. Om du vill utöva dina rättigheter, såsom registerutdrag, eller <a
+    href="https://www.handlingar.se/sv/help/contact">kontakta oss</a> med anledning av vår behandling av dina personuppgifter är du välkommen att göra det till oss. DIntegritetsskyddsmyndigheten kan besluta om tillsyn om:
+
+  </p>
+  
+        <ul>
+        <li>
+    det är ett återkommande och systematiskt fel
+        </li>
+        <li>
+     det är allvarliga brister
+        </li>
+        <li>
+  det gäller ett enstaka fall eller ett generellt fel
+        </li>
+        <li>
+det gäller något som Integritetsskyddsmyndigheten redan har granskat.
+        </li>
+      </ul>
 
 
 </div>
+
