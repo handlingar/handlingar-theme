@@ -1,0 +1,195 @@
+<% @title = 'Pro' %>
+
+<%= render partial: 'sidebar' %>
+
+<div id="left_column_flip" class="left_column_flip">
+  <h1 id="pro">
+    <%= @title %>
+  </h1>
+
+  <ul>
+    <li><%= link_to 'Privata förfrågningar', '#private-requests' %></li>
+    <li><%= link_to 'Serieförfrågningar', '#batch' %></li>
+  </ul>
+
+  <h2 id="private-requests">
+    Privata förfrågningar
+   <a href="#private-requests">#</a>
+  </h2>
+
+  <p>
+    Pro-användare kan sätta en embargoperiod på en fråga för att försena publicering medan
+    du arbetar på din artikel eller undersökning.
+  </p>
+
+  <p>
+    När en fråga är privat garanterar vi att den bara kommer vara synlig på
+    <%= AlaveteliConfiguration.site_name %> för den period du väljer.
+    <%= AlaveteliConfiguration.pro_site_name %> administratörer kommer också att kunna
+    se din begäran, men kommer bara kunna göra så i det fall att de behöver fixa
+    ett problem med det (t.ex. misslyckad leverans till myndigheten). De kommer inte
+    avslöja innehållet av dinfråga eller något svar du skickar till någon annan.
+    Myndigheten kan fortfarande publicera det i registraturens diarie som vanligt.
+  </p>
+
+  <h3 id="how-long-can-i-keep-requests-private">
+    Hur länge kan jag hålla förfrågningar privata?
+   <a href="#how-long-can-i-keep-requests-private">#</a>
+  </h3>
+
+  <p>
+    Embargoperioder kan sättas för 3, 6 eller 12 månadersperioder.
+  </p>
+
+  <p>
+    <%= image_tag 'alaveteli-pro/screenshot-embargo.jpg',
+                  alt: 'Lägger till en embargoperiod' %>
+  </p>
+
+  <p>
+    Du kommer automatiskt bli notifierad en vecka innan och på datumet,
+    som embargoperioden upphör.
+  </p>
+
+  <p>
+    När embargoperioden är över kommer din förfrågan och följande korresponsden,
+    inklusive <strong>ditt namn</strong>, att bli <strong>
+    <%= link_to 'offentligt publicerad',
+      help_privacy_path(anchor: 'public_request') %></strong> på denna webbsida.
+  </p>
+
+  <h3 id="i-need-more-time-can-i-extend-a-privacy-period">
+    Jag behöver mer tid. Kan jag förlänga en embargoperiod?
+   <a href="#i-need-more-time-can-i-extend-a-privacy-period">#</a>
+  </h3>
+
+  <p>
+    Embargoperioder kan förlängas, men bara under veckan innan datumet det
+    upphör.
+  </p>
+
+  <p>
+    <%= image_tag 'alaveteli-pro/screenshot-embargo-extension.jpg',
+                  alt: 'Hur du förlänger en embargoperiod' %>
+  </p>
+
+  <p>
+    Det finns ingen begränsning på antalet gånger en embargoperiod kan förlängas,
+    men varje förlängning kräver manuell bekräftan.
+  </p>
+
+  <h3 id="how-do-i-publish-a-request">
+    Hur publicerar jag en begäran om allmän handling?
+   <a href="#how-do-i-publish-a-request">#</a>
+  </h3>
+
+  <p>
+    Förfrågningar kan publiceras när som helst.
+  </p>
+
+  <p>
+    <%= image_tag 'alaveteli-pro/screenshot-embargo-publish.jpg',
+                  alt: 'Att publicera en begäran' %>
+  </p>
+
+  <h3 id="can-i-make-private-batch-requests">
+    Kan jag göra privata serieförfrågningar?
+   <a href="#can-i-make-private-batch-requests">#</a>
+  </h3>
+
+  <p>
+    Embargoperioder kan även bli satta för serieförfrågningar, och deras hantering
+    följer samma principer som individuella förfrågningar. Förändringar på en period
+    med embargo på en förfrågan som tillhör en serieförfrågan speglas till alla förfrågningar
+    i serien.
+  </p>
+
+  <h2 id="batch">
+    Serieförfrågningar
+   <a href="#batch">#</a>
+  </h2>
+
+  <p>
+    Serieförfrågningar gör det enkelt att skicka och hantera förfrågningar till flera myndigheter.
+  </p>
+
+  <h3 id="how-do-i-make-a-batch-request">
+    Hur gör jag en serieförfrågan?
+   <a href="#how-do-i-make-a-batch-request">#</a>
+  </h3>
+
+  <p>
+    Serieförfrågan tillåter dig att välja en lista av myndigheter och skriva en mall
+    till förfrågan. Begäran blir individuellt skickad till varje myndighet som ett e-postmeddelande
+    merge.
+  </p>
+
+  <p>
+    <%= image_tag 'alaveteli-pro/screenshot-batch-selection.jpg',
+                  alt: 'Select authorities for a batch' %>
+  </p>
+
+  <p>
+    <%= image_tag 'alaveteli-pro/screenshot-batch-write.jpg',
+                  alt: 'Write a batch template' %>
+  </p>
+
+  <h3 id="how-do-i-manage-a-batch-request">
+    Hur hanterar jag en serieförfrågan?
+   <a href="#how-do-i-manage-a-batch-request">#</a>
+  </h3>
+
+  <p>
+    Utvecklingen av en serieförfrågan kan hanteras med en behändig utvecklingsindikator för att se
+    hur nära du är att få svaren från alla myndigheter och göra det
+    enkelt att välja vilket steg du ska ta härnäst.
+  </p>
+
+  <p>
+    <%= image_tag 'alaveteli-pro/screenshot-batch-list.jpg',
+                  alt: 'Att hantera serieförfråningar' %>
+  </p>
+
+  <h3 id="how-do-i-manage-batch-privacy-periods">
+    Hur hanterar jag serieförfrågningars embargoperioder?
+   <a href="#how-do-i-manage-batch-privacy-periods">#</a>
+  </h3>
+
+  <p>
+    Serieförfrågningar kan göras privata, och privata perioder kan enkelt hanteras över hela
+    serieförfrågan.
+  </p>
+
+  <p>
+    <%= image_tag 'alaveteli-pro/screenshot-batch-privacy.jpg',
+                  alt: 'Hantera serieförfrågans privata status' %>
+  </p>
+
+  <h3 id="how-many-authorities-can-i-add-to-a-batch">
+    Hur många myndigheter kan jag lägga till en serieförfrågan?
+   <a href="#how-many-authorities-can-i-add-to-a-batch">#</a>
+  </h3>
+
+  <p>
+    Det maximala antalet att myndigheter som kan läggas till är
+    <%= AlaveteliConfiguration.pro_batch_authority_limit %>.
+  </p>
+
+  <h3 id="how-many-batch-requests-can-i-make">
+    Hur många serieförfrågningar kan jag göra?
+   <a href="#how-many-batch-requests-can-i-make">#</a>
+  </h3>
+
+  <p>
+    Vi rekommenderar att du skickar ett begränsat test av en serieförfrågan till ett prov av myndigheter för att testa
+    frågan. När du vet att myndigheterna håller den typen av data som du frågar efter
+    kan du då skicka begära ut från återstående myndigheter.
+  </p>
+
+  <p>
+    Det finns ingen begräsning på antalet serieförfrågningar som kan skickas, men Pro-användare
+    krävs följa våra riktlinjer kring formuleringar
+    <%= link_to 'responsible requests',
+      help_requesting_path(anchor: 'responsible') %>.
+  </p>
+</div>
