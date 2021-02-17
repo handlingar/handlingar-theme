@@ -1,31 +1,6 @@
 <% @title = "Kontakta oss" %>
 
-<%= foi_error_messages_for :contact %>
 
-<div id="contact_preamble">
-
-    <% if !flash[:notice] %>
-        <h1>Kontakta en myndighet för att få officiell information</h1>
-        <ul>
-            <li><a href="<%= new_request_path %>">Gå hit</a> för att göra en offentlig begäran om allmän handling och få information från svenska myndigheter.</li>
-
-            <li>
-            Begär du privat information om dig själv?
-            Vänligen läs vår hjälpsida om
-            <a href="<%= help_requesting_path(:anchor => 'data_protection') %>">dataskydd</a> .
-            </li>
-        </ul>
-
-        <h1>Ta upp ett problem med regeringen</h1>
-
-        <ul>
-            <li><a href="https://riksdagen.se/sv/ledamoter-partier/">Skriv till din riksdagspolitiker</a>,
-            landstingspolitiker, eller annan kommunal representant</li>.
-            <li><a href="https://www.regeringen.se/">Regeringen.se</a> är ett bra ställe att börja om du vill ta upp ett problem med regeringen. </li>
-       </ul>
-
-
-    <% end %>
 
     <h1>Kontakta Handlingar.se-teamet</h1>
     <% if !flash[:notice] %>
@@ -38,11 +13,10 @@
               Antingen fyll i detta formulär, eller skicka ett e-postmeddelande till <a
               href="mailto:<%=@contact_email%>"><%=@contact_email%></a>
           </li>
-          <li>Vi är en <strong>icke-vinstdrivande ideell förening</strong> och inte en del av
-               Regeringen eller offentlig sektor.</li> </ul>
-          </ul>
+</ul>
+          
     <% end %>
-</div>
+
 
 <%= form_for :contact do |f| %>
 
@@ -91,15 +65,14 @@
 
     <p class="form_note">
     Vi kan bara hjälpa dig med <strong>tekniska problem</strong>, eller frågor
-    om Offentlighetsprincipen (Freedom of Information). Se längre upp på sidan om du skulle vilja
-    kontakta regeringen.
+    om Offentlighetsprincipen.
     </p>
 
 
     <div class="form_button">
         <%= hidden_field_tag(:submitted_contact_form, 1) %>
-        <%= submit_tag "Skicka ett meddelande till föreningen", :disable_with => "Skicka..." %>
-        &lt;- vi driver denna webbplats, inte regeringen!
+        <%= submit_tag "Skicka meddelande", :disable_with => "Skicka..." %>
+  
     </div>
 
 <% end %>
