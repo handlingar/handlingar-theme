@@ -8,9 +8,31 @@
   </h1>
 
   <ul>
+       <li><%= link_to 'Allmänna Villkor', '#terms' %></li>
+       <li><%= link_to 'Handlingar Pro', '#handlingar' %></li>
     <li><%= link_to 'Privata förfrågningar', '#private-requests' %></li>
     <li><%= link_to 'Serieförfrågningar', '#batch' %></li>
   </ul>
+  
+  
+  
+    <h2 id="terms">
+    Allmänna Villkor
+   <a href="#terms">#</a>
+  </h2>
+  
+  <p>
+    Du hittar de Allmänna Villkoren för tjänsten här.  <a href="https://handlingar.se/sv/pro/pages/legal">här</a>.
+  </p>
+  
+    <h2 id="handlingar">
+    Handlingar Pro
+   <a href="#handlingar">#</a>
+  </h2>
+  
+  <p>
+    Intresserad av Handlingar Pro? Lär mer hur det kan underlätta ditt jobb som journalist eller företagare  <a href="https://https://handlingar.se/sv/pro">här</a>!
+  </p>
 
   <h2 id="private-requests">
     Privata förfrågningar
@@ -18,7 +40,7 @@
   </h2>
 
   <p>
-    Pro-användare kan sätta en embargoperiod på en fråga för att försena publicering medan
+    Pro-användare kan sätta en privat period på en fråga för att försena publicering medan
     du arbetar på din artikel eller undersökning.
   </p>
 
@@ -28,7 +50,7 @@
     <%= AlaveteliConfiguration.pro_site_name %> administratörer kommer också att kunna
     se din begäran, men kommer bara kunna göra så i det fall att de behöver fixa
     ett problem med det (t.ex. misslyckad leverans till myndigheten). De kommer inte
-    avslöja innehållet av dinfråga eller något svar du skickar till någon annan.
+    avslöja innehållet av din fråga eller något svar du skickar till någon annan.
     Myndigheten kan fortfarande publicera det i registraturens diarie som vanligt.
   </p>
 
@@ -38,43 +60,43 @@
   </h3>
 
   <p>
-    Embargoperioder kan sättas för 3, 6 eller 12 månadersperioder.
+    Privata perioder kan sättas för 3, 6 eller 12 månadersperioder.
   </p>
 
   <p>
     <%= image_tag 'alaveteli-pro/screenshot-embargo.jpg',
-                  alt: 'Lägger till en embargoperiod' %>
+                  alt: 'Lägger till en privat period' %>
   </p>
 
   <p>
-    Du kommer automatiskt bli notifierad en vecka innan och på datumet,
-    som embargoperioden upphör.
+    Du kommer automatiskt bli notifierad en vecka innan, och på dagen,
+    då den privata perioden upphör.
   </p>
 
   <p>
-    När embargoperioden är över kommer din förfrågan och följande korresponsden,
+    När den privata perioden är över kommer din förfrågan och följande korresponsden,
     inklusive <strong>ditt namn</strong>, att bli <strong>
     <%= link_to 'offentligt publicerad',
       help_privacy_path(anchor: 'public_request') %></strong> på denna webbsida.
   </p>
 
   <h3 id="i-need-more-time-can-i-extend-a-privacy-period">
-    Jag behöver mer tid. Kan jag förlänga en embargoperiod?
+    Jag behöver mer tid. Kan jag förlänga en privat period?
    <a href="#i-need-more-time-can-i-extend-a-privacy-period">#</a>
   </h3>
 
   <p>
-    Embargoperioder kan förlängas, men bara under veckan innan datumet det
+    Privata perioder kan förlängas, men bara under veckan innan datumet det
     upphör.
   </p>
 
   <p>
     <%= image_tag 'alaveteli-pro/screenshot-embargo-extension.jpg',
-                  alt: 'Hur du förlänger en embargoperiod' %>
+                  alt: 'Hur du förlänger en privat period' %>
   </p>
 
   <p>
-    Det finns ingen begränsning på antalet gånger en embargoperiod kan förlängas,
+    Det finns ingen begränsning på antalet gånger en privat period kan förlängas,
     men varje förlängning kräver manuell bekräftan.
   </p>
 
@@ -98,9 +120,9 @@
   </h3>
 
   <p>
-    Embargoperioder kan även bli satta för serieförfrågningar, och deras hantering
-    följer samma principer som individuella förfrågningar. Förändringar på en period
-    med embargo på en förfrågan som tillhör en serieförfrågan speglas till alla förfrågningar
+    Privata perioder kan även bli satta för serieförfrågningar, och deras hantering
+    följer samma principer som individuella förfrågningar. Förändringar på en privat period
+    på en förfrågan som tillhör en serieförfrågan speglas till alla förfrågningar
     i serien.
   </p>
 
@@ -151,7 +173,7 @@
   </p>
 
   <h3 id="how-do-i-manage-batch-privacy-periods">
-    Hur hanterar jag serieförfrågningars embargoperioder?
+    Hur hanterar jag serieförfrågningars privata perioder?
    <a href="#how-do-i-manage-batch-privacy-periods">#</a>
   </h3>
 
@@ -189,7 +211,7 @@
   <p>
     Det finns ingen begräsning på antalet serieförfrågningar som kan skickas, men Pro-användare
     krävs följa våra riktlinjer kring formuleringar
-    <%= link_to 'responsible requests',
+    <%= link_to 'Att göra en begäran',
       help_requesting_path(anchor: 'responsible') %>.
   </p>
 </div>
