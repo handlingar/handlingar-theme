@@ -1,36 +1,36 @@
-<h1 class="pricing__title centered"><%= _('Pricing') %></h1>
+<h1 class="pricing__title centered"><%= _('Priser') %></h1>
 
 <div class="pricing__tiers">
   <div class="pricing__tier pricing__tier--primary">
 
     <div class="pricing__tier__heading">
-      <h2><%= _('Professional') %></h2>
-      <p class="pricing__tier__subhead"><%= _('For journalists, academics and power users') %></p>
+      <h2><%= _('Pro') %></h2>
+      <p class="pricing__tier__subhead"><%= _('För journalister, civilsamhälle och företagare') %></p>
       <p class="price-label">
         <% if @plan.interval == 'month' %>
           <%= _('<span class="price-label__amount">{{monthly_price}}</span> ' \
-                'per user, per month',
+                'per användare, per månad',
                 monthly_price: format_currency(
                                  @plan.amount_with_tax,
                                  no_cents_if_whole: true)) %>
         <% elsif @plan.interval == 'year' %>
           <%= _('<span class="price-label__amount">{{yearly_price}}</span> ' \
-                'per user, per year',
+                'per användare, per år',
                 yearly_price: format_currency(
                                 @plan.amount_with_tax,
                                 no_cents_if_whole: true)) %>
         <% end %>
       </p>
-      <p class="pricing__tier__subhead pricing__tier__subhead--intro_pricing"><%= _('Introductory Pricing') %></p>
+      <p class="pricing__tier__subhead pricing__tier__subhead--intro_pricing"><%= _('Introduktionspris') %></p>
     </div>
 
     <div class="pricing__tier__content">
-      <h3><%= _('Featuring') %></h3>
+      <h3><%= _('Tjänster') %></h3>
       <ul class="pricing__tier__features">
-        <li><%= _('Public requests for information') %></li>
-        <li><%= _('Private requests for information') %></li>
-        <li><%= _('Dashboard and workflow features') %></li>
-        <li><%= _('Friendly support') %></li>
+        <li><%= _('Förfrågningar om allmänna handlingar') %></li>
+        <li><%= _('Privata förfrågningar om information') %></li>
+        <li><%= _('En privat panel och smarta funktioner') %></li>
+        <li><%= _('Stöd från Handlingar-teamet') %></li>
       </ul>
       <%= link_to _('Sign up'), plan_path('pro'), :class => 'button button-pop' %>
     </div>
@@ -39,7 +39,7 @@
 </div>
 
 <p class="pricing__free-message">
-  <%= _('Don’t worry – <a href="{{signup_link}}">our free accounts</a> are still available and always will be.',
+  <%= _('<a href="{{signup_link}}">Ett gratis konto</a> är fortfarande tillgängligt och kommer alltid att vara det.',
         signup_link: signin_path) %>
 </p>
 
