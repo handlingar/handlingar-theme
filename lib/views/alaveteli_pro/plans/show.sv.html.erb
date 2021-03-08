@@ -15,7 +15,7 @@
 
   <div class="inner-canvas-header">
     <div class="row">
-      <h1><%= _('Upgrade account') %></h1>
+      <h1><%= _('Uppgradera konto') %></h1>
     </div>
   </div>
 
@@ -26,7 +26,7 @@
       <div class="settings-right-column">
         <%= form_tag(subscriptions_path, id: 'js-stripe-subscription-form', class: 'stripe-form') do %>
         <div class="settings__section">
-          <h3><%= _('Selected plan') %></h3>
+          <h3><%= _('Vald plan') %></h3>
           <div class="plan-overview">
             <div class="plan-overview__desc">
               <%= @plan.name %>
@@ -44,17 +44,17 @@
 
         <div class="settings__section">
           <div class="plan-coupon">
-            <label class="form_label" for="coupon_code"><%= _('Do you have a coupon code?') %></label>
+            <label class="form_label" for="coupon_code"><%= _('Har du en rabattkod?') %></label>
             <%= text_field_tag 'coupon_code', params[:coupon_code] %>
           </div>
           <div class="card-details">
-            <label class="form_label"><%= _('Card details') %></label>
+            <label class="form_label"><%= _('Kortuppgifter') %></label>
             <div id="card-element"></div>
           </div>
         </div>
 
         <div class="settings__section">
-          <h3><%= _('Terms and conditions') %></h3>
+          <h3><%= _('Villkor') %></h3>
           <div class="settings__terms">
             <div class="settings__terms-content">
               <%= render partial: 'alaveteli_pro/pages/legal' %>
@@ -63,22 +63,22 @@
           <div class="settings__terms__accept">
             <label for="js-pro-signup-terms">
               <input type="checkbox" id="js-pro-signup-terms" required />
-               <%= _('I have read and accepted these terms and conditions') %>
+               <%= _('Jag har läst och godkänt dessa villkor') %>
              </label>
            </div>
         </div>
 
         <div class="settings__section">
           <%= hidden_field_tag 'plan_id', @plan.id %>
-          <%= submit_tag _('Subscribe'), id: 'js-stripe-submit', disabled: true, data: { disable_with: 'Processing...' } %>
-          <%= link_to _('Cancel'), pro_plans_path, class: 'settings__cancel-button' %>
+          <%= submit_tag _('Prenumerera'), id: 'js-stripe-submit', disabled: true, data: { disable_with: 'Processing...' } %>
+          <%= link_to _('Avbryt'), pro_plans_path, class: 'settings__cancel-button' %>
           <p id="card-errors"></p>
 
           <noscript>
             <div id="error">
               <p>
-                <%= _('Continuing with checkout requires your browser to have ' \
-                      'JavaScript enabled.') %>
+                <%= _('För att fortsätta i kassan krävs det att din webbläsare har  ' \
+                      'JavaScript aktiverat.') %>
               </p>
             </div>
           </noscript>
