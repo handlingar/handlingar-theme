@@ -1,0 +1,54 @@
+<div id="signup" class="signup">
+  <%= form_tag(signup_path, {:id => "signup_form"}) do %>
+    <%= foi_error_messages_for :user_signup %>
+
+    <p>
+      <label class="form_label" for="user_signup_name"> <%= _('Ditt namn:') %></label>
+      <%= text_field 'user_signup', 'name', { :size => 20, :tabindex => 10, :autocomplete => "off" } %>
+    </p>
+
+    <div class="form_item_note">
+      <%= _('Ditt <strong>namn kommer att synas offentligt</strong> ' \
+            '(<a href="{{why_url}}">why?</a>) på denna webbsida och på ' \
+            'sökmotorer. <a href="{{help_url}}">Funderar du på att använda en ' \
+            'pseudonym?</a>',
+            :why_url => help_privacy_path(:anchor => "public_request").html_safe,
+            :help_url => help_privacy_path(:anchor => "real_name").html_safe) %>
+    </div>
+
+    <p>
+      <label class="form_label" for="user_signup_email"><%= _('Din e-postadress:') %></label>
+      <%= text_field 'user_signup', 'email', { :size => 20, :tabindex => 20 } %>
+    </p>
+
+    <div class="form_item_note">
+      <%= _('Vi kommer inte att avslöja din e-postadress till någon såvida inte ' \
+            '<a href="{{url}}">du eller lagen säger till oss</a>.',
+            :url => help_privacy_path) %>
+    </div>
+
+    <p>
+      <label class="form_label" for="user_signup_password"> <%= _('Lösenord:') %></label>
+      <%= password_field 'user_signup', 'password', { :size => 15, :tabindex => 30, :autocomplete => "off" } %>
+    </p>
+
+    <div class="form_item_note">
+      <%= _('Minst 12 tecken. Maximalt 72 tecken.') %>
+    </div>
+
+    <p>
+      <label class="form_label" for="user_signup_password_confirmation"> <%= _('Bekräfta lösenord:') %></label>
+      <%= password_field 'user_signup', 'password_confirmation', { :size => 15, :tabindex => 40, :autocomplete => "off" } %>
+    </p>
+
+    <%= recaptcha_tags %>
+
+    <div class="form_button">
+      <%= hidden_field_tag 'token', params[:token], {:id => 'signup_token' } %>
+      <%= hidden_field_tag :modal, params[:modal], {:id => 'signup_modal' } %>
+      <%= submit_tag _('Sign up'),
+                     :tabindex => 50,
+                     :data => { :disable_with => _("Sending...") } %>
+    </div>
+  <% end %>
+</div>
