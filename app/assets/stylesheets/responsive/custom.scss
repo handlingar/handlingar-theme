@@ -28,11 +28,12 @@
 /* Selected menu item */
 %selected-menu-item {
   font-weight: bold;
-  color: $color_primary #100467;
-  background-color: $color_neutral_light #E6722A;
+  color: $color_neutral_light;
+  // background-color: $color_primary;
   &:hover,
   &:active,
   &:focus {
+    color: $color_neutral_dark;
     background-color: $color_neutral_light;
   }
 }
@@ -293,6 +294,15 @@ a.link_button_green_large {
   background-color: $topnav_bg;
   @media( min-width: $main_menu-mobile_menu_cutoff ) {
     box-shadow: inset 0 1px 3px 0 rgba(0,0,0,0.1);
+  }
+}
+
+.subnav {
+  background-color: darken($topnav_bg, 10%);
+
+  .navigation li.selected a {
+    color: $color_neutral_dark;
+    background-color: $color_neutral_light;
   }
 }
 
