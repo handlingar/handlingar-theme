@@ -3,7 +3,7 @@
 </li>
 
 <li class="<%= 'selected' if controller?('request') && !action?('new', 'select_authority') %>">
-  <%= link_to _("Browse requests"), request_list_successful_path %>
+  <%= link_to _("View requests"), request_list_successful_path %>
 </li>
 
 <li class="<%= 'selected' if controller?('public_body') %>">
@@ -14,7 +14,9 @@
 
 <li><%= link_to _("Services"), 'https://about.handlingar.se/' %></li>
 
-<li><%= link_to _("Read blog"), blog_path %></li>
+<% if Blog.enabled? %>
+  <li class="<%= 'selected' if controller?('general') && action?('blog') %>"><%= link_to _("Read blog"), blog_path %></li>
+<% end %>
 
 <li class="<%= 'selected' if controller?('help') %>">
   <%= link_to _("Help"), help_about_path %>
