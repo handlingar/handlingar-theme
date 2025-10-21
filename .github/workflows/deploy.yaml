@@ -26,8 +26,8 @@ jobs:
           # sudo apt-get update && sudo apt-get install -y rsync
           rsync --archive --verbose --compress --delete \
             --rsh='ssh -o StrictHostKeyChecking=no' \
-            ./ ${{ vars.SSH_USER }}@${{ vars.SSH_HOST }}:${{ vars.SSH_INSTALL_PATH }}
+            ./ ${{ vars.SSH_USER }}@${{ vars.SSH_HOST }}:${{ vars.SSH_ALAVETELI_INSTALL_PATH }}/lib/themes/handlingar-theme
 
       - name: Install theme
         run: |
-          ssh ${{ vars.SSH_USER }}@${{ vars.SSH_HOST }} "bundle exec rake themes:install"
+          ssh ${{ vars.SSH_USER }}@${{ vars.SSH_HOST }} "cd ${{ vars.SSH_ALAVETELI_INSTALL_PATH }} && bundle exec rake themes:install"
