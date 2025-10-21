@@ -1,0 +1,33 @@
+name: Release Charts
+
+on:
+  push:
+    branches:
+      # - main
+      - github-actions-deploy
+
+jobs:
+  release:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      # Set up SSH agent with private key
+      - name: Setup SSH
+        uses: webfactory/ssh-agent@v0.8.0
+        with:
+          ssh-private-key: ${{ secrets.SSH_PRIVATE_KEY }}
+
+      - name: Copy files to remote server
+        run: |
+          # sudo apt-get update && sudo apt-get install -y rsync
+          rsync --archive --verbose --compress --delete \
+            --rsh='ssh -o StrictHostKeyChecking=no' \
+            ./ ${{ vars.SSH_USER }}@${{ vars.SSH_HOST }}:${{ vars.SSH_INSTALL_PATH }}
+
+      - name: Install theme
+        run: |
+          ssh ${{ vars.SSH_USER }}@${{ vars.SSH_HOST }} "bundle exec rake themes:install"
