@@ -34,9 +34,9 @@ in
         ISO_COUNTRY_CODE = "SE";
         ISO_CURRENCY_CODE = "SEK";
         TIME_ZONE = "Europe/Stockholm";
-        AVAILABLE_LOCALES = "sv";
+        AVAILABLE_LOCALES = "en sv";
         DEFAULT_LOCALE = "sv";
-        INCLUDE_DEFAULT_LOCALE_IN_URLS = false;
+        INCLUDE_DEFAULT_LOCALE_IN_URLS = true;
         REPLY_LATE_AFTER_DAYS = 31;
         WORKING_OR_CALENDAR_DAYS = "calendar";
         # effectively disable very late status, it will only happen 100 years after the
