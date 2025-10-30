@@ -33,7 +33,7 @@ end
 
 # Note you should rename the file at "config/custom-routes.rb" to
 # something unique (e.g. yourtheme-custom-routes.rb":
-$alaveteli_route_extensions << 'custom-routes.rb'
+$alaveteli_route_extensions << File.expand_path('config/custom-routes.rb', __dir__)
 
 # Append individual theme assets to the asset path
 theme_asset_path = File.join(File.dirname(__FILE__),
