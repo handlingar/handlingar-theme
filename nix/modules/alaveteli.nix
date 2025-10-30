@@ -26,12 +26,6 @@ in
     theme = {
       url = "https://github.com/laurentS/handlingar-theme.git";
       files = themeFiles;
-      package = pkgs.stdenvNoCC.mkDerivation {
-        pname = "handlingar-theme";
-        version = "0.0.1";
-        src = themeFiles;
-        installPhase = "cp -R . $out";
-      };
     };
 
     settings = {
