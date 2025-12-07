@@ -31,9 +31,13 @@ jobs:
       #       ./ \
       #       ${{ vars.SSH_USER }}@${{ vars.SSH_HOST }}:${{ vars.SSH_ALAVETELI_INSTALL_PATH }}/lib/themes/handlingar-theme
 
-
-      - name: Install theme
+      - name: Set theme target branch
         run: |
           CURRENT_BRANCH="${{ github.ref_name }}"
-          ssh ${{ vars.SSH_USER }}@${{ vars.SSH_HOST }} "sed -i "s/^THEME_BRANCH: '.*'/THEME_BRANCH: '${CURRENT_BRANCH}'/" ${{ vars.SSH_ALAVETELI_INSTALL_PATH }}/config/general.yml"
+          ssh -o StrictHostKeyChecking=no \
+            ${{ vars.SSH_USER }}@${{ vars.SSH_HOST }} \
+            "sed -i \"s/^THEME_BRANCH: '.*'/THEME_BRANCH: '${CURRENT_BRANCH//'/'_}'/\" \
+            ${{ vars.SSH_ALAVETELI_INSTALL_PATH }}/config/general.yml"
+      - name: Install theme
+        run: |
           ssh ${{ vars.SSH_USER }}@${{ vars.SSH_HOST }} "cd ${{ vars.SSH_ALAVETELI_INSTALL_PATH }} && bundle exec rake themes:install RAILS_ENV=production"
