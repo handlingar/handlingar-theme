@@ -35,5 +35,5 @@ jobs:
       - name: Install theme
         run: |
           CURRENT_BRANCH="${{ github.ref_name }}"
-          sed -i "s/^THEME_BRANCH: '.*'/THEME_BRANCH: '${CURRENT_BRANCH}'/" ${{ vars.SSH_ALAVETELI_INSTALL_PATH }}/config/general.yml
+          ssh ${{ vars.SSH_USER }}@${{ vars.SSH_HOST }} "sed -i "s/^THEME_BRANCH: '.*'/THEME_BRANCH: '${CURRENT_BRANCH}'/" ${{ vars.SSH_ALAVETELI_INSTALL_PATH }}/config/general.yml"
           ssh ${{ vars.SSH_USER }}@${{ vars.SSH_HOST }} "cd ${{ vars.SSH_ALAVETELI_INSTALL_PATH }} && bundle exec rake themes:install RAILS_ENV=production"
