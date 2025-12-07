@@ -1,0 +1,41 @@
+name: Release Charts
+
+on:
+  push:
+    branches:
+      - main
+  workflow_dispatch:
+    
+jobs:
+  release:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      # Set up SSH agent with private key
+      - name: Setup SSH
+        uses: webfactory/ssh-agent@v0.8.0
+        with:
+          ssh-private-key: ${{ secrets.SSH_PRIVATE_KEY }}
+
+      - name: Set theme target branch
+        run: |
+          CURRENT_BRANCH="${{ github.ref_name }}"
+          ssh -o StrictHostKeyChecking=no \
+            ${{ vars.SSH_USER }}@${{ vars.SSH_HOST }} \
+            "sed -i \"s/^THEME_BRANCH: '.*'/THEME_BRANCH: '${CURRENT_BRANCH//'/'_}'/\" \
+            ${{ vars.SSH_ALAVETELI_INSTALL_PATH }}/config/general.yml"
+      - name: Install theme
+        run: |
+          ssh -o StrictHostKeyChecking=no \
+            ${{ vars.SSH_USER }}@${{ vars.SSH_HOST }} \
+            "
+              export PATH=\"\$HOME/.rbenv/bin:\$HOME/.gem/ruby/3.2.2/bin:\$PATH\";
+              eval \"\$(rbenv init -)\";
+              cd ${{ vars.SSH_ALAVETELI_INSTALL_PATH }} &&
+              bundle exec rake themes:install RAILS_ENV=production
+            "
+
