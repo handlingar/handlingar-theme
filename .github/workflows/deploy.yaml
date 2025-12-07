@@ -4,7 +4,6 @@ on:
   push:
     branches:
       - main
-      # - github-actions-deploy
   workflow_dispatch:
     
 jobs:
@@ -21,15 +20,6 @@ jobs:
         uses: webfactory/ssh-agent@v0.8.0
         with:
           ssh-private-key: ${{ secrets.SSH_PRIVATE_KEY }}
-
-      # - name: Copy files to remote server
-      #   run: |
-      #     rsync --archive --verbose --compress --delete \
-      #       --rsh='ssh -o StrictHostKeyChecking=no' \
-      #       --exclude='.git*' \
-      #       --exclude='.github/' \
-      #       ./ \
-      #       ${{ vars.SSH_USER }}@${{ vars.SSH_HOST }}:${{ vars.SSH_ALAVETELI_INSTALL_PATH }}/lib/themes/handlingar-theme
 
       - name: Set theme target branch
         run: |
