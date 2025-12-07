@@ -6,7 +6,7 @@ on:
       # - main
       - github-actions-deploy
   workflow_dispatch:
-    
+
 jobs:
   release:
     runs-on: ubuntu-latest
@@ -24,6 +24,7 @@ jobs:
 
       - name: Copy files to remote server
         run: |
+          mkdir -p ${{ vars.SSH_ALAVETELI_INSTALL_PATH }}/lib/themes/handlingar-theme
           rsync --archive --verbose --compress --delete \
             --rsh='ssh -o StrictHostKeyChecking=no' \
             ./ ${{ vars.SSH_USER }}@${{ vars.SSH_HOST }}:${{ vars.SSH_ALAVETELI_INSTALL_PATH }}/lib/themes/handlingar-theme
