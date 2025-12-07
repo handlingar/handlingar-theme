@@ -26,8 +26,12 @@ jobs:
         run: |
           rsync --archive --verbose --compress --delete \
             --rsh='ssh -o StrictHostKeyChecking=no' \
-            ./ ${{ vars.SSH_USER }}@${{ vars.SSH_HOST }}:${{ vars.SSH_ALAVETELI_INSTALL_PATH }}/lib/themes/handlingar-theme
+            --exclude='.git*' \
+            --exclude='.github/' \
+            ./ \
+            ${{ vars.SSH_USER }}@${{ vars.SSH_HOST }}:${{ vars.SSH_ALAVETELI_INSTALL_PATH }}/lib/themes/handlingar-theme
 
-      # - name: Install theme
-      #   run: |
-      #     ssh ${{ vars.SSH_USER }}@${{ vars.SSH_HOST }} "cd ${{ vars.SSH_ALAVETELI_INSTALL_PATH }} && bundle exec rake themes:install"
+
+      - name: Install theme
+        run: |
+          ssh ${{ vars.SSH_USER }}@${{ vars.SSH_HOST }} "cd ${{ vars.SSH_ALAVETELI_INSTALL_PATH }} && bundle exec rake themes:install"
