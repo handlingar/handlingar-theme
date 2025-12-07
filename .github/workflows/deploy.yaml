@@ -5,7 +5,8 @@ on:
     branches:
       # - main
       - github-actions-deploy
-
+  workflow_dispatch:
+    
 jobs:
   release:
     runs-on: ubuntu-latest
