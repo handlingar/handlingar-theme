@@ -3,8 +3,8 @@ name: Release Charts
 on:
   push:
     branches:
-      # - main
-      - github-actions-deploy
+      - main
+      # - github-actions-deploy
   workflow_dispatch:
     
 jobs:
