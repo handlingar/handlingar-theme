@@ -40,4 +40,12 @@ jobs:
             ${{ vars.SSH_ALAVETELI_INSTALL_PATH }}/config/general.yml"
       - name: Install theme
         run: |
-          ssh ${{ vars.SSH_USER }}@${{ vars.SSH_HOST }} "cd ${{ vars.SSH_ALAVETELI_INSTALL_PATH }} && bundle exec rake themes:install RAILS_ENV=production"
+          ssh -o StrictHostKeyChecking=no \
+            ${{ vars.SSH_USER }}@${{ vars.SSH_HOST }} \
+            "
+              export PATH=\"\$HOME/.rbenv/bin:\$HOME/.gem/ruby/3.2.2/bin:\$PATH\";
+              eval \"\$(rbenv init -)\";
+              cd ${{ vars.SSH_ALAVETELI_INSTALL_PATH }} &&
+              bundle exec rake themes:install RAILS_ENV=production
+            "
+
