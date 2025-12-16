@@ -1,0 +1,10 @@
+---
+keys:
+  - &staging age1s9aejnjwsnsfd6h7c72g5huxm876cg8jjrrtss6u5etpqvhh83xqzfmyal
+  - &personal age1u8ln4n7wdzre2wa6kxzuthf64uqkk4yg7t7lqe47chsqy28yq3xq8y3my7
+creation_rules:
+  - path_regex: nix/secrets[^/]*\.(yaml|json|env|ini|sops)$
+    key_groups:
+      - age:
+          - *staging
+          - *personal
