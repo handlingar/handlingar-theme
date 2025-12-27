@@ -1,0 +1,548 @@
+
+<!DOCTYPE html>
+<html lang="sv" class="no-js">
+  <head>
+    <meta charset="utf-8">
+    <meta name="csrf-param" content="authenticity_token" />
+<meta name="csrf-token" />
+
+    <title>
+        Handlingar.se - Gör och skapa förfrågningar om allmänna handlingar
+    </title>
+
+    <link rel="icon" type="image/x-icon" href="/assets/favicon-3e06c6d6cb34168fb0342ef3186f733b2c7d1c44422d1136013ad3cca6c4694f.ico" />
+
+
+      <!--[if LTE IE 7]>
+<link rel="stylesheet" href="/assets/responsive/application-lte-ie7-68b78b940bd7eb86d7402e528386e1f4231e4ab0551c0667a7874c76daa034f9.css" title="Main" media="all" />
+<![endif]-->
+
+<!--[if IE 8]>
+<link rel="stylesheet" href="/assets/responsive/application-ie8-71bb2bfd2563c2bbe6bf401522299e078e0c5e3d3aaaa1b7ffe2cb0281f4ee95.css" title="Main" media="all" />
+<![endif]-->
+
+<!--[if IE 8]>
+<link rel="stylesheet" href="/assets/responsive/application-ie8-71bb2bfd2563c2bbe6bf401522299e078e0c5e3d3aaaa1b7ffe2cb0281f4ee95.css" title="Main" media="all" />
+<![endif]-->
+
+<!--[if GT IE 8]><!-->
+<link rel="stylesheet" href="/assets/responsive/application-202cbaea7810e13380eefd6016df8d840683849355207e8ce8c4363bfcf6aa3f.css" title="Main" media="all" />
+<!--<![endif]-->
+
+  <link rel="stylesheet" href="/assets/responsive/print-f382691f6b7273571ffb7f402fe142b58891fec1e115fe46abdd8e80a3c064cc.css" media="print" />
+
+
+        <link rel="alternate" type="application/atom+xml" title="Framgångsrika förfrågningar" href="https://handlingar.se/feed/search/%20(latest_status:successful%20OR%20latest_status:partially_successful)">
+          <link rel="alternate" type="application/json" title="JSON version of Framgångsrika förfrågningar" href="https://handlingar.se/feed/search/%20(latest_status:successful%20OR%20latest_status:partially_successful).json">
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    
+<meta property="og:site_name" content="Handlingar.se" />
+
+  <meta property="og:title" content="Gör och skapa förfrågningar om allmänna handlingar" />
+  <meta property="og:type" content="website" />
+
+
+
+<meta property="og:image" content="https://handlingar.se/assets/logo-opengraph-08651411c043245191b8b3957faebb49c8eb235fc04f4b71114d22334c630cf3.png" />
+<meta property="og:url" content="https://handlingar.se/sv/" />
+<meta property="og:image:width" content="256" />
+<meta property="og:image:height" content="256" />
+
+    <!-- Matomo -->
+<script type="text/javascript">
+  if (window.location.hostname.indexOf('dev.handlingar.se') >= 0) {
+  var _paq = window._paq = window._paq || [];
+  /* tracker methods like "setCustomDimension" should be called before "trackPageView" */
+  _paq.push(["setDoNotTrack", true]);
+  _paq.push(["disableCookies"]);
+  _paq.push(['trackPageView']);
+  _paq.push(['enableLinkTracking']);
+  (function() {
+    var u="https://analytics.handlingar.se/";
+    _paq.push(['setTrackerUrl', u+'matomo.php']);
+    _paq.push(['setSiteId', '1']);
+    var d=document, g=d.createElement('script'), s=d.getElementsByTagName('script')[0];
+    g.type='text/javascript'; g.async=true; g.src=u+'matomo.js'; s.parentNode.insertBefore(g,s);
+  })();
+</script>
+<noscript><p><img src="https://analytics.handlingar.se/matomo.php?idsite=1&amp;rec=1" style="border:0;" alt="" /></p></noscript>
+<!-- End Matomo Code -->
+
+    <!-- Replace the html tag's no-js class with js -->
+    <script>
+      (function(H){
+        H.className = H.className.replace(/\bno-js\b/,'js-loaded')
+      })(document.documentElement);
+    </script>
+    
+  </head>
+  <body class="front ">
+    <div class="entirebody">
+
+    <a href="#content" class="show-with-keyboard-focus-only skip-to-link" tabindex="0">Skip to content</a>
+      <!-- begin popups -->
+        
+        <div id="country-message">
+        </div>
+      <!-- end popups -->
+
+      <div class="only-show-for-print">
+  <p class="print-information">Printed from https://handlingar.se/sv/ on January 30, 2024 13:30</p>
+</div>
+<div id="banner" class="banner " role="banner">
+  <div id="banner_inner" class="banner_inner">
+    <div id="banner_content" class="banner_content">
+      <div class="banner_site-title">
+        <h1><a id="logo" class="site-title__logo" href="/">Handlingar.se</a></h1>
+      </div>
+
+      <div class="rsp_menu_button">
+        <a href="#banner" class="open"> <i class="icon-menu"></i> Menu </a>
+        <a href="#" class="close"> <i class="icon-menu"></i> Close </a>
+      </div>
+
+      <div id="user_locale_switcher" class="locale-list">
+    <p class="locale-list-trigger ">
+      <strong class="current-locale">svenska</strong>
+    </p>
+
+    <ul class="available-languages">
+        <li class="available-languages__item">
+          <a href="/en">English</a>
+        </li>
+    </ul>
+  </div>
+        <div id="logged_in_bar" class="logged_in_bar account-link-menu-item">
+  <a class="sign_in_link" href="/profile/sign_in?r=%2Fsv">Logga in eller registrera dig</a>
+</div>
+
+      <div id="navigation_search" class="navigation_search">
+        <form id="navigation_search_form" class="navigation_search_form" method="get" action="/search" role="search">
+          <label class="visually-hidden" for="navigation_search_button">
+            Sök
+          </label>
+          <input type="search" name="query" id="navigation_search_button" class="navigation_search_button" placeholder="Sök" title="skriv in din sökterm här" />
+          <button type="submit">
+            <span class="visually-hidden">
+              Gör sökning
+            </span>
+          </button>
+        </form>
+      </div>
+    </div>
+
+    <div id="topnav" class="topnav ">
+  <ul id="navigation" class="navigation" role="navigation">
+
+      <li class="">
+  <a id="make-request-link" href="/select_authority">Gör en begäran</a>
+</li>
+
+<li class="">
+  <a href="/list/successful">Bläddra bland förfrågningar</a>
+</li>
+
+<li class="">
+  <a href="/body/list/all">Se myndigheter</a>
+</li>
+
+<li><a href="https://handlingar.se/sv/pro">Pro</a></li>
+
+
+<li><a href="https://about.handlingar.se/">Tjänster</a></li>
+
+<li><a href="https://handlingar.se/blog">Blogg</a></li>
+
+
+
+
+<li class="">
+  <a href="/help/about">Hjälp</a>
+</li>
+
+  </ul>
+</div>
+
+  </div>
+</div>
+
+  <div class="wrapper">
+    <div class="homepage-flash">
+    </div>
+  </div>
+
+  <div class="homepage-hero">
+  <div class="row">
+    <div class="hero__intro">
+      <h1 class="intro__title">Information för bättre beslut</h1>
+<p class="intro__description">
+  Alla människor har rätt att få tillgång till information som myndigheter har.
+    Enligt lag måste de svara.
+</p>
+
+
+      <p class="intro__browse">
+        Bläddra bland <a href="/list/successful">242 förfrågningar</a> till <a href="/body/list/all">2 471 myndigheter</a>
+      </p>
+    </div>
+
+    <div class="hero__new-request">
+      <div class="new-request__content">
+        <h2 class="new-request__title">Vad vill du veta?</h2>
+<p class="new-request__description">Ställ din fråga</p>
+<a class="new-request__make-new-requests" href="/select_authority">
+  Gör en begäran &raquo;
+</a>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+
+      <div id="wrapper">
+        <div id="content" role="main">
+
+          <div id="general_frontpage" class="controller_general">
+              <div class="homepage-how-it-works" id="learn-more">
+  <div class="row">
+    <div class="homepage-how-it-works__hiw-content">
+      <div class="hiw-content__headings">
+        <h2>Hur det fungerar</h2>
+        <p class="hiw__subtitle">
+          Du har <strong>rätt</strong> att begära information från offentligt finansierade organisationer, och få svar. Handlingar.se hjälper dig att få viktig information du behöver genom att göra en begäran om allmän handling. Tjänsten är kostnadsfri men beroende av ditt stöd. Behöver du fler kraftfulla funktioner? Skaffa Handlingar Pro för journalister, civilsamhälle och företagare! 
+        </p>
+      </div>
+      <div class="hiw-content__steps">
+        <ol class="steps__list row">
+          <li>
+            <div class="steps__step-box">
+              <p>Använd denna sida för att fråga om information - vi visar dig hur.</p>
+            </div>
+            <div class="steps__step-number" aria-hidden="true">
+              <p>1</p>
+            </div>
+          </li>
+          <li>
+            <div class="steps__step-box">
+              <p>Vi skickar dig ett e-postmeddelande när din begäran får ett svar.</p>
+            </div>
+            <div class="steps__step-number" aria-hidden="true">
+              <p>2</p>
+            </div>
+          </li>
+          <li>
+            <div class="steps__step-box">
+              <p>Vi publicerar allt på Internet. Bra! Nu har du ditt svar, och alla andra kan få tillgång till det också.</p>
+            </div>
+            <div class="steps__step-number" aria-hidden="true">
+              <p>3</p>
+            </div>
+          </li>
+        </ol>
+        <div class="learn-more-foi">
+          <a href="/help/about">Lär dig mer &rarr;</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+  <div id="frontpage_examples" class="frontpage_examples">
+      <div id="examples_0" class="examples_0 bodies-list">
+    <h3>Vem kan jag begära information från?</h3>
+
+    <h4>Handlingar.se täcker förfrågningar till 2 471 myndigheter, inklusive:</h4>
+
+    <ul>
+        <li><a href="/body/go">Regeringskansliet</a>
+          15 förfrågningar
+        </li>
+        <li><a href="/body/harnosands_kommun">Härnösands kommun</a>
+          10 förfrågningar
+        </li>
+        <li><a href="/body/stockholms_stad">Stockholms stad</a>
+          8 förfrågningar
+        </li>
+        <li><a href="/body/region_vasternorrland">Region Västernorrland</a>
+          6 förfrågningar
+        </li>
+        <li><a href="/body/forsakringskassan">Försäkringskassan</a>
+          6 förfrågningar
+        </li>
+        <li><a href="/body/digg">Myndigheten för digital förvaltning</a>
+          5 förfrågningar
+        </li>
+        <li><a href="/body/trafikverket">Trafikverket</a>
+          5 förfrågningar
+        </li>
+        <li><a href="/body/region_stockholm">Region Stockholm</a>
+          4 förfrågningar
+        </li>
+        <li><a href="/body/mil">Försvarsmakten</a>
+          4 förfrågningar
+        </li>
+        <li><a href="/body/isof">Institutet för språk och folkminnen</a>
+          3 förfrågningar
+        </li>
+        <li><a href="/body/fastighetskontoret">Fastighetskontoret</a>
+          3 förfrågningar
+        </li>
+        <li><a href="/body/polismyndigheten">Polismyndigheten</a>
+          3 förfrågningar
+        </li>
+        <li><a href="/body/utrikesdepartementet">Utrikesdepartementet</a>
+          3 förfrågningar
+        </li>
+        <li><a href="/body/socialstyrelsen">Socialstyrelsen</a>
+          3 förfrågningar
+        </li>
+        <li><a href="/body/riksdagsforvaltningen">Riksdagsförvaltningen</a>
+          3 förfrågningar
+        </li>
+        <li><a href="/body/kalmar_kommun">Kalmar kommun</a>
+          3 förfrågningar
+        </li>
+        <li><a href="/body/av">Arbetsmiljöverket</a>
+          2 förfrågningar
+        </li>
+        <li><a href="/body/sveriges_standiga_representation_vid_europeiska_unionen_i_bryssel">Sveriges ständiga representation vid Europeiska unionen i Bryssel</a>
+          2 förfrågningar
+        </li>
+        <li><a href="/body/nykopings_kommun">Nyköpings kommun</a>
+          2 förfrågningar
+        </li>
+        <li><a href="/body/vr">Vetenskapsrådet</a>
+          2 förfrågningar
+        </li>
+        <li><a href="/body/region_orebro_lan">Region Örebro län</a>
+          2 förfrågningar
+        </li>
+        <li><a href="/body/sapo">Säkerhetspolisen</a>
+          2 förfrågningar
+        </li>
+        <li><a href="/body/foi">Totalförsvarets forskningsinstitut, Foi</a>
+          2 förfrågningar
+        </li>
+        <li><a href="/body/e_halsomyndigheten">E-Hälsomyndigheten</a>
+          2 förfrågningar
+        </li>
+        <li><a href="/body/region_skane">Region Skåne</a>
+          2 förfrågningar
+        </li>
+        <li><a href="/body/region_blekinge">Region Blekinge</a>
+          2 förfrågningar
+        </li>
+        <li><a href="/body/exploateringskontoret">Exploateringskontoret</a>
+          2 förfrågningar
+        </li>
+        <li><a href="/body/gallivare_kommun">Gällivare kommun</a>
+          2 förfrågningar
+        </li>
+        <li><a href="/body/sjofartsverket">Sjöfartsverket</a>
+          2 förfrågningar
+        </li>
+        <li><a href="/body/af">Arbetsförmedlingen</a>
+          2 förfrågningar
+        </li>
+        <li><a href="/body/konsumentverket">Konsumentverket</a>
+          2 förfrågningar
+        </li>
+        <li><a href="/body/region_ostergotland">Region Östergötland</a>
+          2 förfrågningar
+        </li>
+    </ul>
+
+    <a class="button-secondary" href="/body/list/all">Bläddra bland alla myndigheter &rarr;</a>
+  </div>
+
+    <div id="examples_1" class="latest-requests">
+  <h3>
+      Vilken information har offentliggjorts?
+  </h3>
+
+  <h4>
+    Handlingar.se användare har gjort 242 förfrågningar, inklusive:
+  </h4>
+
+  <ul>
+      <li class="request-listing">
+        <div class="request-listing__request-status-icon bottomline icon_successful icon-standalone"></div>
+        <div class="request-listing__request-body">
+          <p>
+              <a href="/body/ostersunds_kommun">Östersunds kommun</a> svarade en begäran om
+
+            <a href="/request/priser_for_organisationens_anvan">Priser för organisationens användning av tjänsten Google Workspace</a>
+          </p>
+
+          <p class="request-body__time-ago">
+            ungefär 5 timmar sen
+          </p>
+        </div>
+      </li>
+      <li class="request-listing">
+        <div class="request-listing__request-status-icon bottomline icon_successful icon-standalone"></div>
+        <div class="request-listing__request-body">
+          <p>
+              <a href="/body/bromma_stadsdelsforvaltning">Bromma stadsdelsförvaltning</a> svarade en begäran om
+
+            <a href="/request/stora_angby_11_liljegrensvagen_5">Stora Ängby 1:1, Liljegrensvägen 5</a>
+          </p>
+
+          <p class="request-body__time-ago">
+            6 dagar sen
+          </p>
+        </div>
+      </li>
+      <li class="request-listing">
+        <div class="request-listing__request-status-icon bottomline icon_successful icon-standalone"></div>
+        <div class="request-listing__request-body">
+          <p>
+              <a href="/body/fastighetskontoret">Fastighetskontoret</a> svarade en begäran om
+
+            <a href="/request/hyra_stora_angby_11_12">Hyra stora ängby 1:1</a>
+          </p>
+
+          <p class="request-body__time-ago">
+            11 dagar sen
+          </p>
+        </div>
+      </li>
+      <li class="request-listing">
+        <div class="request-listing__request-status-icon bottomline icon_successful icon-standalone"></div>
+        <div class="request-listing__request-body">
+          <p>
+              <a href="/body/socialstyrelsen">Socialstyrelsen</a> svarade en begäran om
+
+            <a href="/request/handlingar_om_foraldraalienation">Handlingar om föräldraalienation</a>
+          </p>
+
+          <p class="request-body__time-ago">
+            13 dagar sen
+          </p>
+        </div>
+      </li>
+      <li class="request-listing">
+        <div class="request-listing__request-status-icon bottomline icon_successful icon-standalone"></div>
+        <div class="request-listing__request-body">
+          <p>
+              <a href="/body/lekebergs_kommun">Lekebergs kommun</a> svarade en begäran om
+
+            <a href="/request/kommunstyrelsens_protokoll_mm_fr">Kommunstyrelsens protokoll mm från 2023-12-28</a>
+          </p>
+
+          <p class="request-body__time-ago">
+            26 dagar sen
+          </p>
+        </div>
+      </li>
+  </ul>
+
+  <a class="button-secondary" href="/list/all">Bläddra bland alla förfrågningar &rarr;</a>
+</div>
+
+  </div>
+
+    <div class="frontpage__blog">
+    <h2>Senaste nyheter och kampanjer</h2>
+
+      <div class="blog__post">
+        <h3><a href="https://about.handlingar.se/2024/01/18/grattis-till-systerplattformen-i-england-for-1-miljon-forfragningar/">Grattis till systerplattformen i England för 1 miljon förfrågningar!</a></h3>
+        <p>I december passerade MySocietys plattform WhatDoTheyKnow i Storbritannien 1 miljon förfrågningar. Det är ett bevis på värdet att begära ut offentlig information, och på behovet av plattformar som Handlingar.se! WDTK har funnits i 15 år och hemsidan är ett arkiv med den information användarna har begärt ut. Användare av WDTK skickar två och ett halvt […]</p>
+<p>The post <a href=&quot;https://about.handlingar.se/2024/01/18/grattis-till-systerplattformen-i-england-for-1-miljon-forfragningar/&quot;>Grattis till systerplattformen i England för 1 miljon förfrågningar!</a> appeared first on <a href=&quot;https://about.handlingar.se&quot;>Om Handlingar.se</a>.</p>
+</p>
+      </div>
+      <div class="blog__post">
+        <h3><a href="https://about.handlingar.se/2024/01/18/big-congratulations-to-our-sister-platform-for-1-million-public-requests/">Big congratulations to our sister platform for 1 million public requests!</a></h3>
+        <p>In December, MySocietys FOI platform WhatDoTheyKnow in the UK passed 1 million requests. It’s proof of the value of FOI, and of the need for platforms like Handlingar.se to exist! WDTK have been running for 15 years and the site is an archive of publicly-available information. Users of WDTK send two-and-half thousand requests a week. […]</p>
+<p>The post <a href=&quot;https://about.handlingar.se/2024/01/18/big-congratulations-to-our-sister-platform-for-1-million-public-requests/&quot;>Big congratulations to our sister platform for 1 million public requests!</a> appeared first on <a href=&quot;https://about.handlingar.se&quot;>Om Handlingar.se</a>.</p>
+</p>
+      </div>
+      <div class="blog__post">
+        <h3><a href="https://about.handlingar.se/2024/01/09/detta-ar-de-nya-myndigheterna-2024/">Detta är de nya myndigheterna 2024</a></h3>
+        <p>Nytt år brukar betyda nya myndigheter och offentliga bolag i Sverige. Så även år 2024. 1 januari 2024 startar följande myndighet: Utbetalningsmyndigheten Syftet med den nya myndigheten är att förebygga, förhindra och upptäcka felaktiga utbetalningar från välfärdssystemen.  Utbetalningsmyndigheten kommer att administrera ett system där betalningar från Arbetsförmedlingen, Centrala studiestödsnämnden (CSN), Försäkringskassan, Pensionsmyndigheten och Skatteverket görs […]</p>
+<p>The post <a href=&quot;https://about.handlingar.se/2024/01/09/detta-ar-de-nya-myndigheterna-2024/&quot;>Detta är de nya myndigheterna 2024</a> appeared first on <a href=&quot;https://about.handlingar.se&quot;>Om Handlingar.se</a>.</p>
+</p>
+      </div>
+      <div class="blog__post">
+        <h3><a href="https://about.handlingar.se/2024/01/09/these-are-the-new-swedish-authorities-of-2024/">These are the new Swedish authorities of 2024.</a></h3>
+        <p>The new year usually means new authorities and public agencies in Sweden. This is also the case in 2024. On 1st January 2024, the following authorities will commence: The Payment Authority  The purpose of the new authority is to prevent, hinder, and detect incorrect payments from the welfare systems. The Payment Authority will administer a […]</p>
+<p>The post <a href=&quot;https://about.handlingar.se/2024/01/09/these-are-the-new-swedish-authorities-of-2024/&quot;>These are the new Swedish authorities of 2024.</a> appeared first on <a href=&quot;https://about.handlingar.se&quot;>Om Handlingar.se</a>.
+</p>
+      </div>
+
+    <a class="button-secondary" href="/blog">Se allt &rarr;</a>
+  </div>
+
+
+          </div>
+          <div style="clear:both"></div>
+        </div>
+      </div>
+
+      <div class="footer" id="footer" role="contentinfo">
+  <div class="row">
+    <div class="footer__about">
+      <h2>Handlingar.se</h2>
+      <p>Drivs av <a href="https://okfn.se/">Open Knowledge Sverige</a> med mjukvaran <a href="http://www.alaveteli.org/">Alaveteli.</a> Ansvarig utgivare: Elenor Weijmar
+</p>
+
+      <ul class="about__contact-links">
+        <li>
+          <a href="/help/contact">Kontakta oss</a>
+        </li>
+        <li>
+          <a href="/help">Hjälp</a>
+        </li>
+        <li>
+          <a href="/help/privacy">Integritet och kakor</a>
+        </li>
+        <li>
+          <a href="/help/api">API</a>
+        </li>
+        <li>
+          <a href="/pro/pages/legal">Handlingar Pro Villkor</a>
+        </li>
+      </ul>
+    </div>
+  </div>
+  <div class="footer__final">
+    <div class="row">
+      <div class="final__social-links">
+        <ul>
+          <li>
+            <a href="https://twitter.com/handlingar" class="social-link social-link--twitter" onclick="if (ga) { ga(&#39;send&#39;,&#39;event&#39;,&#39;Outbound Link&#39;,&#39;Twitter Exit&#39;,&#39;Footer link&#39;,1) };">@handlingar</a>
+          </li>
+          <li>
+            <a href="https://facebook.com/handlingar" class="social-link social-link--facebook" onclick="if (ga) { ga(&#39;send&#39;,&#39;event&#39;,&#39;Outbound Link&#39;,&#39;Facebook Exit&#39;,&#39;Footer link&#39;,1) };">/handlingar</a>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</div>
+
+    </div>
+
+    
+
+    <script src="/assets/application-986359465effd8c039ab88ebdc171641539eac16d12c54bca9eea6dbca9cd286.js"></script>
+
+    
+
+    <script>
+  jQuery('#user_locale_switcher').find('.locale-list-trigger').each(function() {
+    jQuery(this).click(function(){
+      jQuery(this).parent().toggleClass('active');
+    });
+  });
+</script>
+
+
+    <a href="#content" class="show-with-keyboard-focus-only skip-to-link">
+      Tillbaka till innehåll
+    </a>
+  </body>
+</html>
