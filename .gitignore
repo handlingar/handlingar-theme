@@ -11,3 +11,7 @@
 TAGS
 *.sw[a-z]
 *DONT-CHECKIN*
+.local
+logs.txt
+.gitignore
+themes/handlingar-theme
