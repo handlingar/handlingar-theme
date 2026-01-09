@@ -1,0 +1,21 @@
+sudo apt install build-essential libssl-dev zlib1g-dev libyaml-dev libreadline-dev
+git clone https://github.com/rbenv/rbenv.git ~/.rbenv
+echo 'export PATH="$HOME/.rbenv/bin:$PATH"' >> ~/.bashrc
+echo 'eval "$(rbenv init - bash)"' >> ~/.bashrc
+source ~/.bashrc
+
+git clone https://github.com/rbenv/ruby-build.git ~/.rbenv/plugins/ruby-build
+rbenv install 3.2.2
+rbenv global 3.2.2
+
+gem install debug --install-dir ./.local
+export PATH=$(pwd)/.local/bin:$PATH
+
+# commands
+docker compose down
+docker volume rm $(docker volume ls -q) -f
+sudo rm -rf ./themes
+
+git clone --depth=1 https://github.com/mysociety/alaveteli.git ./alaveteli
+git -C ./alaveteli submodule update --init --recursive
+docker compose logs setup > logs.txt
