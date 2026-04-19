@@ -310,6 +310,57 @@ session_summary() {
       printf '%s\n' "$old" | sed 's/^/    /'
     fi
   fi
+
+  # ---- Claude usage spend (requires ccusage; skipped if not installed)
+  printf '\n'
+  hdr "Claude usage (today)"
+  if command -v ccusage >/dev/null 2>&1; then
+    local usage_json
+    usage_json=$(ccusage blocks --json 2>/dev/null)
+    if [[ -n "$usage_json" ]]; then
+      local total_cost active_pct burn_usd_hr
+      total_cost=$(printf '%s' "$usage_json" | python3 -c "
+import json,sys
+blocks=json.load(sys.stdin).get('blocks',[])
+total=sum(b.get('costUSD',0) for b in blocks)
+print(f'\${total:.2f}')
+" 2>/dev/null || echo '?')
+      active_pct=$(printf '%s' "$usage_json" | python3 -c "
+import json,sys
+blocks=json.load(sys.stdin).get('blocks',[])
+ab=next((b for b in blocks if b.get('isActive')),None)
+if ab:
+    limit=blocks[0].get('totalTokens',1) if blocks else 1
+    pct=ab.get('totalTokens',0)/limit*100
+    print(f'{pct:.0f}%')
+" 2>/dev/null || echo '')
+      burn_usd_hr=$(printf '%s' "$usage_json" | python3 -c "
+import json,sys
+blocks=json.load(sys.stdin).get('blocks',[])
+ab=next((b for b in blocks if b.get('isActive')),None)
+if ab and ab.get('burnRate'):
+    print(f'\${ab[\"burnRate\"][\"costPerHour\"]:.2f}/hr')
+" 2>/dev/null || echo '')
+
+      printf '  spend today: %s' "$total_cost"
+      [[ -n "$active_pct" ]] && printf '  |  active block: %s of limit' "$active_pct"
+      [[ -n "$burn_usd_hr" ]] && printf '  |  burn rate: %s' "$burn_usd_hr"
+      printf '\n'
+
+      # Warn if today's spend already looks high for typical doc/config work
+      local cost_num
+      cost_num=$(printf '%s' "$total_cost" | tr -d '$')
+      if awk "BEGIN{exit !($cost_num > 10)}"; then
+        printf '  %sWARN%s spend >$10 today — check resource discipline before continuing:\n' "$Y" "$N"
+        printf '       /fast for mechanical edits  |  /clear after each commit  |  narrow reads\n'
+        printf '       (2026-04-19: $15.85 spent on 4 doc commits — do not repeat)\n'
+      fi
+    else
+      printf '  ccusage available but returned no data\n'
+    fi
+  else
+    printf '  %sccusage not installed%s — install with: npm i -g ccusage\n' "$Y" "$N"
+  fi
 }
 
 # -------------------------------------------------- runner
