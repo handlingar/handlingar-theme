@@ -16,3 +16,4 @@ logs.txt
 .gitignore
 themes/handlingar-theme
 general.yml
+.claude/settings.local.json

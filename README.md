@@ -14,10 +14,24 @@ git clone git@github.com:handlingar/handlingar-theme.git
 cd handlingar-theme
 git config core.hooksPath .githooks   # install pre-push quality gate
 bash scripts/quality-gate.sh          # one-shot: verify repo is clean
+npm i -g ccusage                      # recommended: passive Pro-usage visibility
 ```
 
 The pre-push gate and the required CI check enforce architectural invariants, privacy, and
 secret hygiene. See [docs/WAYS-OF-WORKING.md](docs/WAYS-OF-WORKING.md#quality-gate-automated-drift-detection).
+
+### Keeping an eye on Claude Pro usage
+
+The repo ships a `.claude/settings.json` that wires a statusline into Claude Code so your
+current 5-hour and daily usage stays visible in the prompt — no separate window to check.
+
+- If you install `ccusage` (one line above), the statusline reads your local Claude Code
+  session logs and shows it continuously.
+- If you don't, the statusline shows a one-time install hint instead of breaking anything.
+- At task close, Claude asks for `/cost` output so the number is written into
+  `docs/ROADMAP.md` next to the closed task. Per-task cost over time lives in git history —
+  the mechanical backstop against quietly spending too much. See
+  [docs/WAYS-OF-WORKING.md § Resource discipline](docs/WAYS-OF-WORKING.md#resource-discipline).
 
 ## Quickstart (humans)
 

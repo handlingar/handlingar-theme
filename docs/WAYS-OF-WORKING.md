@@ -69,12 +69,18 @@ corrections, preferences, clarifications. When this happens:
 
 ### Task closure
 
-1. Claude says: **"Propose to close task `<id>` — summary: \<one sentence\>."**
-2. The developer replies yes/no (or asks for adjustments).
+1. Claude says: **"Propose to close task `<id>` — summary: \<one sentence\>. Please share
+   `/cost` output so I can log session usage."**
+2. The developer replies yes/no (or asks for adjustments), and pastes the `/cost` line.
 3. On approval, in the same response, Claude:
    - marks the task `[x]` in `ROADMAP.md`
-   - replaces the inline `> Claimed:` line with `> Closed YYYY-MM-DD by @<gh-handle> — <1 sentence outcome + PR or commit SHA>`
+   - replaces the inline `> Claimed:` line with
+     `> Closed YYYY-MM-DD by @<gh-handle> — <1 sentence outcome + PR or commit SHA> (usage: <N msgs / $X>)`
    - announces the next candidate task if the developer wants to continue.
+
+The `(usage: ...)` line lets the team see per-task cost over time in git history, which is
+our mechanical backstop against silent overruns (see § Resource discipline and the statusline
+setup in the README).
 
 ### End of session / handoff
 

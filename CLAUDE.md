@@ -38,8 +38,10 @@ and investigate before layering new work on top of pre-existing drift.
    above. Don't pre-load the rest.
 2. **One task at a time**: pick the next `[ ]` task under the active phase in `ROADMAP.md`. If unclear,
    ask the developer which.
-3. **Task close**: when you believe a task is done, say *"Propose to close task `<id>`"* and wait.
-   On approval, edit `ROADMAP.md` to mark `[x]` and add a one-line completion note with the date.
+3. **Task close**: when you believe a task is done, say *"Propose to close task `<id>`"* and
+   ask the developer to run `/cost` so the session usage can be captured in the close note.
+   On approval, edit `ROADMAP.md` to mark `[x]` and add a one-line completion note with the
+   date + the `/cost` figure (format in WAYS-OF-WORKING).
 4. **New decision?** Write a new ADR under `docs/decisions/NNNN-title.md` before/alongside the code change.
 5. **Making an assumption?** Append one line to `docs/assumptions.md` with today's date.
 6. **Stopping mid-task**: offer to write a short handoff paragraph into `ROADMAP.md`'s "In progress" section
