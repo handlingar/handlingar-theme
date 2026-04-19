@@ -56,7 +56,7 @@ derive_personal_tokens() {
   local stop
   stop='^(claude|github|noreply|users|action|actions|bot|bots|dependabot|renovate'
   stop+='|handlingar|alaveteli|mysociety|example|gmail|outlook|hotmail|yahoo|icloud'
-  stop+='|mail|info|admin|root|user|null|none|main|test|prod'
+  stop+='|mail|info|admin|root|user|runner|null|none|main|test|prod'
   stop+='|mark|make|made|this|that|with|from|have|were|will|your|into|when|then|than)$'
   local base
   base=$(git merge-base HEAD origin/main 2>/dev/null \
