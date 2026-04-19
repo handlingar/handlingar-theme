@@ -47,15 +47,31 @@ and investigate before layering new work on top of pre-existing drift.
 
 Full protocol + rationale lives in [docs/WAYS-OF-WORKING.md](docs/WAYS-OF-WORKING.md).
 
-## Token-budget rules
+## Resource discipline
 
-The developers here use Claude Pro subscriptions with a daily token cap. Going over mid-session
-blocks further work for the day.
+Claude usage on this project is cost-capped. Responsibility is split:
 
-- Don't re-read files already read this session.
-- Use `Grep`/`Glob` with narrow patterns before wide `Read`s.
-- Spawn subagents only when the task is genuinely parallel or open-ended (>3 search rounds).
-- Keep replies tight. No trailing recap of what the diff already shows.
+- **Claude self-manages** per-session spend by default: tight replies, narrow reads, aggressive
+  `/clear` between tasks.
+- **Developers flag** when usage feels excessive ("that cost too much", "slow down on reads").
+  Claude recalibrates immediately — no argument.
+
+Working rules (non-negotiable):
+
+- **`/clear` between tasks.** State persists in `docs/ROADMAP.md` + branch, not in chat history.
+  One task → one session → commit → clear. Don't continue a long session into a new task.
+- **`/fast` (Opus 4.6) for routine mechanical edits.** Save default Opus for architecture,
+  tricky debugging, unfamiliar code paths.
+- **Narrow reads.** `offset`/`limit` on `Read`, specific `Grep` patterns. Never read a whole
+  file when a region suffices.
+- **No re-reads** of files already loaded this session — Edit/Write track state.
+- **Subagents only** for genuinely parallel work or open-ended research (>3 search rounds).
+  They start cold and re-derive context; every delegation has a real cost.
+- **Terse replies.** One-sentence end-of-turn. No diff recap. Structure only when the task
+  needs it.
+
+See [docs/WAYS-OF-WORKING.md § Provider division of labour](docs/WAYS-OF-WORKING.md#provider-division-of-labour)
+for when other LLMs beat Claude Code for a given sub-task.
 
 ## Repo layout (current)
 

@@ -127,19 +127,46 @@ log output into Claude for analysis; unredacted pastes leak into transcript + te
 - The tool prints a redaction summary (counts by pattern) for sanity-checking.
 - Never propose "grep it yourself and paste clean" — the tool does the redaction.
 
-## Token budget
+## Resource discipline
 
-Developers here use Claude Pro subscriptions with a daily cap. Going over mid-session blocks
-further work. Claude should:
+Claude usage on this project is cost-capped. `CLAUDE.md § Resource discipline` carries the
+per-session rules (tight replies, `/clear` between tasks, `/fast` for mechanical edits, narrow
+reads, subagents only when genuinely parallel). What follows is the shared responsibility model
+and the provider-choice guidance that Claude Code alone can't encode.
 
-- Keep `CLAUDE.md` short (loaded every session).
-- Prefer `Grep` / `Glob` over wide `Read`. Read specific line ranges with `offset`/`limit` when
-  the region is known.
-- Never re-read a file already read in the same session.
-- Reserve the `Agent` tool for genuinely parallel research or open-ended >3-query exploration.
-  Don't delegate small lookups.
-- Keep user-facing replies tight. One-sentence end-of-turn summaries. No filler recap of the diff.
-- When the developer says "short" or "brief", drop all structure and reply in 1-3 sentences.
+### Responsibility model
+
+- **Claude** manages per-session spend by default. It applies the rules above, calibrates tool
+  calls to the task, and keeps replies short.
+- **Developers** flag when usage feels excessive — *"that cost too much", "slow down on reads",
+  "use fast for this"*. Flagging is expected and not a complaint. Claude recalibrates
+  immediately.
+- **Neither side pre-negotiates every turn.** If something gets out of hand, the developer says
+  so; Claude adjusts. That loop is the control system.
+
+### Provider division of labour
+
+Claude Code is the only AI that touches this repository directly — it has the `CLAUDE.md` entry
+brief, the private memory system, the skills, and the quality-gate integration. Other providers
+(Gemini, ChatGPT, local models) feed it context but do not modify files.
+
+| Task | Best tool | Why |
+| --- | --- | --- |
+| Code changes, commits, ADRs in this repo | Claude Code | In-context memory, gate, repo knowledge. |
+| Reading long upstream Alaveteli source / vendor docs | Gemini | Large context window, cheap. |
+| Brainstorming / drafting before bringing a plan in | Whatever's fastest | No repo state needed. |
+| Swedish ↔ English translation for locale work | Any general LLM | No repo state needed. |
+| Ops reasoning on already-masked inventory output | Claude Code | Session continuity. |
+
+Rule of thumb: **Claude Code touches this repo; other tools feed it context.** Switching
+providers mid-edit costs more context than it saves.
+
+### Intensity-variable days
+
+- **Short day (≤2h):** one focused task end-to-end, commit, done.
+- **Long day (up to ~10h):** multiple tasks, each on its own feature branch + ROADMAP claim,
+  with `/clear` between them. Continuity comes from the repo, not from a conversation history
+  that grew for hours.
 
 ## Privacy (public-repository hygiene)
 
