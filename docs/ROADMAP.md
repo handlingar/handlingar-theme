@@ -16,6 +16,29 @@ See [WAYS-OF-WORKING.md](WAYS-OF-WORKING.md) for claim, handoff, and close proto
 
 ---
 
+## Session bootstrap — read first
+
+**Current repo state (2026-04-19).** Foundation scaffolding lives on branch `feat/local-dev`:
+this ROADMAP, ADRs 0001-0003, `scripts/quality-gate.sh`, pre-push hook, CI workflow, usage
+statusline (`.claude/settings.json`), docs for ways-of-working / architecture / runbook /
+inventory / assumptions / incidents / invariants. Three commits, not pushed, not yet merged
+to `main`. No P0 task is claimed yet.
+
+**Next session's first decision.** Before starting any P0 task, resolve the scaffold:
+
+1. Open a PR from `feat/local-dev` to `main` (recommended — CI runs the gate as a required
+   check), OR
+2. Merge `feat/local-dev` into `main` locally and push `main`, OR
+3. Branch P0-T1 off `feat/local-dev` directly if there's a reason not to merge yet.
+
+Option 1 is the default unless the developer says otherwise. After that, create
+`feat/p0-t1-<slug>` off the updated `main` and claim P0-T1 inline below.
+
+**Environment prerequisites (one-time).** `git config core.hooksPath .githooks` and
+`npm i -g ccusage` (for the Pro-usage statusline) — see [README.md](../README.md#first-time-setup-any-contributor).
+
+---
+
 ## Phase 0 — Inventory & baseline  ← active
 
 Goal: know what's actually running in production, documented in the repo, before changing anything.
