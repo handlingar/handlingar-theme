@@ -1,24 +1,8 @@
-# See https://guides.rubyonrails.org/active_storage_overview.html for the guide
-# on how to configure your storage.
-#
-# amazon:
-#   service: S3
-#   access_key_id: ''
-#   secret_access_key: ''
-#   region: ''
-#   bucket: ''
-#
-# azure:
-#   service: AzureStorage
-#   storage_account_name: ''
-#   storage_access_key: ''
-#   container: ''
-#
-# google:
-#   service: GCS
-#   credentials:
-#   project: ''
-#   bucket: ''
+# Active Storage configuration for Alaveteli.
+# See https://guides.rubyonrails.org/active_storage_overview.html
+# We use local disk only (per docs/decisions/0002-hosting-hetzner-cloud.md — no public-cloud
+# object storage for application assets). Backup destinations are handled separately by the
+# infra layer.
 
 local:
   service: Disk
