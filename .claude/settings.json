@@ -6,7 +6,9 @@
       "Bash(gzip -1)",
       "Bash(make)",
       "Bash(make -p)",
-      "Bash(make image-import *)"
+      "Bash(make image-import *)",
+      "Bash(git check-ignore *)",
+      "Bash(git grep *)"
     ]
   },
   "hooks": {

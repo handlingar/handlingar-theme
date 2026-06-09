@@ -10,7 +10,7 @@ set -euo pipefail
 
 BIN="$HOME/.local/bin"
 KUBECONFIG_PATH="$HOME/.kube/handlingar-dev.yaml"
-TOKEN_FILE=".local/hcloud.env"
+TOKEN_FILE=".local/.env"   # single local secrets file (template: .local/.env.example)
 HELM_VERSION="v3.16.4"
 ok()   { printf '  \033[32mOK\033[0m    %s\n' "$1"; }
 add()  { printf '  \033[36mFIX\033[0m   %s\n' "$1"; }
@@ -68,11 +68,11 @@ fi
 
 hdr "Hetzner Cloud API token"
 if [[ ! -f "$TOKEN_FILE" ]]; then
-  die "$TOKEN_FILE not found.
-  Create a Hetzner *Cloud* API token (console.hetzner.cloud -> your Project ->
-  Security -> API Tokens -> Generate, Read & Write), then save it (it is NOT
-  committed to git):
-      printf 'HCLOUD_TOKEN=%s\\n' 'PASTE_64_CHAR_TOKEN' > $TOKEN_FILE
+  die "$TOKEN_FILE not found — this is the single local secrets file.
+  Create it from the tracked template, then fill in your values (it is NOT
+  committed to git; see .local/.env.example for every value and where to get it):
+      cp .local/.env.example $TOKEN_FILE
+      \$EDITOR $TOKEN_FILE        # set HCLOUD_TOKEN (Hetzner Cloud -> Security -> API tokens)
   Then re-run this."
 fi
 # shellcheck disable=SC1090

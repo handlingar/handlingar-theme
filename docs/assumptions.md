@@ -26,7 +26,7 @@ Ratified assumptions should be struck through and linked to the ADR or doc that 
 - 2026-04-19 — GitHub handles are the identifier used in repo-visible contributor notes (claim / close / handoff lines) — no real names. — project kickoff — [open]
 - 2026-04-19 — Any production inventory/log/config tooling must redact secrets programmatically before output can reach a Claude session. — project kickoff — [open]
 - 2026-06-09 — Dev cluster uses `cpx22` (2 vCPU / 4 GB shared-x86) in `fsn1`; the original `cx22` is deprecated by Hetzner and not provisionable. Implies app container images must be x86 (not ARM `cax11`). — P2-T2 — [open]
-- 2026-06-09 — `HCLOUD_TOKEN` is provided to local tooling via a gitignored `.local/hcloud.env` sourced at provision time; never committed, never pasted into a Claude session. Kubeconfig lands at `~/.kube/handlingar-dev.yaml`. — P2-T2 — [open]
+- 2026-06-09 — `HCLOUD_TOKEN` is provided to local tooling via a gitignored secrets file sourced at provision time; never committed, never pasted into a Claude session. Kubeconfig lands at `~/.kube/handlingar-dev.yaml`. (Updated 2026-06-10: consolidated to a single `.local/.env` for all secrets, documented by the tracked `.local/.env.example`; see ADR 0005.) — P2-T2 — [open]
 
 ## Ratified
 

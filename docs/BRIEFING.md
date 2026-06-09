@@ -30,12 +30,12 @@ The whole platform is reproducible from this repo with **one command** (each ste
 idempotent and self-fixing):
 ```bash
 make preflight       # one-time: installs kubectl/helm/hetzner-k3s; tells you where
-                     #   to paste the Hetzner token (.local/hcloud.env, gitignored)
+                     #   to paste the Hetzner token (.local/.env, gitignored)
 make bringup         # cluster-up → image-build → image-import → app-up
 make app-forward     # → http://localhost:3000
 ```
 Prerequisites NOT in the repo (by design): the **Hetzner API token** in
-`.local/hcloud.env` (a secret; `make preflight` prompts) and your SSH key
+`.local/.env` (a secret; `make preflight` prompts) and your SSH key
 `~/.ssh/id_ed25519` (used by the cluster config + the image import). Everything else —
 image build, registry-less import, DB migrate, theme install, dev secret — is
 automated. `make bringup` from a fresh cluster takes ~25-40 min (mostly the image
@@ -44,7 +44,7 @@ build + the slow image upload to the node).
 Each target sets `KUBECONFIG`/`PATH` and fixes its own prerequisites, so commands
 don't fail halfway and you never need to remember flags or environment variables.
 The only manual, one-time step is pasting a Hetzner Cloud API token into
-`.local/hcloud.env` (kept out of git) — `make preflight` tells you exactly how if
+`.local/.env` (kept out of git) — `make preflight` tells you exactly how if
 it's missing.
 
 ## Right now
@@ -146,7 +146,7 @@ all PASS, 2026-06-09. Teardown leaves no billed volume behind.
 - `~/.local/bin/kubectl` v1.36.1
 - `~/.local/bin/helm` v3.16.4
 - `hetzner-k3s` v2.5.0 (on PATH)
-- `HCLOUD_TOKEN` sourced from gitignored `.local/hcloud.env` (never committed)
+- `HCLOUD_TOKEN` sourced from gitignored `.local/.env` (never committed)
 
 ## Known gotchas (captured during P2-T2 bring-up)
 

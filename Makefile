@@ -16,8 +16,11 @@ SHELL := /bin/bash
 # automatically — no manual `export` needed.
 export PATH := $(HOME)/.local/bin:$(PATH)
 export KUBECONFIG := $(HOME)/.kube/handlingar-dev.yaml
--include .local/hcloud.env
+# All local secrets live in ONE gitignored file: .local/.env
+# (template + docs: .local/.env.example). Sourced into every target.
+-include .local/.env
 export HCLOUD_TOKEN
+export DB_PASSWORD
 
 CLUSTER_CFG := infra/hetzner-k3s/dev-cluster.yaml
 NS := handlingar
@@ -61,9 +64,10 @@ deploy: ## Deploy backing services (postgres/redis/memcached) to the cluster
 	@kubectl get ns $(NS) >/dev/null 2>&1 || kubectl create namespace $(NS)
 	@# Create a throwaway dev DB secret once if missing (never printed, not in git).
 	@kubectl -n $(NS) get secret alaveteli-secrets >/dev/null 2>&1 || { \
+	  pw="$(DB_PASSWORD)"; [ -n "$$pw" ] || pw="dev-$$(head -c8 /dev/urandom | od -An -tx1 | tr -d ' \n')"; \
 	  kubectl -n $(NS) create secret generic alaveteli-secrets \
-	    --from-literal=db-password="dev-$$(head -c8 /dev/urandom | od -An -tx1 | tr -d ' \n')" >/dev/null; \
-	  echo "Created dev DB secret 'alaveteli-secrets' (value not shown)."; }
+	    --from-literal=db-password="$$pw" >/dev/null; \
+	  echo "Created DB secret 'alaveteli-secrets' (value not shown; from .local/.env DB_PASSWORD or auto-generated)."; }
 	kubectl apply -f infra/k8s/base/
 	@$(MAKE) --no-print-directory status
 
@@ -119,9 +123,10 @@ image-import: ## Import the local image into worker1's containerd (no registry n
 app-up: ## Deploy the app (apply manifests, wait for web to roll out, show status)
 	@kubectl get ns $(NS) >/dev/null 2>&1 || kubectl create namespace $(NS)
 	@kubectl -n $(NS) get secret alaveteli-secrets >/dev/null 2>&1 || { \
+	  pw="$(DB_PASSWORD)"; [ -n "$$pw" ] || pw="dev-$$(head -c8 /dev/urandom | od -An -tx1 | tr -d ' \n')"; \
 	  kubectl -n $(NS) create secret generic alaveteli-secrets \
-	    --from-literal=db-password="dev-$$(head -c8 /dev/urandom | od -An -tx1 | tr -d ' \n')" >/dev/null; \
-	  echo "Created dev DB secret 'alaveteli-secrets' (value not shown)."; }
+	    --from-literal=db-password="$$pw" >/dev/null; \
+	  echo "Created DB secret 'alaveteli-secrets' (value not shown; from .local/.env DB_PASSWORD or auto-generated)."; }
 	kubectl apply -f infra/k8s/base/
 	@echo "Waiting for alaveteli-web to roll out (first boot migrates + installs theme)..."
 	kubectl -n $(NS) rollout status deploy/alaveteli-web --timeout=420s

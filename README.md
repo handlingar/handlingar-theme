@@ -28,13 +28,23 @@ fixes its own prerequisites (installs tools, validates the token, sets `KUBECONF
 ```bash
 make                 # list all commands
 make preflight       # install/verify tools + validate the Hetzner token
+make bringup         # FULL zero-to-running: cluster + build/import image + deploy app
 make cluster-up      # create the dev cluster        make cluster-down  # destroy it (stops billing)
 make deploy          # deploy backing services       make status        # health + billing reminder
-make smoke           # re-runnable cluster health test
+make app-forward     # port-forward app to :3000     make smoke         # cluster health test
 ```
 
-The only manual one-time step is putting a Hetzner Cloud API token in `.local/hcloud.env`
-(never committed); `make preflight` prints the exact instructions if it's missing.
+The only manual one-time step is providing secrets. **All secrets live in one gitignored
+file: `.local/.env`.** Copy the tracked template and fill it in — the template documents
+every value and exactly where to retrieve it:
+
+```bash
+cp .local/.env.example .local/.env   # then edit; see the file for each value + source
+```
+
+Currently that's just `HCLOUD_TOKEN` (Hetzner Cloud Console → your project → Security →
+API tokens → Read & Write). `make preflight` validates it and prints exact instructions if
+anything is missing. Nothing else is machine- or person-specific (see ADR 0005).
 
 ### Keeping an eye on Claude Pro usage
 

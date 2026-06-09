@@ -11,7 +11,8 @@
 TAGS
 *.sw[a-z]
 *DONT-CHECKIN*
-.local
+.local/*
+!.local/.env.example
 logs.txt
 .gitignore
 themes/handlingar-theme
