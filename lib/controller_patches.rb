@@ -9,6 +9,28 @@ Rails.configuration.to_prepare do
   HelpController.class_eval do
     def terms; end
   end
+
+  UserController.class_eval do
+    module SignupNameValidation
+      def signup
+        name = params.dig(:user_signup, :name).to_s
+        if name.present?
+          allowed_chars = Regexp.new('^[a-zA-Z0-9\-—_. \',\(\)àááâÁÂçÇéêèëÉÈğïíîöôÖüÿ@&]+$')
+          if !name.match?(allowed_chars) ||
+             name.match?(/^[a-zA-Z0-9]{10}$/) ||
+             name.match?(/^[a-zA-Z0-9]{16,24}$/) ||
+             name.match(/telegra\.ph\//) ||
+             name.match(/graph\.org\//)
+            flash.now[:error] = _('There was a problem with your submission. Please try again.')
+            render action: 'sign'
+            return
+          end
+        end
+        super
+      end
+    end
+    prepend SignupNameValidation
+  end
 end
   # Example adding an instance variable to the frontpage controller
   # GeneralController.class_eval do
