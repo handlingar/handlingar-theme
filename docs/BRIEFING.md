@@ -12,8 +12,12 @@
 - **Just finished:** P2-T2 — the **dev K3s cluster is live** on Hetzner Cloud, and a
   re-runnable **smoke test** confirms scheduling, CSI persistence, Service/DNS, and
   real HTTP reachability all work (see "Validation" below).
-- **Next up:** P2-T3 — base K8s manifests under `infra/k8s/base/` (blocked on the
-  Phase 1 container image; will scaffold against a placeholder if we proceed first).
+- **In progress:** P2-T3 — base manifests written and **backing services
+  (postgres 14 + redis 7 + memcached 1.6) deployed live and verified** in the
+  `handlingar` namespace. App Deployments are placeholders (replicas 0) until the
+  Phase 1 image exists.
+- **Next up:** build the Phase 1 Alaveteli image (to bring the app online), or
+  P2-T4 ingress controller (for external HTTP).
 
 ## Dev cluster — handlingar-dev (LIVE)
 
@@ -31,6 +35,23 @@
 export PATH="$HOME/.local/bin:$PATH"   # kubectl 1.36.1, helm 3.16.4 live here
 export KUBECONFIG=~/.kube/handlingar-dev.yaml
 kubectl get nodes
+```
+
+## Deployed services — `handlingar` namespace
+
+| Service | Image | State | Verified |
+| --- | --- | --- | --- |
+| postgres | postgres:14 | Running, 10Gi CSI PVC | `alaveteli_dev` reachable (v14.23) |
+| redis | redis:7-alpine | Running | `PONG` |
+| memcached | memcached:1.6-alpine | Running | `VERSION 1.6.42` |
+| alaveteli-web / -sidekiq | placeholder | replicas 0 | pending Phase 1 image |
+
+Manifests: `infra/k8s/base/` (see its README). Dev DB password is a throwaway
+Secret created out-of-band (`alaveteli-secrets`, not in git). Apply/teardown:
+```bash
+kubectl apply -f infra/k8s/base/
+kubectl -n handlingar get pods
+kubectl delete -f infra/k8s/base/      # also removes the postgres volume
 ```
 
 ## Validation — cluster smoke test

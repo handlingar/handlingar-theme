@@ -1,0 +1,18 @@
+# Non-secret application config, mirrored from docker-compose.yml for dev↔K8s
+# parity. Secrets (DB password) live in a Secret, NOT here — see README.md.
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: alaveteli-config
+  namespace: handlingar
+data:
+  # Database (StatefulSet `postgres`, Service DNS `postgres`)
+  DB_HOST: postgres
+  DB_USER: alaveteli
+  DB_NAME: alaveteli_dev
+  # Redis (used by Sidekiq) and memcached (page/fragment cache)
+  REDIS_URL: redis://redis:6379
+  MEMCACHE_SERVERS: memcached:11211
+  # Rails environment for a deployed cluster. ASSUMPTION (P2-T3): deployed envs
+  # run `production`; revisit when Phase 1 image + general.yml drift are known.
+  RAILS_ENV: production

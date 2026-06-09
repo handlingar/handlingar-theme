@@ -114,6 +114,7 @@ Provisioning is a single command; teardown equally simple. See ADR 0004.
 - [ ] **P2-T3** — Base K8s manifests (`infra/k8s/base/`): Namespace, Deployments for alaveteli,
   sidekiq, redis, memcached; StatefulSet + PVC for postgres. ConfigMaps for non-secret config.
   Use the same container image built in Phase 1.
+  > Claimed: branch `feat/local-dev` since 2026-06-09 by @erikjaderberg — manifests written; backing services (postgres 14 + redis 7 + memcached 1.6) deployed to `handlingar` ns and functionally verified. App web/sidekiq Deployments are placeholders (replicas 0) pending the Phase 1 image. Remaining: real image + replicas up.
 - [ ] **P2-T4** — cert-manager + ClusterIssuer (Let's Encrypt) and Traefik IngressRoute for
   `dev.handlingar.se`. TLS cert issued automatically.
 - [ ] **P2-T5** — Hetzner CSI driver persistent volumes: verify postgres PVC survives a pod

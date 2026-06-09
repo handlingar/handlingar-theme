@@ -1,0 +1,82 @@
+# Alaveteli web + Sidekiq worker.
+#
+# PLACEHOLDER — replicas: 0 until the Phase 1 container image exists.
+# These manifests are fully wired (config, secret, service) so that bringing the
+# app online is just: build the image, set `image:` below, scale replicas up.
+#
+#   image:    REPLACE with the Phase 1 Alaveteli image (see ALAVETELI_VERSION / P1-T4)
+#   replicas: bump to >=1 once the image is published
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: alaveteli
+  namespace: handlingar
+  labels:
+    app: alaveteli
+spec:
+  selector:
+    app: alaveteli
+  ports:
+    - name: http
+      port: 80
+      targetPort: 3000
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: alaveteli-web
+  namespace: handlingar
+spec:
+  replicas: 0                       # PLACEHOLDER: no image yet (Phase 1)
+  selector:
+    matchLabels:
+      app: alaveteli
+  template:
+    metadata:
+      labels:
+        app: alaveteli
+    spec:
+      containers:
+        - name: alaveteli
+          image: PLACEHOLDER-alaveteli:phase1   # REPLACE in Phase 1
+          ports:
+            - containerPort: 3000
+          envFrom:
+            - configMapRef: { name: alaveteli-config }
+          env:
+            - name: DB_PASSWORD
+              valueFrom:
+                secretKeyRef: { name: alaveteli-secrets, key: db-password }
+          resources:
+            requests: { cpu: "250m", memory: "512Mi" }
+            limits: { memory: "1536Mi" }
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: alaveteli-sidekiq
+  namespace: handlingar
+spec:
+  replicas: 0                       # PLACEHOLDER: no image yet (Phase 1)
+  selector:
+    matchLabels:
+      app: alaveteli-sidekiq
+  template:
+    metadata:
+      labels:
+        app: alaveteli-sidekiq
+    spec:
+      containers:
+        - name: sidekiq
+          image: PLACEHOLDER-alaveteli:phase1   # REPLACE in Phase 1 (same image as web)
+          command: ["bundle", "exec", "sidekiq"]
+          envFrom:
+            - configMapRef: { name: alaveteli-config }
+          env:
+            - name: DB_PASSWORD
+              valueFrom:
+                secretKeyRef: { name: alaveteli-secrets, key: db-password }
+          resources:
+            requests: { cpu: "100m", memory: "512Mi" }
+            limits: { memory: "1536Mi" }
