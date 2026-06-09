@@ -9,7 +9,9 @@
 ## Right now
 
 - **Active work:** Phase 2 — IaC baseline (K3s on Hetzner).
-- **Just finished:** P2-T2 — the **dev K3s cluster is live** on Hetzner Cloud.
+- **Just finished:** P2-T2 — the **dev K3s cluster is live** on Hetzner Cloud, and a
+  re-runnable **smoke test** confirms scheduling, CSI persistence, Service/DNS, and
+  real HTTP reachability all work (see "Validation" below).
 - **Next up:** P2-T3 — base K8s manifests under `infra/k8s/base/` (blocked on the
   Phase 1 container image; will scaffold against a placeholder if we proceed first).
 
@@ -31,6 +33,23 @@ export KUBECONFIG=~/.kube/handlingar-dev.yaml
 kubectl get nodes
 ```
 
+## Validation — cluster smoke test
+
+Re-runnable test at `infra/k8s/smoke-test/` proves the cluster works end-to-end
+without the app image. **Run it after any cluster change:**
+
+```bash
+export PATH="$HOME/.local/bin:$PATH"
+export KUBECONFIG=~/.kube/handlingar-dev.yaml
+infra/k8s/smoke-test/run.sh          # all checks should PASS
+infra/k8s/smoke-test/run.sh --clean  # release the test volume when done
+```
+
+Checks: (1) pod scheduling, (2) CSI volume survives a pod restart, (3) Service /
+in-cluster DNS, (4) real HTTP GET from the host via port-forward, (5) ingress —
+SKIPPED until P2-T4 installs a controller (auto-runs once one exists). Last run:
+all PASS, 2026-06-09. Teardown leaves no billed volume behind.
+
 ## Local tooling installed (this machine)
 
 - `~/.local/bin/kubectl` v1.36.1
@@ -46,6 +65,9 @@ kubectl get nodes
 - `~/.kube/` must exist before provisioning or the kubeconfig write fails.
 - hetzner-k3s v2.5.0 deploys a `cluster-autoscaler` even when disabled; it
   CrashLoopBackOffs and was deleted post-provision (harmless).
+- **No ingress controller installed.** hetzner-k3s did not bundle Traefik, so
+  there is no ingress / LoadBalancer yet — external HTTP is only reachable via
+  `kubectl port-forward`. Installing an ingress controller is P2-T4.
 
 ## Open decisions / waiting on
 

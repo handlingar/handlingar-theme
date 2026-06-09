@@ -1,0 +1,74 @@
+# Cluster smoke-test workload — re-applyable, self-contained.
+# Verifies: pod scheduling, Hetzner CSI persistent volume, and in-cluster
+# Service/DNS connectivity. Apply/teardown via ./run.sh (idempotent).
+#
+# Namespaced under `smoke-test` so it never collides with app workloads and can
+# be torn down wholesale.
+---
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: smoke-test
+  labels:
+    app.kubernetes.io/part-of: cluster-smoke-test
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: smoke-pvc
+  namespace: smoke-test
+spec:
+  accessModes:
+    - ReadWriteOnce
+  storageClassName: hcloud-volumes        # Hetzner CSI default SC
+  resources:
+    requests:
+      storage: 10Gi                       # Hetzner CSI minimum volume size
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: smoke-nginx
+  namespace: smoke-test
+spec:
+  replicas: 1
+  strategy:
+    type: Recreate                        # RWO volume: avoid two pods contending the same disk
+  selector:
+    matchLabels:
+      app: smoke-nginx
+  template:
+    metadata:
+      labels:
+        app: smoke-nginx
+    spec:
+      containers:
+        - name: nginx
+          image: nginx:1.27-alpine
+          ports:
+            - containerPort: 80
+          volumeMounts:
+            - name: data
+              mountPath: /data            # persistence is checked against this CSI volume
+          readinessProbe:
+            httpGet:
+              path: /
+              port: 80
+            initialDelaySeconds: 2
+            periodSeconds: 3
+      volumes:
+        - name: data
+          persistentVolumeClaim:
+            claimName: smoke-pvc
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: smoke-nginx
+  namespace: smoke-test
+spec:
+  selector:
+    app: smoke-nginx
+  ports:
+    - port: 80
+      targetPort: 80
