@@ -22,6 +22,13 @@ export HCLOUD_TOKEN
 CLUSTER_CFG := infra/hetzner-k3s/dev-cluster.yaml
 NS := handlingar
 
+# App image (registry-less for now: built locally, imported into the worker
+# node's containerd over SSH). TAG tracks the pinned Alaveteli version.
+IMAGE   := alaveteli-handlingar
+TAG     := $(shell cat ALAVETELI_VERSION 2>/dev/null || echo dev)
+WORKER  := handlingar-dev-pool-workers-worker1
+SSH_KEY := $(HOME)/.ssh/id_ed25519
+
 .DEFAULT_GOAL := help
 
 .PHONY: help
@@ -80,6 +87,60 @@ status: ## Show cluster nodes, app pods, and the billing reminder
 .PHONY: gate
 gate: ## Run the full quality gate (drift/secret/privacy checks)
 	@bash scripts/quality-gate.sh
+
+# ---------------------------------------------------------------------------
+# App image + bring-up (registry-less: build locally, import into the worker
+# node's containerd over SSH, then deploy). `make bringup` does the whole thing
+# from a fresh cluster; each target is idempotent and self-fixing.
+# ---------------------------------------------------------------------------
+
+.PHONY: image-build
+image-build: ## Build the pinned Alaveteli app image locally (docker build)
+	@echo "Building $(IMAGE):$(TAG) (Alaveteli pinned via ALAVETELI_VERSION)..."
+	docker build -t $(IMAGE):$(TAG) .
+
+.PHONY: image-import
+image-import: ## Import the local image into worker1's containerd (no registry needed)
+	@ip=$$(kubectl get node $(WORKER) -o jsonpath='{.status.addresses[?(@.type=="ExternalIP")].address}' 2>/dev/null); \
+	if [ -z "$$ip" ]; then echo "ERROR: $(WORKER) not found — is the cluster up? (make cluster-up)"; exit 1; fi; \
+	if ! docker image inspect $(IMAGE):$(TAG) >/dev/null 2>&1; then \
+	  echo "Image $(IMAGE):$(TAG) not built locally — run 'make image-build' first."; exit 1; fi; \
+	if ssh -o StrictHostKeyChecking=no -o ConnectTimeout=10 -i $(SSH_KEY) root@$$ip \
+	     "k3s ctr -n k8s.io images ls 2>/dev/null | grep -q $(IMAGE):$(TAG)"; then \
+	  echo "Image already present on $(WORKER) — nothing to do."; \
+	else \
+	  echo "Streaming $(IMAGE):$(TAG) to $(WORKER) ($$ip) — slow over the uplink, be patient..."; \
+	  docker save $(IMAGE):$(TAG) | gzip -1 | ssh -o StrictHostKeyChecking=no -i $(SSH_KEY) \
+	    root@$$ip "gunzip | k3s ctr -n k8s.io images import -"; \
+	  echo "Imported."; \
+	fi
+
+.PHONY: app-up
+app-up: ## Deploy the app (apply manifests, wait for web to roll out, show status)
+	@kubectl get ns $(NS) >/dev/null 2>&1 || kubectl create namespace $(NS)
+	@kubectl -n $(NS) get secret alaveteli-secrets >/dev/null 2>&1 || { \
+	  kubectl -n $(NS) create secret generic alaveteli-secrets \
+	    --from-literal=db-password="dev-$$(head -c8 /dev/urandom | od -An -tx1 | tr -d ' \n')" >/dev/null; \
+	  echo "Created dev DB secret 'alaveteli-secrets' (value not shown)."; }
+	kubectl apply -f infra/k8s/base/
+	@echo "Waiting for alaveteli-web to roll out (first boot migrates + installs theme)..."
+	kubectl -n $(NS) rollout status deploy/alaveteli-web --timeout=420s
+	@$(MAKE) --no-print-directory status
+
+.PHONY: bringup
+bringup: ## FULL zero-to-running: cluster + image build/import + app (idempotent)
+	@$(MAKE) --no-print-directory cluster-up
+	@$(MAKE) --no-print-directory image-build
+	@$(MAKE) --no-print-directory image-import
+	@$(MAKE) --no-print-directory app-up
+	@echo ""
+	@echo "App is up. Reach it with:"
+	@echo "  kubectl -n $(NS) port-forward deploy/alaveteli-web 3000:3000   # http://localhost:3000"
+
+.PHONY: app-forward
+app-forward: ## Port-forward the app to http://localhost:3000 (Ctrl-C to stop)
+	@echo "Open http://localhost:3000 (use Host localhost — Rails blocks other hosts in dev)"
+	kubectl -n $(NS) port-forward deploy/alaveteli-web 3000:3000
 
 # ---------------------------------------------------------------------------
 # Theme development helpers (diff/copy theme views against upstream Alaveteli)

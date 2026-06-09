@@ -13,12 +13,33 @@ Everything runs through `make`. Run it with no arguments to see every command:
 ```bash
 make                 # list all commands with descriptions
 make preflight       # install/verify tools + validate the Hetzner token
+make bringup         # FULL zero-to-running: cluster + build image + import + deploy app
 make cluster-up      # create the dev cluster (auto-fixes prerequisites)
+make image-build     # docker build the pinned Alaveteli image locally
+make image-import    # import the image into worker1 containerd (idempotent, no registry)
+make app-up          # apply manifests + wait for the app to roll out
+make app-forward     # port-forward the app to http://localhost:3000
 make deploy          # deploy backing services (auto-creates namespace + dev secret)
 make status          # cluster + app health + the billing reminder
 make smoke           # re-runnable cluster health test
 make cluster-down    # destroy the cluster (STOPS billing)
 ```
+
+### Replicate everything from zero (e.g. after `make cluster-down`)
+The whole platform is reproducible from this repo with **one command** (each step is
+idempotent and self-fixing):
+```bash
+make preflight       # one-time: installs kubectl/helm/hetzner-k3s; tells you where
+                     #   to paste the Hetzner token (.local/hcloud.env, gitignored)
+make bringup         # cluster-up → image-build → image-import → app-up
+make app-forward     # → http://localhost:3000
+```
+Prerequisites NOT in the repo (by design): the **Hetzner API token** in
+`.local/hcloud.env` (a secret; `make preflight` prompts) and your SSH key
+`~/.ssh/id_ed25519` (used by the cluster config + the image import). Everything else —
+image build, registry-less import, DB migrate, theme install, dev secret — is
+automated. `make bringup` from a fresh cluster takes ~25-40 min (mostly the image
+build + the slow image upload to the node).
 
 Each target sets `KUBECONFIG`/`PATH` and fixes its own prerequisites, so commands
 don't fail halfway and you never need to remember flags or environment variables.

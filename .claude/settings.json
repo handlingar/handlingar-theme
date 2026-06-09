@@ -3,7 +3,10 @@
   "permissions": {
     "allow": [
       "Bash(time docker save alaveteli-handlingar:0.46.7.0)",
-      "Bash(gzip -1)"
+      "Bash(gzip -1)",
+      "Bash(make)",
+      "Bash(make -p)",
+      "Bash(make image-import *)"
     ]
   },
   "hooks": {

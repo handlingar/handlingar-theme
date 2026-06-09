@@ -126,10 +126,10 @@ Provisioning is a single command; teardown equally simple. See ADR 0004.
   > `alaveteli-handlingar:0.46.7.0`, plus postgres 14 / redis 7 / memcached 1.6. Frontpage
   > returns HTTP 200 (sv locale, "Handlingar" branding). Full state, access steps, and
   > caveats are in **docs/BRIEFING.md** — read it first next session. Key handoff facts:
-  >  - Image is imported into **worker1's containerd only** (no registry yet); both app
-  >    pods are pinned to worker1 via nodeSelector. To rebuild/re-import:
-  >    `docker build -t alaveteli-handlingar:0.46.7.0 .` then
-  >    `docker save … | gzip | ssh root@<worker1-ip> 'gunzip | k3s ctr -n k8s.io images import -'`.
+  >  - Full bring-up is automated: **`make bringup`** (cluster + image-build + image-import
+  >    + app-up) reproduces everything from zero; each target is idempotent. Image is
+  >    imported into **worker1's containerd only** (no registry yet); both app pods are
+  >    pinned to worker1 via nodeSelector. A real registry (drop the pin) is a follow-up.
   >  - Boot runs `db:migrate` (NOT `db:prepare`) + `rake themes:install`; general.yml comes
   >    from the baked `config/general-handlingar-theme.yml`. RAILS_ENV=development for now.
   >  - The `alaveteli_dev` PVC had to be dropped & recreated clean (leftover inconsistent
