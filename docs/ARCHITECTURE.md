@@ -17,43 +17,46 @@
 
 ## High-level topology (target)
 
+> **Updated 2026-06-09 (ADR 0004):** provisioning path changed from Terraform + Ansible
+> (single-box) to hetzner-k3s + K3s (Kubernetes cluster). See `infra/hetzner-k3s/`.
+
 ```
                          ┌─────────────────────┐
                          │   GitHub Actions    │
                          │  (CI/CD, scheduled) │
                          └──────────┬──────────┘
-                                    │ Terraform + Ansible + SOPS
+                                    │ hetzner-k3s + kubectl + SOPS
                                     ▼
-  Hetzner Cloud project ─── provisioned from infra/
-    ┌───────────────────────────────────────────────────────────────┐
-    │  prod.handlingar.se      tst.handlingar.se   dev.handlingar.se │
-    │  (production box)        (staging box)       (optional)        │
-    └───────────────────────────────────────────────────────────────┘
+  Hetzner Cloud project ─── provisioned from infra/hetzner-k3s/
+    ┌───────────────────────────────────────────────────────────────────┐
+    │  handlingar-dev (K3s)    handlingar-tst (K3s)  handlingar-prod    │
+    │  1 master + 2 workers    1 master + 2 workers  3 masters + N wkrs │
+    │  Development type        Development type       HA type (future)   │
+    └───────────────────────────────────────────────────────────────────┘
 
-  Each box (identical recipe):
-    ┌──────────────────────────────────────────────────────────────┐
-    │  apache2  ──►  passenger  ──►  alaveteli (Rails, rbenv)      │
-    │                                  │                           │
-    │                                  ├──► postgresql             │
-    │                                  ├──► redis   (cache/sidekiq)│
-    │                                  ├──► memcached              │
-    │                                  └──► sidekiq (background)   │
-    │                                                              │
-    │  postfix + dovecot ◄───── inbound mail ────── MX             │
-    │                           (Alaveteli mail handling)          │
-    │                                                              │
-    │  crowdsec       (intrusion detection)                         │
-    │  prometheus + loki + grafana (self-host observability, P6)   │
-    │  node_exporter + alloy agent                                 │
-    └──────────────────────────────────────────────────────────────┘
+  Each K3s cluster — workloads in namespace per env:
+    ┌──────────────────────────────────────────────────────────────────┐
+    │  Traefik (ingress) ──► alaveteli (Rails, Deployment)             │
+    │    + cert-manager (Let's Encrypt TLS)                            │
+    │                           │                                      │
+    │                           ├──► postgresql (StatefulSet + PVC)    │
+    │                           ├──► redis      (Deployment + PVC)     │
+    │                           ├──► memcached  (Deployment)           │
+    │                           └──► sidekiq    (Deployment)           │
+    │                                                                  │
+    │  postfix + dovecot  (DaemonSet hostNetwork or external relay)    │
+    │                     ◄─── inbound mail ─── MX                    │
+    │                                                                  │
+    │  crowdsec    (DaemonSet, intrusion detection)                    │
+    │  prometheus + loki + grafana (self-hosted, P6)                   │
+    └──────────────────────────────────────────────────────────────────┘
 
-  Off-box:
-    ┌──────────────────────────────────────────────────────────────┐
-    │  Hetzner DNS       (managed by Terraform)                    │
-    │  Hetzner Object    (encrypted DB + metric/log backups)       │
-    │   Storage (S3)                                               │
-    │  Let's Encrypt     (TLS, via acme.sh or certbot)             │
-    └──────────────────────────────────────────────────────────────┘
+  Off-cluster:
+    ┌──────────────────────────────────────────────────────────────────┐
+    │  Hetzner DNS           (manual or Terraform — TBD)               │
+    │  Hetzner Object Store  (encrypted DB + log backups, S3-compat)   │
+    │  Hetzner LB            (provisioned by hetzner-k3s CCM)          │
+    └──────────────────────────────────────────────────────────────────┘
 ```
 
 ## Components & responsibilities
@@ -80,18 +83,19 @@
 | `tst` | Pre-prod verification | Hetzner (sized like prod) | Anonymised prod snapshot |
 | `prod` | `handlingar.se` | Hetzner (production box) | Live data, backups to Object Storage |
 
-Provisioned from the same Terraform root with per-env tfvars. Ansible inventory has one group per env.
+Provisioned from `infra/hetzner-k3s/<env>-cluster.yaml` via hetzner-k3s CLI. Application
+workloads deployed via `kubectl apply -k infra/k8s/<env>/` (Kustomize overlays).
 
 ## Deployment flow (target)
 
-1. Developer opens PR against `main` with theme or config changes.
-2. GH Actions PR workflow: lint, rubocop, theme specs, terraform fmt/validate, docker-compose build.
+1. Developer opens PR against `main` with theme, config, or K8s manifest changes.
+2. GH Actions PR workflow: lint, rubocop, theme specs, docker-compose build, kubectl dry-run.
 3. Merge to `main` → GH Actions deploy workflow:
    a. Decrypt `secrets/tst.enc.yaml` (SOPS + age; key in repo secret).
-   b. Run Ansible playbook against `tst` inventory (idempotent; unchanged nodes no-op).
+   b. `kubectl apply -k infra/k8s/tst/` against the tst cluster (idempotent).
    c. Run smoke test against `tst.handlingar.se`.
-4. Human approval → same workflow runs against `prod`.
-5. On failure, `rollback` workflow redeploys the previous SHA.
+4. Human approval → same workflow runs against prod cluster.
+5. On failure, `rollback` workflow re-applies the previous SHA's manifests.
 
 ## Alaveteli upgrade flow (target, Phase 7)
 
@@ -127,7 +131,7 @@ Provisioned from the same Terraform root with per-env tfvars. Ansible inventory 
 
 ## What is explicitly NOT in scope
 
-- Kubernetes / Nomad / any container orchestrator. Single-box deploy.
+- Nomad / any container orchestrator other than K3s. (K3s via hetzner-k3s is now in scope — ADR 0004.)
 - Multi-region / HA database. A nightly restore drill is good enough for our SLA.
 - Cloud-managed Postgres / Redis. We stay on-box.
 - A forked Alaveteli. Upstream is consumed unchanged at a pinned tag; all customisation flows
@@ -147,8 +151,9 @@ INVENTORY §M for the patch catalogue (populated in P0-T9).
 ## Open questions (tracked in ADRs)
 
 See `docs/decisions/`:
-- `0002` — Hetzner Cloud as sole hosting provider (draft).
-- (Future) `0003` — Phase 0 inventory findings summary.
-- (Future) `0004` — IaC tooling (Terraform + Ansible vs. alternatives).
-- (Future) `0005` — Secrets encryption (SOPS + age vs. alternatives).
-- (Future) `0006` — Observability stack choice.
+- `0002` — Hetzner Cloud as sole hosting provider (partially superseded by 0004).
+- `0004` — K8s via hetzner-k3s (accepted 2026-06-09).
+- (Future) `0005` — Phase 0 inventory findings summary.
+- (Future) `0006` — Secrets encryption (SOPS + age vs. alternatives).
+- (Future) `0007` — Observability stack choice.
+- (Future) `0008` — Inbound mail in K8s (postfix/dovecot DaemonSet vs. external relay).

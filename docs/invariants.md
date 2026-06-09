@@ -21,10 +21,8 @@ This two-step rule is why editing-around-the-gate is not an easier path than doi
 | `\bazure\b` | Hosting is Hetzner | 0002 |
 | `\bgcp\b` | Hosting is Hetzner | 0002 |
 | `\bgoogle[[:space:]]+cloud\b` | Hosting is Hetzner | 0002 |
-| `\bkubernetes\b` | Single-box deploy, no orchestrator | 0002 |
-| `\bk8s\b` | No orchestrator | 0002 |
-| `\bnomad\b` | No orchestrator | 0002 |
-| `\bdocker[[:space:]]+swarm\b` | No orchestrator | 0002 |
+| `\bnomad\b` | No orchestrator other than K3s | 0004 |
+| `\bdocker[[:space:]]+swarm\b` | No orchestrator other than K3s | 0004 |
 | `\bpulumi\b` | IaC tooling is Terraform + Ansible (pending ADR 0004) | assumption 2026-04-19 |
 
 ## Allow-list (patterns may appear here without counting as drift)

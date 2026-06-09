@@ -237,9 +237,10 @@ check_roadmap() {
     /^- \[x\] \*\*P[0-9]+-T[0-9]+/ {
       task = $0; tn = NR; found = 0
       while ((getline nxt) > 0) {
-        if (nxt ~ /^[[:space:]]*$/) continue
-        if (nxt ~ /^> Closed [0-9]{4}-[0-9]{2}-[0-9]{2}/) { found = 1 }
-        break
+        if (nxt ~ /^[[:space:]]*$/) continue       # blank line
+        if (nxt ~ /^[[:space:]]+/) continue         # indented continuation of the task description
+        if (nxt ~ /^> Closed [0-9][0-9][0-9][0-9]-[0-9][0-9]-[0-9][0-9]/) { found = 1 }
+        break                                       # first non-blank, non-continuation line decides
       }
       if (!found) print tn ": " task
     }

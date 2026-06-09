@@ -100,23 +100,32 @@ second machine._
 
 ---
 
-## Phase 2 — IaC baseline
+## Phase 2 — IaC baseline (K8s via hetzner-k3s)
 
-Goal: one codepath provisions any environment (dev-box, tst, prod replacement). Reproducible.
+Goal: one codepath provisions any environment (dev, tst, prod) as a K3s cluster on Hetzner Cloud.
+Provisioning is a single command; teardown equally simple. See ADR 0004.
 
-- [ ] **P2-T1** — ADR: tooling choice (default assumption: Terraform for Hetzner Cloud + DNS +
-  firewall; Ansible for in-OS config). Ratify or replace.
-- [ ] **P2-T2** — `infra/terraform/` — Hetzner project, server resource, floating IP, firewall,
-  DNS records. Per-env tfvars files (`tst.tfvars`, `prod.tfvars`).
-- [ ] **P2-T3** — `infra/ansible/` — role per stack component (postgres, postfix, dovecot, apache2,
-  passenger/rbenv, redis, memcached, crowdsec, alaveteli-app). Idempotent.
-- [ ] **P2-T4** — Parity check: apply to a throwaway Hetzner box, compare to prod inventory from
-  Phase 0, close gaps.
-- [ ] **P2-T5** — ADR: secret-less bootstrap strategy (how does the Ansible run get secrets the
-  first time?).
+- [x] **P2-T1** — ADR: tooling choice — hetzner-k3s + K3s instead of Terraform + Ansible single-box.
+> Closed 2026-06-09 by @erikjaderberg — ADR 0004 written; infra/hetzner-k3s/dev-cluster.yaml created; ARCHITECTURE.md and invariants.md updated.
+- [x] **P2-T2** — Install hetzner-k3s locally and provision the dev cluster from
+  `infra/hetzner-k3s/dev-cluster.yaml`. Record kubeconfig path. Verify `kubectl get nodes` shows
+  1 master + 2 workers.
+> Closed 2026-06-09 by @erikjaderberg — dev cluster live (1 master + 2 workers, cpx22/fsn1, k3s v1.32.4+k3s1); kubeconfig at ~/.kube/handlingar-dev.yaml; config corrected (cpx22, location:, HCLOUD_TOKEN, autoscaler cleanup). See docs/BRIEFING.md. /cost: pending.
+- [ ] **P2-T3** — Base K8s manifests (`infra/k8s/base/`): Namespace, Deployments for alaveteli,
+  sidekiq, redis, memcached; StatefulSet + PVC for postgres. ConfigMaps for non-secret config.
+  Use the same container image built in Phase 1.
+- [ ] **P2-T4** — cert-manager + ClusterIssuer (Let's Encrypt) and Traefik IngressRoute for
+  `dev.handlingar.se`. TLS cert issued automatically.
+- [ ] **P2-T5** — Hetzner CSI driver persistent volumes: verify postgres PVC survives a pod
+  restart; snapshot/restore test.
+- [ ] **P2-T6** — ADR: secret-less bootstrap — how do SOPS-encrypted secrets reach the K8s cluster
+  on first deploy (options: External Secrets Operator, SOPS + Helm secrets plugin, manual
+  `kubectl create secret` from decrypted local file).
+- [ ] **P2-T7** — Parity check: cluster running dev.handlingar.se with all Phase 1 services green;
+  smoke test passes; no manual steps required beyond `hetzner-k3s create` + `kubectl apply`.
 
-_Exit criteria: a fresh Hetzner box provisioned from scratch via `make provision ENV=tst` matches
-the prod inventory._
+_Exit criteria: `hetzner-k3s create --config infra/hetzner-k3s/dev-cluster.yaml` + `make deploy ENV=dev`
+yields a running Alaveteli instance at dev.handlingar.se, confirmed by smoke test._
 
 ---
 

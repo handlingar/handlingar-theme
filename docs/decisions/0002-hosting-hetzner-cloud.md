@@ -3,7 +3,7 @@
 - **Status:** proposed
 - **Date:** 2026-04-19
 - **Supersedes:** —
-- **Superseded by:** —
+- **Superseded by:** ADR 0004 (K8s provisioning path; Hetzner provider decision remains)
 
 ## Context
 
@@ -35,9 +35,8 @@ object storage buckets for backup.
 - **AWS / GCP / Azure** — rejected; cost and complexity are wrong for a small team running a
   single-box workload. Managed services we don't need. Vendor lock-in not desirable.
 - **Self-hosted on-prem** — rejected; no existing infrastructure or ops capacity.
-- **Kubernetes on Hetzner (k3s or Hetzner-managed k8s)** — rejected; adds an operational
-  dimension (cluster ops) that dwarfs the workload. Single-box Ansible is simpler and covers
-  current needs.
+- **Kubernetes on Hetzner (k3s or Hetzner-managed k8s)** — originally rejected here; later
+  adopted via ADR 0004 using hetzner-k3s, which reduces cluster-ops burden to a single YAML config.
 
 ## Consequences
 
