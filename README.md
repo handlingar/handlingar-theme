@@ -20,6 +20,22 @@ npm i -g ccusage                      # recommended: passive Pro-usage visibilit
 The pre-push gate and the required CI check enforce architectural invariants, privacy, and
 secret hygiene. See [docs/WAYS-OF-WORKING.md](docs/WAYS-OF-WORKING.md#quality-gate-automated-drift-detection).
 
+### Operating the platform — just run `make`
+
+You don't need to learn `kubectl` or `hetzner-k3s`. Every operation is a `make` target that
+fixes its own prerequisites (installs tools, validates the token, sets `KUBECONFIG`):
+
+```bash
+make                 # list all commands
+make preflight       # install/verify tools + validate the Hetzner token
+make cluster-up      # create the dev cluster        make cluster-down  # destroy it (stops billing)
+make deploy          # deploy backing services       make status        # health + billing reminder
+make smoke           # re-runnable cluster health test
+```
+
+The only manual one-time step is putting a Hetzner Cloud API token in `.local/hcloud.env`
+(never committed); `make preflight` prints the exact instructions if it's missing.
+
 ### Keeping an eye on Claude Pro usage
 
 The repo ships a `.claude/settings.json` that wires a statusline into Claude Code so your

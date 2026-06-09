@@ -6,6 +6,26 @@
 
 **Last updated:** 2026-06-09
 
+## Operating this — no commands to memorize
+
+Everything runs through `make`. Run it with no arguments to see every command:
+
+```bash
+make                 # list all commands with descriptions
+make preflight       # install/verify tools + validate the Hetzner token
+make cluster-up      # create the dev cluster (auto-fixes prerequisites)
+make deploy          # deploy backing services (auto-creates namespace + dev secret)
+make status          # cluster + app health + the billing reminder
+make smoke           # re-runnable cluster health test
+make cluster-down    # destroy the cluster (STOPS billing)
+```
+
+Each target sets `KUBECONFIG`/`PATH` and fixes its own prerequisites, so commands
+don't fail halfway and you never need to remember flags or environment variables.
+The only manual, one-time step is pasting a Hetzner Cloud API token into
+`.local/hcloud.env` (kept out of git) — `make preflight` tells you exactly how if
+it's missing.
+
 ## Right now
 
 - **Active work:** Phase 2 — IaC baseline (K3s on Hetzner).
