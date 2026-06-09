@@ -24,6 +24,7 @@ This two-step rule is why editing-around-the-gate is not an easier path than doi
 | `\bnomad\b` | No orchestrator other than K3s | 0004 |
 | `\bdocker[[:space:]]+swarm\b` | No orchestrator other than K3s | 0004 |
 | `\bpulumi\b` | IaC tooling is Terraform + Ansible (pending ADR 0004) | assumption 2026-04-19 |
+| `/home/[a-z]` | No hardcoded absolute home paths — use `$HOME`/`~` so setup is non-person/machine-dependent | 0005 |
 
 ## Allow-list (patterns may appear here without counting as drift)
 
