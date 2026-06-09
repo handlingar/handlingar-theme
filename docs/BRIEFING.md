@@ -55,7 +55,12 @@ it's missing.
   base), imported it into worker1's containerd (registry-less), deployed web + sidekiq,
   migrated a clean DB, and installed the **handlingar theme** (sv locale, "Handlingar"
   branding). Frontpage returns **HTTP 200** via port-forward.
-- **Next up:** P2-T4 ingress (cert-manager + Traefik IngressRoute for `dev.handlingar.se`)
+- **NEXT SESSION — do this first:** full **cleanup and start from scratch** to prove the
+  bring-up is truly reproducible from zero. Run `make cluster-down` (destroys cluster +
+  postgres PVC), then `make bringup` (cluster + image build/import + app) and `make app-forward`
+  to confirm a clean rebuild reaches a themed HTTP 200 with no manual steps. This is the
+  one path not yet validated end-to-end (see "What I verified vs. didn't" history).
+- **After that:** P2-T4 ingress (cert-manager + Traefik IngressRoute for `dev.handlingar.se`)
   so it's reachable without port-forward; then publish the image to a real registry and
   import to all workers (drop the worker1 pin).
 
