@@ -1,11 +1,14 @@
 # Alaveteli web + Sidekiq worker.
 #
-# PLACEHOLDER — replicas: 0 until the Phase 1 container image exists.
-# These manifests are fully wired (config, secret, service) so that bringing the
-# app online is just: build the image, set `image:` below, scale replicas up.
+# Image: built from the repo Dockerfile, pinned to ALAVETELI_VERSION (P1-T4),
+# and imported directly into each worker node's containerd (no registry yet —
+# Phase 3/4 will publish to a real registry). Because the image is present on
+# the node, imagePullPolicy is IfNotPresent so the kubelet never tries to pull.
 #
-#   image:    REPLACE with the Phase 1 Alaveteli image (see ALAVETELI_VERSION / P1-T4)
-#   replicas: bump to >=1 once the image is published
+# On boot each container materialises config/general.yml from the upstream
+# example (the dev cluster has no secrets store yet) and the web pod runs
+# `db:prepare` (idempotent: migrate + seed). Kept as a sh bootstrap so config
+# can be iterated without rebuilding the (heavy) image.
 ---
 apiVersion: v1
 kind: Service
@@ -28,7 +31,9 @@ metadata:
   name: alaveteli-web
   namespace: handlingar
 spec:
-  replicas: 0                       # PLACEHOLDER: no image yet (Phase 1)
+  replicas: 1
+  strategy:
+    type: Recreate          # single DB-migrating pod; avoid two booting at once
   selector:
     matchLabels:
       app: alaveteli
@@ -37,9 +42,34 @@ spec:
       labels:
         app: alaveteli
     spec:
+      # Pinned to worker1: the image is imported into that node's containerd
+      # only (single-upload over a slow uplink). Revisit when a registry exists.
+      nodeSelector:
+        kubernetes.io/hostname: handlingar-dev-pool-workers-worker1
       containers:
         - name: alaveteli
-          image: PLACEHOLDER-alaveteli:phase1   # REPLACE in Phase 1
+          image: alaveteli-handlingar:0.46.7.0
+          imagePullPolicy: IfNotPresent
+          command: ["/bin/bash", "-lc"]
+          args:
+            - |
+              set -e
+              cd /app/alaveteli
+              # Use the handlingar config (THEME_URLS + sv locale + site name).
+              cp config/general-handlingar-theme.yml config/general.yml
+              # Allow access via `kubectl port-forward localhost:3000`.
+              sed -i "s#^DOMAIN:.*#DOMAIN: 'localhost:3000'#" config/general.yml
+              # db:migrate (NOT db:prepare): only touches the dev DB. db:prepare
+              # also prepares the test DB in-process, where acts_as_versioned's
+              # create_versioned_table reads a stale column cache and skips adding
+              # public_bodies.version, breaking migration 026.
+              echo "[boot] migrating database..."
+              bundle exec rake db:migrate RAILS_ENV="$RAILS_ENV"
+              # Clone + install the handlingar theme (per THEME_URLS/THEME_BRANCH).
+              echo "[boot] installing handlingar theme..."
+              bundle exec rake themes:install RAILS_ENV="$RAILS_ENV"
+              echo "[boot] starting Rails..."
+              exec bundle exec rails s -b 0.0.0.0 -p 3000
           ports:
             - containerPort: 3000
           envFrom:
@@ -48,9 +78,14 @@ spec:
             - name: DB_PASSWORD
               valueFrom:
                 secretKeyRef: { name: alaveteli-secrets, key: db-password }
+          readinessProbe:
+            httpGet: { path: /, port: 3000 }
+            initialDelaySeconds: 45
+            periodSeconds: 10
+            failureThreshold: 60      # allow up to ~10min for first boot + migrate
           resources:
-            requests: { cpu: "250m", memory: "512Mi" }
-            limits: { memory: "1536Mi" }
+            requests: { cpu: "250m", memory: "640Mi" }
+            limits: { memory: "1792Mi" }
 ---
 apiVersion: apps/v1
 kind: Deployment
@@ -58,7 +93,7 @@ metadata:
   name: alaveteli-sidekiq
   namespace: handlingar
 spec:
-  replicas: 0                       # PLACEHOLDER: no image yet (Phase 1)
+  replicas: 1
   selector:
     matchLabels:
       app: alaveteli-sidekiq
@@ -67,10 +102,26 @@ spec:
       labels:
         app: alaveteli-sidekiq
     spec:
+      # Pinned to worker1: the image is imported into that node's containerd
+      # only (single-upload over a slow uplink). Revisit when a registry exists.
+      nodeSelector:
+        kubernetes.io/hostname: handlingar-dev-pool-workers-worker1
       containers:
         - name: sidekiq
-          image: PLACEHOLDER-alaveteli:phase1   # REPLACE in Phase 1 (same image as web)
-          command: ["bundle", "exec", "sidekiq"]
+          image: alaveteli-handlingar:0.46.7.0
+          imagePullPolicy: IfNotPresent
+          command: ["/bin/bash", "-lc"]
+          args:
+            - |
+              set -e
+              cd /app/alaveteli
+              cp config/general-handlingar-theme.yml config/general.yml
+              # Wait for the web pod to finish migrating before processing jobs.
+              echo "[boot] waiting for database schema..."
+              until bundle exec rails runner 'ActiveRecord::Base.connection.tables' >/dev/null 2>&1; do
+                sleep 5
+              done
+              exec bundle exec sidekiq
           envFrom:
             - configMapRef: { name: alaveteli-config }
           env:

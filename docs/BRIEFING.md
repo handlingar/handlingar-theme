@@ -29,15 +29,38 @@ it's missing.
 ## Right now
 
 - **Active work:** Phase 2 — IaC baseline (K3s on Hetzner).
-- **Just finished:** P2-T2 — the **dev K3s cluster is live** on Hetzner Cloud, and a
-  re-runnable **smoke test** confirms scheduling, CSI persistence, Service/DNS, and
-  real HTTP reachability all work (see "Validation" below).
-- **In progress:** P2-T3 — base manifests written and **backing services
-  (postgres 14 + redis 7 + memcached 1.6) deployed live and verified** in the
-  `handlingar` namespace. App Deployments are placeholders (replicas 0) until the
-  Phase 1 image exists.
-- **Next up:** build the Phase 1 Alaveteli image (to bring the app online), or
-  P2-T4 ingress controller (for external HTTP).
+- **Just finished (2026-06-09):** **Alaveteli is running in the cluster, themed.**
+  Built the Phase 1 image (pinned Alaveteli `0.46.7.0`, Ruby 3.3, `ruby:3.3-bookworm`
+  base), imported it into worker1's containerd (registry-less), deployed web + sidekiq,
+  migrated a clean DB, and installed the **handlingar theme** (sv locale, "Handlingar"
+  branding). Frontpage returns **HTTP 200** via port-forward.
+- **Next up:** P2-T4 ingress (cert-manager + Traefik IngressRoute for `dev.handlingar.se`)
+  so it's reachable without port-forward; then publish the image to a real registry and
+  import to all workers (drop the worker1 pin).
+
+### How to reach the running app (no ingress yet)
+```bash
+export PATH="$HOME/.local/bin:$PATH"; export KUBECONFIG=~/.kube/handlingar-dev.yaml
+kubectl -n handlingar port-forward deploy/alaveteli-web 3000:3000
+# then open http://localhost:3000  (Host must be localhost — see caveat below)
+```
+
+### Caveats / known follow-ups (dev cluster)
+- **RAILS_ENV=development** for now (matches the proven docker-compose bring-up:
+  on-the-fly assets, dev secret_key_base). Production hardening (precompiled assets,
+  SECRET_KEY_BASE, xapian index, FORCE_SSL) is later Phase 1 work.
+- **Image only on worker1**; both app pods are pinned there via nodeSelector
+  (single registry-less import over a slow uplink, ~16 min). A real registry removes this.
+- **`db:migrate`, not `db:prepare`** on boot: `db:prepare` also prepares the test DB
+  in-process, where `acts_as_versioned.create_versioned_table` reads a stale column
+  cache and skips `public_bodies.version`, breaking migration 026. (The `alaveteli_dev`
+  PVC also carried inconsistent leftover schema from earlier P2-T3 work — dropped &
+  recreated clean; a stray `alaveteli_test` DB also exists on the server.)
+- **Host authorization:** Rails 8 returns 403 for non-localhost Host headers. Access via
+  port-forward (Host `localhost`) works; P2-T4 ingress for `dev.handlingar.se` will need
+  that host added to `config.hosts` / Alaveteli `DOMAIN`.
+- **Theme is cloned at pod boot** via `rake themes:install` (handlingar-theme `dev`
+  branch). Fine for dev; bake into the image once stable.
 
 ## Dev cluster — handlingar-dev (LIVE)
 
@@ -64,7 +87,8 @@ kubectl get nodes
 | postgres | postgres:14 | Running, 10Gi CSI PVC | `alaveteli_dev` reachable (v14.23) |
 | redis | redis:7-alpine | Running | `PONG` |
 | memcached | memcached:1.6-alpine | Running | `VERSION 1.6.42` |
-| alaveteli-web / -sidekiq | placeholder | replicas 0 | pending Phase 1 image |
+| alaveteli-web | alaveteli-handlingar:0.46.7.0 | Running (1/1), themed | HTTP 200 via port-forward |
+| alaveteli-sidekiq | alaveteli-handlingar:0.46.7.0 | Running (1/1) | boots after schema ready |
 
 Manifests: `infra/k8s/base/` (see its README). Dev DB password is a throwaway
 Secret created out-of-band (`alaveteli-secrets`, not in git). Apply/teardown:

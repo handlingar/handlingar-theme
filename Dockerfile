@@ -1,14 +1,20 @@
-FROM ruby:3.2
+# bookworm (GCC 12), NOT the newer trixie default: Alaveteli pulls in old C gems
+# (statistics2, syck) that don't compile under GCC 14's stricter -Werror defaults.
+FROM ruby:3.3-bookworm
 
 
 # System dependencies
 RUN apt-get update && apt-get install -y \
     build-essential git curl nodejs npm libpq-dev imagemagick libmagic-dev postgresql-client \
+    && npm install -g corepack \
     && corepack enable \
     && rm -rf /var/lib/apt/lists/*
 
-# WORKDIR /app
-RUN  git clone --depth=1 https://github.com/mysociety/alaveteli.git /app/alaveteli
+# Pin Alaveteli to a specific upstream tag for reproducible builds (P1-T4).
+# Keep in sync with the top-level ALAVETELI_VERSION file.
+ARG ALAVETELI_VERSION=0.46.7.0
+RUN git clone --depth=1 --branch ${ALAVETELI_VERSION} \
+    https://github.com/mysociety/alaveteli.git /app/alaveteli
 
 WORKDIR /app/alaveteli
 RUN git submodule update --init --recursive

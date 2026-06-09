@@ -90,6 +90,12 @@ mocked SMTP via smtp4dev. Onboard new devs in <30 minutes.
   clean state" procedure.
 - [ ] **P1-T4** — Pin Alaveteli upstream to a specific tag (not `master --depth=1`) and record it
   in a top-level `ALAVETELI_VERSION` file consumed by both dev and prod.
+  > Claimed: branch `feat/local-dev` since 2026-06-09 by @erikjaderberg — DONE in substance,
+  > pending /cost + formal close. `ALAVETELI_VERSION` file created (`0.46.7.0`); `Dockerfile`
+  > pins the clone to that tag via `ARG ALAVETELI_VERSION` and uses `ruby:3.3-bookworm`
+  > (Ruby 3.3 for `dalli`; bookworm/GCC-12 so the old C gems `statistics2`/`syck` compile;
+  > `npm i -g corepack` since bookworm node lacks it). Added `.dockerignore` (keeps
+  > `.local/`, `.git` out of the image). NOT yet consumed by prod deploy — that's later.
 - [ ] **P1-T5** — `make dev` / `make dev-reset` / `make dev-logs` convenience targets with brief docs
   in README.
 - [ ] **P1-T6** — Smoke-test checklist in `docs/RUNBOOK.md` (browse site, submit request, receive
@@ -114,7 +120,23 @@ Provisioning is a single command; teardown equally simple. See ADR 0004.
 - [ ] **P2-T3** — Base K8s manifests (`infra/k8s/base/`): Namespace, Deployments for alaveteli,
   sidekiq, redis, memcached; StatefulSet + PVC for postgres. ConfigMaps for non-secret config.
   Use the same container image built in Phase 1.
-  > Claimed: branch `feat/local-dev` since 2026-06-09 by @erikjaderberg — manifests written; backing services (postgres 14 + redis 7 + memcached 1.6) deployed to `handlingar` ns and functionally verified. App web/sidekiq Deployments are placeholders (replicas 0) pending the Phase 1 image. Remaining: real image + replicas up.
+  > Claimed: branch `feat/local-dev` since 2026-06-09 by @erikjaderberg — DONE in substance,
+  > pending /cost + formal close. App is **live and themed** in the `handlingar` ns:
+  > `alaveteli-web` + `alaveteli-sidekiq` (1/1 each) on the Phase 1 image
+  > `alaveteli-handlingar:0.46.7.0`, plus postgres 14 / redis 7 / memcached 1.6. Frontpage
+  > returns HTTP 200 (sv locale, "Handlingar" branding). Full state, access steps, and
+  > caveats are in **docs/BRIEFING.md** — read it first next session. Key handoff facts:
+  >  - Image is imported into **worker1's containerd only** (no registry yet); both app
+  >    pods are pinned to worker1 via nodeSelector. To rebuild/re-import:
+  >    `docker build -t alaveteli-handlingar:0.46.7.0 .` then
+  >    `docker save … | gzip | ssh root@<worker1-ip> 'gunzip | k3s ctr -n k8s.io images import -'`.
+  >  - Boot runs `db:migrate` (NOT `db:prepare`) + `rake themes:install`; general.yml comes
+  >    from the baked `config/general-handlingar-theme.yml`. RAILS_ENV=development for now.
+  >  - The `alaveteli_dev` PVC had to be dropped & recreated clean (leftover inconsistent
+  >    schema). A stray `alaveteli_test` DB also exists.
+  >  - Remaining for full close: P2-T4 ingress (so it's reachable at dev.handlingar.se
+  >    without port-forward; Rails 8 host-auth 403s non-localhost hosts), real registry,
+  >    production-mode hardening.
 - [ ] **P2-T4** — cert-manager + ClusterIssuer (Let's Encrypt) and Traefik IngressRoute for
   `dev.handlingar.se`. TLS cert issued automatically.
 - [ ] **P2-T5** — Hetzner CSI driver persistent volumes: verify postgres PVC survives a pod

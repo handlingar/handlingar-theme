@@ -1,3 +1,22 @@
 {
-  "$schema": "https://json.schemastore.org/claude-code-settings.json"
+  "$schema": "https://json.schemastore.org/claude-code-settings.json",
+  "permissions": {
+    "allow": [
+      "Bash(time docker save alaveteli-handlingar:0.46.7.0)",
+      "Bash(gzip -1)"
+    ]
+  },
+  "hooks": {
+    "Stop": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "bash \"$CLAUDE_PROJECT_DIR/.claude/hooks/block-stop-on-bg-work.sh\"",
+            "timeout": 15
+          }
+        ]
+      }
+    ]
+  }
 }

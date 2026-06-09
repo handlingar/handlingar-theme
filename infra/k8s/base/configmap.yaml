@@ -13,6 +13,9 @@ data:
   # Redis (used by Sidekiq) and memcached (page/fragment cache)
   REDIS_URL: redis://redis:6379
   MEMCACHE_SERVERS: memcached:11211
-  # Rails environment for a deployed cluster. ASSUMPTION (P2-T3): deployed envs
-  # run `production`; revisit when Phase 1 image + general.yml drift are known.
-  RAILS_ENV: production
+  # Rails environment. The dev cluster runs `development` for now: it matches the
+  # team's proven docker-compose bring-up (on-the-fly asset compilation, dev
+  # secret_key_base, no precompile/xapian prerequisites), which is the fastest
+  # path to a running app. Production hardening (precompiled assets, SECRET_KEY_BASE,
+  # xapian index, FORCE_SSL) is tracked as later Phase 1 work.
+  RAILS_ENV: development
