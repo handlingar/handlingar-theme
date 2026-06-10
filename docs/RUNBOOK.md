@@ -93,6 +93,28 @@ If this fails, check GH Actions logs first. If the server is wedged, see R8.
 
 ---
 
+## R10 — Dev cluster: mock mail, mock data, search index  (LIVE, since 2026-06-11)
+
+The dev cluster (https://dev.nonprod.handlingar.se) has a fully mocked email loop and
+seedable test data. Everything is a `make` target; all of it is reproduced by `make bringup`
+(manifests in `infra/k8s/base/`, scripts in `scripts/mock-data/`).
+
+| What | Command | Notes |
+| --- | --- | --- |
+| See all caught email (web UI) | `make mail-ui` → http://localhost:8025 | Mailpit catches **all** outgoing app mail (SMTP `mailpit:1025` via `SMTP_URL` in the ConfigMap). Port-forward; Ctrl-C to stop. |
+| Feed replies INTO Alaveteli | `make mail-ingest` | Pulls every message from Mailpit's API and pipes it into `script/mailin`. Replies to a request's exact incoming address attach to that request; everything else lands in the admin holding pen. |
+| Seed mock authorities + test user | `make mock-data` | Idempotent. 5 fake Swedish authorities (request emails route to Mailpit) + `testuser@…` account. |
+| File a mock FOI request | `make mock-request` | Real controller code path → request appears on the site, outgoing email lands in Mailpit. |
+
+Search/list pages need the **Xapian index**: built automatically at web-pod boot when missing,
+then incrementally updated every 60s by a background loop in the web container (new
+authorities/requests become searchable within ~1 min). The index is ephemeral (rebuilt per
+pod) — fine at dev data volumes; revisit with a PVC if data grows.
+
+Troubleshooting: `kubectl -n handlingar logs deploy/alaveteli-web | grep '\[boot\]'` shows the
+boot chain (migrate → theme → xapian); Mailpit API: `curl localhost:8025/api/v1/messages`
+(while `make mail-ui` runs).
+
 ## Smoke test checklist
 
 Used by several runbooks above. Minimum bar for "it works":

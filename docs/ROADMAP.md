@@ -248,6 +248,17 @@ _Exit criteria: one team member can upgrade Alaveteli end-to-end by following th
 
 ## Backlog (not yet scheduled)
 
+- **Alaveteli scheduled jobs in the cluster** (noted 2026-06-11): trigger sidekiq/cron-type
+  jobs the upstream install runs from crontab — xapian index updates (currently a 60s loop in
+  the web container), alert emails, request-classification reminders, holding-pen notices etc.
+  Proper home: a k8s CronJob set or sidekiq-scheduler, fed from upstream's crontab template.
+- **Mail UI ergonomics** (noted 2026-06-11): make launching the Mailpit web UI + port-forward
+  dead simple/obvious (today: `make mail-ui` → http://localhost:8025; consider auto-opening
+  the browser, printing the URL more loudly, or an ingress host — the latter needs DNS approval).
+- **Replicability audit of the dev-env features** (noted 2026-06-11): verify everything added
+  on the live cluster (xapian boot build, Mailpit, SMTP wiring, mock-data targets) actually
+  reproduces in a clean `make bringup`, and that the smoke/test steps run when they should —
+  fold the R10 runbook checks into `make smoke` or a `make verify` target.
 - Metabase for business reporting on FOI-request data (distinct from observability).
 - Public status page.
 - k6 / locust load test suite runnable against tst.
