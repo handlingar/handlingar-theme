@@ -33,6 +33,18 @@ I18n.with_locale(:sv) do
       puts "+ PublicBody created: #{pb.url_name} (id=#{pb.id}, email=#{pb.request_email})"
     end
 
+    # The body list page joins on current-locale translations, so a body
+    # seeded only in :sv is invisible (count 0) to a browser in :en. Seed an
+    # English translation as well so the dev list works in both locales.
+    unless pb.translations.exists?(locale: 'en')
+      I18n.with_locale(:en) do
+        pb.name       = "Test Authority for Sample Cases #{n}"
+        pb.short_name = "Test Authority #{n}"
+        pb.save!
+      end
+      puts '  + en translation added'
+    end
+
     # One-line note (Note model replaced the old text attribute in this version).
     next if Note.where(notable: pb).exists?
 
