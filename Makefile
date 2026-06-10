@@ -21,9 +21,18 @@ export KUBECONFIG := $(HOME)/.kube/handlingar-dev.yaml
 -include .local/.env
 export HCLOUD_TOKEN
 export DB_PASSWORD
+export CLOUDFLARE_API_TOKEN
 
 CLUSTER_CFG := infra/hetzner-k3s/dev-cluster.yaml
 NS := handlingar
+
+# Ingress / DNS / TLS (P2-T4). Chart versions pinned for reproducibility.
+INGRESS_DIR := infra/k8s/ingress
+CERTMGR_VER := v1.20.2
+TRAEFIK_VER := 40.3.0
+EXTDNS_VER  := 1.21.1
+APP_HOST    := dev.nonprod.handlingar.se
+DNS_ZONE    := handlingar.se
 
 # App image (registry-less for now: built locally, imported into the worker
 # node's containerd over SSH). TAG tracks the pinned Alaveteli version.
@@ -136,14 +145,77 @@ app-up: ## Deploy the app (apply manifests, wait for web to roll out, show statu
 	@$(MAKE) --no-print-directory status
 
 .PHONY: bringup
-bringup: ## FULL zero-to-running: cluster + image build/import + app (idempotent)
+bringup: ## FULL zero-to-running: cluster + image build/import + app + ingress (idempotent)
 	@$(MAKE) --no-print-directory cluster-up
 	@$(MAKE) --no-print-directory image-build
 	@$(MAKE) --no-print-directory image-import
 	@$(MAKE) --no-print-directory app-up
+	@$(MAKE) --no-print-directory ingress-up
 	@echo ""
-	@echo "App is up. Reach it with:"
-	@echo "  kubectl -n $(NS) port-forward deploy/alaveteli-web 3000:3000   # http://localhost:3000"
+	@echo "App is up at https://$(APP_HOST) (TLS via Let's Encrypt; DNS via external-dns)."
+	@echo "  Local fallback: kubectl -n $(NS) port-forward deploy/alaveteli-web 3000:3000  # http://localhost:3000"
+
+# ---------------------------------------------------------------------------
+# Ingress + automated DNS + TLS (P2-T4). Installs Traefik (behind a Hetzner LB),
+# cert-manager, and external-dns, then applies the Let's Encrypt issuers, the
+# Certificate, and the app IngressRoute. All committed under infra/k8s/ingress/.
+# external-dns is locked to the nonprod.handlingar.se subtree + upsert-only, so
+# it can never touch production DNS. See ADR 0006 and infra/k8s/ingress/README.md.
+# ---------------------------------------------------------------------------
+
+.PHONY: ingress-secret
+ingress-secret: ## Create the Cloudflare API-token Secret (cert-manager + external-dns ns)
+	@[ -n "$(CLOUDFLARE_API_TOKEN)" ] || { echo "ERROR: CLOUDFLARE_API_TOKEN not set in .local/.env (see .local/.env.example)"; exit 1; }
+	@for ns in cert-manager external-dns; do \
+	  kubectl get ns $$ns >/dev/null 2>&1 || kubectl create namespace $$ns >/dev/null; \
+	  kubectl -n $$ns create secret generic cloudflare-api-token \
+	    --from-literal=api-token="$(CLOUDFLARE_API_TOKEN)" \
+	    --dry-run=client -o yaml | kubectl apply -f - >/dev/null; \
+	done
+	@echo "Cloudflare API-token Secret present in cert-manager + external-dns namespaces (value not shown)."
+
+.PHONY: ingress-up
+ingress-up: ## Install ingress + automated DNS + TLS (Traefik LB, cert-manager, external-dns)
+	@command -v helm >/dev/null || { echo "helm not found — run 'make preflight'"; exit 1; }
+	@echo "[1/6] helm repos..."
+	@helm repo add jetstack https://charts.jetstack.io >/dev/null 2>&1; \
+	 helm repo add traefik https://traefik.github.io/charts >/dev/null 2>&1; \
+	 helm repo add external-dns https://kubernetes-sigs.github.io/external-dns/ >/dev/null 2>&1; \
+	 helm repo update >/dev/null 2>&1
+	@echo "[2/6] cert-manager $(CERTMGR_VER)..."
+	@helm upgrade --install cert-manager jetstack/cert-manager -n cert-manager --create-namespace \
+	  --version $(CERTMGR_VER) --set crds.enabled=true --wait --timeout 5m
+	@echo "[3/6] Cloudflare API-token secret..."
+	@$(MAKE) --no-print-directory ingress-secret
+	@echo "[4/6] Traefik $(TRAEFIK_VER) (provisions the Hetzner LB — this bills ~€5.4/mo)..."
+	@helm upgrade --install traefik traefik/traefik -n traefik --create-namespace \
+	  --version $(TRAEFIK_VER) -f $(INGRESS_DIR)/values-traefik.yaml --wait --timeout 5m
+	@echo "[5/6] external-dns $(EXTDNS_VER) (publishes $(APP_HOST) to Cloudflare)..."
+	@# dev.nonprod.handlingar.se lives INSIDE the handlingar.se Cloudflare zone (no
+	@# separate sub-zone). domainFilters alone would exclude the parent zone, so we
+	@# pin the zone by id (derived from the token at deploy time — nothing secret in
+	@# git) while domainFilters keeps record management restricted to the nonprod subtree.
+	@zid=$$(curl -s -H "Authorization: Bearer $(CLOUDFLARE_API_TOKEN)" \
+	   'https://api.cloudflare.com/client/v4/zones?name=$(DNS_ZONE)' \
+	   | python3 -c 'import sys,json;z=json.load(sys.stdin).get("result",[]);print(z[0]["id"] if z else "")'); \
+	 [ -n "$$zid" ] || { echo "ERROR: could not resolve Cloudflare zone id for $(DNS_ZONE) (check CLOUDFLARE_API_TOKEN scope)"; exit 1; }; \
+	 helm upgrade --install external-dns external-dns/external-dns -n external-dns --create-namespace \
+	   --version $(EXTDNS_VER) -f $(INGRESS_DIR)/values-external-dns.yaml \
+	   --set "extraArgs[0]=--zone-id-filter=$$zid" --wait --timeout 5m
+	@echo "[6/6] Let's Encrypt issuers + certificate + IngressRoute..."
+	@kubectl apply -f $(INGRESS_DIR)/clusterissuer-staging.yaml -f $(INGRESS_DIR)/clusterissuer-prod.yaml
+	@kubectl apply -f $(INGRESS_DIR)/certificate.yaml -f $(INGRESS_DIR)/ingressroute.yaml
+	@$(MAKE) --no-print-directory ingress-status
+
+.PHONY: ingress-status
+ingress-status: ## Show LB IP, TLS cert readiness, and DNS resolution for the app host
+	@printf '\n\033[1mTraefik LoadBalancer (Hetzner LB)\033[0m\n'
+	@kubectl -n traefik get svc traefik -o wide 2>/dev/null || echo "  (traefik not installed — run 'make ingress-up')"
+	@printf '\n\033[1mTLS certificate\033[0m\n'
+	@kubectl -n $(NS) get certificate alaveteli-tls 2>/dev/null || echo "  (no certificate yet)"
+	@printf '\n\033[1mDNS — %s\033[0m\n' "$(APP_HOST)"
+	@getent hosts $(APP_HOST) || echo "  (not resolving yet — external-dns may still be publishing)"
+	@printf '\n'
 
 .PHONY: app-forward
 app-forward: ## Port-forward the app to http://localhost:3000 (Ctrl-C to stop)

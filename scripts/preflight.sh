@@ -14,6 +14,7 @@ TOKEN_FILE=".local/.env"   # single local secrets file (template: .local/.env.ex
 HELM_VERSION="v3.16.4"
 ok()   { printf '  \033[32mOK\033[0m    %s\n' "$1"; }
 add()  { printf '  \033[36mFIX\033[0m   %s\n' "$1"; }
+warn() { printf '  \033[33mWARN\033[0m  %s\n' "$1"; }
 die()  { printf '\n\033[31mPreflight stopped:\033[0m %s\n' "$1"; exit 1; }
 hdr()  { printf '\n\033[1m%s\033[0m\n' "$1"; }
 
@@ -85,5 +86,20 @@ case "$code" in
   000) die "No network route to api.hetzner.cloud — check connectivity.";;
   *) die "Unexpected Hetzner API status $code.";;
 esac
+
+hdr "Cloudflare API token (for ingress DNS + TLS)"
+if [[ -z "${CLOUDFLARE_API_TOKEN:-}" ]]; then
+  warn "CLOUDFLARE_API_TOKEN not set in $TOKEN_FILE.
+  Not needed for 'make cluster-up', but REQUIRED by 'make ingress-up' / 'make bringup'
+  (Traefik + cert-manager + external-dns). See .local/.env.example for how to create it
+  (Cloudflare -> API Tokens -> Edit zone DNS, scoped to handlingar.se)."
+else
+  cf="$(curl -s -H "Authorization: Bearer $CLOUDFLARE_API_TOKEN" https://api.cloudflare.com/client/v4/user/tokens/verify)"
+  if grep -q '"status":"active"' <<<"$cf"; then
+    ok "Cloudflare token valid (active)"
+  else
+    die "Cloudflare token rejected. Recreate it (Edit zone DNS, zone handlingar.se) and rewrite $TOKEN_FILE."
+  fi
+fi
 
 printf '\n\033[32mPreflight passed.\033[0m All prerequisites are in place.\n'

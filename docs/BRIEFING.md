@@ -59,9 +59,30 @@ it's missing.
   then `make bringup` + port-forward on a fully fresh cluster — themed **HTTP 200** (sv locale,
   "Handlingar" branding), **no manual steps**. Total ~18 min (cluster ready) + slow image
   upload + first-boot migrate. Three defects surfaced and were handled (see below).
-- **NEXT SESSION — do this first:** P2-T4 ingress (cert-manager + Traefik IngressRoute for
-  `dev.handlingar.se`) so it's reachable without port-forward; then publish the image to a
-  real registry and import to all workers (drop the worker1 pin).
+- **Just finished (2026-06-11): P2-T4 — public HTTPS is LIVE.** The app is reachable at
+  **https://dev.nonprod.handlingar.se** with a real Let's Encrypt cert, behind a Hetzner LB.
+  Full stack codified in `infra/k8s/ingress/` + `make ingress-up` (wired into `make bringup`):
+  Traefik (LB), cert-manager (DNS-01/Cloudflare), external-dns (auto-publishes the record). See
+  ADR 0006 + `infra/k8s/ingress/README.md`. Non-prod now lives under `*.nonprod.handlingar.se`.
+- **NEXT SESSION — do this first:** re-validate full reproducibility — `make cluster-down`
+  then `make bringup` on a fresh cluster should now reach **https://dev.nonprod.handlingar.se**
+  (themed 200, valid cert) with no manual steps (this exact chain was built incrementally, not
+  yet proven in one clean from-zero run). Then: real image registry (drop the worker1 pin);
+  production-mode hardening.
+
+### Ingress / DNS / TLS (P2-T4, 2026-06-11)
+- **Reachable at https://dev.nonprod.handlingar.se** — Hetzner LB IPv4 `91.98.218.67` (+ IPv6).
+- **Prerequisite:** `CLOUDFLARE_API_TOKEN` in `.local/.env` (Edit zone DNS, scoped to
+  `handlingar.se`); validated by `make preflight`.
+- **DNS safety:** external-dns is locked to `nonprod.handlingar.se` (domain-filter) + TXT
+  ownership registry, so it can NEVER touch production records. Recorded as a project rule in
+  `docs/invariants.md` (Change-control rules): exact DNS changes are specified before applying.
+- **Three sub-issues hit + fixed while wiring it (all codified):** (1) Traefik chart v40 nests
+  redirect under `ports.web.http.redirections`; (2) external-dns needs `--zone-id-filter` for the
+  parent zone (domain-filter alone matched no zone) — derived from the token at deploy time;
+  (3) the LB's private IP leaked into DNS — fixed with `disable-private-ingress` + `policy: sync`
+  (so stale records self-clean on rebuild, since the LB IP changes each time).
+- **`make ingress-status`** shows LB IP, cert readiness, and DNS resolution for troubleshooting.
 
 ### Reproducibility-validation findings (2026-06-10)
 - **FIXED — `make cluster-down` hung forever non-interactively.** `hetzner-k3s delete` v2.5.0

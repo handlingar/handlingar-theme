@@ -57,6 +57,20 @@ land in the same PR:
 Current enforcement: human checklist via `.github/pull_request_template.md`. Upgrading this to
 automatic diff-based enforcement is a later task (tracked when Phase 2 introduces `infra/`).
 
+## Change-control rules (process)
+
+These govern *how* a change is made, not what patterns are forbidden.
+
+- **DNS and base-infrastructure changes must be pre-specified and approved.** Before applying any
+  change to DNS records, cloud DNS zones, load balancers, networks, firewalls, or other base
+  infrastructure, state **exactly** what will change — for DNS: each record's name, type, and
+  old → new value; for other infra: the resource and the precise mutation — and get explicit
+  approval first. This applies to changes made *indirectly* by automation too: e.g. before
+  deploying external-dns or requesting a cert (cert-manager DNS-01), enumerate the exact records
+  the controller will create/modify/delete. Rationale: `handlingar.se` is the live production zone
+  and infra changes are high-blast-radius; "the controller manages it" is not a substitute for
+  knowing the exact record set. Governed by ADR 0006.
+
 ## Evolving this file
 
 - **Adding a pattern:** accompanies an ADR that newly rejects a technology. Add one row; add the

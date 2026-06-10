@@ -1,0 +1,20 @@
+# Traefik IngressRoute: route HTTPS traffic for dev.nonprod.handlingar.se to the
+# alaveteli web Service. TLS terminates here using the cert-manager-issued
+# `alaveteli-tls` Secret. Plain HTTP (:80) is redirected to HTTPS globally by the
+# Traefik `web` entrypoint (see values-traefik.yaml), so only websecure is routed.
+apiVersion: traefik.io/v1alpha1
+kind: IngressRoute
+metadata:
+  name: alaveteli
+  namespace: handlingar
+spec:
+  entryPoints:
+    - websecure
+  routes:
+    - match: Host(`dev.nonprod.handlingar.se`)
+      kind: Rule
+      services:
+        - name: alaveteli
+          port: 80
+  tls:
+    secretName: alaveteli-tls

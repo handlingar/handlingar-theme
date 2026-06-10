@@ -1,0 +1,19 @@
+# TLS certificate for the dev app, issued automatically by cert-manager via the
+# production Let's Encrypt issuer (DNS-01 / Cloudflare). cert-manager writes the
+# signed cert + key into the `alaveteli-tls` Secret, which the IngressRoute mounts.
+#
+# First-time validation: issue against letsencrypt-staging once (edit issuerRef,
+# or `kubectl patch`), confirm `kubectl -n handlingar get certificate` shows
+# READY=True, then switch back to letsencrypt-prod. cert-manager auto-renews.
+apiVersion: cert-manager.io/v1
+kind: Certificate
+metadata:
+  name: alaveteli-tls
+  namespace: handlingar
+spec:
+  secretName: alaveteli-tls
+  dnsNames:
+    - dev.nonprod.handlingar.se
+  issuerRef:
+    name: letsencrypt-prod
+    kind: ClusterIssuer

@@ -1,0 +1,24 @@
+# Let's Encrypt STAGING issuer — use this to validate the DNS-01 plumbing without
+# burning the production rate limit. Staging certs are NOT trusted by browsers
+# (signed by a fake root) — that's expected; it only proves issuance works.
+#
+# DNS-01 challenge via Cloudflare: cert-manager creates a temporary TXT record
+# `_acme-challenge.<host>` in the handlingar.se zone, Let's Encrypt verifies it,
+# then cert-manager deletes it. No public HTTP reachability needed.
+# (ACME account email intentionally omitted — optional, and keeps personal data
+# out of the repo; cert-manager auto-renews regardless of expiry notices.)
+apiVersion: cert-manager.io/v1
+kind: ClusterIssuer
+metadata:
+  name: letsencrypt-staging
+spec:
+  acme:
+    server: https://acme-staging-v02.api.letsencrypt.org/directory
+    privateKeySecretRef:
+      name: letsencrypt-staging-account-key
+    solvers:
+      - dns01:
+          cloudflare:
+            apiTokenSecretRef:
+              name: cloudflare-api-token
+              key: api-token

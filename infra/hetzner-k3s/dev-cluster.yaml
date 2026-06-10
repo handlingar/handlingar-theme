@@ -69,6 +69,7 @@ cluster_autoscaler:
   enabled: false
 
 # Hetzner CSI driver is enabled by default; provides ReadWriteOnce PVCs.
-# Traefik (K3s default) is used as the ingress controller.
-# cert-manager must be installed separately after cluster creation — see
-# infra/k8s/cert-manager/ (to be created in P2-T4).
+# Ingress is NOT bundled by hetzner-k3s. The ingress controller (Traefik behind a
+# Hetzner LB), cert-manager, and external-dns are installed post-creation by
+# `make ingress-up` (and as the final step of `make bringup`) from committed
+# manifests under infra/k8s/ingress/. See ADR 0006.

@@ -139,6 +139,18 @@ Provisioning is a single command; teardown equally simple. See ADR 0004.
   >    production-mode hardening.
 - [ ] **P2-T4** — cert-manager + ClusterIssuer (Let's Encrypt) and Traefik IngressRoute for
   `dev.handlingar.se`. TLS cert issued automatically.
+  > Claimed: branch `feat/local-dev` since 2026-06-11 by @erikjaderberg — DONE in substance,
+  > pending /cost + formal close. App is LIVE at **https://dev.nonprod.handlingar.se** (real
+  > Let's Encrypt prod cert, HTTP→HTTPS redirect, themed 200). Host moved under a new
+  > **`*.nonprod.handlingar.se`** convention (non-prod servers) so no existing `dev.handlingar.se`
+  > / prod records are touched. Stack codified in `infra/k8s/ingress/` + `make ingress-up`
+  > (wired into `make bringup`): **Traefik** behind a **Hetzner LB** (`91.98.218.67`),
+  > **cert-manager** (Let's Encrypt **DNS-01 via Cloudflare**), **external-dns** auto-publishing
+  > the record. ADR 0006 written. New project rule in `docs/invariants.md`: DNS/base-infra
+  > changes must be specified + approved before applying (external-dns is hard-locked to the
+  > `nonprod.handlingar.se` subtree, `policy: sync`, TXT-ownership — cannot touch prod).
+  > Prereq: `CLOUDFLARE_API_TOKEN` in `.local/.env` (validated by `make preflight`).
+  > Not yet re-validated in one clean from-zero `make bringup` run.
 - [ ] **P2-T5** — Hetzner CSI driver persistent volumes: verify postgres PVC survives a pod
   restart; snapshot/restore test.
 - [ ] **P2-T6** — ADR: secret-less bootstrap — how do SOPS-encrypted secrets reach the K8s cluster

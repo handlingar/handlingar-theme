@@ -57,8 +57,15 @@ spec:
               cd /app/alaveteli
               # Use the handlingar config (THEME_URLS + sv locale + site name).
               cp config/general-handlingar-theme.yml config/general.yml
-              # Allow access via `kubectl port-forward localhost:3000`.
-              sed -i "s#^DOMAIN:.*#DOMAIN: 'localhost:3000'#" config/general.yml
+              # Public dev host (served via the Traefik ingress + Hetzner LB, P2-T4).
+              sed -i "s#^DOMAIN:.*#DOMAIN: 'dev.nonprod.handlingar.se'#" config/general.yml
+              # Dev-only: allow any Host header so BOTH the ingress host and
+              # `kubectl port-forward` (localhost:3000) work. Real protection is
+              # the ingress + TLS; host-auth is just a dev guard. (Rails 8 blocks
+              # non-allowlisted hosts by default — this clears that allowlist.)
+              mkdir -p config/initializers
+              printf 'Rails.application.config.hosts.clear if Rails.env.development?\n' \
+                > config/initializers/zz_dev_hosts.rb
               # db:migrate (NOT db:prepare): only touches the dev DB. db:prepare
               # also prepares the test DB in-process, where acts_as_versioned's
               # create_versioned_table reads a stale column cache and skips adding
