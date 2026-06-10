@@ -168,6 +168,12 @@ Provisioning is a single command; teardown equally simple. See ADR 0004.
   nodeSelector pin on the app pods. Needs an ADR + user approval first — it introduces a new
   prerequisite (a GitHub account/token for pulls).
   > Next up #2, user-ordered 2026-06-11. Deferred to a later day.
+- [ ] **P2-T10** — Production-mode hardening: `RAILS_ENV=production`, asset precompile, FORCE_SSL,
+  real SECRET_KEY_BASE handling, xapian index on a PVC (replacing the boot-time rebuild + 60s
+  loop). Prod migration blocker — every later phase should build against production mode, not
+  retrofit it.
+- [ ] **P2-T11** — Env overlays: split `infra/k8s/base/` into base + per-env kustomize overlays
+  (dev/tst/prod) so tst (Phase 5) isn't a fork. Do before any second environment exists.
 
 _Exit criteria: `hetzner-k3s create --config infra/hetzner-k3s/dev-cluster.yaml` + `make deploy ENV=dev`
 yields a running Alaveteli instance at dev.handlingar.se, confirmed by smoke test._
@@ -225,8 +231,13 @@ _Exit criteria: tst refresh is a single command, runs in <15 min, preserves no P
 Goal: know what's broken without logging into the box. Minimal external infra.
 
 - [ ] **P6-T1** — ADR: observability stack. Candidates: Loki+Prometheus+Grafana (self-host),
-  Metabase (BI, not ops), HolmesGPT (AI triage, k8s-centric — may not fit). **My leaning:**
-  Prometheus + Loki + Grafana, all self-hosted on the same box via Podman.
+  Metabase (BI, not ops), HolmesGPT (AI triage, k8s-centric — may not fit). ~~My leaning:
+  Prometheus + Loki + Grafana, all self-hosted on the same box via Podman.~~
+  > 2026-06-11 correction: the Podman-on-same-box leaning predates the k8s pivot (ADR 0004/0006).
+  > New leaning: in-cluster Helm charts — `kube-prometheus-stack` + Loki + Alloy/Promtail.
+  > Covers centralized logging, dashboards, and user-log analytics. Phase 6 can be pulled
+  > forward to run as a parallel stream alongside Phase 3/4 work (purely additive,
+  > owns `infra/k8s/observability/` only — see docs/AGENT-ORCHESTRATION.md).
 - [ ] **P6-T2** — Deploy the chosen stack via Ansible role. Off-site backup of metrics/logs (S3-
   compatible like Hetzner Object Storage).
 - [ ] **P6-T3** — Dashboards: request rate, error rate, sidekiq queue depth, postgres stats,
@@ -269,6 +280,10 @@ _Exit criteria: one team member can upgrade Alaveteli end-to-end by following th
   on the live cluster (xapian boot build, Mailpit, SMTP wiring, mock-data targets) actually
   reproduces in a clean `make bringup`, and that the smoke/test steps run when they should —
   fold the R10 runbook checks into `make smoke` or a `make verify` target.
+- **Inbound production mail migration** (noted 2026-06-11): prod receives real FOI email.
+  MX cutover, in-cluster mail ingestion (replacing Mailpit mock), SPF/DKIM/deliverability.
+  No existing task covers this; likely the long pole of the actual prod cutover — needs its
+  own ADR + rehearsal on tst before any migration date is set.
 - Metabase for business reporting on FOI-request data (distinct from observability).
 - Public status page.
 - k6 / locust load test suite runnable against tst.

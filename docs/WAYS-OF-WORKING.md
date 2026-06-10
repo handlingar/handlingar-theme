@@ -163,6 +163,9 @@ streams in commit `9cffa97`), use subagents — but keep them token-cheap:
 
 Keep agents few and cheap; every delegation starts cold and re-derives context.
 
+The full operating manual — economics, prompt template, model tiering, kill criteria, and the
+current pre-scoped stream map — lives in [AGENT-ORCHESTRATION.md](AGENT-ORCHESTRATION.md).
+
 ### Provider division of labour
 
 Claude Code is the only AI that touches this repository directly — it has the `CLAUDE.md` entry
