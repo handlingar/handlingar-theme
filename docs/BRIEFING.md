@@ -4,7 +4,7 @@
 > any contributor (or a cold Claude session) can see current state at a glance.
 > Detailed task tracking lives in [ROADMAP.md](ROADMAP.md); this is the headline.
 
-**Last updated:** 2026-06-09
+**Last updated:** 2026-06-10
 
 ## Operating this — no commands to memorize
 
@@ -55,14 +55,33 @@ it's missing.
   base), imported it into worker1's containerd (registry-less), deployed web + sidekiq,
   migrated a clean DB, and installed the **handlingar theme** (sv locale, "Handlingar"
   branding). Frontpage returns **HTTP 200** via port-forward.
-- **NEXT SESSION — do this first:** full **cleanup and start from scratch** to prove the
-  bring-up is truly reproducible from zero. Run `make cluster-down` (destroys cluster +
-  postgres PVC), then `make bringup` (cluster + image build/import + app) and `make app-forward`
-  to confirm a clean rebuild reaches a themed HTTP 200 with no manual steps. This is the
-  one path not yet validated end-to-end (see "What I verified vs. didn't" history).
-- **After that:** P2-T4 ingress (cert-manager + Traefik IngressRoute for `dev.handlingar.se`)
-  so it's reachable without port-forward; then publish the image to a real registry and
-  import to all workers (drop the worker1 pin).
+- **Just validated (2026-06-10): reproducibility from zero PASSES.** Ran `make cluster-down`
+  then `make bringup` + port-forward on a fully fresh cluster — themed **HTTP 200** (sv locale,
+  "Handlingar" branding), **no manual steps**. Total ~18 min (cluster ready) + slow image
+  upload + first-boot migrate. Three defects surfaced and were handled (see below).
+- **NEXT SESSION — do this first:** P2-T4 ingress (cert-manager + Traefik IngressRoute for
+  `dev.handlingar.se`) so it's reachable without port-forward; then publish the image to a
+  real registry and import to all workers (drop the worker1 pin).
+
+### Reproducibility-validation findings (2026-06-10)
+- **FIXED — `make cluster-down` hung forever non-interactively.** `hetzner-k3s delete` v2.5.0
+  prompts "type the cluster name to confirm"; with no TTY it looped on the empty-input error
+  at 100% CPU and deleted nothing (burned ~25 min before I killed it). Added `--force` to the
+  target ([Makefile](../Makefile) `cluster-down`). Re-run deleted the cluster in ~20s.
+- **GAP — `cluster-down` orphans the postgres CSI volume.** `hetzner-k3s delete` removes
+  servers/network/firewall/SSH key but NOT dynamically-provisioned `pvc-*` volumes; one was
+  left `available` (detached, still billing). Removed it manually via the Hetzner API. The
+  target's doc-string claims it "destroys the postgres PVC" — it does not. **Follow-up:** have
+  `cluster-down` delete orphaned dev CSI volumes too (query API by name/label, delete detached).
+- **COSMETIC — image-import prints SSH "REMOTE HOST IDENTIFICATION HAS CHANGED" on recycled
+  IPs.** A fresh cluster can reuse a prior node's public IP with a new host key, conflicting
+  with `~/.ssh/known_hosts`. Import still succeeds (pubkey auth via `-i`, `StrictHostKeyChecking=no`
+  proceeds and only disables password auth), but the warning is alarming and would become fatal
+  if SSH config ever hardened. **Follow-up:** add `-o UserKnownHostsFile=/dev/null` (or
+  `ssh-keygen -R` the node IPs) to the import target's ssh calls.
+- **NOTE — `alaveteli-web` restarted 3× during first boot** before going 1/1 Running (probe
+  timing while the first-boot migrate + theme install run). Self-healed; worth a readiness/boot
+  review later, not blocking.
 
 ### How to reach the running app (no ingress yet)
 ```bash

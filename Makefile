@@ -57,7 +57,10 @@ cluster-up: preflight ## Create the dev K3s cluster on Hetzner (spends ~€20/mo
 .PHONY: cluster-down
 cluster-down: ## Destroy the dev cluster (STOPS billing)
 	@echo "Destroying cluster — this stops Hetzner billing."
-	hetzner-k3s delete --config $(CLUSTER_CFG)
+	# --force: delete without the interactive "type the cluster name" prompt.
+	# Without it, a non-TTY run (CI, make in background) loops forever at 100% CPU
+	# on the empty-input error and deletes nothing. Must stay non-interactive.
+	hetzner-k3s delete --config $(CLUSTER_CFG) --force
 
 .PHONY: deploy
 deploy: ## Deploy backing services (postgres/redis/memcached) to the cluster
