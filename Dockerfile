@@ -22,7 +22,15 @@ RUN git submodule update --init --recursive
 # Install dependencies
 RUN gem install bundler
 RUN echo "gem 'debug', '~> 1.11.0'" >> /app/alaveteli/Gemfile
-RUN bundle install
+# After bundling, prune build-only artifacts in the SAME layer so the image (and
+# every registry-less upload of it) shrinks by ~315MB:
+#   /usr/local/bundle/cache                       — downloaded .gem sources (77MB)
+#   .../xapian-full-alaveteli-*/tmp               — xapian compile scratch (238MB)
+# xapian's runtime libxapian.so.30 lives under .../ports/ (in the gem's RUNPATH),
+# which is kept. Verified with ldd/objdump on the built image.
+RUN bundle install \
+    && rm -rf /usr/local/bundle/cache \
+              /usr/local/bundle/gems/xapian-full-alaveteli-*/tmp
 RUN gem install debug
 
 # Install JS dependencies
@@ -41,7 +49,10 @@ RUN chmod +x /setup.sh
 
 # RUN chown 1000:1000 -R /app
 
-RUN apt-get update && apt-get install -y iproute2
+# --no-install-recommends + apt-list cleanup keep this late layer ~25MB smaller
+# (it previously left /var/lib/apt/lists behind).
+RUN apt-get update && apt-get install -y --no-install-recommends iproute2 \
+    && rm -rf /var/lib/apt/lists/*
 COPY . /app/alaveteli-themes/handlingar-theme
 
 RUN curl -sL https://raw.githubusercontent.com/handlingar/alaveteli/refs/heads/develop/config/general.yml -o /app/alaveteli/config/general-handlingar-theme.yml

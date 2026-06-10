@@ -19,3 +19,7 @@ data:
   # path to a running app. Production hardening (precompiled assets, SECRET_KEY_BASE,
   # xapian index, FORCE_SSL) is tracked as later Phase 1 work.
   RAILS_ENV: development
+  # Mock mail loop (dev): development.rb reads SMTP_URL when
+  # USE_MAILCATCHER_IN_DEVELOPMENT is true, so all outgoing mail lands in
+  # Mailpit (see mailpit.yaml) instead of leaving the cluster.
+  SMTP_URL: smtp://mailpit:1025

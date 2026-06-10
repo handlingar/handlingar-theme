@@ -75,6 +75,32 @@ spec:
               # Clone + install the handlingar theme (per THEME_URLS/THEME_BRANCH).
               echo "[boot] installing handlingar theme..."
               bundle exec rake themes:install RAILS_ENV="$RAILS_ENV"
+              # Xapian full-text index. Lives on the pod's EPHEMERAL filesystem
+              # (lib/acts_as_xapian/xapiandbs/<env>), so every fresh pod starts
+              # without one and /list/* + /search would 500 with
+              # DatabaseNotFoundError. Tradeoff: for dev we simply rebuild the
+              # (near-empty) index at boot instead of adding a PVC — simplest
+              # reproducible option; revisit with a PVC when data volume grows.
+              # Guarded so an in-place container restart with a surviving dir
+              # skips the (destructive) full rebuild.
+              if [ ! -d "lib/acts_as_xapian/xapiandbs/$RAILS_ENV" ]; then
+                echo "[boot] building xapian index (missing)..."
+                bundle exec rake xapian:destroy_and_rebuild_index \
+                  models="PublicBody User InfoRequestEvent" RAILS_ENV="$RAILS_ENV"
+              else
+                echo "[boot] xapian index present, skipping rebuild"
+              fi
+              # Ongoing incremental index updates. Upstream runs
+              # script/update-xapian-index from cron; for dev we run the same
+              # rake task in a background loop inside this container (simplest
+              # reproducible equivalent — no extra CronJob/sidecar to keep in
+              # sync with the node-pinned image). Picks up new/changed records
+              # (e.g. `make mock-data`) within ~60s.
+              ( while true; do
+                  bundle exec rake --silent xapian:update_index RAILS_ENV="$RAILS_ENV" \
+                    >/dev/null 2>&1 || true
+                  sleep 60
+                done ) &
               echo "[boot] starting Rails..."
               exec bundle exec rails s -b 0.0.0.0 -p 3000
           ports:

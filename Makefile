@@ -40,6 +40,10 @@ IMAGE   := alaveteli-handlingar
 TAG     := $(shell cat ALAVETELI_VERSION 2>/dev/null || echo dev)
 WORKER  := handlingar-dev-pool-workers-worker1
 SSH_KEY := $(HOME)/.ssh/id_ed25519
+# Node IPs are recycled across cluster rebuilds, so never trust/record host keys:
+# UserKnownHostsFile=/dev/null avoids stale-key failures and known_hosts spam;
+# LogLevel=ERROR silences the per-connection "Permanently added" warning.
+SSH_OPTS := -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null -o LogLevel=ERROR -i $(SSH_KEY)
 
 .DEFAULT_GOAL := help
 
@@ -70,6 +74,30 @@ cluster-down: ## Destroy the dev cluster (STOPS billing)
 	# Without it, a non-TTY run (CI, make in background) loops forever at 100% CPU
 	# on the empty-input error and deletes nothing. Must stay non-interactive.
 	hetzner-k3s delete --config $(CLUSTER_CFG) --force
+	@$(MAKE) --no-print-directory volumes-clean
+
+# hetzner-k3s delete removes servers but NOT volumes created by the in-cluster
+# CSI driver (e.g. the postgres PVC) — they keep billing. This deletes a volume
+# only when ALL THREE hold: it is detached (server=null — an attached volume
+# belongs to a live server and is never touched), its name starts with "pvc-"
+# (the CSI naming scheme), and it carries the CSI driver's own label
+# (managed-by=csi-driver — confirmed against the live API JSON). Manually
+# created volumes are therefore never deleted. Zero matches is a normal no-op.
+.PHONY: volumes-clean
+volumes-clean: ## Delete orphaned (detached) CSI-created Hetzner volumes (stops their billing)
+	@[ -n "$$HCLOUD_TOKEN" ] || { echo "ERROR: HCLOUD_TOKEN not set — fill in .local/.env (see .local/.env.example)"; exit 1; }
+	@vols=$$(curl -sf -H "Authorization: Bearer $$HCLOUD_TOKEN" "https://api.hetzner.cloud/v1/volumes?per_page=50" \
+	  | python3 -c 'import sys,json; [print(v["id"], v["name"]) for v in json.load(sys.stdin).get("volumes",[]) if v.get("server") is None and v.get("name","").startswith("pvc-") and v.get("labels",{}).get("managed-by")=="csi-driver"]'); \
+	if [ -z "$$vols" ]; then \
+	  echo "No orphaned CSI volumes — nothing to clean up."; \
+	else \
+	  echo "$$vols" | while read -r id name; do \
+	    echo "Deleting orphaned CSI volume $$name (id $$id)..."; \
+	    curl -sf -X DELETE -H "Authorization: Bearer $$HCLOUD_TOKEN" \
+	      "https://api.hetzner.cloud/v1/volumes/$$id" >/dev/null \
+	      && echo "  deleted." || echo "  WARNING: delete failed for $$name (id $$id) — check the Hetzner console."; \
+	  done; \
+	fi
 
 .PHONY: deploy
 deploy: ## Deploy backing services (postgres/redis/memcached) to the cluster
@@ -115,18 +143,30 @@ image-build: ## Build the pinned Alaveteli app image locally (docker build)
 	@echo "Building $(IMAGE):$(TAG) (Alaveteli pinned via ALAVETELI_VERSION)..."
 	docker build -t $(IMAGE):$(TAG) .
 
+# Compression choice: zstd -12 -T0 measured 25% smaller than gzip -1 on this
+# image (711MB vs 950MB) while compressing at ~20MB/s — far above the ~1MB/s
+# uplink, so the smaller stream cuts upload time proportionally (~16min → ~12min,
+# less again as the image shrinks). Self-fixing: installs zstd on the node (Ubuntu)
+# if missing; falls back to gzip -1 when zstd is unavailable on either end.
 .PHONY: image-import
 image-import: ## Import the local image into worker1's containerd (no registry needed)
-	@ip=$$(kubectl get node $(WORKER) -o jsonpath='{.status.addresses[?(@.type=="ExternalIP")].address}' 2>/dev/null); \
+	@set -o pipefail; \
+	ip=$$(kubectl get node $(WORKER) -o jsonpath='{.status.addresses[?(@.type=="ExternalIP")].address}' 2>/dev/null); \
 	if [ -z "$$ip" ]; then echo "ERROR: $(WORKER) not found — is the cluster up? (make cluster-up)"; exit 1; fi; \
 	if ! docker image inspect $(IMAGE):$(TAG) >/dev/null 2>&1; then \
 	  echo "Image $(IMAGE):$(TAG) not built locally — run 'make image-build' first."; exit 1; fi; \
-	if ssh -o StrictHostKeyChecking=no -o ConnectTimeout=10 -i $(SSH_KEY) root@$$ip \
+	if ssh $(SSH_OPTS) -o ConnectTimeout=10 root@$$ip \
 	     "k3s ctr -n k8s.io images ls 2>/dev/null | grep -q $(IMAGE):$(TAG)"; then \
 	  echo "Image already present on $(WORKER) — nothing to do."; \
+	elif command -v zstd >/dev/null 2>&1 && ssh $(SSH_OPTS) root@$$ip \
+	     "command -v zstd >/dev/null 2>&1 || (apt-get update -qq && apt-get install -y -qq zstd) >/dev/null 2>&1; command -v zstd >/dev/null 2>&1"; then \
+	  echo "Streaming $(IMAGE):$(TAG) to $(WORKER) ($$ip) via zstd — limited by uplink, be patient..."; \
+	  docker save $(IMAGE):$(TAG) | zstd -12 -T0 -q | ssh $(SSH_OPTS) \
+	    root@$$ip "zstd -d | k3s ctr -n k8s.io images import -"; \
+	  echo "Imported."; \
 	else \
-	  echo "Streaming $(IMAGE):$(TAG) to $(WORKER) ($$ip) — slow over the uplink, be patient..."; \
-	  docker save $(IMAGE):$(TAG) | gzip -1 | ssh -o StrictHostKeyChecking=no -i $(SSH_KEY) \
+	  echo "zstd unavailable locally or on the node — falling back to gzip -1 (slower)."; \
+	  docker save $(IMAGE):$(TAG) | gzip -1 | ssh $(SSH_OPTS) \
 	    root@$$ip "gunzip | k3s ctr -n k8s.io images import -"; \
 	  echo "Imported."; \
 	fi
@@ -144,10 +184,20 @@ app-up: ## Deploy the app (apply manifests, wait for web to roll out, show statu
 	kubectl -n $(NS) rollout status deploy/alaveteli-web --timeout=420s
 	@$(MAKE) --no-print-directory status
 
+# cluster-up (~10-15 min, mostly waiting on Hetzner) and image-build (~10 min
+# cold, seconds when cached) are independent, so bringup runs them in parallel:
+# the build streams in the background with an [image-build] prefix while
+# cluster-up streams in the foreground. We always wait for BOTH and fail hard
+# (loudly) if either failed — never proceeding to import/deploy on a half-result.
 .PHONY: bringup
 bringup: ## FULL zero-to-running: cluster + image build/import + app + ingress (idempotent)
-	@$(MAKE) --no-print-directory cluster-up
-	@$(MAKE) --no-print-directory image-build
+	@echo "Running cluster-up and image-build in parallel (build lines are prefixed [image-build])..."
+	@( set -o pipefail; $(MAKE) --no-print-directory image-build 2>&1 | sed -u 's/^/[image-build] /' ) & build_pid=$$!; \
+	$(MAKE) --no-print-directory cluster-up; cluster_rc=$$?; \
+	wait $$build_pid; build_rc=$$?; \
+	if [ $$cluster_rc -ne 0 ]; then echo "ERROR: cluster-up FAILED (rc=$$cluster_rc) — aborting bringup."; exit $$cluster_rc; fi; \
+	if [ $$build_rc -ne 0 ]; then echo "ERROR: image-build FAILED (rc=$$build_rc) — see [image-build] lines above. Aborting bringup."; exit $$build_rc; fi; \
+	echo "cluster-up and image-build both succeeded."
 	@$(MAKE) --no-print-directory image-import
 	@$(MAKE) --no-print-directory app-up
 	@$(MAKE) --no-print-directory ingress-up
@@ -257,3 +307,50 @@ diff-theme: ## (theme) diff a theme view against the upstream copy
 
 copy-a: ## (theme) copy an upstream view into the theme
 	 cp ../alaveteli/app/views/$(DIFF_FILE_HSE) ./lib/views/$(DIFF_FILE_HSE)
+
+# ---------------------------------------------------------------------------
+# Mock data (dev cluster) — scripts/mock-data/
+# ---------------------------------------------------------------------------
+
+.PHONY: mock-data
+mock-data: ## Seed mock authorities + a test user into the dev cluster
+	@cat scripts/mock-data/seed.rb | kubectl -n $(NS) exec -i deploy/alaveteli-web -- bash -c 'cat > /tmp/mock-seed.rb'
+	kubectl -n $(NS) exec deploy/alaveteli-web -- bundle exec rails runner /tmp/mock-seed.rb
+
+.PHONY: mock-request
+mock-request: ## File a mock FOI request (generates a real outgoing email)
+	@cat scripts/mock-data/send-request.rb | kubectl -n $(NS) exec -i deploy/alaveteli-web -- bash -c 'cat > /tmp/mock-send-request.rb'
+	kubectl -n $(NS) exec deploy/alaveteli-web -- bundle exec rails runner /tmp/mock-send-request.rb
+
+# ---------------------------------------------------------------------------
+# Mock mail loop (dev) — Mailpit catches all outgoing mail; see
+# infra/k8s/base/mailpit.yaml for the design notes.
+# ---------------------------------------------------------------------------
+
+.PHONY: mail-ui
+mail-ui: ## Port-forward the Mailpit web UI to http://localhost:8025
+	@echo "Open http://localhost:8025 — all outgoing app mail lands here (Ctrl-C to stop)"
+	kubectl -n $(NS) port-forward svc/mailpit 8025:8025
+
+.PHONY: mail-ingest
+mail-ingest: ## Feed every message in Mailpit into Alaveteli as incoming mail (then delete it from Mailpit)
+	@echo "Ingesting Mailpit messages into Alaveteli via script/mailin..."
+	@kubectl -n $(NS) port-forward svc/mailpit 18025:8025 >/dev/null 2>&1 & \
+	PF_PID=$$!; trap 'kill $$PF_PID 2>/dev/null' EXIT; \
+	for i in 1 2 3 4 5 6 7 8 9 10; do \
+	  curl -sf http://localhost:18025/api/v1/messages?limit=1 >/dev/null && break; sleep 1; \
+	done; \
+	IDS=$$(curl -sf 'http://localhost:18025/api/v1/messages?limit=500' \
+	  | python3 -c 'import sys,json; print("\n".join(m["ID"] for m in json.load(sys.stdin)["messages"]))'); \
+	[ -n "$$IDS" ] || { echo "Mailpit is empty — nothing to ingest."; exit 0; }; \
+	for id in $$IDS; do \
+	  echo "  -> $$id"; \
+	  if curl -sf "http://localhost:18025/api/v1/message/$$id/raw" \
+	    | kubectl -n $(NS) exec -i deploy/alaveteli-web -- ./script/mailin; then \
+	    curl -sf -X DELETE http://localhost:18025/api/v1/messages \
+	      -H 'Content-Type: application/json' -d "{\"IDs\":[\"$$id\"]}" >/dev/null; \
+	  else \
+	    echo "     mailin failed for $$id (left in Mailpit)"; \
+	  fi; \
+	done; \
+	echo "Done. Replies to request addresses now appear on the request page."

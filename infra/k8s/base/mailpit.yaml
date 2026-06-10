@@ -1,0 +1,77 @@
+# Mailpit — mock mail server for dev (https://github.com/axllent/mailpit).
+# Catches ALL outgoing app mail (SMTP :1025) so nothing ever leaves the
+# cluster, and serves a web UI + REST API (:8025) to read it. Pinned for
+# reproducibility. Public image — no nodeSelector needed (unlike the app).
+#
+# Outgoing wiring: development.rb honours SMTP_URL when
+# USE_MAILCATCHER_IN_DEVELOPMENT is true (it is), so the ConfigMap sets
+# SMTP_URL=smtp://mailpit:1025 — no boot-script changes required.
+#
+# Incoming (authority replies → Alaveteli): Alaveteli 0.46 does have native
+# POP3 polling (lib/alaveteli_mail_poller.rb + POP_MAILER_* keys), and POP3
+# is enabled below (:1110, dev-only creds) to keep that door open. But the
+# poller needs its own long-running `rails runner` process — mySociety runs
+# it as a daemon — which doesn't fit the dev nodes' memory budget next to
+# web + sidekiq. So ingestion is on-demand instead: `make mail-ingest`
+# pulls raw messages from the Mailpit REST API and pipes each one into
+# script/mailin in the web pod (same entrypoint a real MTA would use).
+#
+# UI access: `make mail-ui` → http://localhost:8025 (port-forward only;
+# no Ingress — ingress/DNS changes are approval-gated).
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: mailpit
+  namespace: handlingar
+  labels:
+    app: mailpit
+spec:
+  selector:
+    app: mailpit
+  ports:
+    - name: smtp
+      port: 1025
+      targetPort: 1025
+    - name: http
+      port: 8025
+      targetPort: 8025
+    - name: pop3
+      port: 1110
+      targetPort: 1110
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: mailpit
+  namespace: handlingar
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: mailpit
+  template:
+    metadata:
+      labels:
+        app: mailpit
+    spec:
+      containers:
+        - name: mailpit
+          image: axllent/mailpit:v1.30.1
+          env:
+            # POP3 is OFF unless credentials are configured. These are
+            # throwaway dev fixtures for a cluster-internal mock mailbox
+            # (no Ingress, dev data only) — not real secrets.
+            - name: MP_POP3_AUTH
+              value: "alaveteli:alaveteli"
+          ports:
+            - containerPort: 1025
+            - containerPort: 8025
+            - containerPort: 1110
+          readinessProbe:
+            httpGet: { path: /readyz, port: 8025 }
+            initialDelaySeconds: 2
+            periodSeconds: 5
+          resources:
+            requests: { cpu: "25m", memory: "32Mi" }
+            limits: { memory: "256Mi" }

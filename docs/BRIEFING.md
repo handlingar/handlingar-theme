@@ -64,11 +64,25 @@ it's missing.
   Full stack codified in `infra/k8s/ingress/` + `make ingress-up` (wired into `make bringup`):
   Traefik (LB), cert-manager (DNS-01/Cloudflare), external-dns (auto-publishes the record). See
   ADR 0006 + `infra/k8s/ingress/README.md`. Non-prod now lives under `*.nonprod.handlingar.se`.
+- **Just finished (2026-06-11, four parallel work streams): functional dev environment.**
+  (1) **Xapian fixed** — /list/* and search 500'd (index never built); boot now builds the index
+  if missing + runs a 60s background incremental updater. All main pages verified 200.
+  (2) **Mock mail loop** — Mailpit deployed (`infra/k8s/base/mailpit.yaml`); all outgoing app
+  mail lands there (`SMTP_URL: smtp://mailpit:1025` in the ConfigMap; Alaveteli's
+  USE_MAILCATCHER_IN_DEVELOPMENT path). Web UI: **`make mail-ui`** → http://localhost:8025.
+  Incoming replies: **`make mail-ingest`** pipes Mailpit messages into `script/mailin`.
+  (3) **Mock data** — **`make mock-data`** seeds 5 fake Swedish authorities + a test user
+  (idempotent; `scripts/mock-data/`); **`make mock-request`** files a real FOI request through
+  the normal code path (verified: request live on site, email in Mailpit, searchable via Xapian).
+  (4) **Bringup speed** — image-build now runs in parallel with cluster-up; zstd image transfer
+  (−25% bytes); Dockerfile slimmed ~340MB; ssh known-hosts noise fixed; `cluster-down` now also
+  deletes orphaned detached CSI volumes. Est. cold bringup ~40 → ~25 min. Registry evaluation:
+  **ghcr.io recommended** (kills the 12-16 min import entirely) — not yet implemented.
 - **NEXT SESSION — do this first:** re-validate full reproducibility — `make cluster-down`
-  then `make bringup` on a fresh cluster should now reach **https://dev.nonprod.handlingar.se**
-  (themed 200, valid cert) with no manual steps (this exact chain was built incrementally, not
-  yet proven in one clean from-zero run). Then: real image registry (drop the worker1 pin);
-  production-mode hardening.
+  then `make bringup` on a fresh cluster should reach **https://dev.nonprod.handlingar.se**
+  (themed 200, valid cert) with no manual steps, then `make mock-data` for test content (the
+  whole chain was built incrementally, never proven in one clean from-zero run). Then: ghcr.io
+  registry (drop the worker1 pin); production-mode hardening.
 
 ### Ingress / DNS / TLS (P2-T4, 2026-06-11)
 - **Reachable at https://dev.nonprod.handlingar.se** — Hetzner LB IPv4 `91.98.218.67` (+ IPv6).
