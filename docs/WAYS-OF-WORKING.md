@@ -150,6 +150,19 @@ and the provider-choice guidance that Claude Code alone can't encode.
 - **Neither side pre-negotiates every turn.** If something gets out of hand, the developer says
   so; Claude adjusts. That loop is the control system.
 
+### Parallel-agent protocol
+
+When a task genuinely splits into independent streams (proven on 2026-06-11: four parallel
+streams in commit `9cffa97`), use subagents — but keep them token-cheap:
+
+1. Write a short handoff file with the shared state agents need, then `/clear` the main session.
+2. Fan out with **tight prompts** and **disjoint file ownership** — no two agents may touch the
+   same file.
+3. Agents return **machine-readable reports** (what changed, what was verified), not prose.
+4. The **main session alone** integrates the results, runs the quality gate, and commits once.
+
+Keep agents few and cheap; every delegation starts cold and re-derives context.
+
 ### Provider division of labour
 
 Claude Code is the only AI that touches this repository directly — it has the `CLAUDE.md` entry

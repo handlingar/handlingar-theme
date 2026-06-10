@@ -4,7 +4,7 @@
 > any contributor (or a cold Claude session) can see current state at a glance.
 > Detailed task tracking lives in [ROADMAP.md](ROADMAP.md); this is the headline.
 
-**Last updated:** 2026-06-10
+**Last updated:** 2026-06-11
 
 ## Operating this — no commands to memorize
 

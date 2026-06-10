@@ -158,6 +158,16 @@ Provisioning is a single command; teardown equally simple. See ADR 0004.
   `kubectl create secret` from decrypted local file).
 - [ ] **P2-T7** — Parity check: cluster running dev.handlingar.se with all Phase 1 services green;
   smoke test passes; no manual steps required beyond `hetzner-k3s create` + `kubectl apply`.
+- [ ] **P2-T8** — From-zero re-validation: `make cluster-down` → `make bringup` → `make mock-data`,
+  then verify https://dev.nonprod.handlingar.se + the RUNBOOK R10 checks, with zero manual steps.
+  Also times the 9cffa97 bringup speedups (est. ~25 min cold, was ~40 — never proven in one
+  clean run).
+  > Next up #1, user-ordered 2026-06-11. Deferred to a later day; nothing blocks it.
+- [ ] **P2-T9** — Container registry (ghcr.io recommended in the 9cffa97 analysis): replaces the
+  registry-less worker1 containerd import (10–16 min over a slow uplink) and drops the worker1
+  nodeSelector pin on the app pods. Needs an ADR + user approval first — it introduces a new
+  prerequisite (a GitHub account/token for pulls).
+  > Next up #2, user-ordered 2026-06-11. Deferred to a later day.
 
 _Exit criteria: `hetzner-k3s create --config infra/hetzner-k3s/dev-cluster.yaml` + `make deploy ENV=dev`
 yields a running Alaveteli instance at dev.handlingar.se, confirmed by smoke test._
