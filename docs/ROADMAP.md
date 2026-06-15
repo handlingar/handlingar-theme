@@ -162,7 +162,37 @@ Provisioning is a single command; teardown equally simple. See ADR 0004.
   then verify https://dev.nonprod.handlingar.se + the RUNBOOK R10 checks, with zero manual steps.
   Also times the 9cffa97 bringup speedups (est. ~25 min cold, was ~40 — never proven in one
   clean run).
-  > Next up #1, user-ordered 2026-06-11. Deferred to a later day; nothing blocks it.
+  > Claimed: branch `feat/local-dev` since 2026-06-15 by @erikjaderberg — DONE in substance,
+  > pending /cost + formal close. From-zero re-validation PASSED with zero manual steps:
+  > `make cluster-down` (14.6s) → `make bringup` (**17m02s cold** — under the ~25min est, was
+  > ~40) → `make mock-data` → `make mock-request`. Verified: all 6 pods Running; Let's Encrypt
+  > TLS issued in ~96s; https://dev.nonprod.handlingar.se returns 200, `lang="sv"`; Xapian index
+  > built at boot (6 docs = PublicBody.count); all 5 seeded authorities render on `/body/list/all`;
+  > outbound FOI email landed in Mailpit. Boot chain ran migrate→theme→xapian→Rails (web pod
+  > self-healed after 3 boot-time restarts).
+  > **Gap found + fixed:** `make cluster-down` left the managed Hetzner LB (`handlingar-dev`) and
+  > the external-dns Cloudflare records (A/AAAA + `extdns-*` TXT) ORPHANED — the in-cluster CCM /
+  > external-dns are gone at teardown so nobody reaps them (confirmed: LB id 6630006 survived the
+  > first teardown). Added `scripts/orphan-clean.sh` + `make orphans` (read-only list) /
+  > `make orphans-clean` (idempotent, self-guards against deleting a live cluster's LB/DNS),
+  > folded `orphans-clean` into `cluster-down`. Installed the `hcloud` CLI reproducibly via
+  > `make preflight`, and fixed a latent `cut -d'\"'` tag-parse bug that would break the
+  > hetzner-k3s/hcloud auto-install for a fresh contributor. NOTE: `--clean` deletion path is
+  > validated by construction + list-mode (it correctly refused while nodes were live); its
+  > end-to-end deletion runs on the next real `make cluster-down`.
+  > **Visibility hard-gate (the real fix for "this must never happen silently"):**
+  > A declarative registry `infra/resources.tsv` is the single source of truth for every cloud
+  > resource this stack deploys (provider/type/match-by/value/cleaned-by). `scripts/cloud-audit.sh`
+  > (`make resources` / `make cloud-audit`) is driven entirely by it: each row identifies OUR
+  > resources via a Hetzner label selector / exact name / nonprod DNS suffix, so resources NOT in
+  > the registry are never queried and never appear. Output is a standardized TYPE/NAME/ID/DETAIL
+  > table. `cloud-audit-assert` (folded in as the final step of `cluster-down`) exits non-zero if
+  > any managed resource survives — a teardown can no longer end quietly while something bills.
+  > **Safety finding:** the audit revealed the **prod server shares the same Hetzner project +
+  > token** as dev (`handlingar-prod-*`, hel1). The registry approach makes the tooling provably
+  > blind to prod (it's not listed → never touched). Logged in assumptions.md (2026-06-15) —
+  > flagged for a prod-migration decision to split projects/tokens. Audit also surfaced a stale
+  > detached CSI volume now billing (`volumes-clean` reaps it on teardown).
 - [ ] **P2-T9** — Container registry (ghcr.io recommended in the 9cffa97 analysis): replaces the
   registry-less worker1 containerd import (10–16 min over a slow uplink) and drops the worker1
   nodeSelector pin on the app pods. Needs an ADR + user approval first — it introduces a new

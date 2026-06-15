@@ -27,6 +27,7 @@ Ratified assumptions should be struck through and linked to the ADR or doc that 
 - 2026-04-19 — Any production inventory/log/config tooling must redact secrets programmatically before output can reach a Claude session. — project kickoff — [open]
 - 2026-06-09 — Dev cluster uses `cpx22` (2 vCPU / 4 GB shared-x86) in `fsn1`; the original `cx22` is deprecated by Hetzner and not provisionable. Implies app container images must be x86 (not ARM `cax11`). — P2-T2 — [open]
 - 2026-06-09 — `HCLOUD_TOKEN` is provided to local tooling via a gitignored secrets file sourced at provision time; never committed, never pasted into a Claude session. Kubeconfig lands at `~/.kube/handlingar-dev.yaml`. (Updated 2026-06-10: consolidated to a single `.local/.env` for all secrets, documented by the tracked `.local/.env.example`; see ADR 0005.) — P2-T2 — [open]
+- 2026-06-15 — The **production server lives in the SAME Hetzner Cloud project** as the dev cluster (`handlingar-prod-debian-8gb-hel1-1`, hel1), so the dev `HCLOUD_TOKEN` can read/modify/delete prod. All dev cloud tooling MUST therefore be hard-scoped to the `handlingar-dev` cluster name + the `nonprod.handlingar.se` DNS subtree (see `scripts/cloud-audit.sh`, `scripts/orphan-clean.sh`). Open question for prod migration: split dev/tst into a separate Hetzner project with its own token so a dev mistake is physically unable to touch prod. — P2-T8 (discovered during from-zero re-validation) — [open]
 
 ## Ratified
 

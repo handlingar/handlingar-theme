@@ -33,6 +33,9 @@ TRAEFIK_VER := 40.3.0
 EXTDNS_VER  := 1.21.1
 APP_HOST    := dev.nonprod.handlingar.se
 DNS_ZONE    := handlingar.se
+# The managed Hetzner LB (Traefik svc annotation) AND the hetzner-k3s server-name
+# prefix are both this. Used by orphan cleanup to find the LB and detect live nodes.
+LB_NAME     := handlingar-dev
 
 # App image (registry-less for now: built locally, imported into the worker
 # node's containerd over SSH). TAG tracks the pinned Alaveteli version.
@@ -75,6 +78,37 @@ cluster-down: ## Destroy the dev cluster (STOPS billing)
 	# on the empty-input error and deletes nothing. Must stay non-interactive.
 	hetzner-k3s delete --config $(CLUSTER_CFG) --force
 	@$(MAKE) --no-print-directory volumes-clean
+	@$(MAKE) --no-print-directory orphans-clean
+	@# Hard gate: a teardown must NEVER finish quietly with billable resources
+	@# still alive. cloud-audit enumerates everything and exits non-zero if any
+	@# remain, so the orphaned-LB/DNS surprise can't recur silently.
+	@$(MAKE) --no-print-directory cloud-audit-assert
+
+# hetzner-k3s delete leaves the in-cluster-provisioned LB + DNS behind (the
+# cloud-controller-manager and external-dns are gone, so nobody reaps them).
+# These two targets find and remove exactly those orphans. `orphans` is
+# read-only (safe to run anytime); `orphans-clean` deletes and is folded into
+# `cluster-down` so a teardown is actually complete. See scripts/orphan-clean.sh.
+.PHONY: orphans
+orphans: ## List orphaned cloud resources (LB + DNS) a teardown would leave behind (read-only)
+	@LB_NAME=$(LB_NAME) APP_HOST=$(APP_HOST) bash scripts/orphan-clean.sh --list
+
+.PHONY: orphans-clean
+orphans-clean: ## Delete the orphaned LB + DNS records left by a cluster teardown (idempotent)
+	@LB_NAME=$(LB_NAME) APP_HOST=$(APP_HOST) bash scripts/orphan-clean.sh --clean
+
+# Enumerates EVERY billable Hetzner resource + all nonprod DNS by discovery
+# (not by guessing names), so nothing is ever left running silently. `cloud-audit`
+# is read-only; `cloud-audit-assert` exits non-zero if anything remains and runs
+# as the final gate of `cluster-down`.
+.PHONY: cloud-audit resources
+resources: cloud-audit ## Alias for cloud-audit — list every resource this stack deploys
+cloud-audit: ## List the cloud resources this stack deploys (registry-driven; foreign resources never shown)
+	@bash scripts/cloud-audit.sh
+
+.PHONY: cloud-audit-assert
+cloud-audit-assert: ## Fail if ANY billable resource / stale nonprod DNS remains (teardown gate)
+	@bash scripts/cloud-audit.sh --assert-empty
 
 # hetzner-k3s delete removes servers but NOT volumes created by the in-cluster
 # CSI driver (e.g. the postgres PVC) — they keep billing. This deletes a volume

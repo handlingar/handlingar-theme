@@ -52,10 +52,30 @@ if command -v hetzner-k3s >/dev/null 2>&1; then
   ok "hetzner-k3s present ($(hetzner-k3s --version 2>&1 | head -1))"
 else
   add "installing hetzner-k3s..."
-  LATEST="$(curl -fsSL https://api.github.com/repos/vitobotta/hetzner-k3s/releases/latest | grep -o '\"tag_name\": \"[^\"]*' | cut -d'\"' -f4)"
+  LATEST="$(curl -fsSL https://api.github.com/repos/vitobotta/hetzner-k3s/releases/latest \
+    | python3 -c 'import sys,json; print(json.load(sys.stdin)["tag_name"])')"
+  [ -n "$LATEST" ] || die "could not resolve the latest hetzner-k3s release tag from GitHub."
   curl -fsSL "https://github.com/vitobotta/hetzner-k3s/releases/download/${LATEST}/hetzner-k3s-linux-amd64" -o "$BIN/hetzner-k3s"
   chmod +x "$BIN/hetzner-k3s"
   ok "hetzner-k3s ${LATEST} installed"
+fi
+
+# hcloud CLI (used by `make orphans` / `make cluster-down` to remove the
+# managed Load Balancer + DNS that a cluster delete leaves behind)
+if command -v hcloud >/dev/null 2>&1; then
+  ok "hcloud present ($(hcloud version 2>&1 | head -1))"
+else
+  add "installing hcloud CLI..."
+  LATEST="$(curl -fsSL https://api.github.com/repos/hetznercloud/cli/releases/latest \
+    | python3 -c 'import sys,json; print(json.load(sys.stdin)["tag_name"])')"
+  [ -n "$LATEST" ] || die "could not resolve the latest hcloud release tag from GitHub."
+  tmp="$(mktemp -d)"
+  curl -fsSL "https://github.com/hetznercloud/cli/releases/download/${LATEST}/hcloud-linux-amd64.tar.gz" -o "$tmp/hcloud.tgz"
+  tar -xzf "$tmp/hcloud.tgz" -C "$tmp"
+  mv "$tmp/hcloud" "$BIN/hcloud"
+  chmod +x "$BIN/hcloud"
+  rm -rf "$tmp"
+  ok "hcloud ${LATEST} installed"
 fi
 
 hdr "SSH key (for cluster nodes)"
