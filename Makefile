@@ -77,12 +77,17 @@ cluster-down: ## Destroy the dev cluster (STOPS billing)
 	# Without it, a non-TTY run (CI, make in background) loops forever at 100% CPU
 	# on the empty-input error and deletes nothing. Must stay non-interactive.
 	hetzner-k3s delete --config $(CLUSTER_CFG) --force
-	@$(MAKE) --no-print-directory volumes-clean
-	@$(MAKE) --no-print-directory orphans-clean
-	@# Hard gate: a teardown must NEVER finish quietly with billable resources
-	@# still alive. cloud-audit enumerates everything and exits non-zero if any
-	@# remain, so the orphaned-LB/DNS surprise can't recur silently.
-	@$(MAKE) --no-print-directory cloud-audit-assert
+	@# Volume detach + LB/DNS deletion are ASYNC and lag the cluster delete, so a
+	@# single reap pass can miss a still-detaching volume. Reap + verify in a loop
+	@# until the registry audit (the hard gate) confirms nothing remains — a
+	@# teardown can never finish quietly with a resource still billing.
+	@for i in 1 2 3 4 5; do \
+	  $(MAKE) --no-print-directory volumes-clean; \
+	  $(MAKE) --no-print-directory orphans-clean; \
+	  if bash scripts/cloud-audit.sh --assert-empty; then break; fi; \
+	  if [ $$i -eq 5 ]; then echo "TEARDOWN VERIFICATION FAILED after 5 attempts."; exit 1; fi; \
+	  echo "Resources still settling — retry $$i/5 in 15s..."; sleep 15; \
+	done
 
 # hetzner-k3s delete leaves the in-cluster-provisioned LB + DNS behind (the
 # cloud-controller-manager and external-dns are gone, so nobody reaps them).
