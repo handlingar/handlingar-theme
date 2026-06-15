@@ -105,6 +105,16 @@ seedable test data. Everything is a `make` target; all of it is reproduced by `m
 | Feed replies INTO Alaveteli | `make mail-ingest` | Pulls every message from Mailpit's API and pipes it into `script/mailin`. Replies to a request's exact incoming address attach to that request; everything else lands in the admin holding pen. |
 | Seed mock authorities + test user | `make mock-data` | Idempotent. 5 fake Swedish authorities (request emails route to Mailpit) + `testuser@…` account. |
 | File a mock FOI request | `make mock-request` | Real controller code path → request appears on the site, outgoing email lands in Mailpit. |
+| Simulate an authority reply | `make mock-reply [REQ=<id>]` | Delivers an authority answer **into Mailpit over SMTP** (To = the request's `incoming_email`). Defaults to the most recent request. |
+| Sync replies via **POP3** | `make mail-poll` | The real incoming path: Alaveteli's native `AlaveteliMailPoller` fetches from Mailpit's POP3 (`:1110`), routes each message via `RequestMailer.receive(_, :poller)`, and deletes it. One pass drains the mailbox. |
+
+**Full POP3 reply loop:** `make mock-request` → `make mock-reply` → `make mail-poll` → the reply
+appears on the request page (a `response` event). **Gotcha:** poller-sourced mail is gated behind
+Alaveteli's `accept_mail_from_anywhere` feature (`InfoRequest#receive_mail_from_source?`); without
+it the poller silently drops everything. `make mock-data` enables it, so a fresh `bringup` works
+out of the box. (`make mail-ingest`, source `:mailin`, is unaffected.) Dev caveat: Mailpit is both
+the outgoing catcher and the POP3 source, so a poll also sweeps the original outgoing email to the
+admin holding pen — harmless, and invisible on the request page.
 
 Search/list pages need the **Xapian index**: built automatically at web-pod boot when missing,
 then incrementally updated every 60s by a background loop in the web container (new

@@ -361,10 +361,24 @@ mock-request: ## File a mock FOI request (generates a real outgoing email)
 	@cat scripts/mock-data/send-request.rb | kubectl -n $(NS) exec -i deploy/alaveteli-web -- bash -c 'cat > /tmp/mock-send-request.rb'
 	kubectl -n $(NS) exec deploy/alaveteli-web -- bundle exec rails runner /tmp/mock-send-request.rb
 
+.PHONY: mock-reply
+mock-reply: ## Simulate an authority replying (delivers an answer into Mailpit via SMTP) [REQ=<id>]
+	@cat scripts/mock-data/send-reply.rb | kubectl -n $(NS) exec -i deploy/alaveteli-web -- bash -c 'cat > /tmp/mock-send-reply.rb'
+	kubectl -n $(NS) exec deploy/alaveteli-web -- bundle exec rails runner /tmp/mock-send-reply.rb $(REQ)
+
 # ---------------------------------------------------------------------------
 # Mock mail loop (dev) — Mailpit catches all outgoing mail; see
 # infra/k8s/base/mailpit.yaml for the design notes.
 # ---------------------------------------------------------------------------
+
+.PHONY: mail-poll
+mail-poll: ## Pull incoming mail from Mailpit over POP3 into Alaveteli (native AlaveteliMailPoller)
+	@# The real incoming path: Alaveteli's POP3 poller fetches from Mailpit's POP3
+	@# (:1110, dev fixtures alaveteli:alaveteli per mailpit.yaml), routes each
+	@# message via RequestMailer.receive, and deletes it from the mailbox. One pass
+	@# drains the mailbox (each_mail iterates all messages).
+	kubectl -n $(NS) exec deploy/alaveteli-web -- bundle exec rails runner \
+	  "found = AlaveteliMailPoller.new(address: 'mailpit', port: 1110, user_name: 'alaveteli', password: 'alaveteli', enable_ssl: false).poll_for_incoming; puts(found ? 'POP3 poll: incoming mail retrieved and processed.' : 'POP3 poll: mailbox empty — nothing to retrieve.')"
 
 .PHONY: mail-ui
 mail-ui: ## Port-forward the Mailpit web UI to http://localhost:8025

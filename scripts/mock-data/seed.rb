@@ -79,6 +79,17 @@ end
 
 puts "PublicBody.count=#{PublicBody.count} User.count=#{User.count}"
 
+# Enable incoming mail from the POP3 poller (and any source) in dev. Alaveteli
+# gates poller-sourced mail behind the `accept_mail_from_anywhere` feature
+# (InfoRequest#receive_mail_from_source?) — mySociety's gradual-rollout switch.
+# Without it, `make mail-poll` silently drops every reply. Enabling it here makes
+# the POP3 sync path (mock-reply -> mail-poll) work out of the box on every
+# bringup. (mail-ingest, source :mailin, works regardless.)
+if defined?(AlaveteliFeatures) && AlaveteliFeatures.backend.respond_to?(:enable)
+  AlaveteliFeatures.backend.enable(:accept_mail_from_anywhere)
+  puts "+ feature accept_mail_from_anywhere enabled (POP3 poller can deliver mail)"
+end
+
 # Best-effort Xapian index update (another process may be rebuilding it).
 puts 'Updating Xapian index (best-effort)...'
 ok = system('bundle exec script/update-xapian-index')
