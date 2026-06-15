@@ -8,7 +8,8 @@
       "Bash(make -p)",
       "Bash(make image-import *)",
       "Bash(git check-ignore *)",
-      "Bash(git grep *)"
+      "Bash(git grep *)",
+      "Bash(make bringup *)"
     ]
   },
   "hooks": {
