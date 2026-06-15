@@ -4,7 +4,8 @@ Filled during Phase 0. Each section is a template; replace `<fill>` placeholders
 facts. **Do not guess.** Only record what was verified on the live box. Where a value is sensitive
 (secrets), note `see secrets/prod.enc.yaml → <key>` instead of writing the value here.
 
-> Last verified: _(never — Phase 0 not started)_ by: _(—)_
+> Last verified: _partial — 2026-06-15, Host section only, via Hetzner Cloud **API discovery**
+> (not on-box) during the P2-T8 session. Everything else awaits Phase 0._
 
 ---
 
@@ -12,15 +13,15 @@ facts. **Do not guess.** Only record what was verified on the live box. Where a 
 
 | Field | Value |
 | --- | --- |
-| Provider | Hetzner `<fill>` (Cloud? Dedicated?) |
-| Instance type | `<fill>` (e.g. CPX21) |
-| Region / DC | `<fill>` |
-| OS | `<fill>` (e.g. Debian 12) |
+| Provider | Hetzner **Cloud** — **same project + API token as the dev cluster** (see § L) |
+| Instance type | `<fill>` (~8 GB RAM per server name; confirm exact type on-box) |
+| Region / DC | `hel1` (Helsinki) |
+| OS | Debian (per server name; confirm `cat /etc/os-release` on-box) |
 | Kernel | `<fill>` (`uname -r`) |
 | CPU / RAM / Disk | `<fill>` |
-| Public IPv4 / IPv6 | `<fill>` |
+| Public IPv4 / IPv6 | `<fill>` (verify the IP↔server assignment on-box before recording) |
 | Floating IP? | `<fill>` |
-| Hostname | `<fill>` |
+| Hostname | `handlingar-prod-debian-8gb-hel1-1` (Hetzner server name) |
 | Timezone | `<fill>` |
 | Created (approx) | `<fill>` |
 
@@ -131,6 +132,12 @@ Anything `apt-mark hold`'d, PPAs, or non-standard repos:
 
 Running list of things that aren't how we'd build them today, to be addressed through the roadmap.
 
+- **Prod shares one Hetzner Cloud project + API token with the dev cluster** (discovered
+  2026-06-15, P2-T8). The dev `HCLOUD_TOKEN` can therefore read/modify/delete prod. Dev tooling
+  is hard-scoped to the `handlingar-dev` cluster name + `nonprod` DNS subtree to compensate
+  (`scripts/cloud-audit.sh` is driven by `infra/resources.tsv` and never lists prod), but the
+  durable fix is to split dev/tst into a separate Hetzner project with its own token before the
+  prod migration. See `docs/assumptions.md` (2026-06-15).
 - `<fill>`
 
 ## M. Runtime patches injected via this theme

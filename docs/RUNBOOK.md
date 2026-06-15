@@ -125,6 +125,24 @@ Troubleshooting: `kubectl -n handlingar logs deploy/alaveteli-web | grep '\[boot
 boot chain (migrate → theme → xapian); Mailpit API: `curl localhost:8025/api/v1/messages`
 (while `make mail-ui` runs).
 
+## R11 — Tear down / rebuild the dev cluster  (LIVE, since 2026-06-15)
+
+The dev cluster is disposable and **billing-bearing** (~€20/mo nodes + ~€5.4/mo LB). Tear it
+down when idle; rebuild from zero in one command.
+
+| Action | Command | Notes |
+| --- | --- | --- |
+| List everything this stack deploys | `make resources` (alias `make cloud-audit`) | Standardized TYPE/NAME/ID/DETAIL table, **registry-driven** (`infra/resources.tsv`). Read-only. Foreign resources (incl. the prod server) are never listed. |
+| Tear down (stops billing) | `make cluster-down` | Deletes the cluster, then **self-heals**: loops `volumes-clean` + `orphans-clean` and re-runs the audit until it confirms **zero** resources remain (handles async volume-detach / LB+DNS deletion). Fails loudly if anything still bills — a teardown can never finish "clean" with a resource alive. |
+| Bring back up from zero | `make bringup` | Full cluster + image build/import + app + ingress. ~15–17 min cold (proven 2026-06-15). Idempotent. |
+| Re-seed dev data + mail loop | `make mock-data` then the R10 loop | Fresh DB after a rebuild. `mock-data` also re-enables the `accept_mail_from_anywhere` feature so POP3 sync works. |
+
+**Why teardown leaves orphans without this**: `hetzner-k3s delete` only removes what it created.
+The cloud-controller-manager's Load Balancer and external-dns's Cloudflare records are created
+from *inside* the cluster and outlive it. `orphans-clean` (folded into `cluster-down`) reaps them;
+`cloud-audit --assert-empty` is the hard gate that proves it. To manage a new resource type, add a
+line to `infra/resources.tsv`.
+
 ## Smoke test checklist
 
 Used by several runbooks above. Minimum bar for "it works":

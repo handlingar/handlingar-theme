@@ -314,6 +314,32 @@ _Exit criteria: one team member can upgrade Alaveteli end-to-end by following th
   MX cutover, in-cluster mail ingestion (replacing Mailpit mock), SPF/DKIM/deliverability.
   No existing task covers this; likely the long pole of the actual prod cutover — needs its
   own ADR + rehearsal on tst before any migration date is set.
+- **Self-service app provisioning via tickets** (noted 2026-06-15): let a team member open a
+  JIRA / GitLab ticket ("I want a Nextcloud") and have the app spun up in the cluster with
+  admin access granted automatically. *What it would require* (high-level — needs its own ADR
+  before any build):
+  - **Trigger**: a GitLab/JIRA webhook (or polling agent) watches for tickets matching a
+    structured form/label (e.g. `provision:nextcloud`). Parse → validate against an
+    **allowlist of supported apps** (don't run arbitrary charts from a ticket).
+  - **Provisioning (GitOps, not imperative)**: the agent renders the app's Helm chart /
+    kustomize overlay into `infra/k8s/apps/<app>/` and opens a PR (review gate) or auto-applies
+    via a GitOps controller (Argo CD / Flux). Apps run **in-cluster** — storage via the existing
+    Hetzner CSI, ingress via the existing Traefik + cert-manager + external-dns. So this is a
+    **Kubernetes/GitOps-layer** capability; raw Hetzner API integration is largely already
+    abstracted by the cluster (CCM/CSI). New hostnames stay under `nonprod.handlingar.se` and
+    remain **DNS-approval-gated** (see invariants.md).
+  - **Identity & "grant admin"**: needs a cluster SSO/IdP (Keycloak / Authentik) so "admin
+    access" = create user + assign role, or per-app admin credentials **generated and stored via
+    SOPS / External Secrets** (Phase 3) and delivered to the requester out-of-band — never pasted
+    into the ticket in plaintext.
+  - **Lifecycle & guardrails**: deprovision on ticket close; per-app ResourceQuota / cost ceiling;
+    register every provisioned resource in `infra/resources.tsv` so `make cloud-audit` keeps
+    tracking it; hard-scope to nonprod (same prod-isolation concern as `docs/assumptions.md` 2026-06-15).
+  - **The "agent"**: could be a scheduled Claude Code routine or a small custom controller. It
+    operates at the GitOps/K8s layer (open PRs, apply manifests, call the IdP API), behind the
+    same review + approval gates as human changes.
+  - **Depends on**: ADR 0004 (k3s), ADR 0006 (ingress/DNS), Phase 3 (secrets), and likely an
+    IdP decision. Spans multiple phases; schedule after the prod baseline is stable.
 - Metabase for business reporting on FOI-request data (distinct from observability).
 - Public status page.
 - k6 / locust load test suite runnable against tst.
