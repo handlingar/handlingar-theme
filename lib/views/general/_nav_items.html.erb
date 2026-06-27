@@ -2,10 +2,6 @@
   <%= link_to _("Make a request"), select_authority_path, :id => 'make-request-link' %>
 </li>
 
-<li class="<%= 'selected' if controller?('request') && !action?('new', 'select_authority') %>">
-  <%= link_to _("View requests"), request_list_successful_path %>
-</li>
-
 <li class="<%= 'selected' if controller?('public_body') %>">
   <%= link_to _("View authorities"), list_public_bodies_default_path %>
 </li>

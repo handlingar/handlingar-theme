@@ -964,3 +964,848 @@ dt {
 .pro-pill {
   background-color: desaturate(darken($color_secondary, 10%), 5%);
 }
+
+// =============================================================================
+//  TAMM STUDIOS DESIGN SYSTEM  ·  Handlingar.se
+//  Imported last → authoritative overrides for identity, type & components.
+// =============================================================================
+
+// ---- 1.2 Typography ---------------------------------------------------------
+body,
+.entirebody,
+input,
+button,
+select,
+textarea {
+  font-family: $source-sans;
+}
+
+body {
+  font-size: $base-font-size;
+  line-height: 1.5;
+  color: $body-font-color;
+  -webkit-font-smoothing: antialiased;
+}
+
+h1, h2, h3, h4 { font-weight: $font-weight-bold; line-height: 1.15; }
+h1 { font-size: $font-size-h1; }   // 48px — Bold
+h2 { font-size: $font-size-h2; }   // 36px — Bold
+h3 { font-size: $font-size-h3; }   // 32px — Bold
+h4 { font-size: $font-size-h4; }   // 24px — Bold
+h5 { font-size: $font-size-h5; font-weight: $font-weight-semibold; line-height: 1.3; } // 19px — Semi-Bold
+h6 { font-size: $font-size-body; font-weight: $font-weight-semibold; line-height: 1.3; }
+
+.subtitle { font-size: $font-size-subtitle; font-weight: $font-weight-semibold; }
+p, li, dd, dt, .body-text { font-size: $font-size-body; }
+small, .small-body { font-size: $font-size-small; }
+
+// Mobile down-scale (keep hierarchy, reduce strain on small screens)
+@media ( max-width: $main_menu-mobile_menu_cutoff ) {
+  h1 { font-size: 2rem; }      // 32
+  h2 { font-size: 1.75rem; }   // 28
+  h3 { font-size: 1.5rem; }    // 24
+  h4 { font-size: 1.25rem; }   // 20
+}
+
+// ---- 2.1 Spacing (8px base unit) -------------------------------------------
+$ds-space-1: 8px;
+$ds-space-2: 16px;
+$ds-space-3: 24px;
+$ds-space-4: 32px;
+$ds-space-5: 40px;
+$ds-space-6: 56px;
+
+// ---- 1.1 Graphic element: the angled "dividing stroke" (Brand Accent) -------
+// The booklet's signature notch — a Brand Accent bar that slants at its right
+// edge, sitting at the top-left of dark sections.
+@mixin ds-accent-notch {
+  position: relative;
+  &::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 180px;
+    height: 14px;
+    background-color: $brand_accent;
+    -webkit-clip-path: polygon(0 0, 100% 0, calc(100% - 14px) 100%, 0 100%);
+    clip-path: polygon(0 0, 100% 0, calc(100% - 14px) 100%, 0 100%);
+  }
+}
+
+// ---- 1.6 Buttons ------------------------------------------------------------
+// Shared anatomy (page 1.6). Medium = 16/32 padding, 16px Bold.
+//                            Small  = 14/24 padding, 14px Semi-Bold.
+@mixin ds-button-base {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: $ds-space-1;                 // item spacing: 8
+  padding: 16px 32px;               // Medium button anatomy
+  font-family: $source-sans;
+  font-size: $font-size-button-m;   // 16px
+  font-weight: $font-weight-bold;
+  line-height: 1.2;
+  border: 2px solid transparent;
+  border-radius: 4px;
+  text-decoration: none;
+  cursor: pointer;
+  transition: background-color 0.2s ease-out, color 0.2s ease-out,
+              border-color 0.2s ease-out;
+  -webkit-appearance: none;
+}
+
+@mixin ds-button-small {
+  padding: 14px 24px;               // Small button anatomy
+  font-size: $font-size-button-s;   // 14px
+  font-weight: $font-weight-semibold;
+}
+
+// -- Primary (dark on light backgrounds) --
+%ds-primary {
+  @include ds-button-base;
+  background-color: $brand_primary;
+  color: $color_white;
+  border-color: $brand_primary;
+  &:link, &:visited { color: $color_white; }
+  &:hover, &:active, &:focus,
+  &:visited:hover, &:visited:focus {
+    background-color: $color_text_black;
+    border-color: $color_text_black;
+    color: $color_white;
+    text-decoration: none;
+  }
+}
+
+// -- Secondary (outline) --
+%ds-secondary {
+  @include ds-button-base;
+  background-color: transparent;
+  color: $brand_primary;
+  border-color: $brand_primary;
+  &:link, &:visited { color: $brand_primary; }
+  &:hover, &:active, &:focus {
+    background-color: $brand_primary;
+    color: $color_white;
+    text-decoration: none;
+  }
+}
+
+// -- Tertiary (underlined text button) --
+%ds-tertiary {
+  @include ds-button-base;
+  background-color: transparent;
+  border-color: transparent;
+  color: $brand_primary;
+  text-decoration: underline;
+  &:link, &:visited { color: $brand_primary; }
+  &:hover, &:active, &:focus { color: $color_text_black; text-decoration: underline; }
+}
+
+// Map the design-system roles onto Alaveteli's real button hooks.
+input[type="submit"],
+.form_button,
+.link_button_green,
+.button-primary,
+a.button-primary,
+.button.button--primary {
+  @extend %ds-primary;
+}
+.link_button_green_large { @extend %ds-primary; font-size: 1.375rem; padding: 20px 40px; }
+
+.button-secondary,
+a.button-secondary {
+  @extend %ds-secondary;
+}
+
+.button-tertiary,
+a.button-tertiary {
+  @extend %ds-tertiary;
+}
+
+// Smaller buttons used in lists / sidebars / inline contexts
+.body_listing__request-button,
+.make-request-quick-button,
+.requests__search__button,
+.action-menu__button,
+.button-s {
+  @include ds-button-small;
+}
+
+// -- Dark-context variants ----------------------------------------------------
+// On Brand Primary (#333) backgrounds the orange Brand Secondary takes over for
+// primaries (approved combo 000000 + EB9C6A), and outlines/links go orange.
+.homepage-hero,
+.ds-dark,
+#footer {
+  input[type="submit"],
+  .form_button,
+  .link_button_green,
+  .button-primary {
+    background-color: $brand_secondary;
+    border-color: $brand_secondary;
+    color: $brand_primary;
+    &:link, &:visited { color: $brand_primary; }
+    &:hover, &:active, &:focus {
+      background-color: darken($brand_secondary, 8%);
+      border-color: darken($brand_secondary, 8%);
+      color: $brand_primary;
+    }
+  }
+  .button-secondary {
+    color: $color_white;
+    border-color: $color_white;
+    background-color: transparent;
+    &:link, &:visited { color: $color_white; }
+    &:hover, &:active, &:focus {
+      background-color: rgba(255, 255, 255, 0.12);
+      color: $color_white;
+    }
+  }
+  .button-tertiary {
+    color: $brand_secondary;
+    &:link, &:visited { color: $brand_secondary; }
+    &:hover, &:active, &:focus { color: $color_white; }
+  }
+}
+
+// ---- 1.5 Iconography (Material Symbols, outlined) ---------------------------
+.material-symbols-outlined {
+  font-family: 'Material Symbols Outlined';
+  font-weight: normal;
+  font-style: normal;
+  line-height: 1;
+  letter-spacing: normal;
+  text-transform: none;
+  display: inline-block;
+  white-space: nowrap;
+  word-wrap: normal;
+  direction: ltr;
+  -webkit-font-feature-settings: 'liga';
+  -webkit-font-smoothing: antialiased;
+  font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24; // outlined, not filled
+}
+
+// ---- 3.1 Header: two-level navigation --------------------------------------
+// White top bar (logo · search · language) over an orange Brand Secondary bar
+// (menu · auth buttons), divided by a Brand Accent stroke (page 3.1).
+#banner_inner.banner_inner,
+.banner_inner {
+  background-color: $color_white;
+  border-bottom: 3px solid $brand_accent; // dividing stroke between the two bars
+}
+
+#banner_content {
+  @include respond-min( $main_menu-mobile_menu_cutoff ) {
+    display: flex;
+    align-items: center;
+    padding: 0.75em 50px; // 50px page margin from the grid spec
+  }
+}
+
+.banner_site-title {
+  margin: 0;
+  @include respond-min( $main_menu-mobile_menu_cutoff ) { margin-right: auto; }
+  h1 { margin: 0; font-size: 0; }
+}
+
+// Search field — dark-on-white, square design
+.navigation_search {
+  @include respond-min( $main_menu-mobile_menu_cutoff ) {
+    order: 2;
+    margin: 0 1em 0 0;
+  }
+  .navigation_search_button[type="search"] {
+    background-color: $color_white;
+    border: 1px solid $color_light_grey;
+    border-radius: 4px;
+    color: $brand_primary;
+  }
+  button[type="submit"] { color: $brand_primary; }
+}
+
+// Language selector — dark-on-white in the top bar
+#user_locale_switcher.locale-list {
+  @include respond-min( $main_menu-mobile_menu_cutoff ) { order: 3; }
+  .locale-list-trigger,
+  .current-locale { color: $brand_primary; }
+  .available-languages {
+    @include respond-min( $main_menu-mobile_menu_cutoff ) {
+      background-color: $color_white;
+      border: 1px solid $color_light_grey;
+    }
+    &__item a { color: $brand_primary; }
+  }
+}
+
+// The orange Brand Secondary nav bar
+#topnav.topnav {
+  background-color: $brand_secondary;
+  box-shadow: none;
+  @include respond-min( $main_menu-mobile_menu_cutoff ) {
+    position: relative;
+    min-height: 3.5em;
+    padding: 0 240px 0 50px; // reserve room on the right for the auth buttons
+    nav { display: flex; align-items: center; min-height: 3.5em; }
+    .navigation {
+      width: auto;
+      max-width: none;
+      margin: 0;
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      > li { float: none; display: inline-block; }
+    }
+  }
+  .navigation > li > a {
+    color: $brand_primary;            // higher-contrast dark text on orange
+    font-weight: $font-weight-semibold;
+    text-decoration: none;
+    &:hover, &:active, &:focus {
+      background-color: rgba(0, 0, 0, 0.08);
+      color: $color_text_black;
+    }
+  }
+  .navigation > li.selected > a {
+    background-color: $color_bg;
+    color: $brand_primary;
+  }
+}
+
+// Auth buttons live on the right of the orange bar
+.topnav__auth {
+  @include respond-min( $main_menu-mobile_menu_cutoff ) {
+    position: absolute;
+    right: 50px;
+    top: 50%;
+    transform: translateY(-50%);
+    display: flex;
+    align-items: center;
+    gap: $ds-space-1;
+  }
+  // Neutralise core's grid-column float/width on the log-in bar
+  #logged_in_bar.logged_in_bar {
+    display: flex;
+    align-items: center;
+    gap: $ds-space-1;
+    float: none;
+    width: auto;
+    padding: 0;
+    margin: 0;
+  }
+
+  .create-account-link.button-primary {
+    @extend %ds-primary;
+    @include ds-button-small;
+    white-space: nowrap;
+  }
+  .sign_in_link.button-secondary {
+    @extend %ds-secondary;
+    @include ds-button-small;
+    white-space: nowrap;
+  }
+  // Logged-in account name on the orange bar
+  .account-link,
+  .account-link:link,
+  .account-link:visited {
+    color: $brand_primary;
+    font-weight: $font-weight-semibold;
+  }
+}
+
+// ---- 3.1 Hero (title / subtitle boxes + CTAs over image) -------------------
+.homepage-hero {
+  padding: 4em 0 5em;
+  @include respond-min( $main_menu-mobile_menu_cutoff ) { padding: 5em 0 7em; }
+
+  .hero__headline { margin-bottom: 1.5em; }
+
+  // Title sits in a dark box that hugs each wrapped line (design page 28)
+  .hero__title {
+    display: inline;
+    -webkit-box-decoration-break: clone;
+    box-decoration-break: clone;
+    background-color: rgba(51, 51, 51, 0.9);
+    color: $color_white;
+    font-size: $font-size-h2;
+    font-weight: $font-weight-bold;
+    line-height: 1.55;
+    padding: 0.15em 0.4em;
+    text-shadow: none;
+    @include respond-min( $main_menu-mobile_menu_cutoff ) { font-size: $font-size-h1; }
+  }
+
+  // Subtitle in a Brand Accent box, offset below the title
+  .hero__subtitle {
+    display: inline-block;
+    margin-top: 0.6em;
+    background-color: $brand_accent;
+    color: $color_white;
+    font-size: $font-size-h4;
+    font-weight: $font-weight-bold;
+    line-height: 1.4;
+    padding: 0.2em 0.5em;
+    @include respond-min( $main_menu-mobile_menu_cutoff ) { font-size: $font-size-h3; }
+  }
+
+  .hero__browse,
+  .hero__browse a { color: $color_white; }
+  .hero__browse { font-size: $font-size-subtitle; margin-bottom: 1.5em; }
+
+  .hero__ctas {
+    display: flex;
+    flex-wrap: wrap;
+    gap: $ds-space-2;
+  }
+}
+
+// ---- 1.5 USP section (three propositions on the dark surface) --------------
+.homepage-usp {
+  background-color: $brand_primary;
+  color: $color_white;
+  padding: 3.5em 0;
+  @include ds-accent-notch;
+
+  .usp__list {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    @include respond-min( $main_menu-mobile_menu_cutoff ) {
+      display: flex;
+      gap: 2.5em;
+    }
+  }
+  .usp__item {
+    flex: 1;
+    text-align: center;
+    padding: 1em 0;
+  }
+  .usp__icon {
+    color: $brand_secondary;
+    font-size: 3.25rem;
+    font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 48;
+    margin-bottom: 0.4em;
+  }
+  .usp__title { color: $color_white; font-size: $font-size-h4; margin: 0 0 0.4em; }
+  .usp__text { color: transparentize($color_white, 0.15); font-size: $font-size-body; }
+  .usp__link.button-tertiary {
+    color: $brand_secondary;
+    padding-left: 0;
+    padding-right: 0;
+    &:link, &:visited { color: $brand_secondary; }
+    &:hover, &:active, &:focus { color: $color_white; }
+  }
+}
+
+// ---- 3.1 Handlingar PRO marketing section ----------------------------------
+.homepage-pro {
+  background-color: $color_bg;
+  padding: 4em 0;
+
+  .pro__title { font-size: $font-size-h3; margin: 0 0 0.5em; max-width: 28em; }
+  .pro__lead { font-size: $font-size-subtitle; color: $color_text_gray; max-width: 40em; margin-bottom: 1.5em; }
+
+  .pro__usp-grid {
+    list-style: none;
+    margin: 3em 0 0;
+    padding: 0;
+    @include respond-min( $main_menu-mobile_menu_cutoff ) {
+      display: flex;
+      flex-wrap: wrap;
+    }
+  }
+  .pro__usp {
+    padding: 1em 1.5em 1.5em 0;
+    @include respond-min( $main_menu-mobile_menu_cutoff ) { flex: 0 0 33.333%; }
+    .usp__icon {
+      color: $brand_accent;
+      font-size: 2.5rem;
+      font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 40;
+      display: block;
+      margin-bottom: 0.3em;
+    }
+    .usp__title { font-size: $font-size-h5; margin: 0 0 0.3em; color: $brand_primary; }
+    .usp__text { color: $color_text_gray; }
+  }
+
+  .pro__media {
+    margin-top: 3em;
+    padding-top: 2em;
+    border-top: 3px solid $brand_accent;
+    text-align: center;
+  }
+  .pro__media-title { font-size: $font-size-h4; margin: 0 0 1em; }
+  .pro__media-logos {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 2.5em;
+    li { font-size: 1.5rem; font-weight: $font-weight-bold; color: $color_text_gray; opacity: 0.8; }
+  }
+}
+
+// ---- How-it-works: "Learn more" as a tertiary text button ------------------
+.learn-more-foi a {
+  @extend %ds-tertiary;
+}
+
+// ---- 3.1 Footer (dark, accent notch, structured links) ---------------------
+#footer.footer {
+  @include ds-accent-notch;
+  background-color: $brand_primary;
+  color: transparentize($color_white, 0.25);
+  padding-top: 3em;
+
+  .footer__about h2 { color: $color_white; font-size: $font-size-h4; }
+
+  .about__contact-links {
+    list-style: none;
+    margin: 1.5em 0 0;
+    padding: 0;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5em 2em;
+    li a {
+      color: $color_white;
+      text-decoration: none;
+      &:hover, &:active, &:focus { color: $brand_secondary; text-decoration: underline; }
+    }
+  }
+
+  .footer__final .row { border-top: 1px solid lighten($brand_primary, 10%); }
+  .final__social-links a { color: $color_white; }
+}
+
+// ---- 3.3 Search / list results: Brand Accent dividers (page 36) -------------
+.body_listing,
+.request_listing,
+.user_listing {
+  border-bottom: 1px solid transparentize($brand_accent, 0.55);
+  padding-bottom: 1.25em;
+  margin-bottom: 1.25em;
+}
+
+// Find-an-authority / search field consistency with the design inputs
+#search_form input[type="text"],
+.requests__search input[type="text"],
+form.user_search input[type="text"] {
+  border: 1px solid $color_light_grey;
+  border-radius: 4px;
+}
+
+// ---- 1.5 Iconography — exact box sizes (booklet page 15) --------------------
+// Small 24/16 · Big 32/20 · Social 26/26 · USP 100/80
+.icon--small  { font-size: 16px; font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 20; }
+.icon--big    { font-size: 20px; font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24; }
+.icon--social { font-size: 26px; }
+.icon--usp    { font-size: 80px; font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 48; }
+
+// USP icons sit in a 100×100 box with an 80px glyph
+.homepage-usp .usp__icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 100px;
+  height: 100px;
+  font-size: 72px;
+  font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 48;
+}
+
+// ---- 3.1 Footer — multi-column layout + solid social badges ----------------
+#footer.footer {
+  padding: 48px 0 40px; // 8px-multiple spacing
+
+  .footer__top {
+    @include respond-min( $main_menu-mobile_menu_cutoff ) {
+      display: flex;
+      justify-content: space-between;
+      gap: 40px;
+      padding-left: $ds-page-margin;
+      padding-right: $ds-page-margin;
+    }
+  }
+  .footer__run-by,
+  .footer__publisher {
+    color: transparentize($color_white, 0.3);
+    margin: 0.25em 0;
+    font-size: $font-size-body;
+  }
+  .footer__nav {
+    display: flex;
+    gap: 48px;
+    margin-top: 8px;
+    @include respond-min( $main_menu-mobile_menu_cutoff ) { margin-top: 0; }
+  }
+  .footer__links {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    li { margin-bottom: 8px; }
+    a { color: $color_white; text-decoration: none;
+        &:hover, &:active, &:focus { color: $brand_secondary; text-decoration: underline; } }
+  }
+
+  // Solid social badges (design changed social icons to solid colour, page 31)
+  .footer__social ul {
+    list-style: none;
+    margin: 16px 0 0;
+    padding: 0;
+    display: flex;
+    gap: 8px;
+  }
+  .footer__social .social-link {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    height: 2.4em;
+    padding: 0 1em;
+    border-radius: 1.2em;
+    background-color: $brand_secondary;
+    color: $brand_primary;
+    font-weight: $font-weight-semibold;
+    text-decoration: none;
+    &:hover, &:active, &:focus {
+      background-color: darken($brand_secondary, 8%);
+      color: $brand_primary;
+      text-decoration: none;
+    }
+  }
+}
+
+// ---- 2.2 Page margin (50px) on the home sections ---------------------------
+.homepage-hero .row,
+.homepage-usp .row,
+.homepage-pro .row,
+.homepage-how-it-works .row,
+.homepage-learn-more .row {
+  @include respond-min( $main_menu-mobile_menu_cutoff ) {
+    padding-left: $ds-page-margin;
+    padding-right: $ds-page-margin;
+  }
+}
+
+// ---- 3.1 How-it-works — illustrated vertical steps (page 29) ----------------
+.homepage-how-it-works {
+  background-color: $color_bg;
+  padding: 56px 0;
+
+  .hiw-content__headings { text-align: center; margin-bottom: 40px; }
+  .hiw__subtitle { font-size: $font-size-subtitle; color: $color_text_gray; max-width: 48em; margin: 0 auto; }
+
+  .hiw-steps { list-style: none; margin: 0; padding: 0; }
+
+  .hiw-step {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 24px;
+    margin-bottom: 40px;
+    @include respond-min( $main_menu-mobile_menu_cutoff ) {
+      flex-direction: row;
+      gap: 56px;        // 56px spacing from the booklet
+      margin-bottom: 56px;
+    }
+    &--reverse {
+      @include respond-min( $main_menu-mobile_menu_cutoff ) { flex-direction: row-reverse; }
+    }
+  }
+
+  .hiw-step__illustration {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 12em;
+    background-color: transparentize($brand_secondary, 0.82);
+    border-radius: 8px;
+    .material-symbols-outlined {
+      font-size: 96px;
+      color: $brand_accent;
+      font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 48;
+    }
+  }
+
+  .hiw-step__content { flex: 1; }
+  .hiw-step__title { font-size: $font-size-h4; margin: 0 0 8px; }
+  .hiw-step__num { color: $brand_accent; }
+  .hiw-step__content p { margin-bottom: 16px; line-height: 1.6; }
+}
+
+// ---- 3.1 Dark "learn more" band --------------------------------------------
+.homepage-learn-more {
+  background-color: $brand_primary;
+  color: transparentize($color_white, 0.1);
+  padding: 56px 0;
+  text-align: center;
+  @include ds-accent-notch;
+
+  .learn-more__title { color: $color_white; font-size: $font-size-h3; margin: 0 0 16px; }
+  .learn-more__text { max-width: 52em; margin: 0 auto 24px; line-height: 1.6; }
+  .learn-more__ctas { display: flex; flex-wrap: wrap; gap: 16px; justify-content: center; }
+}
+
+// ---- 3.2 Create account (booklet page 33) ----------------------------------
+.create-account {
+  @include respond-min( $main_menu-mobile_menu_cutoff ) {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-template-areas:
+      "illu form"
+      "signin signin";
+    column-gap: 40px;
+    row-gap: 32px;
+    align-items: start;
+  }
+
+  .create-account__illustration {
+    grid-area: illu;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 18em;
+    background-color: $brand_primary;
+    border-radius: 8px;
+    margin-bottom: 24px;
+    @include respond-min( $main_menu-mobile_menu_cutoff ) { margin-bottom: 0; }
+    .material-symbols-outlined {
+      font-size: 120px;
+      color: $brand_secondary;
+      font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 48;
+    }
+  }
+
+  .create-account__form { grid-area: form; }
+  .create-account__title { font-size: $font-size-h2; margin: 0 0 8px; }
+  .create-account__lead { color: $color_text_gray; margin-bottom: 16px; }
+
+  .create-account__alt-links {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 8px;
+    margin-bottom: 24px;
+    .button-tertiary { padding: 0; }
+  }
+
+  .signup__terms { margin: 16px 0; }
+  .signup__terms-label { display: flex; align-items: center; gap: 8px; }
+
+  // Sign-in moved below, de-emphasised (the design keeps create-account primary)
+  .create-account__signin {
+    grid-area: signin;
+    border-top: 1px solid $color_light_grey;
+    padding-top: 24px;
+    margin-top: 8px;
+    .sign-in-wrapper { max-width: 28em; }
+  }
+}
+
+// ---- 3.3 Search feature (booklet pages 35–36) ------------------------------
+.search-hero {
+  background-color: $brand_primary;
+  background-image: image-url('homepage-background.jpg');
+  background-size: cover;
+  background-position: center;
+  color: $color_white;
+  padding: 48px 0 56px;
+
+  .search-hero__title {
+    display: inline;
+    -webkit-box-decoration-break: clone;
+    box-decoration-break: clone;
+    background-color: rgba(51, 51, 51, 0.9);
+    color: $color_white;
+    font-size: $font-size-h3;
+    line-height: 1.5;
+    padding: 0.15em 0.4em;
+    @include respond-min( $main_menu-mobile_menu_cutoff ) { font-size: $font-size-h2; }
+  }
+  .search-hero__subtitle {
+    display: inline-block;
+    margin-top: 0.6em;
+    background-color: $brand_accent;
+    color: $color_white;
+    font-size: $font-size-h4;
+    font-weight: $font-weight-bold;
+    padding: 0.2em 0.5em;
+  }
+}
+
+.search-intro {
+  background-color: $color_bg;
+  padding: 48px 0;
+  .row {
+    @include respond-min( $main_menu-mobile_menu_cutoff ) { display: flex; align-items: center; gap: 40px; }
+  }
+  .search-intro__text { flex: 2; }
+  .search-intro__text h2 { font-size: $font-size-h3; margin: 0 0 16px; }
+  .search-intro__text p { color: $color_text_gray; margin-bottom: 24px; }
+  .search-intro__ctas { display: flex; flex-wrap: wrap; gap: 16px; }
+  .search-intro__illustration {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    .material-symbols-outlined {
+      font-size: 120px;
+      color: $brand_accent;
+      font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 48;
+    }
+  }
+}
+
+.search-band {
+  background-color: $brand_primary;
+  color: $color_white;
+  padding: 48px 0;
+  text-align: center;
+  @include ds-accent-notch;
+
+  .search-band__title { color: $color_white; font-size: $font-size-h4; margin: 0 0 8px; }
+  .search-band__hint { color: transparentize($color_white, 0.2); margin-bottom: 24px; }
+  .search-band__field {
+    display: flex;
+    justify-content: center;
+    gap: 8px;
+    max-width: 36em;
+    margin: 0 auto;
+    input[type="text"] {
+      flex: 1;
+      background-color: $color_white;
+      border: 1px solid $color_white;
+      border-radius: 4px;
+      margin: 0;
+    }
+  }
+}
+
+.search-results-row {
+  margin-top: 40px;
+}
+
+// Result rows: name + count on the left, action buttons on the right (page 36)
+.body_listing {
+  @include respond-min( $main_menu-mobile_menu_cutoff ) {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 24px;
+  }
+  .body-listing__main { flex: 1; }
+  .body-listing__header a { font-size: $font-size-h5; font-weight: $font-weight-bold; color: $brand_primary; text-decoration: none; }
+  .body-listing__request-count { color: $color_text_gray; font-size: $font-size-small; }
+
+  .body-listing__actions {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    flex-shrink: 0;
+    margin-top: 8px;
+    @include respond-min( $main_menu-mobile_menu_cutoff ) { margin-top: 0; }
+    .link_button_green { @include ds-button-small; white-space: nowrap; }
+    .body-listing__see-previous { white-space: nowrap; }
+  }
+}

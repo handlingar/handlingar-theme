@@ -1,53 +1,108 @@
+// =============================================================================
+//  Handlingar.se — Design System settings
+//  Based on the TAMM STUDIOS UI/UX Design System (Douglas Tamm & Riley Eckerlo)
+//  1.1 Color Palette · 1.2 Typography · 2.x Layout
+// =============================================================================
+
 $main_menu-mobile_menu_cutoff: 58em;
+
+// -- 2.2 Grid & margins (design booklet page 24) ------------------------------
+// 12 columns · 50px page margin · 20px gutter
 $row-width: 64em;
-$body-font-family: "Helvetica Neue", Arial, Helvetica, Helmet, Freesans, sans-serif;
+$total-columns: 12;
+$column-gutter: 20px;   // Foundation gutter (default 30px) → design spec 20px
+$ds-page-margin: 50px;  // outer page margin
+
+// -- 1.2 Typography -----------------------------------------------------------
+// The design system uses a single typeface: Source Sans Pro.
+$source-sans: "Source Sans 3", "Source Sans Pro", "Helvetica Neue", Helvetica, Arial, sans-serif;
+$body-font-family: $source-sans;
+$font-family: $source-sans;
 $base-font-size: 16px;
 
-// Specify the filename and dimensions of your logo file here
+// Type scale (desktop sizes from the booklet, page 1.2)
+$font-size-h1: 48px;   // H1  — Bold
+$font-size-h2: 36px;   // H2  — Bold
+$font-size-h3: 32px;   // H3  — Bold
+$font-size-h4: 24px;   // H4  — Bold
+$font-size-h5: 19px;   // H5  — Semi-Bold
+$font-size-subtitle: 18px; // Subtitle — Semi-Bold
+$font-size-body: 16px; // Body — Regular
+$font-size-small: 12px; // Small Body — Regular
+$font-size-button-m: 16px; // Button M — Bold
+$font-size-button-s: 14px; // Button S — Semi-Bold
+
+$font-weight-regular: 400;
+$font-weight-semibold: 600;
+$font-weight-bold: 700;
+
+// Logo
 $logo-filename: 'logo.png';
-$logo-highdpi-filename: 'logo@2.png'; //Should be at least 2x the size, in the same proportions
+$logo-highdpi-filename: 'logo@2.png';
 $logo-width: 275px;
 $logo-height: 44px;
 
-$color_sand: #f3f1eb;
-$color_black: #333333;
-$color_orange: #E6722A;
-$color_blue: #100467;
-$color_green: #62b356;
-$color_yellow: #ffd836;
-$color_red: #e04b4b;
-$color_violet: #a94ca6;
-$color_purple: #5c377f;
-$color_white: #ffffff;
-$color_off_white: #f3f1eb;
-$color_light_grey: #e2dfd9;
-$color_mid_grey: #959287;
-$color_dark_grey: #6c6b68;
+// -- 1.1 Color Palette --------------------------------------------------------
+// Main colors
+$color_white:            #ffffff;
+$color_bg:               #FBFBFB; // White Background — main background color
+$brand_primary:          #333333; // Brand Primary — dark buttons, dividing sections
+$brand_secondary:        #EB9C6A; // Brand Secondary — buttons, nav bar, USP icons
+$brand_accent:           #E6722A; // Brand Accent — dividing stroke, illustrations
 
-$color_neutral_light: $color_sand;
-$color_neutral_dark: $color_black;
-$color_primary: $color_orange;
-$color_secondary: $color_dark_grey;
+// Text colors
+$color_text_black:       #000000;
+$color_text_gray:        #555555;
 
-$body-bg: $color_neutral_light;
-$topnav_bg: #E6722A;
+// Gradient (illustration depth)
+$gradient_start:         #20384E;
+$gradient_end:           #000000;
 
-$body-font-color: $color_neutral_dark;
-$link-color: darken($color_blue, 20%);
-$action-color: $color_green;
-$font-family: "Source Sans Pro", "Helvetica Neue", Helvetica, Arial, sans-serif;
-$form_input-bg: $color_white;
-$form-label-font-color: $color_black;
+// ---- Compatibility aliases (used throughout core + legacy custom.scss) ------
+// Keep every legacy variable name defined, repointed onto the new palette so
+// the whole site adopts the design system without breaking existing rules.
+$color_black:       $brand_primary;   // legacy "black" == brand dark #333
+$color_orange:      $brand_accent;    // legacy "orange" == brand accent
+$color_sand:        $color_bg;        // legacy light surface == #FBFBFB
+$color_off_white:   $color_bg;
+$color_light_grey:  #e6e6e6;
+$color_mid_grey:    #9b9b9b;
+$color_dark_grey:   $color_text_gray; // #555555
+$color_blue:        $brand_primary;   // remove legacy blue links → brand dark
 
-$button-bg: darken($color_green, 10%);
-$button-color: $color_white;
+// Functional (request status) colors — not part of the brand palette but
+// required to keep success / pending / failure states legible.
+$color_green:       #4f8a45;
+$color_yellow:      #ffd836;
+$color_red:         #cc4b4b;
+$color_violet:      #a94ca6;
+$color_purple:      #5c377f;
 
-$status-success: darken($color_green, 18%);
-$status-failure: darken($color_red, 10%);
-$status-pending: darken($color_orange, 28%);
+// Semantic roles
+$color_neutral_light: $color_bg;
+$color_neutral_dark:  $brand_primary;
+$color_primary:       $brand_accent;     // strong orange for accents / strokes
+$color_secondary:     $color_text_gray;
 
-$notice-color: $color_green;
-$error-color: $color_red;
-$action-color: $color_orange;
+$body-bg:             $color_bg;
+$topnav_bg:           $brand_secondary;  // nav bar == Brand Secondary #EB9C6A
 
-$banner_inner_bg: $color_orange;
+$body-font-color:     $brand_primary;
+$link-color:          $brand_primary;    // dark links on light bg (accessibility)
+$action-color:        $brand_accent;
+$form_input-bg:       $color_white;
+$form-label-font-color: $brand_primary;
+
+// Buttons — Primary is dark (#333) on light backgrounds
+$button-bg:           $brand_primary;
+$button-color:        $color_white;
+
+// Status
+$status-success:      darken($color_green, 4%);
+$status-failure:      $color_red;
+$status-pending:      $brand_accent;
+
+$notice-color:        $color_green;
+$error-color:         $color_red;
+
+$banner_inner_bg:     $color_white;

@@ -1,0 +1,69 @@
+<% if !@post_redirect.nil? && @post_redirect.reason_params[:user_name] %>
+  <% @title = _("Sign in") %>
+  <div id="sign_alone" class="sign_alone">
+
+    <p id="sign_in_reason" class="sign_in_reason">
+      <% if @post_redirect.reason_params[:web].blank? %>
+        <%= _('Please sign in as {{user_name}}',
+              :user_name => link_to(
+                              h(@post_redirect.reason_params[:user_name]),
+                              @post_redirect.reason_params[:user_url])) %>
+      <% else %>
+        <%= _('{{reason}}, please sign in as {{user_name}}.',
+              :reason => @post_redirect.reason_params[:web],
+              :user_name => link_to(
+                              h(@post_redirect.reason_params[:user_name]),
+                              @post_redirect.reason_params[:user_url])) %>
+      <% end %>
+    </p>
+
+    <% if @post_redirect.post_params["controller"] == "admin_general" %>
+      <% unless AlaveteliConfiguration::disable_emergency_user %>
+        <p id="superuser_message" class="superuser_message">
+          <%= _("Don't have a superuser account yet?") %>
+          <%= link_to _("Sign in as the emergency user"),
+                      SafeRedirect.new(@post_redirect.uri).path(query: 'emergency=1') %>
+        </p>
+      <% end %>
+    <% end %>
+
+    <%= render :partial => 'signin', :locals => { :sign_in_as_existing_user => true } %>
+  </div>
+<% else %>
+  <% @title = _('Create a new account') %>
+
+  <div id="sign_together" class="sign_together create-account">
+    <div class="create-account__illustration" aria-hidden="true">
+      <span class="material-symbols-outlined">how_to_reg</span>
+    </div>
+
+    <div id="left_half" class="left_half create-account__form">
+      <h1 class="create-account__title"><%= _('Create a new account') %></h1>
+      <p class="create-account__lead"><%= _('Create a free account to start sending requests for public records.') %></p>
+
+      <p class="create-account__alt-links">
+        <%= link_to _('I already have an account'), '#sign-in-section', class: 'button-tertiary' %>
+        <%= _('or') %>
+        <%= link_to _('I want to create a PRO account'), account_request_index_path, class: 'button-tertiary' %>
+      </p>
+
+      <%= render :partial => 'signup' %>
+    </div>
+
+    <div id="right_half" class="right_half create-account__signin" id="sign-in-section">
+      <div class="sign-in-wrapper">
+        <p class="pretitle">
+        <% if !@post_redirect.nil? && @post_redirect.reason_params[:pro] %>
+          <%= _('Got a {{site_name}} account?', :site_name => site_name) %>
+        <% else %>
+          <%= _('Got an account?') %>
+        <% end %>
+        </p>
+        <h2><%= _('Sign in') %></h2>
+        <%= render :partial => 'signin', :locals => { :sign_in_as_existing_user => false } %>
+      </div>
+    </div>
+
+    <div style="clear:both"></div>
+  </div>
+<% end %>

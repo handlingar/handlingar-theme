@@ -1,0 +1,48 @@
+<div class="footer" id="footer" role="contentinfo">
+  <div class="row footer__top">
+    <div class="footer__about">
+      <h2><%= site_name %></h2>
+      <p class="footer__run-by">
+        <%= _("Run by Open Knowledge Sweden with the Alaveteli software.") %>
+      </p>
+      <p class="footer__publisher">
+        <%= _("Responsible publisher: Elenor Weijmar") %>
+      </p>
+
+      <div class="final__social-links footer__social">
+        <ul>
+          <% unless AlaveteliConfiguration::facebook_username.blank? %>
+            <li>
+              <%= link_to "/#{AlaveteliConfiguration::facebook_username}",
+                          "https://facebook.com/#{AlaveteliConfiguration::facebook_username}",
+                          class: 'social-link social-link--facebook' %>
+            </li>
+          <% end %>
+          <% unless AlaveteliConfiguration::twitter_username.blank? %>
+            <li>
+              <%= link_to "@#{AlaveteliConfiguration::twitter_username}",
+                          "https://twitter.com/#{AlaveteliConfiguration::twitter_username}",
+                          class: 'social-link social-link--twitter' %>
+            </li>
+          <% end %>
+        </ul>
+      </div>
+    </div>
+
+    <nav class="footer__nav" aria-label="Footer">
+      <ul class="footer__links">
+        <li><%= link_to _('Contact us'), help_contact_path %></li>
+        <li><%= link_to _('Privacy and cookies'), help_privacy_path %></li>
+      </ul>
+      <ul class="footer__links">
+        <% if feature_enabled?(:pro_pricing) %>
+          <li><%= link_to _('{{pro_site_name}} Terms', pro_site_name: pro_site_name), pro_page_path(:id => 'legal') %></li>
+        <% end %>
+        <li><%= link_to _('API'), help_api_path %></li>
+      </ul>
+      <ul class="footer__links">
+        <li><%= link_to _('Help'), help_path %></li>
+      </ul>
+    </nav>
+  </div>
+</div>

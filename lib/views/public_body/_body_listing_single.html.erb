@@ -1,0 +1,47 @@
+<%
+  if @highlight_words.nil?
+    @highlight_words = []
+  end
+
+  request_link = false unless defined?(request_link)
+  request_count = public_body.info_requests.is_searchable.size
+%>
+
+<div class="body_listing <%= tags_css(public_body) %>">
+  <div class="body-listing__main">
+    <div class="head body-listing__header">
+      <%= link_to highlight_words(public_body.name, @highlight_words), public_body_path(public_body) %>
+    </div>
+    <div class="desc body-listing__description">
+      <% if !public_body.short_name.blank? || public_body.has_notes? %>
+        <% if !public_body.short_name.blank? %>
+          <%= _("Also called {{other_name}}.",
+                :other_name => highlight_words(public_body.short_name, @highlight_words)) %>
+        <% end %>
+        <% if public_body.has_notes? %>
+          <%= highlight_and_excerpt(strip_tags(public_body.notes_as_string), @highlight_words, 150) %>
+        <% end %>
+        <% if public_body.special_not_requestable_reason? %>
+          <% if public_body.not_requestable_reason == 'not_apply' %>
+            <%= _('FOI law does not apply to this authority.')%>
+          <% elsif public_body.not_requestable_reason == 'defunct' %>
+            <%= _('Defunct.')%>
+          <% end %>
+        <% end %>
+      <% end %>
+    </div>
+    <div class="bottomline body-listing__request-count">
+      <%= n_('{{count}} request has previously been made.',
+             '{{count}} requests have previously been made.',
+             request_count,
+             :count => request_count) %>
+    </div>
+  </div>
+
+  <div class="body-listing__actions">
+    <% unless public_body.special_not_requestable_reason? %>
+      <%= link_to _("Send request"), new_request_to_body_path(:url_name => public_body.url_name), :class => "link_button_green" %>
+    <% end %>
+    <%= link_to _("See previous requests"), public_body_path(public_body), :class => "button-tertiary body-listing__see-previous" %>
+  </div>
+</div>

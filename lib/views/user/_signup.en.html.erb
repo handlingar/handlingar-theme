@@ -43,6 +43,14 @@
 
     <%= recaptcha_tags %>
 
+    <div class="form_item_note signup__terms">
+      <label class="signup__terms-label">
+        <%= check_box_tag 'accepted_terms', '1', false, :tabindex => 45 %>
+        <%= _('I have read the <a href="{{url}}">terms of use</a>',
+              :url => help_terms_path).html_safe %>
+      </label>
+    </div>
+
     <div class="form_button">
       <%= hidden_field_tag 'token', params[:token], {:id => 'signup_token' } %>
       <%= hidden_field_tag :modal, params[:modal], {:id => 'signup_modal' } %>
