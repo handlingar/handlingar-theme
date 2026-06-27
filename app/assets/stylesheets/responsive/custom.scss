@@ -1200,6 +1200,7 @@ a.button-tertiary {
     display: flex;
     align-items: center;
     padding: 0.75em 50px; // 50px page margin from the grid spec
+    .rsp_menu_button { display: none; } // mobile-only hamburger
   }
 }
 
@@ -1209,24 +1210,35 @@ a.button-tertiary {
   h1 { margin: 0; font-size: 0; }
 }
 
-// Search field — dark-on-white, square design
-.navigation_search {
+// Search field — dark-on-white, square design, flush right in the top bar
+#navigation_search.navigation_search {
   @include respond-min( $main_menu-mobile_menu_cutoff ) {
     order: 2;
-    margin: 0 1em 0 0;
+    float: none;      // neutralise core grid-column float…
+    width: auto;      // …fixed 25% width…
+    padding-top: 0;   // …and vertical-centring padding
+    margin: 0;
+    form { width: auto; margin: 0; }
   }
   .navigation_search_button[type="search"] {
     background-color: $color_white;
     border: 1px solid $color_light_grey;
     border-radius: 4px;
     color: $brand_primary;
+    margin: 0;
   }
   button[type="submit"] { color: $brand_primary; }
 }
 
 // Language selector — dark-on-white in the top bar
 #user_locale_switcher.locale-list {
-  @include respond-min( $main_menu-mobile_menu_cutoff ) { order: 3; }
+  @include respond-min( $main_menu-mobile_menu_cutoff ) {
+    order: 3;
+    float: none;
+    width: auto;
+    padding-top: 0;
+    margin-left: 1em;
+  }
   .locale-list-trigger,
   .current-locale { color: $brand_primary; }
   .available-languages {
