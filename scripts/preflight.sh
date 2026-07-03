@@ -23,6 +23,13 @@ mkdir -p "$BIN" "$(dirname "$KUBECONFIG_PATH")"
 
 hdr "Local tools"
 
+# curl — needed to download everything below
+if command -v curl >/dev/null 2>&1; then
+  ok "curl present"
+else
+  die "curl not found — install it first (e.g. 'sudo apt install curl'), then re-run 'make preflight'"
+fi
+
 # kubectl
 if command -v kubectl >/dev/null 2>&1; then
   ok "kubectl present ($(kubectl version --client 2>/dev/null | head -1 | awk '{print $NF}'))"
