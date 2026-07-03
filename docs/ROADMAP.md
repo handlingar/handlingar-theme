@@ -314,32 +314,56 @@ _Exit criteria: one team member can upgrade Alaveteli end-to-end by following th
   MX cutover, in-cluster mail ingestion (replacing Mailpit mock), SPF/DKIM/deliverability.
   No existing task covers this; likely the long pole of the actual prod cutover — needs its
   own ADR + rehearsal on tst before any migration date is set.
-- **Self-service app provisioning via tickets** (noted 2026-06-15): let a team member open a
-  JIRA / GitLab ticket ("I want a Nextcloud") and have the app spun up in the cluster with
-  admin access granted automatically. *What it would require* (high-level — needs its own ADR
-  before any build):
-  - **Trigger**: a GitLab/JIRA webhook (or polling agent) watches for tickets matching a
-    structured form/label (e.g. `provision:nextcloud`). Parse → validate against an
-    **allowlist of supported apps** (don't run arbitrary charts from a ticket).
-  - **Provisioning (GitOps, not imperative)**: the agent renders the app's Helm chart /
-    kustomize overlay into `infra/k8s/apps/<app>/` and opens a PR (review gate) or auto-applies
-    via a GitOps controller (Argo CD / Flux). Apps run **in-cluster** — storage via the existing
-    Hetzner CSI, ingress via the existing Traefik + cert-manager + external-dns. So this is a
-    **Kubernetes/GitOps-layer** capability; raw Hetzner API integration is largely already
-    abstracted by the cluster (CCM/CSI). New hostnames stay under `nonprod.handlingar.se` and
-    remain **DNS-approval-gated** (see invariants.md).
-  - **Identity & "grant admin"**: needs a cluster SSO/IdP (Keycloak / Authentik) so "admin
-    access" = create user + assign role, or per-app admin credentials **generated and stored via
-    SOPS / External Secrets** (Phase 3) and delivered to the requester out-of-band — never pasted
-    into the ticket in plaintext.
+- **Self-service app provisioning via tickets** (noted 2026-06-15; GitLab confirmed 2026-06-15):
+  let a team member open a **GitLab issue** ("I want a Nextcloud") and have the app spun up in
+  the cluster with admin access granted automatically. *What it would require* (high-level —
+  needs its own ADR before any build):
+  - **Trigger**: a **GitLab webhook** (project webhook or instance System Hook on `Issue` events;
+    no polling needed) fires when an issue carries a `provision` label. Intake is a **structured
+    issue template** (`app: nextcloud`, `size:`, `requester:`) parsed **deterministically** —
+    keep the LLM off the provisioning path for the first cut. A free-text LLM-agent parser is a
+    possible later add, but only behind the same approval gate and constrained to the catalog
+    (it may never author arbitrary manifests). Either way, validate against an **allowlist /
+    catalog of supported apps** (don't run arbitrary charts from a ticket).
+  - **GitOps reconciler is the net-new foundation**: today the cluster is applied imperatively
+    from `make` targets (`make app-up`/`bringup`), with **no continuous reconciler**. Ticket-driven
+    provisioning needs **Argo CD or Flux** watching a git repo so a ticket produces a *commit*, not
+    a direct cluster mutation — that preserves the audit trail, drift correction, and
+    delete-the-file teardown the Makefile discipline already aims for. This reconciler choice
+    likely deserves its own ADR before the provisioning ADR.
+  - **Provisioning flow (GitOps, not imperative)**: intake renders the app's vetted Helm chart /
+    kustomize overlay into `infra/k8s/apps/<app>/` and opens a **GitLab MR** (human approval gate);
+    on merge the reconciler deploys it, and CI comments the URL back on the issue. Apps run
+    **in-cluster** — storage via the existing Hetzner CSI, ingress via the existing Traefik +
+    cert-manager + external-dns (a new app with the right annotations gets its host + TLS
+    automatically). So this is a **Kubernetes/GitOps-layer** capability; raw Hetzner API
+    integration is largely already abstracted by the cluster (CCM/CSI). New hostnames stay under
+    `nonprod.handlingar.se` and remain **DNS-approval-gated** (see invariants.md).
+  - **Identity & "grant admin" — the load-bearing wall, and the biggest single chunk**: cleanly,
+    "grant admin" means SSO, not per-app passwords. Stand up a cluster SSO/IdP once (Keycloak /
+    Authentik, or **Cloudflare Access** since we already use Cloudflare) and provision apps to
+    delegate auth to it; then "grant alice admin" = add alice to a group. Without SSO you fall
+    back to per-app admin credentials **generated and stored via SOPS / External Secrets**
+    (Phase 3) and delivered out-of-band (post the *link*, never the value) — which collides with
+    the secret-masking rule, so SSO is strongly preferred.
   - **Lifecycle & guardrails**: deprovision on ticket close; per-app ResourceQuota / cost ceiling;
     register every provisioned resource in `infra/resources.tsv` so `make cloud-audit` keeps
     tracking it; hard-scope to nonprod (same prod-isolation concern as `docs/assumptions.md` 2026-06-15).
   - **The "agent"**: could be a scheduled Claude Code routine or a small custom controller. It
     operates at the GitOps/K8s layer (open PRs, apply manifests, call the IdP API), behind the
     same review + approval gates as human changes.
-  - **Depends on**: ADR 0004 (k3s), ADR 0006 (ingress/DNS), Phase 3 (secrets), and likely an
-    IdP decision. Spans multiple phases; schedule after the prod baseline is stable.
+  - **Minimal first cut to prove the loop** (skip the LLM + full IDP): GitLab issue template +
+    `provision` label → a GitLab CI job parses the fields, renders a catalog values file, opens an
+    MR against the apps tree → **Flux/Argo CD** (installed once) deploys on merge → CI comments the
+    URL back → access via a shared Keycloak/Cloudflare Access group. Everything stays git-auditable
+    and teardown stays a `make` target.
+  - **Effort honestly**: GitOps reconciler ≈ ½–1 day (net-new foundation); **SSO/OIDC = the
+    biggest chunk** (net-new); catalog of vetted charts = ongoing, one per offering; structured
+    intake + MR-open + comment-back = small (larger + riskier if LLM-driven); approval + TTL
+    guardrails = small but non-negotiable (Hetzner is billable, admin is being granted).
+  - **Depends on**: ADR 0004 (k3s), ADR 0006 (ingress/DNS), Phase 3 (secrets), a **GitOps
+    reconciler ADR** (Argo CD vs Flux), and an **IdP/SSO decision**. Spans multiple phases;
+    schedule after the prod baseline is stable.
 - Metabase for business reporting on FOI-request data (distinct from observability).
 - Public status page.
 - k6 / locust load test suite runnable against tst.

@@ -9,7 +9,10 @@
       "Bash(make image-import *)",
       "Bash(git check-ignore *)",
       "Bash(git grep *)",
-      "Bash(make bringup *)"
+      "Bash(make bringup *)",
+      "Bash(kubectl get *)",
+      "Bash(git add *)",
+      "Bash(git commit -q -m ' *)"
     ]
   },
   "hooks": {
