@@ -37,12 +37,13 @@ Cluster types:
 
 | Env | hetzner-k3s type | Masters | Workers | Est. cost |
 | --- | --- | --- | --- | --- |
-| `dev` | Development | 1 × cpx22 | 2 × cpx22 | ~€20/mo |
-| `tst` | Development | 1 × cpx22 | 2 × cpx22 | ~€20/mo |
-| `prod` | Small HA (future) | 3 × cpx22 | 3 × cpx32 | TBD |
+| `dev` | Development | 1 × cx23 | 2 × cx23 | ~€21/mo |
+| `tst` | Development | 1 × cx23 | 2 × cx23 | ~€21/mo |
+| `prod` | Small HA (future) | 3 × cx23 | 3 × cpx32 | TBD |
 
-(`cx22` from the original draft is deprecated by Hetzner; `cpx22` is the current
-2 vCPU / 4 GB shared-x86 equivalent available in `fsn1`.)
+(`cx22` is deprecated; `cpx22` was used until 2026-07-03 but costs €19.49/mo —
+3.5× more than `cx23` (€5.49/mo, same 2 vCPU / 4 GB x86 spec). Switched to
+`cx23` to bring dev/tst cost back to ~€21/mo.)
 
 Cluster configs live in `infra/hetzner-k3s/<env>-cluster.yaml`. The Hetzner API token is
 injected at runtime via `HCLOUD_TOKEN`; no token is committed to the repo.

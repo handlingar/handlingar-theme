@@ -41,17 +41,18 @@ networking:
     subnet: 10.0.0.0/16
 
 # Single master — Development cluster type.
-# cpx22: 2 vCPU / 4 GB RAM / 80 GB NVMe, ~€4.35/mo (shared AMD, x86).
-# (The older cx22 type is deprecated and no longer provisionable.)
+# cx23: 2 vCPU / 4 GB RAM / 80 GB NVMe, ~€5.49/mo (shared Intel, x86).
+# 3×cx23 + LB €7.49 + volume ≈ €21/mo total (verified 2026-07-03).
+# cpx22 was here before but is €19.49/mo — 3.5× more expensive for the same spec.
 masters_pool:
-  instance_type: cpx22
+  instance_type: cx23
   instance_count: 1
   locations:
     - fsn1
 
 worker_node_pools:
   - name: workers
-    instance_type: cpx22
+    instance_type: cx23
     instance_count: 2
     # Worker pools take a single `location` (string); only masters_pool
     # uses `locations` (a list) for HA spread.

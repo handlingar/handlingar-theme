@@ -127,7 +127,7 @@ boot chain (migrate → theme → xapian); Mailpit API: `curl localhost:8025/api
 
 ## R11 — Tear down / rebuild the dev cluster  (LIVE, since 2026-06-15)
 
-The dev cluster is disposable and **billing-bearing** (~€20/mo nodes + ~€5.4/mo LB). Tear it
+The dev cluster is disposable and **billing-bearing** (≈ €21/mo gross while running: 3×cx23 €5.49 + LB €7.49 + volume — live per-resource prices: `make resources`). Tear it
 down when idle; rebuild from zero in one command.
 
 | Action | Command | Notes |

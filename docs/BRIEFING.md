@@ -148,8 +148,8 @@ kubectl -n handlingar port-forward deploy/alaveteli-web 3000:3000
 | --- | --- |
 | Topology | 1 master + 2 workers, all `Ready` |
 | K3s | `v1.32.4+k3s1` |
-| Instances | 3 × `cpx22` (2 vCPU / 4 GB, shared x86) in `fsn1` |
-| Cost | ~€20/mo **while running** — `hetzner-k3s delete --config infra/hetzner-k3s/dev-cluster.yaml` to stop billing |
+| Instances | 3 × `cx23` (2 vCPU / 4 GB, shared Intel x86) in `fsn1` |
+| Cost | ≈ €21/mo gross (≈ €0.70/day, hourly-billed) **while running** — changed to cx23 2026-07-03 — `hetzner-k3s delete --config infra/hetzner-k3s/dev-cluster.yaml` to stop billing |
 | Kubeconfig | `~/.kube/handlingar-dev.yaml` |
 | System pods | Hetzner CCM, CSI (5/5), CoreDNS, Traefik — Running |
 
@@ -206,7 +206,7 @@ all PASS, 2026-06-09. Teardown leaves no billed volume behind.
 
 - hetzner-k3s does **not** evaluate ERB — token comes from `HCLOUD_TOKEN` env, not the config.
 - Worker pools use `location:` (string); only masters use `locations:` (list).
-- `cx22` is deprecated → use `cpx22`.
+- `cx22` is deprecated; `cpx22` was used before but costs €19.49/mo → use `cx23` (€5.49/mo, same spec).
 - `~/.kube/` must exist before provisioning or the kubeconfig write fails.
 - hetzner-k3s v2.5.0 deploys a `cluster-autoscaler` even when disabled; it
   CrashLoopBackOffs and was deleted post-provision (harmless).
