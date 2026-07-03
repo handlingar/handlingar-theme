@@ -132,7 +132,7 @@ down when idle; rebuild from zero in one command.
 
 | Action | Command | Notes |
 | --- | --- | --- |
-| List everything this stack deploys | `make resources` (alias `make cloud-audit`) | Standardized TYPE/NAME/ID/DETAIL table, **registry-driven** (`infra/resources.tsv`). Read-only. Foreign resources (incl. the prod server) are never listed. |
+| List everything this stack deploys | `make resources` | Standardized TYPE/NAME/ID/DETAIL table, **registry-driven** (`infra/resources.tsv`). Read-only. Foreign resources (incl. the prod server) are never listed. |
 | Tear down (stops billing) | `make cluster-down` | Deletes the cluster, then **self-heals**: loops `volumes-clean` + `orphans-clean` and re-runs the audit until it confirms **zero** resources remain (handles async volume-detach / LB+DNS deletion). Fails loudly if anything still bills — a teardown can never finish "clean" with a resource alive. |
 | Bring back up from zero | `make bringup` | Full cluster + image build/import + app + ingress. ~15–17 min cold (proven 2026-06-15). Idempotent. |
 | Re-seed dev data + mail loop | `make mock-data` then the R10 loop | Fresh DB after a rebuild. `mock-data` also re-enables the `accept_mail_from_anywhere` feature so POP3 sync works. |
@@ -140,7 +140,7 @@ down when idle; rebuild from zero in one command.
 **Why teardown leaves orphans without this**: `hetzner-k3s delete` only removes what it created.
 The cloud-controller-manager's Load Balancer and external-dns's Cloudflare records are created
 from *inside* the cluster and outlive it. `orphans-clean` (folded into `cluster-down`) reaps them;
-`cloud-audit --assert-empty` is the hard gate that proves it. To manage a new resource type, add a
+`make resources-assert` is the hard gate that proves it. To manage a new resource type, add a
 line to `infra/resources.tsv`.
 
 ## Smoke test checklist

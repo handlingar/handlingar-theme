@@ -12,9 +12,9 @@
 # resources behind that kept billing while a teardown reported "nothing to clean".
 #
 # Usage:
-#   scripts/cloud-audit.sh                 # list our resources (standardized table)
-#   scripts/cloud-audit.sh --assert-empty  # exit non-zero if ANY remain — the
-#                                           # final gate of `make cluster-down`.
+#   scripts/resources.sh                 # list our resources (standardized table)
+#   scripts/resources.sh --assert-empty  # exit non-zero if ANY remain — the
+#                                         # final gate of `make cluster-down`.
 #
 # Tokens are read from the environment and NEVER printed.
 set -euo pipefail
@@ -129,7 +129,7 @@ if [ "$ASSERT" = "1" ]; then
     printf '\033[32mTEARDOWN VERIFIED CLEAN — no resources from this stack remain.\033[0m\n'
   else
     printf '\033[31mTEARDOWN INCOMPLETE — the resources above still exist (and may bill).\033[0m\n'
-    printf 'Run \033[1mmake orphans-clean\033[0m, then re-run \033[1mmake cloud-audit\033[0m.\n'
+    printf 'Run \033[1mmake orphans-clean\033[0m, then re-run \033[1mmake resources\033[0m.\n'
     exit 1
   fi
 fi

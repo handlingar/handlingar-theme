@@ -135,7 +135,7 @@ Running list of things that aren't how we'd build them today, to be addressed th
 - **Prod shares one Hetzner Cloud project + API token with the dev cluster** (discovered
   2026-06-15, P2-T8). The dev `HCLOUD_TOKEN` can therefore read/modify/delete prod. Dev tooling
   is hard-scoped to the `handlingar-dev` cluster name + `nonprod` DNS subtree to compensate
-  (`scripts/cloud-audit.sh` is driven by `infra/resources.tsv` and never lists prod), but the
+  (`scripts/resources.sh` is driven by `infra/resources.tsv` and never lists prod), but the
   durable fix is to split dev/tst into a separate Hetzner project with its own token before the
   prod migration. See `docs/assumptions.md` (2026-06-15).
 - `<fill>`

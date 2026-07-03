@@ -136,7 +136,7 @@ make cluster-down
 för några euro, istället för att betala för overksamma servrar året om.
 
 <!--
-Revisionen (cloud-audit-assert) kom ur en verklig incident: en tidig nedrivning
+Revisionen (resources-assert) kom ur en verklig incident: en tidig nedrivning
 lämnade tyst kvar en lastbalanserare som fakturerades. Nu är det strukturellt omöjligt
 att missa. Bra ärlig anekdot om det frågas.
 -->

@@ -84,7 +84,7 @@ cluster-down: ## Destroy the dev cluster (STOPS billing)
 	@for i in 1 2 3 4 5; do \
 	  $(MAKE) --no-print-directory volumes-clean; \
 	  $(MAKE) --no-print-directory orphans-clean; \
-	  if bash scripts/cloud-audit.sh --assert-empty; then break; fi; \
+	  if bash scripts/resources.sh --assert-empty; then break; fi; \
 	  if [ $$i -eq 5 ]; then echo "TEARDOWN VERIFICATION FAILED after 5 attempts."; exit 1; fi; \
 	  echo "Resources still settling — retry $$i/5 in 15s..."; sleep 15; \
 	done
@@ -103,17 +103,16 @@ orphans-clean: ## Delete the orphaned LB + DNS records left by a cluster teardow
 	@LB_NAME=$(LB_NAME) APP_HOST=$(APP_HOST) bash scripts/orphan-clean.sh --clean
 
 # Enumerates EVERY billable Hetzner resource + all nonprod DNS by discovery
-# (not by guessing names), so nothing is ever left running silently. `cloud-audit`
-# is read-only; `cloud-audit-assert` exits non-zero if anything remains and runs
-# as the final gate of `cluster-down`.
-.PHONY: cloud-audit resources
-resources: cloud-audit ## Alias for cloud-audit — list every resource this stack deploys
-cloud-audit: ## List the cloud resources this stack deploys (registry-driven; foreign resources never shown)
-	@bash scripts/cloud-audit.sh
+# (not by guessing names), so nothing is ever left running silently. `resources`
+# is read-only, safe to run anytime; `resources-assert` exits non-zero if
+# anything remains and runs as the final gate of `cluster-down`.
+.PHONY: resources
+resources: ## List the cloud resources this stack deploys (registry-driven; foreign resources never shown)
+	@bash scripts/resources.sh
 
-.PHONY: cloud-audit-assert
-cloud-audit-assert: ## Fail if ANY billable resource / stale nonprod DNS remains (teardown gate)
-	@bash scripts/cloud-audit.sh --assert-empty
+.PHONY: resources-assert
+resources-assert: ## Teardown gate: fail if ANY billable resource / stale nonprod DNS remains after cluster-down
+	@bash scripts/resources.sh --assert-empty
 
 # hetzner-k3s delete removes servers but NOT volumes created by the in-cluster
 # CSI driver (e.g. the postgres PVC) — they keep billing. This deletes a volume

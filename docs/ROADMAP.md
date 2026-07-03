@@ -182,11 +182,11 @@ Provisioning is a single command; teardown equally simple. See ADR 0004.
   > end-to-end deletion runs on the next real `make cluster-down`.
   > **Visibility hard-gate (the real fix for "this must never happen silently"):**
   > A declarative registry `infra/resources.tsv` is the single source of truth for every cloud
-  > resource this stack deploys (provider/type/match-by/value/cleaned-by). `scripts/cloud-audit.sh`
-  > (`make resources` / `make cloud-audit`) is driven entirely by it: each row identifies OUR
+  > resource this stack deploys (provider/type/match-by/value/cleaned-by). `scripts/resources.sh`
+  > (`make resources`) is driven entirely by it: each row identifies OUR
   > resources via a Hetzner label selector / exact name / nonprod DNS suffix, so resources NOT in
   > the registry are never queried and never appear. Output is a standardized TYPE/NAME/ID/DETAIL
-  > table. `cloud-audit-assert` (folded in as the final step of `cluster-down`) exits non-zero if
+  > table. `make resources-assert` (folded in as the final step of `cluster-down`) exits non-zero if
   > any managed resource survives — a teardown can no longer end quietly while something bills.
   > **Safety finding:** the audit revealed the **prod server shares the same Hetzner project +
   > token** as dev (`handlingar-prod-*`, hel1). The registry approach makes the tooling provably
@@ -347,7 +347,7 @@ _Exit criteria: one team member can upgrade Alaveteli end-to-end by following th
     (Phase 3) and delivered out-of-band (post the *link*, never the value) — which collides with
     the secret-masking rule, so SSO is strongly preferred.
   - **Lifecycle & guardrails**: deprovision on ticket close; per-app ResourceQuota / cost ceiling;
-    register every provisioned resource in `infra/resources.tsv` so `make cloud-audit` keeps
+    register every provisioned resource in `infra/resources.tsv` so `make resources` keeps
     tracking it; hard-scope to nonprod (same prod-isolation concern as `docs/assumptions.md` 2026-06-15).
   - **The "agent"**: could be a scheduled Claude Code routine or a small custom controller. It
     operates at the GitOps/K8s layer (open PRs, apply manifests, call the IdP API), behind the
