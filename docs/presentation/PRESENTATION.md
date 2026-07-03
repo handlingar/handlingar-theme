@@ -5,274 +5,275 @@ theme: default
 ---
 
 <!--
-30–45 min presentation for a NON-TECHNICAL audience about the new
-handlingar.se platform setup, followed by / interleaved with a live demo.
+30–45 min presentation för en ICKE-TEKNISK publik om den nya
+handlingar.se-plattformens uppbyggnad, följt av / varvat med en livedemo.
 
-How to use this file:
-- It reads as a normal document top-to-bottom.
-- It is also a Marp deck: `npx @marp-team/marp-cli PRESENTATION.md -o slides.pdf`
-  (or present straight from the VS Code Marp extension). Each `---` is a slide.
-- Speaker notes are in HTML comments like this one — visible in presenter view,
-  invisible on the slides.
-- The paired demo script with exact commands and fallbacks is in DEMO.md.
+Hur du använder den här filen:
+- Den fungerar som ett normalt dokument uppifrån och ned.
+- Det är också en Marp-presentation: `npx @marp-team/marp-cli PRESENTATION.md -o slides.pdf`
+  (eller presentera direkt från VS Code Marp-tillägget). Varje `---` är ett bildspel.
+- Talarnoteringar finns i HTML-kommentarer som den här — syns i presentatörsvyn,
+  osynliga på bilderna.
+- Det tillhörande demoskriptet med exakta kommandon och reservplaner finns i DEMO.md.
 
-Suggested timing (40 min total):
-  min 0–2    Slide 1–2, and START `make bringup` LIVE on stage (see DEMO.md, act 0)
-  min 2–12   Slides: what handlingar.se is, the problem we had
-  min 12–22  Slides: what we built, the five capabilities
-  min 22–35  DEMO (the cluster you started at min 0 is now live)
-  min 35–40  What this unlocks next + questions
+Föreslagen tidplan (40 min totalt):
+  min 0–2    Bild 1–2, och KÖR `make bringup` LIVE på scen (se DEMO.md, akt 0)
+  min 2–12   Bilder: vad handlingar.se är, problemet vi hade
+  min 12–22  Bilder: vad vi byggde, de fem förmågorna
+  min 22–35  DEMO (klustret du startade vid min 0 är nu igång)
+  min 35–40  Vad detta möjliggör härnäst + frågor
 -->
 
 # handlingar.se
-## A platform you can rebuild from scratch in 17 minutes
+## En plattform du kan bygga om från grunden på 17 minuter
 
 <!--
-Opening move (demo act 0): show `make resources` — an EMPTY table. "This is
-our cloud account: nothing." Then run `make bringup`: "That command is now
-building an entire copy of our platform from nothing: servers, database,
-website, certificates, everything. It will be done before the demo. Let me
-explain why that's a big deal." The empty table returns twice: full (act 2)
-and empty again (finale) — it's the non-technical thread through the talk.
+Öppningsgrepp (demo akt 0): visa `make resources` — en TOM tabell. "Det här är
+vårt molnkonto: ingenting." Kör sedan `make bringup`: "Det kommandot bygger nu
+en hel kopia av vår plattform från ingenting: servrar, databas, webbplats,
+certifikat, allt. Det är klart innan demon. Låt mig förklara varför det är viktigt."
+Den tomma tabellen återkommer två gånger: full (akt 2) och tom igen (finalen) —
+det är den icke-tekniska tråden genom föredraget.
 -->
 
 ---
 
-## What is handlingar.se?
+## Vad är handlingar.se?
 
-- A public website where **anyone in Sweden can send a freedom-of-information
-  request** (begäran om allmän handling) to a public authority
-- Requests **and the authorities' answers are published openly**, so one
-  person's question becomes everyone's answer
-- Built on **Alaveteli** — proven open-source software running FOI sites in
-  30+ countries (e.g. WhatDoTheyKnow in the UK)
-- We maintain the **Swedish adaptation**: language, branding, and everything
-  needed to run it as a reliable public service
+- En offentlig webbplats där **vem som helst i Sverige kan skicka en
+  begäran om allmän handling** till en myndighet
+- Begäranden **och myndigheternas svar publiceras öppet**, så att en
+  persons fråga blir allas svar
+- Byggt på **Alaveteli** — beprövad öppen källkod som driver offentlighetssajter i
+  30+ länder (t.ex. WhatDoTheyKnow i Storbritannien)
+- Vi underhåller den **svenska anpassningen**: språk, grafisk profil och allt
+  som krävs för att driva det som en pålitlig samhällstjänst
 
 <!--
-Keep this short if the audience already knows the site. The key setup for the
-rest of the talk: it's a PUBLIC SERVICE — people depend on it — so how it's
-operated matters as much as what it does.
+Håll det kort om publiken redan känner till sajten. Det viktiga att etablera för
+resten av föredraget: det är en SAMHÄLLSTJÄNST — folk är beroende av den — så hur
+den driftsätts är lika viktigt som vad den gör.
 -->
 
 ---
 
-## The problem: the platform lived on one hand-built server
+## Problemet: plattformen levde på en handbyggd server
 
-- The production site ran on **one server, configured by hand over time**
-- Nobody could say exactly what was on it — the knowledge lived **in people's
-  heads and in the server itself**
-- Testing a change safely was hard: there was **no second copy** to try things on
-- If the server was lost — or the person who knew it was unavailable —
-  recovery would be **slow, stressful guesswork**
+- Produktionssajten körde på **en server, konfigurerad för hand över tid**
+- Ingen kunde säga exakt vad som fanns på den — kunskapen levde **i folks
+  huvuden och i servern själv**
+- Att testa en förändring säkert var svårt: det fanns **ingen andra kopia** att prova på
+- Om servern försvann — eller personen som kände den var otillgänglig —
+  skulle återställningen bli **långsam, stressig gissning**
 
-**Analogy:** we had a house, but no blueprints. You can live in it,
-but you can't build a second one, and repairs depend on whoever remembers
-where the pipes are.
+**Analogi:** vi hade ett hus, men inga ritningar. Man kan bo i det,
+men man kan inte bygga ett till, och reparationer beror på vem som kommer ihåg
+var rören sitter.
 
 <!--
-Don't dwell on blame — frame it as the normal way small projects grow, and
-the thing every project must eventually fix to become sustainable.
+Undvik att lägga skuld — framställ det som det normala sättet för små projekt att växa,
+och det som varje projekt till slut måste lösa för att bli hållbart.
 -->
 
 ---
 
-## What we changed, in one sentence
+## Vad vi förändrade, i en mening
 
-> **The entire platform is now written down as code in one repository —
-> and one command turns that code into a running copy of handlingar.se,
-> from nothing, in about 17 minutes.**
+> **Hela plattformen är nu nedskriven som kod i ett repository —
+> och ett enda kommando förvandlar den koden till en körande kopia av handlingar.se,
+> från ingenting, på ungefär 17 minuter.**
 
-- Servers, database, website, email handling, security certificates, DNS —
-  all of it is **described in text files**, reviewed and versioned like any document
-- The repository is the **blueprint**; the cloud is just where we choose to
-  build from it
-- This approach is called *Infrastructure as Code* — the industry standard
-  for running services you can trust
+- Servrar, databas, webbplats, e-posthantering, säkerhetscertifikat, DNS —
+  allt är **beskrivet i textfiler**, granskat och versionshanterare som vilket dokument som helst
+- Repositoryt är **ritningen**; molnet är bara platsen där vi väljer att
+  bygga från den
+- Det här tillvägagångssättet kallas *Infrastructure as Code* — branschstandarden
+  för att driva tjänster man kan lita på
 
 <!--
-This is the thesis slide. Everything after is evidence.
-17 minutes: measured on 2026-06-15, full from-zero rebuild, zero manual steps.
+Det här är tesbilden. Allt som följer är bevis.
+17 minuter: uppmätt 2026-06-15, fullständig återuppbyggnad från noll, utan manuella steg.
 -->
 
 ---
 
-## Capability 1 — Rebuild everything with one command
+## Förmåga 1 — Bygg om allt med ett enda kommando
 
 ```
 make bringup
 ```
 
-- From **zero to a live, working website** — real address, real encryption
-  (the padlock in the browser), Swedish branding, search, email — **no manual steps**
-- Measured: **17 minutes**, cold start
-- Every step is **self-fixing**: if a prerequisite is missing, the tooling
-  installs or repairs it and continues
+- Från **noll till en levande, fungerande webbplats** — riktig adress, riktig kryptering
+  (hänglåset i webbläsaren), svensk grafisk profil, sök, e-post — **inga manuella steg**
+- Uppmätt: **17 minuter**, kallstart
+- Varje steg är **självläkande**: om en förutsättning saknas installerar eller reparerar
+  verktyget den och fortsätter
 
-**Why it matters:** disaster recovery stops being a crisis plan and becomes
-a coffee break.
+**Varför det spelar roll:** katastrofåterställning slutar vara en krishanteringsplan
+och blir en kaffepaus.
 
 <!--
-This is the command you ran at minute 0. Callback: "This is what's running in
-the background right now."
+Det här är kommandot du körde vid minut 0. Återkoppling: "Det här är det som körs
+i bakgrunden just nu."
 -->
 
 ---
 
-## Capability 2 — Tear it down just as easily (and stop paying)
+## Förmåga 2 — Riv ner det lika enkelt (och sluta betala)
 
 ```
 make cluster-down
 ```
 
-- Destroys the whole test environment in **seconds** — and **stops the bill**
-- The test environment costs about **€0.70 per day while it exists** (billed
-  by the hour, ≈ €21/month if left running) — so we simply don't keep it
-  when we're not using it
-- A built-in **audit proves nothing was left behind**: the teardown fails
-  loudly if any paid resource survives, instead of quietly billing us
+- Förstör hela testmiljön på **sekunder** — och **stoppar notan**
+- Testmiljön kostar ungefär **0,70 € per dag när den finns** (faktureras
+  per timme, ≈ 21 €/månad om den lämnas igång) — så vi har den helt enkelt inte
+  kvar när vi inte använder den
+- En inbyggd **revision bevisar att inget lämnats kvar**: nedrivningen misslyckas
+  tydligt om någon betald resurs överlever, istället för att tyst fakturera oss
 
-**Why it matters:** we get a full-scale test environment *on demand*
-for a few euros, instead of paying for idle servers year-round.
+**Varför det spelar roll:** vi får en fullskalig testmiljö *på begäran*
+för några euro, istället för att betala för overksamma servrar året om.
 
 <!--
-The audit (cloud-audit-assert) came out of a real incident: an early teardown
-silently left a load balancer billing. Now that's structurally impossible to
-miss. Good honest anecdote if asked.
+Revisionen (cloud-audit-assert) kom ur en verklig incident: en tidig nedrivning
+lämnade tyst kvar en lastbalanserare som fakturerades. Nu är det strukturellt omöjligt
+att missa. Bra ärlig anekdot om det frågas.
 -->
 
 ---
 
-## Capability 3 — No commands to memorize, no single point of failure
+## Förmåga 3 — Inga kommandon att memorera, ingen enskild felkälla
 
 ```
 make
 ```
 
-- Typing just `make` lists **every operation with a plain description** —
-  deploy, status, rebuild, teardown, test data, email tools
-- **Any contributor on their own computer** gets an identical result:
-  no hardcoded paths, no personal setup, no "it only works on my machine"
-- The only manual step, ever: paste **one access token** the first time
-  (secrets are deliberately *never* stored in the repository)
+- Att bara skriva `make` listar **varje operation med en tydlig beskrivning** —
+  driftsätt, status, återbygg, riv ner, testdata, e-postverktyg
+- **Vilken bidragsgivare som helst på sin egen dator** får ett identiskt resultat:
+  inga hårdkodade sökvägar, ingen personlig konfiguration, inget "det fungerar bara
+  på min dator"
+- Det enda manuella steget, någonsin: klistra in **en åtkomsttoken** första gången
+  (hemligheter lagras avsiktligt *aldrig* i repositoryt)
 
-**Why it matters:** the platform no longer depends on any one person's
-memory or laptop.
+**Varför det spelar roll:** plattformen är inte längre beroende av en
+enskild persons minne eller laptop.
 
 <!--
-This is the continuity/bus-factor slide — for a non-technical audience this
-is often the one that lands hardest. The design rule is recorded as a formal
-decision (ADR 0005): any colleague reproduces identically.
+Det här är kontinuitets-/bussgrepsbilden — för en icke-teknisk publik är det ofta
+den som landar hårdast. Designregeln är inskriven som ett formellt beslut (ADR 0005):
+vilken kollega som helst reproducerar identiskt.
 -->
 
 ---
 
-## Capability 4 — A safe place to try everything, even email
+## Förmåga 4 — En säker plats att prova allt, även e-post
 
-The test environment is a **complete, realistic copy** — with training wheels:
+Testmiljön är en **komplett, realistisk kopia** — med skyddsräcken:
 
-- **Fake Swedish authorities** and a test user, seeded with one command
-- File a **real FOI request** through the real code path
-- All outgoing email is **caught in a safe inbox** — nothing can ever reach
-  a real authority by accident
-- We can even **play the authority**: send a reply, and watch it arrive and
-  publish on the request page — the **full round-trip** of the service
+- **Fejkade svenska myndigheter** och en testanvändare, seedade med ett kommando
+- Lämna in en **riktig begäran om allmän handling** via den riktiga kodvägen
+- All utgående e-post **fångas i en säker inkorg** — inget kan någonsin nå
+  en riktig myndighet av misstag
+- Vi kan till och med **spela myndigheten**: skicka ett svar och se det anlända
+  och publiceras på begärandets sida — **hela rundturen** av tjänsten
 
-**Why it matters:** we can rehearse the entire user journey — including
-mistakes — with zero risk to the public site.
+**Varför det spelar roll:** vi kan repetera hela användarresan — inklusive
+misstag — utan någon risk för den offentliga sajten.
 
 <!--
-This is the heart of the demo. The mail loop uses Alaveteli's REAL incoming-
-mail machinery (POP3 polling), not a shortcut — so what we test is what
-production will do.
+Det här är hjärtat av demon. E-postflödet använder Alaveteli's RIKTIGA inkommande
+e-postmaskineri (POP3-polling), inte en genväg — så det vi testar är vad
+produktionen kommer att göra.
 -->
 
 ---
 
-## Capability 5 — Guardrails that make mistakes hard
+## Förmåga 5 — Räcken som gör misstag svåra
 
-- The tooling is **provably blind to production**: it works from an explicit
-  registry of *our* test resources — anything not on the list is never touched
-- DNS (the internet address book) automation is **locked to the test
-  subdomain** — it *cannot* modify the live site's records
-- A **quality gate** runs every session: checks for leaked secrets, personal
-  data, and drift from our recorded architecture decisions
-- Every significant choice is written down as a **decision record** — future
-  contributors see not just *what*, but *why*
+- Verktyget är **bevisligt blint för produktion**: det arbetar från ett explicit
+  register över *våra* testresurser — allt utanför listan rörs aldrig
+- DNS-automatisering (internets adressbok) är **låst till testsubdomänen** —
+  den *kan inte* ändra den live-saidtens poster
+- En **kvalitetsgrind** körs varje session: kontrollerar för läckta hemligheter,
+  personuppgifter och avvikelse från våra dokumenterade arkitekturbeslut
+- Varje viktigt val är nedskrivet som ett **beslutsdokument** — framtida
+  bidragsgivare ser inte bara *vad*, utan *varför*
 
-**Why it matters:** safety comes from the system's design,
-not from people being careful.
+**Varför det spelar roll:** säkerheten kommer från systemets design,
+inte från att folk är försiktiga.
 
 <!--
-If asked "what if the command is run wrong?": the guardrails are structural —
-e.g. external-dns has a domain filter + ownership registry; the cloud audit is
-allowlist-driven. Being careless is recoverable.
+Om det frågas "vad händer om kommandot körs fel?": skyddsräcken är strukturella —
+t.ex. external-dns har ett domänfilter + ägarskapsregister; molnrevisionen är
+tillåtelseslistedriven. Att vara slarvig är möjligt att återhämta sig från.
 -->
 
 ---
 
 ## Demo
 
-**One table tells the story — you saw it empty at minute 0:**
+**En tabell berättar historien — du såg den tom vid minut 0:**
 
-1. The environment that was built *during this presentation* — live on the
-   internet, with a real security certificate
-2. That same table again: **every piece we're running and paying for**
-3. Seed test authorities → **file an FOI request** on the site
-4. Watch the request's email arrive in the **safe inbox**
-5. **Reply as the authority** → the answer appears publicly on the site
-6. (Finale) tear it all down — **the table is empty again, the bill stops**
+1. Miljön som byggdes *under den här presentationen* — live på internet,
+   med ett riktigt säkerhetscertifikat
+2. Den tabellen igen: **varje del vi kör och betalar för**
+3. Seeda testmyndigheter → **lämna in en begäran om allmän handling** på sajten
+4. Se begärandets e-post anlända i den **säkra inkorgen**
+5. **Svara som myndigheten** → svaret visas offentligt på sajten
+6. (Final) riv ner allt — **tabellen är tom igen, notan stoppas**
 
 <!--
-Switch to DEMO.md acts 1–6 here. Keep the terminal font LARGE.
-If the live bringup from minute 0 isn't ready or failed, use the pre-built
-fallback cluster — see DEMO.md "Fallbacks".
+Växla till DEMO.md akter 1–6 här. Håll terminalfonten STOR.
+Om live-bringup från minut 0 inte är klar eller misslyckades, använd det förbyggda
+reservklustret — se DEMO.md "Reservplaner".
 -->
 
 ---
 
-## What this unlocks next
+## Vad detta möjliggör härnäst
 
-- **A registry for our software images** — cuts rebuild time further and
-  removes the last speed bottleneck
-- **Production-grade mode** — the same setup, hardened for the real site
-- **Automatic deployments** — a reviewed change goes live without manual work
-- **A staging environment** — an identical dress rehearsal stage, created
-  with the *same* command (that's the point: environments are now cheap)
-- **Monitoring dashboards** — see the service's health at a glance
+- **Ett register för våra programvarubilder** — minskar återbyggnadstiden ytterligare
+  och tar bort den sista hastighetsbegränsningen
+- **Produktionsfärdigt läge** — samma upplägg, härdat för den riktiga sajten
+- **Automatiska driftsättningar** — en granskad förändring går live utan manuellt arbete
+- **En stagingmiljö** — en identisk generalrepetitionsscen, skapad
+  med *samma* kommando (det är poängen: miljöer är nu billiga)
+- **Övervakningsdashboards** — se tjänstens hälsa på ett ögonkast
 
-The destination: **the public site itself runs from this blueprint** —
-rebuildable, testable, and independent of any single person.
+Målet: **den offentliga sajten själv körs från den här ritningen** —
+återbyggbar, testbar och oberoende av en enskild person.
 
 <!--
-Map to roadmap: registry = P2-T9, production hardening = P2-T10, overlays =
-P2-T11, CI/CD = Phase 4, staging = Phase 5, observability = Phase 6.
-Don't promise dates.
+Koppla till färdplanen: register = P2-T9, produktionshärdning = P2-T10, overlays =
+P2-T11, CI/CD = Fas 4, staging = Fas 5, observabilitet = Fas 6.
+Lova inga datum.
 -->
 
 ---
 
-## The one-slide summary
+## Sammanfattningen på en bild
 
-| Before | Now |
+| Förut | Nu |
 | --- | --- |
-| One hand-built server, no blueprint | The whole platform as reviewed code |
-| Rebuild = guesswork, days | Rebuild = one command, **17 minutes** |
-| Testing risked the live site | Full safe copy, on demand, ~€20/mo only while used |
-| Knowledge in heads | Knowledge in the repository, self-documenting |
-| Depends on specific people | Any contributor, any machine, identical result |
+| En handbyggd server, inga ritningar | Hela plattformen som granskad kod |
+| Återbyggnad = gissning, dagar | Återbyggnad = ett kommando, **17 minuter** |
+| Testning riskerade den live sajten | Fullständig säker kopia, på begäran, ~20 €/mån bara när den används |
+| Kunskapen i folks huvuden | Kunskapen i repositoryt, självdokumenterande |
+| Beroende av specifika personer | Vilken bidragsgivare som helst, vilken dator som helst, identiskt resultat |
 
-**Questions?**
+**Frågor?**
 
 <!--
-Likely questions & short answers:
-- "What did this cost to build?" — developer time plus small test-cluster
-  hours; the cluster itself bills hourly, ≈ €0.70/day *only while running*
-  (the audit table shows the live per-resource prices).
-- "Is the live site on this yet?" — not yet; that migration is the roadmap's
-  destination, done deliberately with the same safety rails.
-- "What happens if the cloud provider disappears?" — the blueprint is
-  provider-thin; the same approach rebuilds elsewhere with modest changes.
-- "Who can operate this?" — anyone with the repo + two tokens; `make` lists
-  every operation. Designed so a non-technical operator memorizes nothing.
+Troliga frågor & korta svar:
+- "Vad kostade det att bygga?" — utvecklingstid plus små testklusterstimmar;
+  klustret faktureras per timme, ≈ 0,70 €/dag *bara när det körs*
+  (revisionstabellen visar live-priser per resurs).
+- "Är den live sajten på det här ännu?" — inte ännu; den migrationen är
+  färdplanens destination, gjord avsiktligt med samma säkerhetsräcken.
+- "Vad händer om molnleverantören försvinner?" — ritningen är leverantörstunna;
+  samma tillvägagångssätt återbygger på annan plats med måttliga ändringar.
+- "Vem kan drifta det här?" — vem som helst med repot + två tokens; `make` listar
+  varje operation. Designad så att en icke-teknisk operatör memorerar ingenting.
 -->
