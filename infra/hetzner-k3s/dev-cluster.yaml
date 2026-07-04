@@ -18,6 +18,8 @@
 # (hetzner-k3s is Crystal — it does NOT evaluate ERB/`<%= %>`.)
 #   export HCLOUD_TOKEN=<your-read-write-api-token>
 
+config_format_version: 1
+
 cluster_name: handlingar-dev
 kubeconfig_path: "~/.kube/handlingar-dev.yaml"
 
