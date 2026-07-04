@@ -55,8 +55,8 @@ timestamped log of a rehearsal bringup instead.
    `.local/.env`).
 
 5. **Render the slides:**
-   `npx @marp-team/marp-cli docs/presentation/PRESENTATION.md -o /tmp/slides.pdf`
-   (or present from the VS Code Marp extension).
+   `make slides` (renders to `/tmp/slides.pdf`; or present from the VS Code Marp
+   extension).
 
 ## Prep — one hour before
 

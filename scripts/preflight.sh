@@ -85,6 +85,23 @@ else
   ok "hcloud ${LATEST} installed"
 fi
 
+hdr "Chromium (for Marp slide export)"
+PUPPETEER_CACHE="$HOME/.cache/puppeteer"
+CHROME_PATH_FILE=".local/chrome-path"
+mkdir -p .local
+if [[ ! -d "$PUPPETEER_CACHE/chrome" || -z "$(ls -A "$PUPPETEER_CACHE/chrome" 2>/dev/null)" ]]; then
+  add "installing puppeteer-managed Chrome (used by 'make slides' for PDF export)..."
+  npx --yes puppeteer browsers install chrome >/dev/null 2>&1 \
+    || warn "could not install Chrome automatically — run 'npx puppeteer browsers install chrome' manually before exporting slides."
+fi
+CHROME_BIN="$(find "$PUPPETEER_CACHE/chrome" -maxdepth 3 -name chrome -type f 2>/dev/null | head -1)"
+if [[ -n "$CHROME_BIN" ]]; then
+  echo "$CHROME_BIN" > "$CHROME_PATH_FILE"
+  ok "puppeteer-managed Chrome present ($CHROME_BIN)"
+else
+  warn "Chrome still not found after install attempt — 'make slides' will fail until this is resolved."
+fi
+
 hdr "SSH key (for cluster nodes)"
 if [[ -f "$HOME/.ssh/id_ed25519" && -f "$HOME/.ssh/id_ed25519.pub" ]]; then
   ok "ed25519 key present"

@@ -61,6 +61,13 @@ help: ## Show this help (default)
 preflight: ## Install/verify local tools + validate the Hetzner token
 	@bash scripts/preflight.sh
 
+.PHONY: slides
+slides: preflight ## Render docs/presentation/PRESENTATION.md to a PDF (requires Chrome from preflight)
+	@test -s .local/chrome-path || (echo "No Chrome found by preflight — see scripts/preflight.sh output above." >&2; exit 1)
+	CHROME_PATH="$$(cat .local/chrome-path)" npx @marp-team/marp-cli --browser chrome \
+	  docs/presentation/PRESENTATION.md -o /tmp/slides.pdf
+	@echo "Slides rendered to /tmp/slides.pdf"
+
 .PHONY: cluster-up
 cluster-up: preflight ## Create the dev K3s cluster on Hetzner (spends ~€20/mo)
 	@mkdir -p $(HOME)/.kube
