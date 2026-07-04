@@ -10,7 +10,7 @@ handlingar.se-plattformens uppbyggnad, följt av / varvat med en livedemo.
 
 Hur du använder den här filen:
 - Den fungerar som ett normalt dokument uppifrån och ned.
-- Det är också en Marp-presentation: `npx @marp-team/marp-cli PRESENTATION.md -o slides.pdf`
+- Det är också en Marp-presentation: kör `make slides` från repo-roten
   (eller presentera direkt från VS Code Marp-tillägget). Varje `---` är ett bildspel.
 - Talarnoteringar finns i HTML-kommentarer som den här — syns i presentatörsvyn,
   osynliga på bilderna.
@@ -79,9 +79,7 @@ och det som varje projekt till slut måste lösa för att bli hållbart.
 
 ## Vad vi förändrade, i en mening
 
-> **Hela plattformen är nu nedskriven som kod i ett repository —
-> och ett enda kommando förvandlar den koden till en körande kopia av handlingar.se,
-> från ingenting, på ungefär 17 minuter.**
+> **Hela plattformen är nu nedskriven som kod i ett repository — och ett enda kommando förvandlar den koden till en körande kopia av handlingar.se, från ingenting, på ungefär 17 minuter.**
 
 - Servrar, databas, webbplats, e-posthantering, säkerhetscertifikat, DNS —
   allt är **beskrivet i textfiler**, granskat och versionshanterare som vilket dokument som helst
@@ -103,11 +101,9 @@ Det här är tesbilden. Allt som följer är bevis.
 make bringup
 ```
 
-- Från **noll till en levande, fungerande webbplats** — riktig adress, riktig kryptering
-  (hänglåset i webbläsaren), svensk grafisk profil, sök, e-post — **inga manuella steg**
+- Från **noll till en levande, fungerande webbplats** — riktig adress, riktig kryptering (hänglåset i webbläsaren), svensk grafisk profil, sök, e-post — **inga manuella steg**
 - Uppmätt: **17 minuter**, kallstart
-- Varje steg är **självläkande**: om en förutsättning saknas installerar eller reparerar
-  verktyget den och fortsätter
+- Varje steg är **självläkande**: om en förutsättning saknas installerar eller reparerar verktyget den och fortsätter
 
 **Varför det spelar roll:** katastrofåterställning slutar vara en krishanteringsplan
 och blir en kaffepaus.
@@ -126,11 +122,8 @@ make cluster-down
 ```
 
 - Förstör hela testmiljön på **sekunder** — och **stoppar notan**
-- Testmiljön kostar ungefär **0,70 € per dag när den finns** (faktureras
-  per timme, ≈ 21 €/månad om den lämnas igång) — så vi har den helt enkelt inte
-  kvar när vi inte använder den
-- En inbyggd **revision bevisar att inget lämnats kvar**: nedrivningen misslyckas
-  tydligt om någon betald resurs överlever, istället för att tyst fakturera oss
+- Testmiljön kostar ungefär **0,70 € per dag när den finns** (faktureras per timme, ≈ 21 €/månad om den lämnas igång) — så vi har den helt enkelt inte kvar när vi inte använder den
+- En inbyggd **revision bevisar att inget lämnats kvar**: nedrivningen misslyckas tydligt om någon betald resurs överlever, istället för att tyst fakturera oss
 
 **Varför det spelar roll:** vi får en fullskalig testmiljö *på begäran*
 för några euro, istället för att betala för overksamma servrar året om.
@@ -149,16 +142,15 @@ att missa. Bra ärlig anekdot om det frågas.
 make
 ```
 
-- Att bara skriva `make` listar **varje operation med en tydlig beskrivning** —
-  driftsätt, status, återbygg, riv ner, testdata, e-postverktyg
-- **Vilken bidragsgivare som helst på sin egen dator** får ett identiskt resultat:
-  inga hårdkodade sökvägar, ingen personlig konfiguration, inget "det fungerar bara
-  på min dator"
-- Det enda manuella steget, någonsin: klistra in **en åtkomsttoken** första gången
-  (hemligheter lagras avsiktligt *aldrig* i repositoryt)
+- Att bara skriva `make` listar **varje operation med en tydlig beskrivning** — driftsätt, status, återbygg, riv ner, testdata, e-postverktyg
+- **Vilken bidragsgivare som helst på sin egen dator** får ett identiskt resultat: inga hårdkodade sökvägar, ingen personlig konfiguration, inget "det fungerar bara på min dator"
+- Det enda manuella steget, någonsin: klistra in **en åtkomsttoken** första gången (hemligheter lagras avsiktligt *aldrig* i repositoryt)
 
-**Varför det spelar roll:** plattformen är inte längre beroende av en
-enskild persons minne eller laptop.
+---
+
+## Förmåga 3, forts. — varför det spelar roll
+
+**Varför det spelar roll:** plattformen är inte längre beroende av en enskild persons minne eller laptop.
 
 <!--
 Det här är kontinuitets-/bussgrepsbilden — för en icke-teknisk publik är det ofta
@@ -174,8 +166,7 @@ Testmiljön är en **komplett, realistisk kopia** — med skyddsräcken:
 
 - **Fejkade svenska myndigheter** och en testanvändare, seedade med ett kommando
 - Lämna in en **riktig begäran om allmän handling** via den riktiga kodvägen
-- All utgående e-post **fångas i en säker inkorg** — inget kan någonsin nå
-  en riktig myndighet av misstag
+- All utgående e-post **fångas i en säker inkorg** — inget kan någonsin nå en riktig myndighet av misstag
 - Vi kan till och med **spela myndigheten**: skicka ett svar och se det anlända
   och publiceras på begärandets sida — **hela rundturen** av tjänsten
 
@@ -234,8 +225,7 @@ reservklustret — se DEMO.md "Reservplaner".
 
 ## Vad detta möjliggör härnäst
 
-- **Ett register för våra programvarubilder** — minskar återbyggnadstiden ytterligare
-  och tar bort den sista hastighetsbegränsningen
+- **Ett register för våra programvarubilder** — minskar återbyggnadstiden ytterligare och tar bort den sista hastighetsbegränsningen
 - **Produktionsfärdigt läge** — samma upplägg, härdat för den riktiga sajten
 - **Automatiska driftsättningar** — en granskad förändring går live utan manuellt arbete
 - **En stagingmiljö** — en identisk generalrepetitionsscen, skapad
@@ -263,7 +253,9 @@ Lova inga datum.
 | Kunskapen i folks huvuden | Kunskapen i repositoryt, självdokumenterande |
 | Beroende av specifika personer | Vilken bidragsgivare som helst, vilken dator som helst, identiskt resultat |
 
-**Frågor?**
+---
+
+# Frågor?
 
 <!--
 Troliga frågor & korta svar:
