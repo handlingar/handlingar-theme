@@ -1,0 +1,6 @@
+#!/usr/bin/env bash
+# Pre-push hook — runs the architectural quality gate.
+# Installed via `git config core.hooksPath .githooks` during onboarding (see README).
+# Bypass (emergency only): `git push --no-verify`.
+set -e
+exec bash "$(git rev-parse --show-toplevel)/scripts/quality-gate.sh" --pre-push

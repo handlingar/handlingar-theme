@@ -1,0 +1,51 @@
+# Active Storage configuration for Alaveteli.
+# See https://guides.rubyonrails.org/active_storage_overview.html
+# We use local disk only (per docs/decisions/0002-hosting-hetzner-cloud.md — no public-cloud
+# object storage for application assets). Backup destinations are handled separately by the
+# infra layer.
+
+local:
+  service: Disk
+  root: <%= Rails.root.join('storage/local') %>
+
+test:
+  service: Disk
+  root: <%= Rails.root.join('tmp/storage') %>
+
+## Raw Emails ##
+
+raw_emails_disk: &raw_emails_disk
+  service: Disk
+  root: <%= Rails.root.join('storage/raw_emails') %>
+
+raw_emails_production: &raw_emails_production
+  <<: *raw_emails_disk
+
+raw_emails_development: &raw_emails_development
+  <<: *raw_emails_disk
+
+raw_emails_test: &raw_emails_test
+  service: Disk
+  root: <%= Rails.root.join('tmp/storage/raw_emails') %>
+
+raw_emails:
+  <<: *raw_emails_<%= Rails.env %>
+
+## Attachments ##
+
+attachments_disk: &attachments_disk
+  service: Disk
+  root: <%= Rails.root.join('storage/attachments') %>
+
+attachments_production: &attachments_production
+  <<: *attachments_disk
+
+attachments_development: &attachments_development
+  <<: *attachments_disk
+
+attachments_test: &attachments_test
+  service: Disk
+  root: <%= Rails.root.join('tmp/storage/attachments') %>
+
+attachments:
+  <<: *attachments_<%= Rails.env %>

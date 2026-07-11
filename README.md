@@ -1,50 +1,124 @@
-Handlingar Theme
-==============
+# handlingar-theme
 
-Create pull request from [alavetelitheme master branch](https://github.com/mysociety/alavetelitheme/tree/master) to our [dev](https://github.com/handlingar/handlingar-theme/tree/dev) branch.
+This repository hosts:
 
-Then do your suggested changes and pushed into [dev](https://github.com/handlingar/handlingar-theme/tree/dev) branch.
+1. The **Swedish theme overlay** for [Alaveteli](https://github.com/mysociety/alaveteli) that
+   powers [handlingar.se](https://handlingar.se).
+2. The **infrastructure-as-code, deployment pipelines, and operational documentation** for the
+   platform itself (in active development — see [docs/ROADMAP.md](docs/ROADMAP.md)).
 
-Test these changes on the development server.
+## First-time setup (any contributor)
 
-If everything from [dev](https://github.com/handlingar/handlingar-theme/tree/dev) branch works correctly on development server we then do a Pull Request (PR) to [main](https://github.com/handlingar/handlingar-theme/tree/main) branch.
+```bash
+git clone git@github.com:handlingar/handlingar-theme.git
+cd handlingar-theme
+git config core.hooksPath .githooks   # install pre-push quality gate
+bash scripts/quality-gate.sh          # one-shot: verify repo is clean
+npm i -g ccusage                      # recommended: passive Pro-usage visibility
+```
 
-Then we push [main](https://github.com/handlingar/handlingar-theme/tree/main) branch to production server.
+The pre-push gate and the required CI check enforce architectural invariants, privacy, and
+secret hygiene. See [docs/WAYS-OF-WORKING.md](docs/WAYS-OF-WORKING.md#quality-gate-automated-drift-detection).
 
-### Deploy updates on development server or production server
-Use the following instructions to deploy changes that have been made. See this [link](https://gitlab.com/handlingar/handlingar/-/wikis/Uppdatera-tema) from Handlingar Wiki.
+### Operating the platform — just run `make`
 
-Read more about project work order at: [Handlingar Wiki](https://gitlab.com/handlingar/handlingar/-/wikis/)
+You don't need to learn `kubectl` or `hetzner-k3s`. Every operation is a `make` target that
+fixes its own prerequisites (installs tools, validates the token, sets `KUBECONFIG`):
 
-This theme is based on Alavetelitheme example theme. Read more below.
+```bash
+make                 # list all commands
+make preflight       # install/verify tools + validate the Hetzner token
+make bringup         # FULL zero-to-running: cluster + build/import image + deploy app
+make cluster-up      # create the dev cluster        make cluster-down  # destroy it (stops billing)
+make deploy          # deploy backing services       make status        # health + billing reminder
+make app-forward     # port-forward app to :3000     make smoke         # cluster health test
+```
 
-Alavetelitheme
-==============
+The only manual one-time step is providing secrets. **All secrets live in one gitignored
+file: `.local/.env`.** Copy the tracked template and fill it in — the template documents
+every value and exactly where to retrieve it:
 
-This is a "hello world" type theme package for Alaveteli.
+```bash
+cp .local/.env.example .local/.env   # then edit; see the file for each value + source
+```
 
-The intention is to support simple overlaying of templates and
-resources without the need to touch the core Alaveteli software.
+Currently that's just `HCLOUD_TOKEN` (Hetzner Cloud Console → your project → Security →
+API tokens → Read & Write). `make preflight` validates it and prints exact instructions if
+anything is missing. Nothing else is machine- or person-specific (see ADR 0005).
 
-Typical usage should be limited to that described in the [documentation](http://alaveteli.org/docs/customising/themes/):
+### Keeping an eye on Claude Pro usage
 
+The repo ships a `.claude/settings.json` that wires a statusline into Claude Code so your
+current 5-hour and daily usage stays visible in the prompt — no separate window to check.
 
-## To install:
+- If you install `ccusage` (one line above), the statusline reads your local Claude Code
+  session logs and shows it continuously.
+- If you don't, the statusline shows a one-time install hint instead of breaking anything.
+- At task close, Claude asks for `/cost` output so the number is written into
+  `docs/ROADMAP.md` next to the closed task. Per-task cost over time lives in git history —
+  the mechanical backstop against quietly spending too much. See
+  [docs/WAYS-OF-WORKING.md § Resource discipline](docs/WAYS-OF-WORKING.md#resource-discipline).
 
-In the Alaveteli `general.yml` configuration file change the default mysociety  theme repository to your theme repository in the [`THEME_URLS`](http://alaveteli.org/docs/customising/config/#theme_urls) setting:
+## Quickstart (humans)
 
-    THEME_URLS:
-      - 'git://github.com/YOUR_GITHUB_USERNAME/YOUR_THEME_NAME.git'
+| You want to… | Start here |
+| --- | --- |
+| Understand the current plan & what's being worked on | [docs/ROADMAP.md](docs/ROADMAP.md) |
+| Understand the target architecture | [docs/ARCHITECTURE.md](docs/ARCHITECTURE.md) |
+| Know how we collaborate (human + Claude Code) | [docs/WAYS-OF-WORKING.md](docs/WAYS-OF-WORKING.md) |
+| Run a procedure (deploy, rollback, reset dev) | [docs/RUNBOOK.md](docs/RUNBOOK.md) |
+| Understand how production is currently put together | [docs/INVENTORY.md](docs/INVENTORY.md) _(Phase 0, WIP)_ |
+| See enforced architectural invariants | [docs/invariants.md](docs/invariants.md) |
+| Propose a significant technical change | Write an ADR in [docs/decisions/](docs/decisions/) |
 
-You can then switch the theme the application is using:
+## Quickstart (Claude Code)
 
-    bundle exec rake themes:install
+The file [CLAUDE.md](CLAUDE.md) at the repo root is the entry brief. Claude reads it
+automatically at session start. Start there.
 
-## To run tests:
+## Local development (current state — being replaced in Phase 1)
 
-To run tests, in the Alaveteli Rails.root (with this theme installed):
+> The current `docker-compose` flow is quirky. It works but is not the recommended path yet.
+> Phase 1 of the roadmap replaces it with `make dev`. Until then:
 
-        bundle exec rspec lib/themes/alavetelitheme/spec
+```bash
+# Prereqs — see local.development.prerequisites.txt
+git clone --depth=1 https://github.com/mysociety/alaveteli.git ./alaveteli
+git -C ./alaveteli submodule update --init --recursive
 
+docker compose up --build
+# Expect ~10–15 min on first run (gem install + DB seed + xapian build)
+# App: http://localhost:3000
+```
 
-Copyright (c) 2011 mySociety, released under the MIT license
+To reset:
+
+```bash
+docker compose down
+docker volume rm $(docker volume ls -q) -f
+sudo rm -rf ./themes
+```
+
+Known issues captured in the roadmap. If you hit something new, open an issue or add it to the
+roadmap backlog.
+
+## Deployment (current state — being replaced in Phase 4)
+
+A merge to `main` triggers [`.github/workflows/deploy.yaml`](.github/workflows/deploy.yaml),
+which SSHes to the production Hetzner server and runs `bundle exec rake themes:install`.
+There is currently no staging step and no rollback mechanism; see `docs/ROADMAP.md` → Phase 4.
+
+## Repository layout
+
+See [CLAUDE.md § Repo layout](CLAUDE.md#repo-layout-current).
+
+## Upstream theme lineage
+
+This theme was originally forked from mySociety's
+[`alavetelitheme`](https://github.com/mysociety/alavetelitheme) and has been maintained as the
+Swedish/Handlingar.se variant since. Upstream Alaveteli itself is **not** forked — we pin a
+version and deploy it unchanged.
+
+## License
+
+MIT. See [MIT-LICENSE](MIT-LICENSE).

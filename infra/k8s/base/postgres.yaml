@@ -1,0 +1,78 @@
+# PostgreSQL — StatefulSet with a Hetzner CSI persistent volume.
+# Version pinned to postgres:14 to match docker-compose.yml (dev parity).
+# Password is read from the `alaveteli-secrets` Secret (created out-of-band; see README.md).
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: postgres
+  namespace: handlingar
+  labels:
+    app: postgres
+spec:
+  selector:
+    app: postgres
+  ports:
+    - port: 5432
+      targetPort: 5432
+  clusterIP: None          # headless: stable DNS for the StatefulSet pod
+---
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: postgres
+  namespace: handlingar
+spec:
+  serviceName: postgres
+  replicas: 1
+  selector:
+    matchLabels:
+      app: postgres
+  template:
+    metadata:
+      labels:
+        app: postgres
+    spec:
+      containers:
+        - name: postgres
+          image: postgres:14
+          ports:
+            - containerPort: 5432
+          env:
+            - name: POSTGRES_USER
+              valueFrom:
+                configMapKeyRef: { name: alaveteli-config, key: DB_USER }
+            - name: POSTGRES_DB
+              valueFrom:
+                configMapKeyRef: { name: alaveteli-config, key: DB_NAME }
+            - name: POSTGRES_PASSWORD
+              valueFrom:
+                secretKeyRef: { name: alaveteli-secrets, key: db-password }
+            # Keep PGDATA in a subdir so the volume's lost+found doesn't clash with initdb.
+            - name: PGDATA
+              value: /var/lib/postgresql/data/pgdata
+          volumeMounts:
+            - name: data
+              mountPath: /var/lib/postgresql/data
+          readinessProbe:
+            exec:
+              command: ["sh", "-c", "pg_isready -U \"$POSTGRES_USER\" -d \"$POSTGRES_DB\""]
+            initialDelaySeconds: 5
+            periodSeconds: 5
+          livenessProbe:
+            exec:
+              command: ["sh", "-c", "pg_isready -U \"$POSTGRES_USER\""]
+            initialDelaySeconds: 20
+            periodSeconds: 10
+          resources:
+            requests: { cpu: "100m", memory: "256Mi" }
+            limits: { memory: "1Gi" }
+  volumeClaimTemplates:
+    - metadata:
+        name: data
+      spec:
+        accessModes: ["ReadWriteOnce"]
+        storageClassName: hcloud-volumes
+        resources:
+          requests:
+            storage: 10Gi          # Hetzner CSI minimum

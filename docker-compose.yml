@@ -1,0 +1,78 @@
+services:
+  postgres:
+    image: postgres:14
+    container_name: alaveteli-postgres
+    environment:
+      POSTGRES_USER: alaveteli
+      POSTGRES_PASSWORD: password
+      POSTGRES_DB: alaveteli_dev
+    # volumes:
+    #   - pgdata:/var/lib/postgresql/data
+    ports:
+      - "5432:5432"
+
+  # One-shot setup container (run manually when needed)
+  setup:
+    build: .
+    container_name: alaveteli-setup
+    # user: "1000:1000"
+    depends_on:
+      - postgres
+    command: ["/setup.sh"]
+    environment:
+      RAILS_ENV: development
+      DB_HOST: postgres
+      DB_USER: alaveteli
+      REDIS_URL: redis://redis:6379
+      DB_PASSWORD: password
+      DB_NAME: alaveteli_dev
+    volumes:
+      # theme in the right place
+      - ./themes:/app/alaveteli/lib/themes:rw
+      # debugger state / shared stuff if needed
+      - ./rdbg:/rdbg
+      - bundle_cache:/usr/local/bundle   # <-- named volume for gems
+      # persistent setup state (so setup doesn't re-run every time)
+      - setupstate:/setupstate
+    healthcheck:
+      test: ["CMD-SHELL", "test -f /setupstate/done"]
+      interval: 2s
+      timeout: 1s
+      retries: 30
+
+  alaveteli:
+    build: .
+    container_name: alaveteli-theme-dev
+    # user: "1000:1000"
+    depends_on:
+      setup:
+        condition: service_healthy
+      postgres:
+        condition: service_started
+    ports:
+      - "3000:3000"
+      - "12345:12345"
+    volumes:
+      - ./themes:/app/alaveteli/lib/themes:ro
+      - ./rdbg:/rdbg
+      - bundle_cache:/usr/local/bundle   # <-- named volume for gems
+      - setupstate:/setupstate
+    environment:
+      RAILS_ENV: development
+      REDIS_URL: redis://redis:6379
+      DB_HOST: postgres
+      DB_USER: alaveteli
+      DB_PASSWORD: password
+      DB_NAME: alaveteli_dev
+    command: ["bundle", "exec", "rdbg", "--open", "--nonstop", "--port=12345", "--host", "0.0.0.0", "--command", "--", "rails", "s", "-p", "3000", "-b", "0.0.0.0"]
+  redis:
+    image: library/redis
+    command: redis-server
+    # volumes:
+      # - redis:/data
+
+volumes:
+  # pgdata: {}
+  setupstate: {}
+  bundle_cache: {}
+  # redis: {}

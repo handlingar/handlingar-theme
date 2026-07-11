@@ -1,0 +1,78 @@
+# hetzner-k3s Development cluster — handlingar-dev
+#
+# Cluster type: Development (1 master + 2 workers).
+# Not HA — single master is fine for dev/tst; see ADR 0004 for prod sizing.
+#
+# Prerequisites:
+#   1. Install hetzner-k3s: https://github.com/vitobotta/hetzner-k3s#installation
+#   2. Export HCLOUD_TOKEN (Hetzner Cloud API token, read+write).
+#   3. Ensure ~/.ssh/id_ed25519{,.pub} exist (or update paths below).
+#
+# Provision:    hetzner-k3s create --config infra/hetzner-k3s/dev-cluster.yaml
+# Destroy:      hetzner-k3s delete --config infra/hetzner-k3s/dev-cluster.yaml
+# Kubeconfig:   written to ~/.kube/handlingar-dev.yaml on provision
+#               export KUBECONFIG=~/.kube/handlingar-dev.yaml
+
+# Token is NOT stored here. hetzner-k3s reads HCLOUD_TOKEN from the
+# environment, and the env var takes precedence over any config field.
+# (hetzner-k3s is Crystal — it does NOT evaluate ERB/`<%= %>`.)
+#   export HCLOUD_TOKEN=<your-read-write-api-token>
+
+config_format_version: 1
+
+cluster_name: handlingar-dev
+kubeconfig_path: "~/.kube/handlingar-dev.yaml"
+
+# Pin to a specific K3s release; bump intentionally and test.
+# Check latest: https://github.com/k3s-io/k3s/releases
+k3s_version: v1.32.4+k3s1
+
+networking:
+  ssh:
+    port: 22
+    public_key_path: "~/.ssh/id_ed25519.pub"
+    private_key_path: "~/.ssh/id_ed25519"
+    use_agent: false
+  allowed_networks:
+    ssh:
+      - 0.0.0.0/0
+    api:
+      - 0.0.0.0/0
+  private_network:
+    enabled: true
+    subnet: 10.0.0.0/16
+
+# Single master — Development cluster type.
+# cx23: 2 vCPU / 4 GB RAM / 80 GB NVMe, ~€5.49/mo (shared Intel, x86).
+# 3×cx23 + LB €7.49 + volume ≈ €21/mo total (verified 2026-07-03).
+# cpx22 was here before but is €19.49/mo — 3.5× more expensive for the same spec.
+masters_pool:
+  instance_type: cx23
+  instance_count: 1
+  locations:
+    - fsn1
+
+worker_node_pools:
+  - name: workers
+    instance_type: cx23
+    instance_count: 2
+    # Worker pools take a single `location` (string); only masters_pool
+    # uses `locations` (a list) for HA spread.
+    location: fsn1
+
+# Do not schedule application workloads on the master.
+schedule_workloads_on_masters: false
+
+# Autoscaling not needed for dev.
+# NOTE: hetzner-k3s v2.5.0 still deploys the cluster-autoscaler Deployment even
+# with this disabled; with no autoscaled worker pool it CrashLoopBackOffs
+# ("No cluster config present"). Harmless to workloads. After provisioning,
+# remove it:  kubectl -n kube-system delete deploy cluster-autoscaler
+cluster_autoscaler:
+  enabled: false
+
+# Hetzner CSI driver is enabled by default; provides ReadWriteOnce PVCs.
+# Ingress is NOT bundled by hetzner-k3s. The ingress controller (Traefik behind a
+# Hetzner LB), cert-manager, and external-dns are installed post-creation by
+# `make ingress-up` (and as the final step of `make bringup`) from committed
+# manifests under infra/k8s/ingress/. See ADR 0006.

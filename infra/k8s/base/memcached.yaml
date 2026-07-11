@@ -1,0 +1,45 @@
+# memcached — Alaveteli page/fragment cache. Stateless, ephemeral.
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: memcached
+  namespace: handlingar
+  labels:
+    app: memcached
+spec:
+  selector:
+    app: memcached
+  ports:
+    - port: 11211
+      targetPort: 11211
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: memcached
+  namespace: handlingar
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: memcached
+  template:
+    metadata:
+      labels:
+        app: memcached
+    spec:
+      containers:
+        - name: memcached
+          image: memcached:1.6-alpine
+          args: ["-m", "256"]          # 256 MB cache
+          ports:
+            - containerPort: 11211
+          readinessProbe:
+            tcpSocket:
+              port: 11211
+            initialDelaySeconds: 2
+            periodSeconds: 5
+          resources:
+            requests: { cpu: "50m", memory: "64Mi" }
+            limits: { memory: "320Mi" }

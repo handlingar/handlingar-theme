@@ -11,3 +11,10 @@
 TAGS
 *.sw[a-z]
 *DONT-CHECKIN*
+.local/*
+!.local/.env.example
+logs.txt
+.gitignore
+themes/handlingar-theme
+general.yml
+.claude/settings.local.json

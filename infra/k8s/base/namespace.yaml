@@ -1,0 +1,7 @@
+# Application namespace for the Alaveteli stack.
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: handlingar
+  labels:
+    app.kubernetes.io/part-of: handlingar

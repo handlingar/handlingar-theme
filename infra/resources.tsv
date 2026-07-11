@@ -1,0 +1,22 @@
+# Resource registry — the single source of truth for EVERY cloud resource this
+# stack deploys. Pipe-delimited; '#' and blank lines ignored. Columns:
+#
+#   provider   | type          | match_by | match_value             | cleaned_by
+#
+# match_by tells the audit how to identify OUR resources (and ONLY ours):
+#   label  — Hetzner label selector; the API returns only matching resources
+#   name   — exact resource name (client-side match)
+#   suffix — Cloudflare record name ends with this (nonprod subtree only)
+#
+# Because discovery is driven entirely by this list, resources NOT described
+# here (e.g. the production server in the same Hetzner project) are never queried
+# and never appear. To start managing a new resource, add one line here.
+#
+provider|type|match_by|match_value|cleaned_by
+hetzner|server|label|cluster=handlingar-dev|hetzner-k3s delete
+hetzner|load-balancer|name|handlingar-dev|make orphans-clean
+hetzner|network|name|handlingar-dev|hetzner-k3s delete
+hetzner|firewall|name|handlingar-dev|hetzner-k3s delete
+hetzner|ssh-key|name|handlingar-dev|hetzner-k3s delete
+hetzner|volume|label|pvc-namespace=handlingar|make volumes-clean
+cloudflare|dns-record|suffix|nonprod.handlingar.se|make orphans-clean

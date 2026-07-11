@@ -1,0 +1,65 @@
+# Traefik ingress controller — Helm values (chart traefik/traefik, version pinned
+# in the Makefile as TRAEFIK_VER). Applied by `make ingress-up`.
+#
+# Exposed via a Hetzner Cloud Load Balancer: the Service is type=LoadBalancer and
+# the hcloud cloud-controller-manager (installed by hetzner-k3s) reads the
+# `load-balancer.hetzner.cloud/*` annotations to provision a managed LB with a
+# STABLE public IPv4 + IPv6. This is base infrastructure — it bills (~€5.4/mo for
+# an lb11) and was explicitly approved. See ADR 0006.
+#
+# DNS is automated: the `external-dns.alpha.kubernetes.io/hostname` annotation
+# tells external-dns to publish A + AAAA records for that host pointing at this
+# LB's IPs. external-dns only ever manages records under nonprod.handlingar.se
+# (its --domain-filter), so it can never touch prod records.
+#
+# Troubleshooting:
+#   kubectl -n traefik get svc traefik -o wide        # EXTERNAL-IP = the LB IP(s)
+#   kubectl -n traefik get pods
+
+deployment:
+  replicas: 1            # dev: single replica is enough
+
+service:
+  type: LoadBalancer
+  annotations:
+    # Managed Hetzner LB, co-located with the cluster (fsn1) for low latency.
+    load-balancer.hetzner.cloud/name: "handlingar-dev"
+    load-balancer.hetzner.cloud/location: "fsn1"
+    load-balancer.hetzner.cloud/type: "lb11"          # smallest LB; ~€5.4/mo
+    # Reach the nodes over the private network the cluster already runs on,
+    # not their public IPs (no egress hairpin, no extra firewall holes).
+    load-balancer.hetzner.cloud/use-private-ip: "true"
+    # Do NOT add the LB's private IP to the Service status — otherwise external-dns
+    # would publish the unroutable 10.x address as a public A record alongside the
+    # real one. Public DNS must only carry the public IPs.
+    load-balancer.hetzner.cloud/disable-private-ingress: "true"
+    # We want both protocols; DNS will publish A + AAAA to this LB.
+    load-balancer.hetzner.cloud/ipv6-disabled: "false"
+    # external-dns: publish this hostname -> the LB's IPs (A + AAAA), DNS-only.
+    external-dns.alpha.kubernetes.io/hostname: "dev.nonprod.handlingar.se"
+    external-dns.alpha.kubernetes.io/cloudflare-proxied: "false"
+
+# Entry points: :80 (web) permanently redirects to :443 (websecure).
+# (Chart v40 schema: redirect lives under web.http.redirections; websecure TLS
+# is enabled by default.)
+ports:
+  web:
+    http:
+      redirections:
+        entryPoint:
+          to: websecure
+          scheme: https
+          permanent: true
+
+# Route via the standard Kubernetes Ingress AND Traefik's own IngressRoute CRD
+# (P2-T4 uses an IngressRoute for the app).
+providers:
+  kubernetesCRD:
+    enabled: true
+  kubernetesIngress:
+    enabled: true
+
+# Keep the dashboard off in dev (no unauthenticated exposure).
+ingressRoute:
+  dashboard:
+    enabled: false

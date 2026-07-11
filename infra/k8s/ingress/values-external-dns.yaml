@@ -1,0 +1,54 @@
+# external-dns — Helm values (chart external-dns/external-dns, version pinned in
+# the Makefile as EXTDNS_VER). Applied by `make ingress-up`.
+#
+# Automatically publishes DNS records to Cloudflare for hostnames exposed on the
+# cluster, so a rebuild re-creates the same records with no manual DNS edits.
+#
+# SAFETY (handlingar.se is the LIVE production zone):
+#   - domainFilters restricts external-dns to the nonprod.handlingar.se subtree —
+#     it is PHYSICALLY unable to read or write dev.handlingar.se or any prod record.
+#   - registry: txt + txtOwnerId — it only manages records it OWNS (tagged via a
+#     companion TXT record), never adopting or deleting pre-existing records.
+#   - txtPrefix keeps those ownership TXTs clearly namespaced (extdns-*).
+#   policy: sync (not upsert-only) so external-dns also REMOVES its own stale records
+#   — essential here because each teardown/rebuild gives the LB a new IP; upsert-only
+#   would pile up stale A records and break DNS. Deletes are confined to the nonprod
+#   subtree + records this owner created, so production is never at risk.
+# See ADR 0006 and docs/invariants.md (Change-control rules).
+#
+# Troubleshooting:
+#   kubectl -n external-dns logs deploy/external-dns -f   # shows every record op
+#   kubectl -n traefik get svc traefik -o wide            # the target LB IPs
+
+provider:
+  name: cloudflare
+
+# Only watch LoadBalancer Services (the Traefik svc carries the hostname annotation).
+sources:
+  - service
+
+# Record-level safety filter: external-dns only ever manages names in this subtree.
+# NOTE: the parent Cloudflare ZONE (handlingar.se) is selected separately via
+# --zone-id-filter, injected by `make ingress-up` (derived from the token at deploy
+# time). domainFilters alone would exclude the parent zone and nothing would publish.
+domainFilters:
+  - nonprod.handlingar.se
+
+policy: sync
+registry: txt
+txtOwnerId: handlingar-dev-k8s
+txtPrefix: extdns-
+
+# Cloudflare API token — same Secret/key as cert-manager uses (created by
+# `make ingress-secret` from .local/.env; never committed).
+env:
+  - name: CF_API_TOKEN
+    valueFrom:
+      secretKeyRef:
+        name: cloudflare-api-token
+        key: api-token
+
+# Reconcile reasonably often; logs each change for troubleshooting.
+interval: 1m
+logLevel: info
+logFormat: text

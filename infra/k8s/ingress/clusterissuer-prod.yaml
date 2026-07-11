@@ -1,0 +1,20 @@
+# Let's Encrypt PRODUCTION issuer — issues browser-trusted certs. Validate with
+# the staging issuer first (rate limits: 50 certs/registered-domain/week).
+#
+# DNS-01 challenge via Cloudflare (same mechanism as staging). cert-manager
+# manages the temporary _acme-challenge TXT record automatically.
+apiVersion: cert-manager.io/v1
+kind: ClusterIssuer
+metadata:
+  name: letsencrypt-prod
+spec:
+  acme:
+    server: https://acme-v02.api.letsencrypt.org/directory
+    privateKeySecretRef:
+      name: letsencrypt-prod-account-key
+    solvers:
+      - dns01:
+          cloudflare:
+            apiTokenSecretRef:
+              name: cloudflare-api-token
+              key: api-token

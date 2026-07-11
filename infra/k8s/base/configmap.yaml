@@ -1,0 +1,25 @@
+# Non-secret application config, mirrored from docker-compose.yml for dev↔K8s
+# parity. Secrets (DB password) live in a Secret, NOT here — see README.md.
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: alaveteli-config
+  namespace: handlingar
+data:
+  # Database (StatefulSet `postgres`, Service DNS `postgres`)
+  DB_HOST: postgres
+  DB_USER: alaveteli
+  DB_NAME: alaveteli_dev
+  # Redis (used by Sidekiq) and memcached (page/fragment cache)
+  REDIS_URL: redis://redis:6379
+  MEMCACHE_SERVERS: memcached:11211
+  # Rails environment. The dev cluster runs `development` for now: it matches the
+  # team's proven docker-compose bring-up (on-the-fly asset compilation, dev
+  # secret_key_base, no precompile/xapian prerequisites), which is the fastest
+  # path to a running app. Production hardening (precompiled assets, SECRET_KEY_BASE,
+  # xapian index, FORCE_SSL) is tracked as later Phase 1 work.
+  RAILS_ENV: development
+  # Mock mail loop (dev): development.rb reads SMTP_URL when
+  # USE_MAILCATCHER_IN_DEVELOPMENT is true, so all outgoing mail lands in
+  # Mailpit (see mailpit.yaml) instead of leaving the cluster.
+  SMTP_URL: smtp://mailpit:1025

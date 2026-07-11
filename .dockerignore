@@ -1,0 +1,13 @@
+# Keep the build context lean and prevent secrets/dev-state from being baked
+# into the image (the Dockerfile does `COPY . ...`).
+.git
+.github
+.local
+themes
+rdbg
+docs
+logs.txt
+*.log
+.DS_Store
+node_modules
+tmp
