@@ -198,6 +198,22 @@ Provisioning is a single command; teardown equally simple. See ADR 0004.
   nodeSelector pin on the app pods. Needs an ADR + user approval first — it introduces a new
   prerequisite (a GitHub account/token for pulls).
   > Next up #2, user-ordered 2026-06-11. Deferred to a later day.
+- [ ] **P2-T9b** — Remote/in-cluster image builds (rootless BuildKit): replace the local
+  `docker build` + `image-import` step in `make bringup` (currently a slow local build +
+  10–16 min push over a poor uplink to worker1's containerd — see P2-T9 notes) with builds
+  that run **inside the cluster**, so a contributor only uploads a build context, not a
+  finished image. Preferred shape: a rootless `buildkitd` Deployment/Job in-cluster
+  (`moby/buildkit` rootless image), driven from the laptop via `buildctl --addr
+  tcp://<in-cluster-buildkit>:1234` (or `docker buildx create --driver
+  remote`) over a `kubectl port-forward`/tunnel — no privileged daemon, no local Docker
+  engine required on the laptop. Depends on P2-T9 (registry) for a push target — BuildKit
+  needs somewhere to push the built image, and worker1-only containerd import goes away
+  once this lands. Needs an ADR (`docs/decisions/000N-remote-buildkit.md`) covering:
+  rootless BuildKit deployment manifest + resource limits, auth from laptop to in-cluster
+  BuildKit (mTLS or SSH tunnel — don't expose the daemon publicly), and how CI (Phase 4)
+  reuses the same BuildKit endpoint instead of `docker build` in GH Actions runners.
+  > Noted 2026-07-11 (user-ordered): motivated by slow/unreliable home connections making
+  > local build+upload painful. Sequenced after P2-T9 since both touch the image pipeline.
 - [ ] **P2-T10** — Production-mode hardening: `RAILS_ENV=production`, asset precompile, FORCE_SSL,
   real SECRET_KEY_BASE handling, xapian index on a PVC (replacing the boot-time rebuild + 60s
   loop). Prod migration blocker — every later phase should build against production mode, not

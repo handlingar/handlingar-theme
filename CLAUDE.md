@@ -25,6 +25,7 @@ and investigate before layering new work on top of pre-existing drift.
 | --- | --- |
 | [docs/ROADMAP.md](docs/ROADMAP.md) | Every session. Current phase, task list, handoff notes. |
 | [docs/WAYS-OF-WORKING.md](docs/WAYS-OF-WORKING.md) | First session on this repo, or when the human↔Claude protocol is unclear. |
+| [docs/ONBOARDING-IAC.md](docs/ONBOARDING-IAC.md) | A new contributor learning infrastructure as code on this repo for the first time. |
 | [docs/ARCHITECTURE.md](docs/ARCHITECTURE.md) | When touching deploy, infra, env topology, or tooling choice. |
 | [docs/RUNBOOK.md](docs/RUNBOOK.md) | When executing or writing operational procedures (deploy, rollback, rebuild). |
 | [docs/INVENTORY.md](docs/INVENTORY.md) | When Phase 0 work requires facts about the live prod server. |

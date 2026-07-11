@@ -290,3 +290,7 @@ A new developer with their own Claude Pro subscription should be able to:
 4. Pick the next `[ ]` task under the active phase (one not already `Claimed:`) and continue.
 
 No Claude conversation history, no Slack archaeology, no tribal knowledge required.
+
+New to infrastructure as code specifically (not just this repo)? Work through
+[docs/ONBOARDING-IAC.md](ONBOARDING-IAC.md) first — it's a guided path through steps 1-3 above
+plus the ADRs, aimed at building understanding rather than just getting unblocked.
