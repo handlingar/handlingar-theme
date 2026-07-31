@@ -1,0 +1,87 @@
+<% @title = @description.empty? ? _("Public authorities") : _("Public authorities - {{description}}", :description => @description) %>
+<% total_bodies = @public_bodies.respond_to?(:total_entries) ? @public_bodies.total_entries : @public_bodies.size %>
+
+<%# 3.3 Search feature — hero (booklet page 35) %>
+<div class="search-hero ds-dark">
+  <div class="row">
+    <h1 class="search-hero__title"><%= _("Find authorities and public organisations") %></h1>
+    <p class="search-hero__subtitle"><%= _("&mdash; to make a request").html_safe %></p>
+  </div>
+</div>
+
+<%# Intro: how many authorities + browse/contact CTAs %>
+<div class="search-intro">
+  <div class="row">
+    <div class="search-intro__text">
+      <h2><%= _("We have contact details for {{count}} different authorities",
+                :count => number_with_delimiter(total_bodies)) %></h2>
+      <p><%= _("Before you make a request to your authority, you can browse requests already made by our users to see if you find your answer.") %></p>
+      <div class="search-intro__ctas">
+        <%= link_to _("Browse requests"), request_list_successful_path, class: "link_button_green" %>
+        <%= link_to _("Contact us"), help_contact_path, class: "button-secondary" %>
+      </div>
+    </div>
+    <div class="search-intro__illustration" aria-hidden="true">
+      <span class="material-symbols-outlined">contact_page</span>
+    </div>
+  </div>
+</div>
+
+<%# Dark "search by free text" band with accent notch %>
+<div class="search-band ds-dark">
+  <div class="row">
+    <h2 class="search-band__title"><%= _("Search by free text") %></h2>
+    <p class="search-band__hint"><%= _("Type the name of the authority, city or similar to find the authority you are looking for.") %></p>
+    <%= form_tag(list_public_bodies_default_url, :method => "get", :id=>"search_form") do %>
+      <div class="search-band__field">
+        <label class="visually-hidden" for="public_body_query"><%=_('Find an authority')%></label>
+        <%= text_field_tag(:public_body_query, params[:public_body_query], { :title => "type your search term here", :placeholder => _("Search") } ) %>
+        <%= submit_tag(_("Search")) %>
+      </div>
+    <% end %>
+  </div>
+</div>
+
+<div class="row search-results-row">
+  <div id="left_column_flip" class="left_column_flip left_column_flip--opposite">
+    <% if @category %>
+      <h2 class="publicbody_results"><%= @category.title %></h2>
+      <%= render partial: 'category' %>
+      <p><i><%= @description %></i></p>
+    <% else %>
+      <h2 class="publicbody_results">
+        <%= @description.presence || _("Search results") %>
+      </h2>
+    <% end %>
+
+    <%= render :partial => 'body_listing', :locals => { :public_bodies => @public_bodies } %>
+    <%= will_paginate(@public_bodies) %><br/>
+    <%= link_to _("Can't find the one you want?"), help_requesting_path(:anchor => 'missing_body') %>
+  </div>
+
+  <div id="right_column_flip" class="right_column_flip">
+    <h2><%=_('Show only...')%></h2>
+
+    <h3><%=_('Beginning with') %></h3>
+    <ul>
+      <li><%= render :partial => 'alphabet' %></li>
+    </ul>
+
+    <% PublicBody.categories.each do |heading| %>
+      <h3><%= heading.title %></h3>
+      <ul>
+        <% heading.children.each do |category| %>
+          <% next unless category.category_tag.present? %>
+          <li>
+            <%= link_to_unless (@tag == category.category_tag),
+              category.title,
+              list_public_bodies_by_tag_path(category.category_tag) %>
+          </li>
+        <% end %>
+      </ul>
+    <% end %>
+
+    <%= render :partial => "list_sidebar_extra",
+               :locals => { :country_code => @country_code } %>
+  </div>
+</div>

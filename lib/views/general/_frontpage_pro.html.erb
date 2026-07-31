@@ -1,0 +1,54 @@
+<%# 3.1 Handlingar.se PRO marketing section (design booklet page 30) %>
+<div class="homepage-pro">
+  <div class="row">
+    <div class="pro__intro">
+      <div class="pro__intro-text">
+        <h2 class="pro__title"><%= _("The premium service for journalists, researchers, associations and businesses") %></h2>
+        <p class="pro__lead"><%= _("Handlingar PRO is a powerful toolbox with everything you need when working with information and public records.") %></p>
+        <%= link_to _("Get premium"), account_request_index_path, class: "link_button_green" %>
+      </div>
+    </div>
+
+    <ul class="pro__usp-grid">
+      <li class="pro__usp">
+        <span class="usp__icon material-symbols-outlined" aria-hidden="true">settings_input_antenna</span>
+        <h3 class="usp__title"><%= _("Streamline your work") %></h3>
+        <p class="usp__text"><%= _("Send the same request to several authorities at once and free up more time for journalism.") %></p>
+      </li>
+      <li class="pro__usp">
+        <span class="usp__icon material-symbols-outlined" aria-hidden="true">mark_email_read</span>
+        <h3 class="usp__title"><%= _("Up-to-date details") %></h3>
+        <p class="usp__text"><%= _("Access contact details for thousands of organisations covered by the principle of public access.") %></p>
+      </li>
+      <li class="pro__usp">
+        <span class="usp__icon material-symbols-outlined" aria-hidden="true">lock</span>
+        <h3 class="usp__title"><%= _("Private requests") %></h3>
+        <p class="usp__text"><%= _("Keep requests private while you work on your project, and publish them when you are ready.") %></p>
+      </li>
+      <li class="pro__usp">
+        <span class="usp__icon material-symbols-outlined" aria-hidden="true">batch_prediction</span>
+        <h3 class="usp__title"><%= _("Batch requests") %></h3>
+        <p class="usp__text"><%= _("Build and manage large batches of requests from a single dashboard.") %></p>
+      </li>
+      <li class="pro__usp">
+        <span class="usp__icon material-symbols-outlined" aria-hidden="true">notifications_active</span>
+        <h3 class="usp__title"><%= _("Action alerts") %></h3>
+        <p class="usp__text"><%= _("Get notified the moment an authority responds so nothing slips through.") %></p>
+      </li>
+      <li class="pro__usp">
+        <span class="usp__icon material-symbols-outlined" aria-hidden="true">draft</span>
+        <h3 class="usp__title"><%= _("Save drafts") %></h3>
+        <p class="usp__text"><%= _("Save your work and return to finish your requests whenever it suits you.") %></p>
+      </li>
+    </ul>
+
+    <div class="pro__media">
+      <h2 class="pro__media-title"><%= _("Handlingar.se in the media and news") %></h2>
+      <ul class="pro__media-logos">
+        <li>Altinget</li>
+        <li>Journalisten</li>
+        <li>Tranquillity</li>
+      </ul>
+    </div>
+  </div>
+</div>

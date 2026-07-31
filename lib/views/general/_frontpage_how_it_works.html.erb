@@ -1,0 +1,64 @@
+<%# 3.1 "How it works" — illustrated vertical steps (design booklet page 29) %>
+<div class="homepage-how-it-works" id="learn-more">
+  <div class="row">
+    <div class="hiw-content__headings">
+      <h2><%= _("How it works") %></h2>
+      <p class="hiw__subtitle">
+        <%= _("You have the <strong>right</strong> to request information " \
+              "from any publicly-funded body, and get answers. " \
+              "{{site_name}} helps you make a Freedom of Information " \
+              "request. It also publishes all requests online.",
+              :site_name => site_name) %>
+      </p>
+    </div>
+
+    <ol class="hiw-steps">
+      <li class="hiw-step">
+        <div class="hiw-step__illustration" aria-hidden="true">
+          <span class="material-symbols-outlined">edit_document</span>
+        </div>
+        <div class="hiw-step__content">
+          <h3 class="hiw-step__title"><span class="hiw-step__num">1.</span> <%= _("Make a request") %></h3>
+          <p><%= _("Easily create a request by filling in your case. We have helped you by creating a template where you only need to state which documents you want access to. The request is sent to the chosen authority as an email, which they must respond to within a few weeks.") %></p>
+          <%= link_to _("Make a request"), select_authority_path, class: "link_button_green" %>
+        </div>
+      </li>
+
+      <li class="hiw-step hiw-step--reverse">
+        <div class="hiw-step__illustration" aria-hidden="true">
+          <span class="material-symbols-outlined">mark_email_unread</span>
+        </div>
+        <div class="hiw-step__content">
+          <h3 class="hiw-step__title"><span class="hiw-step__num">2.</span> <%= _("Wait for a response") %></h3>
+          <p><%= _("While the authority works on providing the documents you requested, you can sit back &mdash; we will notify you by email when you get a response. In the meantime, you can read other requests our users have made.").html_safe %></p>
+          <%= link_to _("Browse requests"), request_list_successful_path, class: "button-secondary" %>
+        </div>
+      </li>
+
+      <li class="hiw-step">
+        <div class="hiw-step__illustration" aria-hidden="true">
+          <span class="material-symbols-outlined">public</span>
+        </div>
+        <div class="hiw-step__content">
+          <h3 class="hiw-step__title"><span class="hiw-step__num">3.</span> <%= _("Published and done") %></h3>
+          <p><%= _("The answer is published online for everyone. Now you have your answer, and everybody else can access it too &mdash; contributing to public benefit and your right to know.").html_safe %></p>
+          <%= link_to _("Search requests"), request_list_successful_path, class: "button-secondary" %>
+        </div>
+      </li>
+    </ol>
+  </div>
+</div>
+
+<%# Dark "learn more about how we work" band with the accent notch %>
+<div class="homepage-learn-more ds-dark">
+  <div class="row">
+    <h2 class="learn-more__title"><%= _("Learn more about how we work") %></h2>
+    <p class="learn-more__text">
+      <%= _("Public records need to be easier to access, to contribute to the common good and give society value &mdash; for our right as citizens to know what happens with our tax money. Dive into how our entirely non-profit organisation works and handles the process of helping you make so-called requests for public records.").html_safe %>
+    </p>
+    <div class="learn-more__ctas">
+      <%= link_to _("Learn more about us"), help_about_path, class: "link_button_green" %>
+      <%= link_to _("Support our work"), help_credits_path(:anchor => 'helpus'), class: "button-secondary" %>
+    </div>
+  </div>
+</div>
