@@ -1,0 +1,58 @@
+<% content_for :javascript do %>
+  <%= javascript_tag nonce: true do %>
+  $(document).ready(function() {
+    $("#query").keypress($.debounce( 300, function() {
+      $("#typeahead_response").load("<%= search_ahead_bodies_url %>?query="+encodeURI(this.value));
+    }));
+
+    if (!!navigator.userAgent.match(/Version\/[\d\.]+.*Safari/)) {
+      $('#query').removeAttr('required');
+    }
+  });
+  <% end %>
+<% end %>
+
+<% @title = _("Find an authority") %>
+
+<div class="request-select">
+  <div class="row">
+    <h1 class="request-select__title"><%= _('Find an authority') %></h1>
+    <p class="request-select__lead">
+      <%= _("First, type in the <strong>name of the public authority" \
+            "</strong> you'd like information from.").html_safe %>
+      <% if AlaveteliConfiguration.authority_must_respond %>
+        <%= _('<strong>By law, they have to respond</strong> ' \
+                '(<a href="{{url}}">why?</a>).',
+              :url => (help_about_path(:anchor => 'whybother_them')).html_safe) %>
+      <% end %>
+    </p>
+
+    <div id="authority_selection" class="authority_selection request-select__search">
+      <%= form_tag "", { :id => 'search_form', :method => 'get' } do %>
+        <div class="request-select__field">
+          <label for="query" class="visually-hidden"><%=_('Authority name')%></label>
+          <%= text_field_tag :query, params[:query], {
+                :size => 30,
+                :title => _('type your search term here'),
+                :required => true,
+                :placeholder => _('e.g. Ministry of Defence'),
+                :type => 'search',
+                :autocomplete => 'off'
+              } %>
+          <%= hidden_field_tag :bodies, 1 %>
+          <%= submit_tag _('Search') %>
+        </div>
+      <% end %>
+
+      <div id="typeahead_response" class="typeahead_response">
+        <%= render :partial => 'public_body/search_ahead' %>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="request-select__help-wrap">
+  <div class="row">
+    <%= render :partial => 'request/select_authority_help' %>
+  </div>
+</div>

@@ -8,3 +8,9 @@
 
 msgid "Services"
 msgstr "Tjänster"
+
+msgid "e.g. Ministry of Defence"
+msgstr "t.ex. Skatteverket"
+
+msgid "How to make a request"
+msgstr "Så gör du en begäran"
