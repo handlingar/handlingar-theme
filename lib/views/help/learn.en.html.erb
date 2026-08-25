@@ -1,0 +1,88 @@
+<% @title = "Learn more" %>
+
+<div class="learn-page">
+  <div class="learn-hero ds-dark">
+    <div class="row">
+      <h1 class="learn-hero__title"><%= @title %></h1>
+      <p class="learn-hero__subtitle"><%= _("&mdash; for your right to know").html_safe %></p>
+    </div>
+  </div>
+
+  <div class="learn-intro">
+    <div class="row">
+      <p class="learn-intro__text">
+        Public records need to be easier to access, to contribute to the common good and
+        give society value &mdash; for our right as citizens to know what happens with our
+        tax money. This page is a short way in: how to make a request, how to find the right
+        authority, and how the non-profit behind <%= site_name %> works.
+      </p>
+      <div class="learn-intro__ctas">
+        <%= link_to "Make a request", select_authority_path, class: "link_button_green" %>
+        <%= link_to "Create account", signup_path, class: "button-secondary" %>
+      </div>
+    </div>
+  </div>
+
+  <div class="learn-steps">
+    <div class="row">
+      <h2>How it works</h2>
+      <ol class="learn-steps__list">
+        <li class="learn-step">
+          <span class="learn-step__num" aria-hidden="true">1</span>
+          <h3>Make a request</h3>
+          <p>Choose an authority, say which records you want, and send. The request goes as email and should be answered within a few weeks.</p>
+        </li>
+        <li class="learn-step">
+          <span class="learn-step__num" aria-hidden="true">2</span>
+          <h3>Wait for a response</h3>
+          <p>We email you when the authority replies, and if the reply is late. Meanwhile you can read other people’s requests.</p>
+        </li>
+        <li class="learn-step">
+          <span class="learn-step__num" aria-hidden="true">3</span>
+          <h3>Published and done</h3>
+          <p>The answer is published online. You have your records, and everyone else can use them too &mdash; for your right to know.</p>
+        </li>
+      </ol>
+    </div>
+  </div>
+
+  <div class="learn-guides">
+    <div class="row">
+      <h2>Guides</h2>
+      <ul class="learn-guides__grid">
+        <li class="learn-guide">
+          <h3>Making a request</h3>
+          <p>How to keep the request focused, what to do if the authority is missing, and how follow-ups work.</p>
+          <%= link_to "Read the guide", help_requesting_path, class: "button-tertiary" %>
+        </li>
+        <li class="learn-guide">
+          <h3>Find an authority</h3>
+          <p>Search by name, city or category. If the body you need is missing, ask us to add the contact details.</p>
+          <%= link_to "Search authorities", list_public_bodies_default_path, class: "button-tertiary" %>
+        </li>
+        <li class="learn-guide">
+          <h3>About <%= site_name %></h3>
+          <p>Who runs the service, how the Principle of Public Access fits the platform, and Handlingar Pro.</p>
+          <%= link_to "Read the introduction", help_about_path, class: "button-tertiary" %>
+        </li>
+        <li class="learn-guide">
+          <h3>Unhappy with a reply?</h3>
+          <p>If you got no answer in time, not the records you asked for, or a refusal without a valid reason.</p>
+          <%= link_to "What you can do", help_unhappy_path, class: "button-tertiary" %>
+        </li>
+        <% if feature_enabled?(:alaveteli_pro) %>
+        <li class="learn-guide">
+          <h3>Handlingar Pro</h3>
+          <p>Private requests, batch requests, and a dashboard for journalism and investigations.</p>
+          <%= link_to "More about Pro", account_request_index_path, class: "button-tertiary" %>
+        </li>
+        <% end %>
+        <li class="learn-guide">
+          <h3>Courses</h3>
+          <p>Training on the Principle of Public Access and public records, with Open Knowledge Sweden.</p>
+          <%= link_to "Handlingar Courses", "https://about.handlingar.se/kurser/", class: "button-tertiary" %>
+        </li>
+      </ul>
+    </div>
+  </div>
+</div>
