@@ -1,5 +1,5 @@
 <div id="topnav" class="topnav <%= @in_pro_area ? 'topnav--pro' : '' %>">
-  <nav aria-label="Main navigation">
+  <nav aria-label="<%= _('Main navigation') %>">
     <ul id="navigation" class="navigation">
       <% if can?(:access, :alaveteli_pro) %>
         <%= render :partial => 'alaveteli_pro/general/nav_items' %>
@@ -18,7 +18,7 @@
 
 <% if content_for? :subnav %>
   <div id="subnav" class="subnav">
-    <ul id="navigation" class="navigation" role="navigation">
+    <ul id="subnavigation" class="navigation">
       <%= yield :subnav %>
     </ul>
   </div>

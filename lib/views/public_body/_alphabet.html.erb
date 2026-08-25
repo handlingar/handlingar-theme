@@ -1,0 +1,9 @@
+<nav aria-label="<%= _('Filter by letter') %>">
+<%- "A".upto("Z") do |l| -%>
+  <% if @tag == l %>
+    <span aria-current="page"><%= l %></span>
+  <% else %>
+    <%= link_to l, list_public_bodies_by_tag_path(l.downcase) %>
+  <% end %>
+<% end %>
+</nav>

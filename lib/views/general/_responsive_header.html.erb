@@ -5,12 +5,18 @@
   <div id="banner_inner" class="banner_inner">
     <div id="banner_content" class="banner_content">
       <div class="banner_site-title">
-        <h1><%= link_to site_name, frontpage_path, :id => 'logo', :class => 'site-title__logo' %></h1>
+        <%= link_to site_name, frontpage_path, :id => 'logo', :class => 'site-title__logo' %>
       </div>
 
       <div class="rsp_menu_button">
-        <a href="#banner" class="open"> <i class="icon-menu"></i> Menu </a>
-        <a href="#" class="close"> <i class="icon-menu"></i> Close </a>
+        <a href="#banner" class="open">
+          <i class="icon-menu" aria-hidden="true"></i>
+          <%= _('Menu') %>
+        </a>
+        <a href="#" class="close">
+          <i class="icon-menu" aria-hidden="true"></i>
+          <%= _('Close') %>
+        </a>
       </div>
 
       <div id="navigation_search" class="navigation_search">
@@ -38,10 +44,10 @@
   <div class="wrapper">
     <div class="homepage-flash">
       <% if flash[:notice] %>
-        <div id="notice"><%= render_flash(flash[:notice]) %></div>
+        <div id="notice" role="status"><%= render_flash(flash[:notice]) %></div>
       <% end %>
       <% if flash[:error] %>
-        <div id="error"><%= render_flash(flash[:error]) %></div>
+        <div id="error" role="alert"><%= render_flash(flash[:error]) %></div>
       <% end %>
     </div>
   </div>

@@ -397,7 +397,7 @@ a.link_button_green_large {
 
 /* LANGUAGE SWITCHER */
 #user_locale_switcher {
-  background-color: $color_primary;
+  background-color: $color_white;
   @include respond-min($main_menu-mobile_menu_cutoff) {
     background-color: transparent;
   }
@@ -413,7 +413,8 @@ a.link_button_green_large {
   }
 }
 
-p.locale-list-trigger {
+p.locale-list-trigger,
+.locale-list-trigger {
   margin-bottom: 0;
   color: $color_white;
   color: rgba(255, 255, 255, 0.8);
@@ -424,6 +425,17 @@ p.locale-list-trigger {
     color: $link-color;
     padding: 0;
   }
+}
+
+button.locale-list-trigger {
+  font: inherit;
+  background: transparent;
+  cursor: pointer;
+  display: block;
+  width: 100%;
+  text-align: left;
+  appearance: none;
+  -webkit-appearance: none;
 }
 
 .locale-list-trigger .current-locale {
@@ -1362,7 +1374,13 @@ a.button-tertiary {
 
   .hero__browse,
   .hero__browse a { color: $color_white; }
-  .hero__browse { font-size: $font-size-subtitle; margin-bottom: 1.5em; }
+  .hero__browse {
+    display: inline-block;
+    font-size: $font-size-subtitle;
+    margin-bottom: 1.5em;
+    background-color: rgba(51, 51, 51, 0.9);
+    padding: 0.35em 0.6em;
+  }
 
   .hero__ctas {
     display: flex;
@@ -1820,4 +1838,71 @@ form.user_search input[type="text"] {
     .link_button_green { @include ds-button-small; white-space: nowrap; }
     .body-listing__see-previous { white-space: nowrap; }
   }
+}
+
+// ---- WCAG 2.1 AA: focus, skip link, status ---------------------------------
+a.skip-to-link.show-with-keyboard-focus-only {
+  left: 0.5em;
+  top: 0.5em;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  clip-path: inset(50%);
+  white-space: nowrap;
+  &:focus,
+  &:focus-visible {
+    width: auto;
+    height: auto;
+    clip: auto;
+    clip-path: none;
+    overflow: visible;
+    z-index: 10000;
+    padding: 0.75em 1.25em;
+    background-color: $brand_primary;
+    color: $color_white;
+    font-weight: $font-weight-bold;
+    text-decoration: none;
+    outline: 3px solid $brand_accent;
+    outline-offset: 2px;
+  }
+}
+
+a:focus-visible,
+button:focus-visible,
+input:focus-visible,
+select:focus-visible,
+textarea:focus-visible,
+[tabindex]:focus-visible {
+  outline: 3px solid $brand_primary;
+  outline-offset: 2px;
+  box-shadow: 0 0 0 5px $color_white;
+}
+
+.ds-dark a:focus-visible,
+.ds-dark button:focus-visible,
+.ds-dark input:focus-visible,
+.homepage-hero a:focus-visible,
+.homepage-hero button:focus-visible,
+#footer a:focus-visible,
+#topnav a:focus-visible,
+#topnav button:focus-visible {
+  outline-color: $color_white;
+  box-shadow: 0 0 0 5px $brand_primary;
+}
+
+.rsp_menu_button a:focus-visible {
+  outline: 3px solid $brand_primary;
+  outline-offset: 2px;
+}
+
+#main-content:focus {
+  outline: 3px solid $color_white;
+  outline-offset: 4px;
+}
+
+.errorExplanation:focus {
+  outline: 3px solid $brand_primary;
+  outline-offset: 2px;
 }

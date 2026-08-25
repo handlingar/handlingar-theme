@@ -8,3 +8,28 @@
 
 msgid "Services"
 msgstr "Tjänster"
+
+msgid "Skip to content"
+msgstr "Hoppa till innehållet"
+
+msgid "Skip navigation"
+msgstr "Hoppa över menyn"
+
+msgid "Main navigation"
+msgstr "Huvudmeny"
+
+msgid "Language"
+msgstr "Språk"
+
+msgid "Menu"
+msgstr "Meny"
+
+msgid "Footer"
+msgstr "Sidfot"
+
+msgid "Filter by letter"
+msgstr "Filtrera på bokstav"
+
+msgid "Your profile photo"
+msgstr "Din profilbild"
+
