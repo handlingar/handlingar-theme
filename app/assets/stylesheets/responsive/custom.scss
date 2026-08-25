@@ -1592,7 +1592,9 @@ form.user_search input[type="text"] {
 .homepage-usp .row,
 .homepage-pro .row,
 .homepage-how-it-works .row,
-.homepage-learn-more .row {
+.homepage-learn-more .row,
+.frontpage__blog .row,
+.frontpage_examples .row {
   @include respond-min( $main_menu-mobile_menu_cutoff ) {
     padding-left: $ds-page-margin;
     padding-right: $ds-page-margin;
@@ -1819,5 +1821,76 @@ form.user_search input[type="text"] {
     @include respond-min( $main_menu-mobile_menu_cutoff ) { margin-top: 0; }
     .link_button_green { @include ds-button-small; white-space: nowrap; }
     .body-listing__see-previous { white-space: nowrap; }
+  }
+}
+
+// ---- 3.1 Blog teasers + recent requests (booklet landing) -------------------
+.frontpage__blog {
+  background-color: $color_bg;
+  padding: 56px 0;
+
+  h2 {
+    font-size: $font-size-h3;
+    margin: 0 0 1.5em;
+    color: $brand_primary;
+  }
+}
+
+.frontpage__blog-grid {
+  display: grid;
+  gap: 24px;
+  margin-bottom: 2em;
+  @include respond-min($main_menu-mobile_menu_cutoff) {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+.blog__post {
+  background-color: $color_white;
+  padding: 1.5em;
+  border-radius: 8px;
+  border-bottom: 3px solid $brand_accent;
+
+  h3 {
+    font-size: $font-size-h5;
+    margin: 0 0 0.5em;
+    a {
+      color: $brand_primary;
+      text-decoration: none;
+      &:hover, &:focus { color: $brand_accent; text-decoration: underline; }
+    }
+  }
+  p {
+    color: $color_text_gray;
+    margin: 0;
+    line-height: 1.5;
+  }
+}
+
+#frontpage_examples.frontpage_examples {
+  background-color: $color_white;
+  padding: 56px 0;
+}
+
+.frontpage_examples__inner {
+  @include respond-min($main_menu-mobile_menu_cutoff) {
+    display: flex;
+    gap: 48px;
+    align-items: flex-start;
+  }
+
+  .bodies-list,
+  .latest-requests {
+    flex: 1;
+    min-width: 0;
+    h3 { font-size: $font-size-h4; color: $brand_primary; margin: 0 0 0.5em; }
+    h4 {
+      font-size: $font-size-body;
+      color: $color_text_gray;
+      font-weight: $font-weight-semibold;
+      margin: 0 0 1.25em;
+    }
+    ul { list-style: none; margin: 0 0 1.5em; padding: 0; }
+    li { margin-bottom: 1em; }
   }
 }
