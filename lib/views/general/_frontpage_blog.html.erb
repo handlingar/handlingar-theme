@@ -1,14 +1,21 @@
 <% if blog_posts_for_frontpage.any? %>
   <div class="frontpage__blog">
-    <h2><%= _('Latest news and campaigns') %></h2>
+    <div class="row">
+      <h2><%= _('Latest news and campaigns') %></h2>
 
-    <% blog_posts_for_frontpage.each do |post| %>
-      <div class="blog__post">
-        <h3><%= link_to post.title, post.url %></h3>
-        <p><%= raw post.description %></p>
+      <div class="frontpage__blog-grid">
+        <% blog_posts_for_frontpage.each do |post| %>
+          <article class="blog__post">
+            <h3><%= link_to post.title, post.url %></h3>
+            <% excerpt = strip_tags(post.description.to_s)
+               excerpt = excerpt.sub(/\s*The post .+ appeared first on .+\z/im, '')
+               excerpt = truncate(excerpt.squish, length: 180) %>
+            <p><%= excerpt %></p>
+          </article>
+        <% end %>
       </div>
-    <% end %>
 
-    <%= link_to _('See all &rarr;'), blog_path, class: 'button-secondary' %>
+      <%= link_to _('See all &rarr;'), blog_path, class: 'button-secondary' %>
+    </div>
   </div>
 <% end %>
