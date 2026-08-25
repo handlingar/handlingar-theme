@@ -15,7 +15,7 @@
     <ol class="hiw-steps">
       <li class="hiw-step">
         <div class="hiw-step__illustration" aria-hidden="true">
-          <span class="material-symbols-outlined">edit_document</span>
+          <%= ds_icon('edit-pencil', html_class: 'ds-icon') %>
         </div>
         <div class="hiw-step__content">
           <h3 class="hiw-step__title"><span class="hiw-step__num">1.</span> <%= _("Make a request") %></h3>
@@ -26,7 +26,7 @@
 
       <li class="hiw-step hiw-step--reverse">
         <div class="hiw-step__illustration" aria-hidden="true">
-          <span class="material-symbols-outlined">mark_email_unread</span>
+          <%= ds_icon('mail', html_class: 'ds-icon') %>
         </div>
         <div class="hiw-step__content">
           <h3 class="hiw-step__title"><span class="hiw-step__num">2.</span> <%= _("Wait for a response") %></h3>
@@ -37,7 +37,7 @@
 
       <li class="hiw-step">
         <div class="hiw-step__illustration" aria-hidden="true">
-          <span class="material-symbols-outlined">public</span>
+          <%= ds_icon('globe', html_class: 'ds-icon') %>
         </div>
         <div class="hiw-step__content">
           <h3 class="hiw-step__title"><span class="hiw-step__num">3.</span> <%= _("Published and done") %></h3>

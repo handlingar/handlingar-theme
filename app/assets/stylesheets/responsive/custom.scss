@@ -1169,22 +1169,27 @@ a.button-tertiary {
   }
 }
 
-// ---- 1.5 Iconography (Material Symbols, outlined) ---------------------------
-.material-symbols-outlined {
-  font-family: 'Material Symbols Outlined';
-  font-weight: normal;
-  font-style: normal;
-  line-height: 1;
-  letter-spacing: normal;
-  text-transform: none;
+// ---- 1.5 Iconography (self-hosted SVG, currentColor) ----------------------
+.ds-icon {
   display: inline-block;
-  white-space: nowrap;
-  word-wrap: normal;
-  direction: ltr;
-  -webkit-font-feature-settings: 'liga';
-  -webkit-font-smoothing: antialiased;
-  font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24; // outlined, not filled
+  width: 1.5rem;
+  height: 1.5rem;
+  flex-shrink: 0;
+  vertical-align: middle;
+  overflow: visible;
+  color: inherit;
 }
+
+// Small 24/16 · Big 32/20 · Social 26/26 · USP 100/80 (booklet page 15)
+.ds-icon--small,
+.icon--small  { width: 16px; height: 16px; }
+.ds-icon--big,
+.icon--big    { width: 20px; height: 20px; }
+.ds-icon--social,
+.icon--social { width: 26px; height: 26px; }
+.ds-icon--usp,
+.icon--usp    { width: 80px; height: 80px; }
+
 
 // ---- 3.1 Header: two-level navigation --------------------------------------
 // White top bar (logo · search · language) over an orange Brand Secondary bar
@@ -1394,9 +1399,10 @@ a.button-tertiary {
   }
   .usp__icon {
     color: $brand_secondary;
-    font-size: 3.25rem;
-    font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 48;
-    margin-bottom: 0.4em;
+    width: 3.25rem;
+    height: 3.25rem;
+    display: block;
+    margin: 0 auto 0.4em;
   }
   .usp__title { color: $color_white; font-size: $font-size-h4; margin: 0 0 0.4em; }
   .usp__text { color: transparentize($color_white, 0.15); font-size: $font-size-body; }
@@ -1431,8 +1437,8 @@ a.button-tertiary {
     @include respond-min( $main_menu-mobile_menu_cutoff ) { flex: 0 0 33.333%; }
     .usp__icon {
       color: $brand_accent;
-      font-size: 2.5rem;
-      font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 40;
+      width: 2.5rem;
+      height: 2.5rem;
       display: block;
       margin-bottom: 0.3em;
     }
@@ -1509,21 +1515,10 @@ form.user_search input[type="text"] {
 }
 
 // ---- 1.5 Iconography — exact box sizes (booklet page 15) --------------------
-// Small 24/16 · Big 32/20 · Social 26/26 · USP 100/80
-.icon--small  { font-size: 16px; font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 20; }
-.icon--big    { font-size: 20px; font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24; }
-.icon--social { font-size: 26px; }
-.icon--usp    { font-size: 80px; font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 48; }
-
-// USP icons sit in a 100×100 box with an 80px glyph
+// USP icons sit in an ~80px glyph (100×100 box in the booklet)
 .homepage-usp .usp__icon {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  width: 100px;
-  height: 100px;
-  font-size: 72px;
-  font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 48;
+  width: 80px;
+  height: 80px;
 }
 
 // ---- 3.1 Footer — multi-column layout + solid social badges ----------------
@@ -1572,6 +1567,7 @@ form.user_search input[type="text"] {
     display: inline-flex;
     align-items: center;
     justify-content: center;
+    gap: 0.4em;
     height: 2.4em;
     padding: 0 1em;
     border-radius: 1.2em;
@@ -1583,6 +1579,11 @@ form.user_search input[type="text"] {
       background-color: darken($brand_secondary, 8%);
       color: $brand_primary;
       text-decoration: none;
+    }
+    .ds-icon {
+      width: 1.15em;
+      height: 1.15em;
+      fill: currentColor;
     }
   }
 }
@@ -1633,10 +1634,10 @@ form.user_search input[type="text"] {
     min-height: 12em;
     background-color: transparentize($brand_secondary, 0.82);
     border-radius: 8px;
-    .material-symbols-outlined {
-      font-size: 96px;
+    .ds-icon {
+      width: 96px;
+      height: 96px;
       color: $brand_accent;
-      font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 48;
     }
   }
 
@@ -1682,10 +1683,10 @@ form.user_search input[type="text"] {
     border-radius: 8px;
     margin-bottom: 24px;
     @include respond-min( $main_menu-mobile_menu_cutoff ) { margin-bottom: 0; }
-    .material-symbols-outlined {
-      font-size: 120px;
+    .ds-icon {
+      width: 120px;
+      height: 120px;
       color: $brand_secondary;
-      font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 48;
     }
   }
 
@@ -1761,10 +1762,10 @@ form.user_search input[type="text"] {
     display: flex;
     align-items: center;
     justify-content: center;
-    .material-symbols-outlined {
-      font-size: 120px;
+    .ds-icon {
+      width: 120px;
+      height: 120px;
       color: $brand_accent;
-      font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 48;
     }
   }
 }
