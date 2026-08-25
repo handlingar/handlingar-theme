@@ -1664,16 +1664,11 @@ form.user_search input[type="text"] {
   @include respond-min( $main_menu-mobile_menu_cutoff ) {
     display: grid;
     grid-template-columns: 1fr 1fr;
-    grid-template-areas:
-      "illu form"
-      "signin signin";
     column-gap: 40px;
-    row-gap: 32px;
     align-items: start;
   }
 
   .create-account__illustration {
-    grid-area: illu;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -1689,7 +1684,6 @@ form.user_search input[type="text"] {
     }
   }
 
-  .create-account__form { grid-area: form; }
   .create-account__title { font-size: $font-size-h2; margin: 0 0 8px; }
   .create-account__lead { color: $color_text_gray; margin-bottom: 16px; }
 
@@ -1704,14 +1698,19 @@ form.user_search input[type="text"] {
 
   .signup__terms { margin: 16px 0; }
   .signup__terms-label { display: flex; align-items: center; gap: 8px; }
+}
 
-  // Sign-in moved below, de-emphasised (the design keeps create-account primary)
-  .create-account__signin {
-    grid-area: signin;
-    border-top: 1px solid $color_light_grey;
-    padding-top: 24px;
-    margin-top: 8px;
-    .sign-in-wrapper { max-width: 28em; }
+.sign-in-page {
+  max-width: 32em;
+  .sign-in-page__title { font-size: $font-size-h2; margin: 0 0 16px; }
+  .sign_in_reason { margin-bottom: 16px; }
+  .create-account__alt-links {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 8px;
+    margin-bottom: 24px;
+    .button-tertiary { padding: 0; }
   }
 }
 
