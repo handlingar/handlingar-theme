@@ -1,0 +1,7 @@
+<%- "A".upto("Z") do |l| -%>
+  <% if @tag == l %>
+    <span class="search-filters__letter search-filters__letter--current" aria-current="page"><%= l %></span>
+  <% else %>
+    <%= link_to l, list_public_bodies_by_tag_path(l.downcase), class: 'search-filters__letter' %>
+  <% end %>
+<% end %>

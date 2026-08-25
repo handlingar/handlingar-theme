@@ -8,3 +8,33 @@
 
 msgid "Services"
 msgstr "Tjänster"
+
+msgid "Find authorities and public organisations"
+msgstr "Hitta myndigheter och offentliga organisationer"
+
+msgid "&mdash; to make a request"
+msgstr "&mdash; för att göra en begäran"
+
+msgid "We have contact details for {{count}} different authorities"
+msgstr "Vi har kontaktuppgifter till {{count}} olika myndigheter"
+
+msgid "Before you make a request to your authority, you can browse requests already made by our users to see if you find your answer."
+msgstr "Innan du skickar en begäran till din myndighet kan du bläddra bland begäranden som andra användare redan har gjort, för att se om du hittar svaret."
+
+msgid "Browse requests"
+msgstr "Bläddra bland begäranden"
+
+msgid "Search by free text"
+msgstr "Sök med fritext"
+
+msgid "Type the name of the authority, city or similar to find the authority you are looking for."
+msgstr "Skriv namnet på myndigheten, kommunen eller liknande för att hitta den du söker."
+
+msgid "Send request"
+msgstr "Skicka begäran"
+
+msgid "See previous requests"
+msgstr "Se tidigare"
+
+msgid "None found."
+msgstr "Inga träffar."
