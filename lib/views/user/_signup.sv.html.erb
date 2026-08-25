@@ -41,7 +41,7 @@
       <%= password_field 'user_signup', 'password_confirmation', { :size => 15, :tabindex => 40, :autocomplete => "off" } %>
     </p>
 
-    <%= recaptcha_tags %>
+    <%= recaptcha_tags(nonce: content_security_policy_nonce) %>
 
     <div class="form_button">
       <%= hidden_field_tag 'token', params[:token], {:id => 'signup_token' } %>
