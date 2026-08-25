@@ -8,3 +8,213 @@
 
 msgid "Services"
 msgstr "Tjänster"
+
+msgid "FOI Management Tools for journalists, campaigners and researchers"
+msgstr "Verktyg för journalister, opinionsbildare och forskare som arbetar med allmänna handlingar"
+
+msgid "{{pro_site_name}} is a powerful, fully-featured <strong class=\"marketing-highlight\">FOI toolkit</strong> for journalists, campaigners and researchers"
+msgstr "{{pro_site_name}} är ett komplett <strong class=\"marketing-highlight\">verktyg</strong> för journalister, opinionsbildare och forskare"
+
+msgid "Everything you need to keep on top of complex FOI-driven stories."
+msgstr "Allt du behöver när du arbetar med information och allmänna handlingar."
+
+msgid "Find out how {{pro_site_name}} can take the hard work out of FOI investigations"
+msgstr "Se hur {{pro_site_name}} tar det tunga jobbet ur undersökningar"
+
+msgid "An all-in-one FOI toolkit for journalists, activists and campaigners"
+msgstr "Allt du behöver för att jobba med information från myndigheter. Oavsett om du är journalist, föreningsaktiv, forskare eller företagare"
+
+msgid "A powerful <strong class=\"marketing-highlight\">private dashboard</strong>: track and manage your FOI projects"
+msgstr "En smart <strong class=\"marketing-highlight\">privat panel</strong>: följ och hantera dina frågor på ett ställe"
+
+msgid "<strong>{{pro_site_name}}</strong> runs on the UK’s best-known FOI service"
+msgstr "{{pro_site_name}} körs på Sveriges mest kända plattform för insyn i offentlig sektor"
+
+msgid "A <strong class=\"marketing-highlight\">searchable archive</strong> of Freedom of Information requests"
+msgstr "Ett <strong class=\"marketing-highlight\">sökbart arkiv</strong> av begäranden om allmänna handlingar"
+
+msgid "Send the same request to many authorities at once and build a nationwide picture from the answers."
+msgstr "Skicka samma begäran till många myndigheter samtidigt och bygg en samlad bild från svaren."
+
+msgid "Collect information that has not been available as a single dataset, so you and your supporters can see the wider picture."
+msgstr "Samla information som inte funnits som ett enda dataset, så att du och de som stöttar dig kan se helheten."
+
+msgid "Compare figures across authorities with batch requests, without maintaining a separate spreadsheet for every reply."
+msgstr "Jämför uppgifter mellan myndigheter med serieförfrågningar, utan ett eget kalkylark för varje svar."
+
+msgid "Frequently Asked Questions"
+msgstr "Vanliga frågor"
+
+msgid "How do I cancel my account?"
+msgstr "Hur säger jag upp mitt konto?"
+
+msgid "Contact us and we will help you cancel. The Pro terms explain how the subscription works."
+msgstr "Kontakta oss så hjälper vi dig att säga upp. Pro-villkoren beskriver hur prenumerationen fungerar."
+
+msgid "Pro terms"
+msgstr "Pro-villkor"
+
+msgid "What does my subscription fee go towards?"
+msgstr "Vad går prenumerationsavgiften till?"
+
+msgid "Handlingar Pro is run by Digital Openers AB. Your fee supports the Pro tools and the running of Handlingar.se."
+msgstr "Handlingar Pro drivs av Digital Openers AB. Avgiften går till Pro-verktygen och driften av Handlingar.se."
+
+msgid "How do I change my payment details?"
+msgstr "Hur ändrar jag mina betaluppgifter?"
+
+msgid "Contact us and we will help you update your payment details."
+msgstr "Kontakta oss så hjälper vi dig att uppdatera dina betaluppgifter."
+
+msgid "I’ve got a voucher code"
+msgstr "Jag har en rabattkod"
+
+msgid "Enter the code at checkout, or contact us if you need help redeeming it."
+msgstr "Ange koden i kassan, eller kontakta oss om du behöver hjälp att lösa in den."
+
+msgid "I’m a journalist"
+msgstr "För journalister"
+
+msgid "I’m a campaigner"
+msgstr "För opinionsbildare"
+
+msgid "I’m a researcher"
+msgstr "För forskare"
+
+msgid "FOI for journalists"
+msgstr "Allmänna handlingar för journalister"
+
+msgid "FOI for campaigners"
+msgstr "Allmänna handlingar för opinionsbildare"
+
+msgid "FOI for researchers"
+msgstr "Allmänna handlingar för forskare"
+
+msgid "Learn more about {{pro_site_name}} for journalists"
+msgstr "Läs mer om {{pro_site_name}} för journalister"
+
+msgid "Learn more about {{pro_site_name}} for campaigners"
+msgstr "Läs mer om {{pro_site_name}} för opinionsbildare"
+
+msgid "Learn more about {{pro_site_name}} for researchers"
+msgstr "Läs mer om {{pro_site_name}} för forskare"
+
+msgid "FOI Management for Journalists"
+msgstr "Verktyg för journalister"
+
+msgid "FOI Management for Campaigners"
+msgstr "Verktyg för opinionsbildare"
+
+msgid "FOI Management for Researchers"
+msgstr "Verktyg för forskare"
+
+msgid "Plus, all the power of {{site_name}}"
+msgstr "Plus alla funktioner i {{site_name}}"
+
+msgid "Request access to {{pro_site_name}}"
+msgstr "Begär tillgång till {{pro_site_name}}"
+
+msgid "Got questions?"
+msgstr "Har du frågor?"
+
+msgid "Get in touch"
+msgstr "Kontakta oss"
+
+msgid "Email address"
+msgstr "E-postadress"
+
+msgid "Batch"
+msgstr "Serieförfrågningar"
+
+msgid "Why do you want access?"
+msgstr "Varför vill du ha tillgång?"
+
+msgid "Are you interested in free training, seminars and workshops about {{pro_site_name}}?"
+msgstr "Är du intresserad av utbildning, seminarier och workshops om {{pro_site_name}}?"
+
+msgid "Get email updates about {{pro_site_name}}?"
+msgstr "Få e-postuppdateringar om {{pro_site_name}}?"
+
+msgid "Please include links to some examples of your journalism or blogging if you can."
+msgstr "Länka gärna till exempel på ditt arbete om du kan."
+
+msgid "Pro brings a new dashboard view"
+msgstr "Pro har en ny panelvy"
+
+msgid "Pro features a new request list view"
+msgstr "Pro har en ny listvy för begäranden"
+
+msgid "Plans and pricing"
+msgstr "Priser och funktioner"
+
+msgid "Pricing"
+msgstr "Priser"
+
+msgid "New to Professional – Batch"
+msgstr "Nytt i Pro – serieförfrågningar"
+
+msgid "Make a request to multiple authorities and manage the responses."
+msgstr "Skicka samma begäran till flera myndigheter och hantera svaren."
+
+msgid "Sign up"
+msgstr "Registrera dig"
+
+msgid "{{pro_site_name}} is here to help"
+msgstr "{{pro_site_name}} hjälper dig"
+
+msgid "Finding it hard to keep on top of your FOI requests?"
+msgstr "Svårt att hålla reda på alla begäranden?"
+
+msgid "Journalists"
+msgstr "Journalister"
+
+msgid "Campaigners"
+msgstr "Opinionsbildare"
+
+msgid "Researchers"
+msgstr "Forskare"
+
+msgid "Keep <strong class=\"marketing-highlight\">requests and responses private</strong> while you work on your story"
+msgstr "Håll <strong class=\"marketing-highlight\">förfrågningar och svar privata</strong> medan du arbetar på ditt projekt"
+
+msgid "A super-smart <strong class=\"marketing-highlight\">to-do list</strong>: follow the progress of your requests"
+msgstr "En smart <strong class=\"marketing-highlight\">att göra-lista</strong>: följ utvecklingen av dina begäranden"
+
+msgid "<strong class=\"marketing-highlight\">Action alerts</strong>: know when it’s time to take the next step"
+msgstr "<strong class=\"marketing-highlight\">Åtgärdsnotiser</strong>: veta när det är dags att ta nästa steg"
+
+msgid "<strong class=\"marketing-highlight\">Daily summary emails</strong> to keep your inbox clean"
+msgstr "<strong class=\"marketing-highlight\">Dagliga sammanfattningar</strong> som håller inkorgen städad"
+
+msgid "<strong class=\"marketing-highlight\">Save as draft</strong> to get back to it later"
+msgstr "<strong class=\"marketing-highlight\">Spara som utkast</strong> och fortsätt senare"
+
+msgid "Up-to-date database of <strong class=\"marketing-highlight\">contact details</strong> for {{authority_count}} authorities"
+msgstr "Uppdaterad databas med <strong class=\"marketing-highlight\">kontaktuppgifter</strong> för {{authority_count}} myndigheter"
+
+msgid "<strong class=\"marketing-highlight\">Delivery verification</strong> for proof of receipt"
+msgstr "<strong class=\"marketing-highlight\">Leveransbekräftelse</strong> som kvitto på att begäran kommit fram"
+
+msgid "A permanent, searchable, <strong class=\"marketing-highlight\">public record</strong> of your request and the responses"
+msgstr "Ett permanent, sökbart <strong class=\"marketing-highlight\">offentligt register</strong> över din begäran och svaren"
+
+msgid "<strong class=\"marketing-highlight\">Streamlined process</strong> for requesting internal reviews"
+msgstr "<strong class=\"marketing-highlight\">Effektiv process</strong> för att följa upp och överklaga svar"
+
+msgid "<strong class=\"marketing-highlight\">Make a request to multiple authorities</strong>: select authorities at the click of a button"
+msgstr "<strong class=\"marketing-highlight\">Skicka till flera myndigheter</strong>: välj myndigheter med ett klick"
+
+msgid "<strong class=\"marketing-highlight\">Manage large volumes of responses</strong>: easily keep track of the status of each request"
+msgstr "<strong class=\"marketing-highlight\">Hantera många svar</strong>: följ statusen för varje begäran"
+
+msgid "<strong class=\"marketing-highlight\">Get regular updates</strong> as the responses come in — without overwhelming your inbox"
+msgstr "<strong class=\"marketing-highlight\">Få regelbundna uppdateringar</strong> när svaren kommer in — utan att översvämma inkorgen"
+
+msgid "Don’t worry – <a href=\"{{signup_link}}\">our free accounts</a> are still available and always will be."
+msgstr "Oroa dig inte – <a href=\"{{signup_link}}\">våra gratiskonton</a> finns kvar och kommer alltid att göra det."
+
+msgid "Batch requests allow multiple recipients of a single request"
+msgstr "Serieförfrågningar går till flera mottagare med samma mall"
+
+msgid "Batch requests are part of a new workflow"
+msgstr "Serieförfrågningar är en del av ett nytt arbetsflöde"

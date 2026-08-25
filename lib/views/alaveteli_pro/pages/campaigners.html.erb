@@ -1,0 +1,22 @@
+<% @title = _('FOI Management for Campaigners') %>
+
+<div class="marketing__section">
+  <div class="marketing__hero">
+    <h1><%= _('I’m a campaigner') %></h1>
+    <h2>
+      <%= _('{{pro_site_name}} is here to help', pro_site_name: pro_site_name) %>
+    </h2>
+    <p class="marketing__subhead">
+      <%= _('Collect information that has not been available as a single dataset, so you and your supporters can see the wider picture.') %>
+    </p>
+    <p>
+      <%= link_to _('Learn more about {{pro_site_name}} for campaigners',
+                    pro_site_name: pro_site_name),
+                  help_pro_path %>
+    </p>
+  </div>
+</div>
+
+<div class="marketing__cta">
+  <%= render partial: 'alaveteli_pro/account_request/cta' %>
+</div>
