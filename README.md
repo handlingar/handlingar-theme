@@ -24,6 +24,9 @@ only contains view/style/Ruby overlays that are loaded *into* a running
 [Alaveteli](https://alaveteli.org) instance. To preview it locally you run
 Alaveteli's Docker development environment with this theme mounted in.
 
+Design-system tokens, type, icons, Stripe and captcha rules:
+[docs/theme-guide.md](docs/theme-guide.md).
+
 ### Prerequisites
 - [Docker Desktop](https://docs.docker.com/get-docker/) (v20+) running
 - `git`
