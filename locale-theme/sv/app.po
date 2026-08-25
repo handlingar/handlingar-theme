@@ -8,3 +8,6 @@
 
 msgid "Services"
 msgstr "Tjänster"
+
+msgid "I have read the <a href=\"{{url}}\">terms of use</a>"
+msgstr "Jag har läst <a href=\"{{url}}\">användarvillkoren</a>"
