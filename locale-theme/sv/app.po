@@ -8,3 +8,12 @@
 
 msgid "Services"
 msgstr "Tjänster"
+
+msgid "Open menu"
+msgstr "Öppna menyn"
+
+msgid "Close menu"
+msgstr "Stäng menyn"
+
+msgid "Create account"
+msgstr "Skapa konto"

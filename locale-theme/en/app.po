@@ -5,3 +5,12 @@
 #
 # msgid "Make and browse Freedom of Information (FOI) requests"
 # msgstr "Make and browse Right to Know (RTI) requests"
+
+msgid "Open menu"
+msgstr "Open menu"
+
+msgid "Close menu"
+msgstr "Close menu"
+
+msgid "Create account"
+msgstr "Create account"
