@@ -1631,12 +1631,14 @@ form.user_search input[type="text"] {
     align-items: center;
     justify-content: center;
     min-height: 12em;
+    padding: 16px 24px;
     background-color: transparentize($brand_secondary, 0.82);
     border-radius: 8px;
-    .material-symbols-outlined {
-      font-size: 96px;
-      color: $brand_accent;
-      font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 48;
+    img {
+      display: block;
+      width: 100%;
+      max-width: 22em;
+      height: auto;
     }
   }
 
@@ -1678,14 +1680,17 @@ form.user_search input[type="text"] {
     align-items: center;
     justify-content: center;
     min-height: 18em;
+    padding: 24px;
     background-color: $brand_primary;
+    background-image: linear-gradient(160deg, $gradient_start, $gradient_end);
     border-radius: 8px;
     margin-bottom: 24px;
     @include respond-min( $main_menu-mobile_menu_cutoff ) { margin-bottom: 0; }
-    .material-symbols-outlined {
-      font-size: 120px;
-      color: $brand_secondary;
-      font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 48;
+    img {
+      display: block;
+      width: 100%;
+      max-width: 28em;
+      height: auto;
     }
   }
 
@@ -1761,10 +1766,15 @@ form.user_search input[type="text"] {
     display: flex;
     align-items: center;
     justify-content: center;
-    .material-symbols-outlined {
-      font-size: 120px;
-      color: $brand_accent;
-      font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 48;
+    min-height: 12em;
+    padding: 16px 24px;
+    background-color: transparentize($brand_secondary, 0.82);
+    border-radius: 8px;
+    img {
+      display: block;
+      width: 100%;
+      max-width: 22em;
+      height: auto;
     }
   }
 }
