@@ -8,3 +8,51 @@
 
 msgid "Services"
 msgstr "Tjänster"
+
+msgid "Dashboard"
+msgstr "Översikt"
+
+msgid "Your dashboard"
+msgstr "Din översikt"
+
+msgid "View public requests"
+msgstr "Visa offentliga förfrågningar"
+
+msgid "All requests"
+msgstr "Alla förfrågningar"
+
+msgid "Drafts"
+msgstr "Utkast"
+
+msgid "Projects"
+msgstr "Projekt"
+
+msgid "Things to do today"
+msgstr "Att göra idag"
+
+msgid "Activity"
+msgstr "Aktivitet"
+
+msgid "Get started with your first request"
+msgstr "Kom igång med din första begäran"
+
+msgid "From this screen you can see what you need to do next to keep your requests moving forward. Why not start a new request now?"
+msgstr "Här ser du vad som behöver göras härnäst för att dina begäranden ska gå framåt. Varför inte starta en ny begäran nu?"
+
+msgid "From this screen you can get a helpful overview of your requests, and use quick actions to keep them up to date. Why not start your first one now?"
+msgstr "Här får du en överblick över dina begäranden och kan hålla dem uppdaterade. Varför inte starta din första nu?"
+
+msgid "Start new request"
+msgstr "Starta ny begäran"
+
+msgid "Create a new Project"
+msgstr "Skapa ett nytt projekt"
+
+msgid "{{site_name}} Projects helps manage large investigations into public records by grouping requests, coordinating contributors, and extracting structured data — making complex research faster and more collaborative."
+msgstr "{{site_name}} Projekt hjälper till att hantera stora undersökningar av allmänna handlingar genom att gruppera begäranden, samordna bidragande och extrahera strukturerad data — så att komplex research går snabbare och blir mer samarbetsinriktad."
+
+msgid "There's nothing to do right now. Great job!"
+msgstr "Det finns inget att göra just nu. Bra jobbat!"
+
+msgid "Dismiss"
+msgstr "Stäng"
