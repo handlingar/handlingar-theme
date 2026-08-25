@@ -91,6 +91,26 @@ page load in development; if a stylesheet change isn't picked up, force it with:
 
     docker compose exec app bin/rails assets:clobber
 
+### Accessibility smoke (axe)
+
+Core journeys are not a Node app, so GitHub Actions runs axe-core against
+committed design-system HTML fixtures (`npm run axe-smoke:fixtures`). Against a
+running Alaveteli (Docker on port 3000, or another origin):
+
+    npm ci
+    npx playwright install chromium
+    npm run axe-smoke
+
+Optional: `AXE_BASE_URL`, `AXE_LOCALES` (default `en,sv`), `AXE_PATHS`
+(default `/profile/sign_in,/body,/help/about`). The homepage is omitted from
+the default live paths because how-it-works accent numerals and empty Swedish
+example-request links still fail color-contrast / link-name on
+`new-design-system`; scan it with `AXE_PATHS=/,/profile/sign_in,/body,/help/about`.
+The live job in `.github/workflows/axe-smoke.yml` also runs when the repo
+variable `AXE_BASE_URL` is set, or via workflow_dispatch. Stripe and reCAPTCHA
+iframes are excluded. The scan fails on critical and serious WCAG 2.1 AA
+findings.
+
 ### Useful commands
 
     docker compose logs -f app          # tail application logs
