@@ -1702,8 +1702,19 @@ form.user_search input[type="text"] {
     .button-tertiary { padding: 0; }
   }
 
-  .signup__terms { margin: 16px 0; }
-  .signup__terms-label { display: flex; align-items: center; gap: 8px; }
+  .signup__terms { margin: 16px 0; max-width: 100%; }
+  .signup__terms-label {
+    display: flex;
+    align-items: flex-start;
+    gap: 8px;
+    line-height: 1.4;
+    max-width: 100%;
+    input {
+      flex: 0 0 auto;
+      margin-top: 0.2em;
+    }
+    span { min-width: 0; flex: 1 1 auto; }
+  }
 
   // Sign-in moved below, de-emphasised (the design keeps create-account primary)
   .create-account__signin {

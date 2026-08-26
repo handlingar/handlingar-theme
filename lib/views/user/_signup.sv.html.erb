@@ -9,7 +9,7 @@
 
     <div class="form_item_note">
       <%= _('Ditt <strong>namn kommer att synas offentligt</strong> ' \
-            '(<a href="{{why_url}}">why?</a>) på denna webbsida och på ' \
+            '(<a href="{{why_url}}">varför?</a>) på denna webbsida och på ' \
             'sökmotorer. <a href="{{help_url}}">Funderar du på att använda en ' \
             'pseudonym?</a>',
             :why_url => help_privacy_path(:anchor => "public_request").html_safe,
@@ -42,6 +42,16 @@
     </p>
 
     <%= recaptcha_tags %>
+
+    <div class="form_item_note signup__terms">
+      <label class="signup__terms-label">
+        <%= check_box_tag 'accepted_terms', '1', false, :tabindex => 45 %>
+        <span>
+          <%= _('Jag har läst <a href="{{url}}">användarvillkoren</a>',
+                :url => help_terms_path).html_safe %>
+        </span>
+      </label>
+    </div>
 
     <div class="form_button">
       <%= hidden_field_tag 'token', params[:token], {:id => 'signup_token' } %>
