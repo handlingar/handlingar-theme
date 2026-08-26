@@ -1,0 +1,13 @@
+<div class="handlingar-captcha">
+  <% if HandlingarCaptcha.site_key.present? %>
+    <div class="frc-captcha" data-sitekey="<%= HandlingarCaptcha.site_key %>"></div>
+    <%= javascript_include_tag HandlingarCaptcha::WIDGET_JS,
+                               async: true,
+                               defer: true,
+                               nonce: nonce %>
+  <% else %>
+    <p class="handlingar-captcha__missing">
+      <%= _('Captcha is not configured.') %>
+    </p>
+  <% end %>
+</div>

@@ -9,6 +9,9 @@ Rails.configuration.to_prepare do
   HelpController.class_eval do
     def terms; end
   end
+
+  ActionView::Base.prepend(HandlingarCaptcha::ViewMethods)
+  ActionController::Base.prepend(HandlingarCaptcha::ControllerMethods)
 end
   # Example adding an instance variable to the frontpage controller
   # GeneralController.class_eval do

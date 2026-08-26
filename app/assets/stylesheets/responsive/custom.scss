@@ -1821,3 +1821,12 @@ form.user_search input[type="text"] {
     .body-listing__see-previous { white-space: nowrap; }
   }
 }
+
+// Captcha adapter: Friendly Captcha widget when CAPTCHA_PROVIDER=friendly_captcha
+.handlingar-captcha {
+  margin: 16px 0;
+}
+.handlingar-captcha__missing {
+  color: $color_red;
+  font-size: $font-size-small;
+}

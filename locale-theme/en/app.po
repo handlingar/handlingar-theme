@@ -5,3 +5,6 @@
 #
 # msgid "Make and browse Freedom of Information (FOI) requests"
 # msgstr "Make and browse Right to Know (RTI) requests"
+
+msgid "Captcha is not configured."
+msgstr "Captcha is not configured."
