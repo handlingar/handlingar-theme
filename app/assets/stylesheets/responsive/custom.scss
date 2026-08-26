@@ -1821,3 +1821,32 @@ form.user_search input[type="text"] {
     .body-listing__see-previous { white-space: nowrap; }
   }
 }
+
+// ---- Help pages: sidebar chrome -------------------------------------------
+.help-sidebar {
+  background-color: $color_bg;
+  border-radius: 8px;
+  padding: 24px;
+  border-top: 3px solid $brand_accent;
+
+  h2 {
+    font-size: $font-size-h4;
+    margin: 0 0 12px;
+  }
+
+  ul.no_bullets {
+    margin: 0 0 24px;
+    padding: 0;
+    list-style: none;
+    li {
+      margin: 0 0 8px;
+      a { color: $brand_primary; }
+      &:not(:has(a)) {
+        font-weight: $font-weight-bold;
+        color: $brand_accent;
+      }
+    }
+  }
+
+  h2.contact { margin-top: 8px; }
+}
