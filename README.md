@@ -133,9 +133,19 @@ You can then switch the theme the application is using:
 
 ## To run tests:
 
-To run tests, in the Alaveteli Rails.root (with this theme installed):
+From the Alaveteli Rails root, with this theme at `lib/themes/handlingar-theme`:
 
-        bundle exec rspec lib/themes/alavetelitheme/spec
+        bundle exec rspec lib/themes/handlingar-theme/spec
 
+In Docker:
+
+        docker compose exec -e RAILS_ENV=test app bundle exec rspec lib/themes/handlingar-theme/spec
+
+The suite loads the theme via `ALAVETELI_TEST_THEME`, checks Stripe and
+reCAPTCHA markup, and renders frontpage, sign-in and `/body`.
+
+Overlay contracts also run without Rails:
+
+        ruby script/check-overlay-contracts.rb
 
 Copyright (c) 2011 mySociety, released under the MIT license
