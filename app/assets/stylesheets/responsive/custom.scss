@@ -1592,7 +1592,11 @@ form.user_search input[type="text"] {
 .homepage-usp .row,
 .homepage-pro .row,
 .homepage-how-it-works .row,
-.homepage-learn-more .row {
+.homepage-learn-more .row,
+.search-hero .row,
+.search-intro .row,
+.search-band .row,
+.search-results-row {
   @include respond-min( $main_menu-mobile_menu_cutoff ) {
     padding-left: $ds-page-margin;
     padding-right: $ds-page-margin;
@@ -1781,21 +1785,113 @@ form.user_search input[type="text"] {
   .search-band__field {
     display: flex;
     justify-content: center;
+    align-items: stretch;
     gap: 8px;
     max-width: 36em;
     margin: 0 auto;
-    input[type="text"] {
+    input[type="text"],
+    input[type="search"] {
       flex: 1;
       background-color: $color_white;
       border: 1px solid $color_white;
       border-radius: 4px;
       margin: 0;
+      min-height: 2.75em;
+      padding: 0 0.75em;
+    }
+    input[type="submit"] {
+      margin: 0;
+      min-height: 2.75em;
     }
   }
 }
 
 .search-results-row {
-  margin-top: 40px;
+  margin-top: 0;
+  padding-top: 40px;
+  padding-bottom: 56px;
+
+  .publicbody_results {
+    font-size: $font-size-h4;
+    color: $brand_primary;
+    margin: 0 0 8px;
+  }
+  .search-results__description {
+    color: $color_text_gray;
+    font-style: italic;
+    margin: 0 0 1.5em;
+  }
+  .search-results__empty {
+    color: $color_text_gray;
+    padding: 1.5em 0 2em;
+  }
+  .search-results__missing {
+    margin: 1.5em 0 0;
+  }
+  .pagination {
+    margin-top: 1.5em;
+  }
+}
+
+.search-filters {
+  h2 {
+    font-size: $font-size-h4;
+    color: $brand_primary;
+    margin: 0 0 1em;
+  }
+  h3 {
+    font-size: $font-size-h5;
+    color: $brand_primary;
+    margin: 1.5em 0 0.5em;
+  }
+  ul {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    li { margin: 0 0 0.4em; }
+    a {
+      color: $brand_primary;
+      text-decoration: none;
+      &:hover, &:focus { color: $brand_accent; text-decoration: underline; }
+    }
+  }
+  .search-filters__current {
+    font-weight: $font-weight-semibold;
+    color: $brand_accent;
+  }
+  .list-sidebar-extra {
+    margin-top: 2em;
+    font-size: $font-size-body;
+    a { color: $brand_primary; }
+  }
+}
+
+.search-filters__alphabet {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px;
+}
+
+.search-filters__letter {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 1.75em;
+  height: 1.75em;
+  padding: 0 0.2em;
+  border-radius: 4px;
+  color: $brand_primary;
+  text-decoration: none;
+  font-weight: $font-weight-semibold;
+  &:hover, &:focus {
+    background-color: $color_bg;
+    color: $brand_accent;
+    text-decoration: none;
+  }
+  &--current {
+    background-color: $brand_accent;
+    color: $color_white;
+  }
 }
 
 // Result rows: name + count on the left, action buttons on the right (page 36)
