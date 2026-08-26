@@ -1821,3 +1821,203 @@ form.user_search input[type="text"] {
     .body-listing__see-previous { white-space: nowrap; }
   }
 }
+
+// ---- Make a request (Demo 2 / vecka 7) --------------------------------------
+.new_info_request {
+  @include respond-min( $main_menu-mobile_menu_cutoff ) {
+    padding-left: $ds-page-margin;
+    padding-right: $ds-page-margin;
+  }
+  padding-bottom: 56px;
+}
+
+#request_header {
+  border-bottom: 1px solid $color_light_grey;
+  h1 {
+    font-size: $font-size-h2;
+    color: $brand_primary;
+    margin: 0 0 16px;
+  }
+}
+
+.to_public_body,
+.from_user {
+  font-size: $font-size-h5;
+  color: $brand_primary;
+}
+
+.to_public_body_label,
+.from_user_label {
+  color: $color_text_gray;
+  margin-right: 0.35em;
+}
+
+#request_advice {
+  .advice-panel {
+    h4 {
+      font-size: $font-size-h5;
+      font-weight: $font-weight-semibold;
+      color: $brand_primary;
+      margin: 0 0 8px;
+    }
+    a {
+      color: $brand_primary;
+      text-decoration: underline;
+      &:hover, &:focus { color: $brand_accent; }
+    }
+  }
+}
+
+.advice-panel.advice-panel--warning {
+  background-color: transparentize($brand_secondary, 0.82);
+  border: 1px solid $brand_accent;
+  border-radius: 4px;
+  padding: 16px;
+}
+
+.new_info_request {
+  input[type="text"],
+  textarea {
+    border: 1px solid $color_light_grey;
+    border-radius: 4px;
+    padding: 0.6em 0.75em;
+    &:focus {
+      border-color: $brand_primary;
+      outline: 2px solid transparentize($brand_accent, 0.5);
+      outline-offset: 1px;
+    }
+  }
+  .form_label {
+    font-weight: $font-weight-semibold;
+    color: $brand_primary;
+  }
+  .form_item_note {
+    color: $color_text_gray;
+  }
+}
+
+// ---- Select authority (start of make-a-request) -----------------------------
+.request-select {
+  background-color: $color_bg;
+  padding: 48px 0 40px;
+  .row {
+    @include respond-min( $main_menu-mobile_menu_cutoff ) {
+      padding-left: $ds-page-margin;
+      padding-right: $ds-page-margin;
+    }
+  }
+}
+
+.request-select__title {
+  font-size: $font-size-h2;
+  color: $brand_primary;
+  margin: 0 0 12px;
+}
+
+.request-select__lead {
+  color: $color_text_gray;
+  max-width: 40em;
+  margin: 0 0 24px;
+  a { color: $brand_primary; }
+}
+
+.request-select__search {
+  max-width: 40em;
+}
+
+.request-select__field {
+  display: flex;
+  align-items: stretch;
+  gap: 8px;
+  input[type="text"],
+  input[type="search"] {
+    flex: 1;
+    margin: 0;
+    min-height: 2.75em;
+    border: 1px solid $color_light_grey;
+    border-radius: 4px;
+    padding: 0 0.75em;
+  }
+  input[type="submit"] {
+    margin: 0;
+    min-height: 2.75em;
+  }
+}
+
+.request-select__help-wrap {
+  padding: 0 0 56px;
+  .row {
+    @include respond-min( $main_menu-mobile_menu_cutoff ) {
+      padding-left: $ds-page-margin;
+      padding-right: $ds-page-margin;
+    }
+  }
+}
+
+.request-select__help {
+  display: grid;
+  gap: 16px;
+  @include respond-min( $main_menu-mobile_menu_cutoff ) {
+    grid-template-columns: repeat(3, 1fr);
+    column-gap: 20px;
+  }
+  & > div {
+    margin-top: 0;
+    padding-top: 0;
+    border-top: 0;
+  }
+}
+
+.request-select__card {
+  background-color: $color_white;
+  border: 1px solid $color_light_grey;
+  border-radius: 4px;
+  padding: 24px;
+  h2 {
+    font-size: $font-size-h5;
+    color: $brand_primary;
+    margin: 0 0 8px;
+  }
+  p { margin: 0; color: $color_text_gray; }
+  a {
+    color: $brand_primary;
+    &:hover, &:focus { color: $brand_accent; }
+  }
+}
+
+#authority_search_ahead_results {
+  margin-top: 24px;
+}
+
+// ---- Preview request --------------------------------------------------------
+#preview_form {
+  padding-bottom: 56px;
+  @include respond-min( $main_menu-mobile_menu_cutoff ) {
+    padding-left: $ds-page-margin;
+    padding-right: $ds-page-margin;
+  }
+  h1 {
+    font-size: $font-size-h2;
+    color: $brand_primary;
+    margin: 24px 0 16px;
+  }
+}
+
+.message-preview {
+  .preview-advice .advice-panel {
+    background-color: transparentize($brand_secondary, 0.82);
+    border: 1px solid $brand_accent;
+    border-radius: 4px;
+    padding: 16px;
+    a { color: $brand_primary; }
+  }
+  .preview-pane .correspondence {
+    border: 1px solid $color_light_grey;
+    border-radius: 4px;
+    padding: 24px;
+  }
+  #reedit_button {
+    color: $brand_primary;
+    &:hover, &:focus { color: $brand_accent; }
+  }
+}

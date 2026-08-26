@@ -5,3 +5,6 @@
 #
 # msgid "Make and browse Freedom of Information (FOI) requests"
 # msgstr "Make and browse Right to Know (RTI) requests"
+
+msgid "How to make a request"
+msgstr "How to make a request"
