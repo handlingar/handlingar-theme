@@ -11,3 +11,4 @@
 TAGS
 *.sw[a-z]
 *DONT-CHECKIN*
+node_modules/
