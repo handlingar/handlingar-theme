@@ -1,4 +1,27 @@
 
+/* Self-hosted Source Sans 3 (SIL OFL). Weights match the booklet: Regular, Semi-Bold, Bold. */
+@font-face {
+  font-family: "Source Sans 3";
+  src: font-url("SourceSans3-Regular.woff2") format("woff2");
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: "Source Sans 3";
+  src: font-url("SourceSans3-Semibold.woff2") format("woff2");
+  font-weight: 600;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: "Source Sans 3";
+  src: font-url("SourceSans3-Bold.woff2") format("woff2");
+  font-weight: 700;
+  font-style: normal;
+  font-display: swap;
+}
+
 /* Mixin styles */
 
 /* Hide text when it's replaced by an image */
