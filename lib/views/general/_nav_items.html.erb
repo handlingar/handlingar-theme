@@ -6,12 +6,20 @@
   <%= link_to _("View authorities"), list_public_bodies_default_path %>
 </li>
 
-<li><%= link_to _("Pro"), account_request_index_path %></li>
+<% if feature_enabled?(:alaveteli_pro) %>
+  <li class="<%= 'selected' if @in_pro_area %>">
+    <%= link_to _("Pro"), account_request_index_path %>
+  </li>
+<% end %>
 
-<li><%= link_to _("Services"), 'https://about.handlingar.se/' %></li>
+<li>
+  <%= link_to _("Services"), 'https://about.handlingar.se/' %>
+</li>
 
 <% if Blog.enabled? %>
-  <li class="<%= 'selected' if controller?('general') && action?('blog') %>"><%= link_to _("Read blog"), blog_path %></li>
+  <li class="<%= 'selected' if controller?('general') && action?('blog') %>">
+    <%= link_to _("Read blog"), blog_path %>
+  </li>
 <% end %>
 
 <li class="<%= 'selected' if controller?('help') %>">
