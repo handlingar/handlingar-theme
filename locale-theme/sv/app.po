@@ -8,3 +8,6 @@
 
 msgid "Services"
 msgstr "Tjänster"
+
+msgid "Create account"
+msgstr "Skapa konto"
