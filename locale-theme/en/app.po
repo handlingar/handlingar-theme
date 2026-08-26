@@ -5,3 +5,408 @@
 #
 # msgid "Make and browse Freedom of Information (FOI) requests"
 # msgstr "Make and browse Right to Know (RTI) requests"
+
+msgid "How to make a request"
+msgstr "How to make a request"
+
+msgid "FOI Management Tools for journalists, campaigners and researchers"
+msgstr "Tools for journalists, campaigners and researchers working with public records"
+
+msgid "{{pro_site_name}} is a powerful, fully-featured <strong class=\"marketing-highlight\">FOI toolkit</strong> for journalists, campaigners and researchers"
+msgstr "{{pro_site_name}} is a powerful, fully-featured <strong class=\"marketing-highlight\">toolbox</strong> for journalists, campaigners and researchers"
+
+msgid "Everything you need to keep on top of complex FOI-driven stories."
+msgstr "Everything you need when working with public records and information from authorities."
+
+msgid "Find out how {{pro_site_name}} can take the hard work out of FOI investigations"
+msgstr "Find out how {{pro_site_name}} can take the hard work out of investigations"
+
+msgid "An all-in-one FOI toolkit for journalists, activists and campaigners"
+msgstr "An all-in-one toolbox for journalists, activists, researchers and businesses"
+
+msgid "A powerful <strong class=\"marketing-highlight\">private dashboard</strong>: track and manage your FOI projects"
+msgstr "A powerful <strong class=\"marketing-highlight\">private dashboard</strong>: track and manage your request projects"
+
+msgid "<strong>{{pro_site_name}}</strong> runs on the UK’s best-known FOI service"
+msgstr "<strong>{{pro_site_name}}</strong> runs on Sweden’s leading platform for access to public records"
+
+msgid "A <strong class=\"marketing-highlight\">searchable archive</strong> of Freedom of Information requests"
+msgstr "A <strong class=\"marketing-highlight\">searchable archive</strong> of requests for public records"
+
+msgid "Send the same request to many authorities at once and build a nationwide picture from the answers."
+msgstr "Send the same request to many authorities at once and build a nationwide picture from the answers."
+
+msgid "Collect information that has not been available as a single dataset, so you and your supporters can see the wider picture."
+msgstr "Collect information that has not been available as a single dataset, so you and your supporters can see the wider picture."
+
+msgid "Compare figures across authorities with batch requests, without maintaining a separate spreadsheet for every reply."
+msgstr "Compare figures across authorities with batch requests, without maintaining a separate spreadsheet for every reply."
+
+msgid "Frequently Asked Questions"
+msgstr "Frequently Asked Questions"
+
+msgid "How do I cancel my account?"
+msgstr "How do I cancel my account?"
+
+msgid "Contact us and we will help you cancel. The Pro terms explain how the subscription works."
+msgstr "Contact us and we will help you cancel. The Pro terms explain how the subscription works."
+
+msgid "Pro terms"
+msgstr "Pro terms"
+
+msgid "What does my subscription fee go towards?"
+msgstr "What does my subscription fee go towards?"
+
+msgid "Handlingar Pro is run by Digital Openers AB. Your fee supports the Pro tools and the running of Handlingar.se."
+msgstr "Handlingar Pro is run by Digital Openers AB. Your fee supports the Pro tools and the running of Handlingar.se."
+
+msgid "How do I change my payment details?"
+msgstr "How do I change my payment details?"
+
+msgid "Contact us and we will help you update your payment details."
+msgstr "Contact us and we will help you update your payment details."
+
+msgid "I’ve got a voucher code"
+msgstr "I’ve got a voucher code"
+
+msgid "Enter the code at checkout, or contact us if you need help redeeming it."
+msgstr "Enter the code at checkout, or contact us if you need help redeeming it."
+
+msgid "I’m a journalist"
+msgstr "I’m a journalist"
+
+msgid "I’m a campaigner"
+msgstr "I’m a campaigner"
+
+msgid "I’m a researcher"
+msgstr "I’m a researcher"
+
+msgid "FOI for journalists"
+msgstr "Public records for journalists"
+
+msgid "FOI for campaigners"
+msgstr "Public records for campaigners"
+
+msgid "FOI for researchers"
+msgstr "Public records for researchers"
+
+msgid "Learn more about {{pro_site_name}} for journalists"
+msgstr "Learn more about {{pro_site_name}} for journalists"
+
+msgid "Learn more about {{pro_site_name}} for campaigners"
+msgstr "Learn more about {{pro_site_name}} for campaigners"
+
+msgid "Learn more about {{pro_site_name}} for researchers"
+msgstr "Learn more about {{pro_site_name}} for researchers"
+
+msgid "FOI Management for Journalists"
+msgstr "Tools for journalists"
+
+msgid "FOI Management for Campaigners"
+msgstr "Tools for campaigners"
+
+msgid "FOI Management for Researchers"
+msgstr "Tools for researchers"
+
+msgid "Plus, all the power of {{site_name}}"
+msgstr "Plus, all the power of {{site_name}}"
+
+msgid "Request access to {{pro_site_name}}"
+msgstr "Request access to {{pro_site_name}}"
+
+msgid "Got questions?"
+msgstr "Got questions?"
+
+msgid "Get in touch"
+msgstr "Get in touch"
+
+msgid "Email address"
+msgstr "Email address"
+
+msgid "Batch"
+msgstr "Batch"
+
+msgid "Why do you want access?"
+msgstr "Why do you want access?"
+
+msgid "Are you interested in free training, seminars and workshops about {{pro_site_name}}?"
+msgstr "Are you interested in free training, seminars and workshops about {{pro_site_name}}?"
+
+msgid "Get email updates about {{pro_site_name}}?"
+msgstr "Get email updates about {{pro_site_name}}?"
+
+msgid "Please include links to some examples of your journalism or blogging if you can."
+msgstr "Please include links to some examples of your work if you can."
+
+msgid "Pro brings a new dashboard view"
+msgstr "Pro brings a new dashboard view"
+
+msgid "Pro features a new request list view"
+msgstr "Pro features a new request list view"
+
+msgid "Plans and pricing"
+msgstr "Plans and pricing"
+
+msgid "Pricing"
+msgstr "Pricing"
+
+msgid "New to Professional – Batch"
+msgstr "New in Professional – Batch"
+
+msgid "Make a request to multiple authorities and manage the responses."
+msgstr "Make a request to multiple authorities and manage the responses."
+
+msgid "Sign up"
+msgstr "Sign up"
+
+msgid "{{pro_site_name}} is here to help"
+msgstr "{{pro_site_name}} is here to help"
+
+msgid "Finding it hard to keep on top of your FOI requests?"
+msgstr "Finding it hard to keep on top of your requests?"
+
+msgid "Journalists"
+msgstr "Journalists"
+
+msgid "Campaigners"
+msgstr "Campaigners"
+
+msgid "Researchers"
+msgstr "Researchers"
+
+msgid "Keep <strong class=\"marketing-highlight\">requests and responses private</strong> while you work on your story"
+msgstr "Keep <strong class=\"marketing-highlight\">requests and responses private</strong> while you work on your story"
+
+msgid "A super-smart <strong class=\"marketing-highlight\">to-do list</strong>: follow the progress of your requests"
+msgstr "A super-smart <strong class=\"marketing-highlight\">to-do list</strong>: follow the progress of your requests"
+
+msgid "<strong class=\"marketing-highlight\">Action alerts</strong>: know when it’s time to take the next step"
+msgstr "<strong class=\"marketing-highlight\">Action alerts</strong>: know when it’s time to take the next step"
+
+msgid "<strong class=\"marketing-highlight\">Daily summary emails</strong> to keep your inbox clean"
+msgstr "<strong class=\"marketing-highlight\">Daily summary emails</strong> to keep your inbox clean"
+
+msgid "<strong class=\"marketing-highlight\">Save as draft</strong> to get back to it later"
+msgstr "<strong class=\"marketing-highlight\">Save as draft</strong> to get back to it later"
+
+msgid "Up-to-date database of <strong class=\"marketing-highlight\">contact details</strong> for {{authority_count}} authorities"
+msgstr "Up-to-date database of <strong class=\"marketing-highlight\">contact details</strong> for {{authority_count}} authorities"
+
+msgid "<strong class=\"marketing-highlight\">Delivery verification</strong> for proof of receipt"
+msgstr "<strong class=\"marketing-highlight\">Delivery verification</strong> for proof of receipt"
+
+msgid "A permanent, searchable, <strong class=\"marketing-highlight\">public record</strong> of your request and the responses"
+msgstr "A permanent, searchable, <strong class=\"marketing-highlight\">public record</strong> of your request and the responses"
+
+msgid "<strong class=\"marketing-highlight\">Streamlined process</strong> for requesting internal reviews"
+msgstr "<strong class=\"marketing-highlight\">Streamlined process</strong> for following up overdue or incomplete answers"
+
+msgid "<strong class=\"marketing-highlight\">Make a request to multiple authorities</strong>: select authorities at the click of a button"
+msgstr "<strong class=\"marketing-highlight\">Make a request to multiple authorities</strong>: select authorities at the click of a button"
+
+msgid "<strong class=\"marketing-highlight\">Manage large volumes of responses</strong>: easily keep track of the status of each request"
+msgstr "<strong class=\"marketing-highlight\">Manage large volumes of responses</strong>: easily keep track of the status of each request"
+
+msgid "<strong class=\"marketing-highlight\">Get regular updates</strong> as the responses come in — without overwhelming your inbox"
+msgstr "<strong class=\"marketing-highlight\">Get regular updates</strong> as the responses come in — without overwhelming your inbox"
+
+msgid "Don’t worry – <a href=\"{{signup_link}}\">our free accounts</a> are still available and always will be."
+msgstr "Don’t worry – <a href=\"{{signup_link}}\">our free accounts</a> are still available and always will be."
+
+msgid "Batch requests allow multiple recipients of a single request"
+msgstr "Batch requests allow multiple recipients of a single request"
+
+msgid "Batch requests are part of a new workflow"
+msgstr "Batch requests are part of a new workflow"
+
+msgid "Captcha is not configured."
+msgstr "Captcha is not configured."
+
+msgid "Open menu"
+msgstr "Open menu"
+
+msgid "Close menu"
+msgstr "Close menu"
+
+msgid "Create account"
+msgstr "Create account"
+
+msgid "Skip to content"
+msgstr "Skip to content"
+
+msgid "Skip navigation"
+msgstr "Skip navigation"
+
+msgid "Main navigation"
+msgstr "Main navigation"
+
+msgid "Language"
+msgstr "Language"
+
+msgid "Menu"
+msgstr "Menu"
+
+msgid "Footer"
+msgstr "Footer"
+
+msgid "Filter by letter"
+msgstr "Filter by letter"
+
+msgid "Your profile photo"
+msgstr "Your profile photo"
+
+msgid "Services"
+msgstr "Services"
+
+msgid "Pro"
+msgstr "Pro"
+
+msgid "Secondary navigation"
+msgstr "Secondary navigation"
+
+msgid "Create a new account"
+msgstr "Create a new account"
+
+msgid "Create a free account to start sending requests for public records."
+msgstr "Create a free account to start sending requests for public records."
+
+msgid "I already have an account"
+msgstr "I already have an account"
+
+msgid "I want to create a PRO account"
+msgstr "I want to create a PRO account"
+
+msgid "We help you get in touch with public authorities"
+msgstr "We help you get in touch with public authorities"
+
+msgid "&mdash; for your right to know"
+msgstr "&mdash; for your right to know"
+
+msgid "Learn more about us"
+msgstr "Learn more about us"
+
+msgid "Streamline your work"
+msgstr "Streamline your work"
+
+msgid "Send the same freedom-of-information request to several authorities at once and free up more time for journalism."
+msgstr "Send the same freedom-of-information request to several authorities at once and free up more time for journalism."
+
+msgid "Up-to-date details"
+msgstr "Up-to-date details"
+
+msgid "You have access to contact details for thousands of organisations covered by the principle of public access."
+msgstr "You have access to contact details for thousands of organisations covered by the principle of public access."
+
+msgid "Private requests"
+msgstr "Private requests"
+
+msgid "Keep your requests private while you work on your project. You decide when you are ready to make them public."
+msgstr "Keep your requests private while you work on your project. You decide when you are ready to make them public."
+
+msgid "Easily create a request by filling in your case. We have helped you by creating a template where you only need to state which documents you want access to. The request is sent to the chosen authority as an email, which they must respond to within a few weeks."
+msgstr "Easily create a request by filling in your case. We have helped you by creating a template where you only need to state which documents you want access to. The request is sent to the chosen authority as an email, which they must respond to within a few weeks."
+
+msgid "Wait for a response"
+msgstr "Wait for a response"
+
+msgid "While the authority works on providing the documents you requested, you can sit back &mdash; we will notify you by email when you get a response. In the meantime, you can read other requests our users have made."
+msgstr "While the authority works on providing the documents you requested, you can sit back &mdash; we will notify you by email when you get a response. In the meantime, you can read other requests our users have made."
+
+msgid "Browse requests"
+msgstr "Browse requests"
+
+msgid "Published and done"
+msgstr "Published and done"
+
+msgid "The answer is published online for everyone. Now you have your answer, and everybody else can access it too &mdash; contributing to public benefit and your right to know."
+msgstr "The answer is published online for everyone. Now you have your answer, and everybody else can access it too &mdash; contributing to public benefit and your right to know."
+
+msgid "Search requests"
+msgstr "Search requests"
+
+msgid "Learn more about how we work"
+msgstr "Learn more about how we work"
+
+msgid "Public records need to be easier to access, to contribute to the common good and give society value &mdash; for our right as citizens to know what happens with our tax money. Dive into how our entirely non-profit organisation works and handles the process of helping you make so-called requests for public records."
+msgstr "Public records need to be easier to access, to contribute to the common good and give society value &mdash; for our right as citizens to know what happens with our tax money. Dive into how our entirely non-profit organisation works and handles the process of helping you make so-called requests for public records."
+
+msgid "Support our work"
+msgstr "Support our work"
+
+msgid "The premium service for journalists, researchers, associations and businesses"
+msgstr "The premium service for journalists, researchers, associations and businesses"
+
+msgid "Handlingar PRO is a powerful toolbox with everything you need when working with information and public records."
+msgstr "Handlingar PRO is a powerful toolbox with everything you need when working with information and public records."
+
+msgid "Get premium"
+msgstr "Get premium"
+
+msgid "Send the same request to several authorities at once and free up more time for journalism."
+msgstr "Send the same request to several authorities at once and free up more time for journalism."
+
+msgid "Access contact details for thousands of organisations covered by the principle of public access."
+msgstr "Access contact details for thousands of organisations covered by the principle of public access."
+
+msgid "Keep requests private while you work on your project, and publish them when you are ready."
+msgstr "Keep requests private while you work on your project, and publish them when you are ready."
+
+msgid "Batch requests"
+msgstr "Batch requests"
+
+msgid "Build and manage large batches of requests from a single dashboard."
+msgstr "Build and manage large batches of requests from a single dashboard."
+
+msgid "Action alerts"
+msgstr "Action alerts"
+
+msgid "Get notified the moment an authority responds so nothing slips through."
+msgstr "Get notified the moment an authority responds so nothing slips through."
+
+msgid "Save drafts"
+msgstr "Save drafts"
+
+msgid "Save your work and return to finish your requests whenever it suits you."
+msgstr "Save your work and return to finish your requests whenever it suits you."
+
+msgid "Handlingar.se in the media and news"
+msgstr "Handlingar.se in the media and news"
+
+msgid "Latest news and campaigns"
+msgstr "Latest news and campaigns"
+
+msgid "See all &rarr;"
+msgstr "See all &rarr;"
+
+msgid "Run by Open Knowledge Sweden with the Alaveteli software."
+msgstr "Run by Open Knowledge Sweden with the Alaveteli software."
+
+msgid "Responsible publisher: Elenor Weijmar"
+msgstr "Responsible publisher: Elenor Weijmar"
+
+msgid "Find authorities and public organisations"
+msgstr "Find authorities and public organisations"
+
+msgid "&mdash; to make a request"
+msgstr "&mdash; to make a request"
+
+msgid "We have contact details for {{count}} different authorities"
+msgstr "We have contact details for {{count}} different authorities"
+
+msgid "Before you make a request to your authority, you can browse requests already made by our users to see if you find your answer."
+msgstr "Before you make a request to your authority, you can browse requests already made by our users to see if you find your answer."
+
+msgid "Search by free text"
+msgstr "Search by free text"
+
+msgid "Type the name of the authority, city or similar to find the authority you are looking for."
+msgstr "Type the name of the authority, city or similar to find the authority you are looking for."
+
+msgid "Send request"
+msgstr "Send request"
+
+msgid "See previous requests"
+msgstr "See previous requests"
+
+msgid "None found."
+msgstr "None found."

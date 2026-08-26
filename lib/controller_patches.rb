@@ -8,7 +8,27 @@
 Rails.configuration.to_prepare do
   HelpController.class_eval do
     def terms; end
+    def learn; end
   end
+
+  UserController.class_eval do
+    before_action :work_out_post_redirect, only: [:signup_form]
+    before_action :set_request_from_foreign_country, only: [:signup_form]
+    before_action :set_in_pro_area, only: [:signup_form]
+
+    def signup_form
+      if @user
+        redirect_path = params.fetch(:r) { frontpage_path }
+        redirect_to SafeRedirect.new(redirect_path).path
+        return
+      end
+
+      render template: 'user/sign_up'
+    end
+  end
+
+  ActionView::Base.prepend(HandlingarCaptcha::ViewMethods)
+  ActionController::Base.prepend(HandlingarCaptcha::ControllerMethods)
 end
   # Example adding an instance variable to the frontpage controller
   # GeneralController.class_eval do

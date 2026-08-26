@@ -5,12 +5,15 @@
 
   <%= render partial: 'frontpage_pro' %>
 
+  <%= render partial: 'frontpage_blog' if Blog.enabled? %>
+
   <div id="frontpage_examples" class="frontpage_examples">
-    <%= render partial: 'frontpage_bodies_list' %>
-    <%= render partial: 'frontpage_requests_list' %>
+    <div class="row frontpage_examples__inner">
+      <%= render partial: 'frontpage_bodies_list' %>
+      <%= render partial: 'frontpage_requests_list' %>
+    </div>
   </div>
 
   <%= render partial: 'frontpage_ati_showcase_cta' if AtiNetworkController.showcase_enabled? %>
-  <%= render partial: 'frontpage_blog' if Blog.enabled? %>
   <%= render partial: 'frontpage_extra' %>
 <% end %>

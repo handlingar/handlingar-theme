@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="sv">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Handlingar.se — axe-smoke chrome</title>
+  <style>
+    /* Tokens from app/assets/stylesheets/responsive/_settings.scss */
+    :root {
+      --color-white: #ffffff;
+      --color-bg: #FBFBFB;
+      --brand-primary: #333333;
+      --brand-accent: #E6722A;
+      --text-black: #000000;
+      --text-gray: #555555;
+      --light-grey: #e6e6e6;
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+      font-size: 16px;
+      line-height: 1.5;
+      background: var(--color-bg);
+      color: var(--text-black);
+    }
+    .skip-to-link {
+      position: absolute;
+      left: -9999px;
+      top: 0;
+      z-index: 10;
+      padding: 8px 16px;
+      background: var(--brand-primary);
+      color: var(--color-white);
+      text-decoration: underline;
+    }
+    .skip-to-link:focus,
+    .skip-to-link:focus-visible {
+      left: 8px;
+      top: 8px;
+      outline: 2px solid var(--brand-accent);
+      outline-offset: 2px;
+    }
+    header, footer, main { padding: 24px; }
+    header {
+      background: var(--color-white);
+      border-bottom: 1px solid var(--light-grey);
+    }
+    h1 { font-size: 32px; line-height: 1.15; margin: 0 0 16px; color: var(--brand-primary); }
+    p { color: var(--text-gray); }
+    label { display: block; font-weight: 600; margin-bottom: 8px; color: var(--text-black); }
+    input[type="search"] {
+      width: 16em;
+      max-width: 100%;
+      padding: 8px;
+      border: 1px solid var(--brand-primary);
+      border-radius: 4px;
+    }
+    .button-primary {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      margin-top: 16px;
+      padding: 16px 32px;
+      background: var(--brand-primary);
+      color: var(--color-white);
+      border: 2px solid var(--brand-primary);
+      border-radius: 4px;
+      font-weight: 700;
+      text-decoration: none;
+    }
+    .button-primary:focus-visible {
+      outline: 2px solid var(--brand-accent);
+      outline-offset: 2px;
+    }
+    .ds-dark {
+      margin-top: 32px;
+      padding: 32px 24px;
+      background: var(--brand-primary);
+      color: var(--color-white);
+    }
+    .ds-dark h2 { margin: 0 0 8px; color: var(--color-white); font-size: 24px; }
+    .ds-dark p { color: var(--color-white); }
+    footer {
+      border-top: 3px solid var(--brand-accent);
+      background: var(--brand-primary);
+      color: var(--color-white);
+    }
+    footer p, footer a { color: var(--color-white); }
+  </style>
+</head>
+<body>
+  <a class="skip-to-link" href="#content">Hoppa till innehållet</a>
+  <header role="banner">
+    <p>Handlingar.se</p>
+  </header>
+  <main id="content">
+    <h1>Hitta myndigheter och offentliga organisationer</h1>
+    <p>Sök på namn, ort eller kategori innan du begär en handling.</p>
+    <form action="#" method="get" role="search">
+      <label for="public_body_query">Hitta en myndighet</label>
+      <input id="public_body_query" name="public_body_query" type="search" autocomplete="off">
+      <button class="button-primary" type="submit">Sök</button>
+    </form>
+    <section class="ds-dark">
+      <h2>Sök i fritext</h2>
+      <p>Skriv namnet på myndigheten, staden eller liknande.</p>
+    </section>
+  </main>
+  <footer role="contentinfo">
+    <p>Drivs av Open Knowledge Sweden. <a href="#content">Tillbaka till innehållet</a></p>
+  </footer>
+</body>
+</html>

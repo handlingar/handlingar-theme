@@ -10,7 +10,7 @@
     <div class="profile-summary">
 
         <% if @user.profile_photo %>
-          <img src="<%= get_profile_photo_url(:url_name => @user.url_name) %>" class="profile-summary__image">
+          <img src="<%= get_profile_photo_url(:url_name => @user.url_name) %>" class="profile-summary__image" alt="<%= _('Your profile photo') %>">
         <% end %>
         <span class="profile-summary__name"><%= @user.name %>
         </span>

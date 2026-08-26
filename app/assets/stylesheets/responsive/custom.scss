@@ -1,4 +1,27 @@
 
+/* Self-hosted Source Sans 3 (SIL OFL). Weights match the booklet: Regular, Semi-Bold, Bold. */
+@font-face {
+  font-family: "Source Sans 3";
+  src: font-url("SourceSans3-Regular.woff2") format("woff2");
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: "Source Sans 3";
+  src: font-url("SourceSans3-Semibold.woff2") format("woff2");
+  font-weight: 600;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: "Source Sans 3";
+  src: font-url("SourceSans3-Bold.woff2") format("woff2");
+  font-weight: 700;
+  font-style: normal;
+  font-display: swap;
+}
+
 /* Mixin styles */
 
 /* Hide text when it's replaced by an image */
@@ -235,7 +258,7 @@ input.use-datepicker[type=text] {
 
 @mixin button-tertiary($args...) {
   @include button-base($args...);
-  background-color: desaturate(darken($color_sand, 5%), 5%);;
+  background-color: desaturate(darken($color_sand, 5%), 5%);
   color: $color_black;
   font-weight: normal;
   border: 1px solid desaturate(darken($color_sand, 15%),5%);
@@ -346,7 +369,7 @@ a.link_button_green_large {
   }
 }
 
-#navigation_search_button{
+#navigation_search_button {
   background-color: $color_white;
   border: none;
   transition: all 0.3s ease-out;
@@ -560,29 +583,39 @@ p.locale-list-trigger {
     display: none;
   }
 
-  .rsp_menu_button{
+  .rsp_menu_button {
     position: absolute;
-    top: 5px; // vertically centre the button in the header
-    right: 4px; // 15px for margin minus 9 for background offset
-    @extend .image-replacement;
-    background-image: image-url('hamburger.png');
-    background-repeat: no-repeat;
-    background-position: center 10px;
-    background-size: 28px 26px;
+    top: 50%;
+    right: 8px;
+    transform: translateY(-50%);
     width: 44px;
-    height: 38px;
+    height: 44px;
     padding: 0;
-    /* Make sure clickable area covers image */
+    background-image: none;
+    text-indent: 0;
+    overflow: visible;
+
     a {
-      width: 100%;
-      height: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 44px;
+      height: 44px;
+      color: $brand_primary;
+      text-decoration: none;
+      &:focus,
+      &:focus-visible {
+        outline: 2px solid $brand_primary;
+        outline-offset: 2px;
+      }
     }
   }
 
   &:target {
     .rsp_menu_button {
-      top: 5px;
-      right: 4px;
+      top: 8px;
+      right: 8px;
+      transform: none;
     }
   }
 }
@@ -1169,22 +1202,27 @@ a.button-tertiary {
   }
 }
 
-// ---- 1.5 Iconography (Material Symbols, outlined) ---------------------------
-.material-symbols-outlined {
-  font-family: 'Material Symbols Outlined';
-  font-weight: normal;
-  font-style: normal;
-  line-height: 1;
-  letter-spacing: normal;
-  text-transform: none;
+// ---- 1.5 Iconography (self-hosted SVG, currentColor) ----------------------
+.ds-icon {
   display: inline-block;
-  white-space: nowrap;
-  word-wrap: normal;
-  direction: ltr;
-  -webkit-font-feature-settings: 'liga';
-  -webkit-font-smoothing: antialiased;
-  font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24; // outlined, not filled
+  width: 1.5rem;
+  height: 1.5rem;
+  flex-shrink: 0;
+  vertical-align: middle;
+  overflow: visible;
+  color: inherit;
 }
+
+// Small 24/16 · Big 32/20 · Social 26/26 · USP 100/80 (booklet page 15)
+.ds-icon--small,
+.icon--small  { width: 16px; height: 16px; }
+.ds-icon--big,
+.icon--big    { width: 20px; height: 20px; }
+.ds-icon--social,
+.icon--social { width: 26px; height: 26px; }
+.ds-icon--usp,
+.icon--usp    { width: 80px; height: 80px; }
+
 
 // ---- 3.1 Header: two-level navigation --------------------------------------
 // White top bar (logo · search · language) over an orange Brand Secondary bar
@@ -1230,7 +1268,7 @@ a.button-tertiary {
   button[type="submit"] { color: $brand_primary; }
 }
 
-// Language selector — dark-on-white in the top bar
+// Language selector: both locales always visible (no JS dropdown)
 #user_locale_switcher.locale-list {
   @include respond-min( $main_menu-mobile_menu_cutoff ) {
     order: 3;
@@ -1238,15 +1276,51 @@ a.button-tertiary {
     width: auto;
     padding-top: 0;
     margin-left: 1em;
+    left: auto;
   }
-  .locale-list-trigger,
-  .current-locale { color: $brand_primary; }
+
   .available-languages {
-    @include respond-min( $main_menu-mobile_menu_cutoff ) {
-      background-color: $color_white;
-      border: 1px solid $color_light_grey;
-    }
-    &__item a { color: $brand_primary; }
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 0.25em 0.75em;
+    position: static;
+    margin: 0;
+    padding: 0;
+    width: auto;
+    max-width: none;
+    background: transparent;
+    border: 0;
+    list-style: none;
+  }
+
+  .available-languages__item {
+    border: 0;
+    display: inline-block;
+  }
+
+  .current-locale,
+  .available-languages a {
+    display: inline-block;
+    min-height: 44px;
+    line-height: 44px;
+    padding: 0 0.25em;
+    color: $brand_primary;
+    font-size: 0.9375em;
+    font-weight: $font-weight-semibold;
+    text-decoration: none;
+    background: transparent;
+  }
+
+  .current-locale { cursor: default; }
+
+  .available-languages a:hover,
+  .available-languages a:focus {
+    color: $brand_accent;
+    background: transparent;
+    border-bottom: 0;
+    outline: 2px solid $brand_accent;
+    outline-offset: 2px;
   }
 }
 
@@ -1325,6 +1399,81 @@ a.button-tertiary {
   }
 }
 
+// Hamburger icon (CSS bars — no webfont, no raster sprite)
+.rsp_menu_button__bars {
+  display: block;
+  position: relative;
+  width: 22px;
+  height: 2px;
+  background-color: $brand_primary;
+  box-shadow: 0 7px 0 $brand_primary, 0 -7px 0 $brand_primary;
+}
+
+.rsp_menu_button__bars--close {
+  box-shadow: none;
+  transform: rotate(45deg);
+  &::after {
+    content: "";
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 22px;
+    height: 2px;
+    background-color: $brand_primary;
+    transform: rotate(90deg);
+  }
+}
+
+@media (max-width: $main_menu-mobile_menu_cutoff) {
+  #banner_content.banner_content {
+    position: relative;
+    padding: 12px 56px 12px 16px;
+  }
+
+  #banner:target {
+    #navigation_search.navigation_search,
+    #user_locale_switcher.locale-list {
+      display: block;
+      float: none;
+      width: auto;
+      padding: 12px 16px 0;
+    }
+
+    #topnav.topnav {
+      display: block;
+      padding: 8px 16px 16px;
+    }
+
+    .navigation {
+      display: block;
+      width: auto;
+      max-width: none;
+      margin: 0;
+      > li {
+        display: block;
+        float: none;
+      }
+    }
+
+    .topnav__auth {
+      display: block;
+      margin-top: 16px;
+      #logged_in_bar.logged_in_bar {
+        display: flex;
+        flex-direction: column;
+        align-items: stretch;
+        gap: 8px;
+        width: 100%;
+      }
+      .create-account-link,
+      .sign_in_link {
+        width: 100%;
+        text-align: center;
+      }
+    }
+  }
+}
+
 // ---- 3.1 Hero (title / subtitle boxes + CTAs over image) -------------------
 .homepage-hero {
   padding: 4em 0 5em;
@@ -1394,9 +1543,10 @@ a.button-tertiary {
   }
   .usp__icon {
     color: $brand_secondary;
-    font-size: 3.25rem;
-    font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 48;
-    margin-bottom: 0.4em;
+    width: 3.25rem;
+    height: 3.25rem;
+    display: block;
+    margin: 0 auto 0.4em;
   }
   .usp__title { color: $color_white; font-size: $font-size-h4; margin: 0 0 0.4em; }
   .usp__text { color: transparentize($color_white, 0.15); font-size: $font-size-body; }
@@ -1431,8 +1581,8 @@ a.button-tertiary {
     @include respond-min( $main_menu-mobile_menu_cutoff ) { flex: 0 0 33.333%; }
     .usp__icon {
       color: $brand_accent;
-      font-size: 2.5rem;
-      font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 40;
+      width: 2.5rem;
+      height: 2.5rem;
       display: block;
       margin-bottom: 0.3em;
     }
@@ -1509,21 +1659,10 @@ form.user_search input[type="text"] {
 }
 
 // ---- 1.5 Iconography — exact box sizes (booklet page 15) --------------------
-// Small 24/16 · Big 32/20 · Social 26/26 · USP 100/80
-.icon--small  { font-size: 16px; font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 20; }
-.icon--big    { font-size: 20px; font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24; }
-.icon--social { font-size: 26px; }
-.icon--usp    { font-size: 80px; font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 48; }
-
-// USP icons sit in a 100×100 box with an 80px glyph
+// USP icons sit in an ~80px glyph (100×100 box in the booklet)
 .homepage-usp .usp__icon {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  width: 100px;
-  height: 100px;
-  font-size: 72px;
-  font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 48;
+  width: 80px;
+  height: 80px;
 }
 
 // ---- 3.1 Footer — multi-column layout + solid social badges ----------------
@@ -1572,6 +1711,7 @@ form.user_search input[type="text"] {
     display: inline-flex;
     align-items: center;
     justify-content: center;
+    gap: 0.4em;
     height: 2.4em;
     padding: 0 1em;
     border-radius: 1.2em;
@@ -1584,6 +1724,11 @@ form.user_search input[type="text"] {
       color: $brand_primary;
       text-decoration: none;
     }
+    .ds-icon {
+      width: 1.15em;
+      height: 1.15em;
+      fill: currentColor;
+    }
   }
 }
 
@@ -1592,7 +1737,13 @@ form.user_search input[type="text"] {
 .homepage-usp .row,
 .homepage-pro .row,
 .homepage-how-it-works .row,
-.homepage-learn-more .row {
+.homepage-learn-more .row,
+.frontpage__blog .row,
+.frontpage_examples .row,
+.search-hero .row,
+.search-intro .row,
+.search-band .row,
+.search-results-row {
   @include respond-min( $main_menu-mobile_menu_cutoff ) {
     padding-left: $ds-page-margin;
     padding-right: $ds-page-margin;
@@ -1631,12 +1782,14 @@ form.user_search input[type="text"] {
     align-items: center;
     justify-content: center;
     min-height: 12em;
+    padding: 16px 24px;
     background-color: transparentize($brand_secondary, 0.82);
     border-radius: 8px;
-    .material-symbols-outlined {
-      font-size: 96px;
-      color: $brand_accent;
-      font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 48;
+    img {
+      display: block;
+      width: 100%;
+      max-width: 22em;
+      height: auto;
     }
   }
 
@@ -1664,32 +1817,29 @@ form.user_search input[type="text"] {
   @include respond-min( $main_menu-mobile_menu_cutoff ) {
     display: grid;
     grid-template-columns: 1fr 1fr;
-    grid-template-areas:
-      "illu form"
-      "signin signin";
     column-gap: 40px;
-    row-gap: 32px;
     align-items: start;
   }
 
   .create-account__illustration {
-    grid-area: illu;
     display: flex;
     align-items: center;
     justify-content: center;
     min-height: 18em;
+    padding: 24px;
     background-color: $brand_primary;
+    background-image: linear-gradient(160deg, $gradient_start, $gradient_end);
     border-radius: 8px;
     margin-bottom: 24px;
     @include respond-min( $main_menu-mobile_menu_cutoff ) { margin-bottom: 0; }
-    .material-symbols-outlined {
-      font-size: 120px;
-      color: $brand_secondary;
-      font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 48;
+    img {
+      display: block;
+      width: 100%;
+      max-width: 28em;
+      height: auto;
     }
   }
 
-  .create-account__form { grid-area: form; }
   .create-account__title { font-size: $font-size-h2; margin: 0 0 8px; }
   .create-account__lead { color: $color_text_gray; margin-bottom: 16px; }
 
@@ -1702,16 +1852,32 @@ form.user_search input[type="text"] {
     .button-tertiary { padding: 0; }
   }
 
-  .signup__terms { margin: 16px 0; }
-  .signup__terms-label { display: flex; align-items: center; gap: 8px; }
+  .signup__terms { margin: 16px 0; max-width: 100%; }
+  .signup__terms-label {
+    display: flex;
+    align-items: flex-start;
+    gap: 8px;
+    line-height: 1.4;
+    max-width: 100%;
+    input {
+      flex: 0 0 auto;
+      margin-top: 0.2em;
+    }
+    span { min-width: 0; flex: 1 1 auto; }
+  }
+}
 
-  // Sign-in moved below, de-emphasised (the design keeps create-account primary)
-  .create-account__signin {
-    grid-area: signin;
-    border-top: 1px solid $color_light_grey;
-    padding-top: 24px;
-    margin-top: 8px;
-    .sign-in-wrapper { max-width: 28em; }
+.sign-in-page {
+  max-width: 32em;
+  .sign-in-page__title { font-size: $font-size-h2; margin: 0 0 16px; }
+  .sign_in_reason { margin-bottom: 16px; }
+  .create-account__alt-links {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 8px;
+    margin-bottom: 24px;
+    .button-tertiary { padding: 0; }
   }
 }
 
@@ -1761,10 +1927,15 @@ form.user_search input[type="text"] {
     display: flex;
     align-items: center;
     justify-content: center;
-    .material-symbols-outlined {
-      font-size: 120px;
-      color: $brand_accent;
-      font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 48;
+    min-height: 12em;
+    padding: 16px 24px;
+    background-color: transparentize($brand_secondary, 0.82);
+    border-radius: 8px;
+    img {
+      display: block;
+      width: 100%;
+      max-width: 22em;
+      height: auto;
     }
   }
 }
@@ -1781,21 +1952,208 @@ form.user_search input[type="text"] {
   .search-band__field {
     display: flex;
     justify-content: center;
+    align-items: stretch;
     gap: 8px;
     max-width: 36em;
     margin: 0 auto;
-    input[type="text"] {
+    input[type="text"],
+    input[type="search"] {
       flex: 1;
       background-color: $color_white;
       border: 1px solid $color_white;
       border-radius: 4px;
       margin: 0;
+      min-height: 2.75em;
+      padding: 0 0.75em;
+    }
+    input[type="submit"] {
+      margin: 0;
+      min-height: 2.75em;
     }
   }
 }
 
 .search-results-row {
-  margin-top: 40px;
+  margin-top: 0;
+  padding-top: 40px;
+  padding-bottom: 56px;
+
+  .publicbody_results {
+    font-size: $font-size-h4;
+    color: $brand_primary;
+    margin: 0 0 8px;
+  }
+  .search-results__description {
+    color: $color_text_gray;
+    font-style: italic;
+    margin: 0 0 1.5em;
+  }
+  .search-results__empty {
+    color: $color_text_gray;
+    padding: 1.5em 0 2em;
+  }
+  .search-results__missing {
+    margin: 1.5em 0 0;
+  }
+  .pagination {
+    margin-top: 1.5em;
+  }
+}
+
+.search-filters {
+  h2 {
+    font-size: $font-size-h4;
+    color: $brand_primary;
+    margin: 0 0 1em;
+  }
+  h3 {
+    font-size: $font-size-h5;
+    color: $brand_primary;
+    margin: 1.5em 0 0.5em;
+  }
+  ul {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    li { margin: 0 0 0.4em; }
+    a {
+      color: $brand_primary;
+      text-decoration: none;
+      &:hover, &:focus { color: $brand_accent; text-decoration: underline; }
+    }
+  }
+  .search-filters__current {
+    font-weight: $font-weight-semibold;
+    color: $brand_accent;
+  }
+  .list-sidebar-extra {
+    margin-top: 2em;
+    font-size: $font-size-body;
+    a { color: $brand_primary; }
+  }
+}
+
+.search-filters__alphabet {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px;
+}
+
+.search-filters__letter {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 1.75em;
+  height: 1.75em;
+  padding: 0 0.2em;
+  border-radius: 4px;
+  color: $brand_primary;
+  text-decoration: none;
+  font-weight: $font-weight-semibold;
+  &:hover, &:focus {
+    background-color: $color_bg;
+    color: $brand_accent;
+    text-decoration: none;
+  }
+  &--current {
+    background-color: $brand_accent;
+    color: $color_white;
+  }
+}
+
+// Category headings as independent disclosure widgets (booklet 3.3 filter).
+// Native details/summary: keyboard, no JS. Alphabet stays expanded.
+.search-filter {
+  h2 { font-size: $font-size-h4; margin-top: 0; }
+
+  .search-filter__hint {
+    color: $color_text_gray;
+    font-size: $font-size-small;
+    margin: 0 0 $ds-space-3;
+  }
+}
+
+.search-filter-alphabet {
+  margin-bottom: $ds-space-3;
+  h3 { font-size: $font-size-h5; margin: 0 0 $ds-space-1; }
+  ul { list-style: none; margin: 0; padding: 0; }
+}
+
+.search-accordion {
+  background-color: $color_white;
+  border: 1px solid $color_light_grey;
+  border-radius: 4px;
+  margin: 0 0 $ds-space-1;
+
+  &[open] .search-accordion__summary::after {
+    transform: rotate(45deg);
+    margin-top: -4px;
+  }
+}
+
+.search-accordion__summary {
+  list-style: none;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: $ds-space-1;
+  min-height: 44px;
+  padding: 8px $ds-space-2;
+  font-size: $font-size-h5;
+  font-weight: $font-weight-semibold;
+  color: $brand_primary;
+  line-height: 1.3;
+
+  &::-webkit-details-marker { display: none; }
+  &::marker { content: ""; }
+
+  // Chevron: right when closed, down when open (no icon font).
+  &::after {
+    content: "";
+    flex-shrink: 0;
+    width: 8px;
+    height: 8px;
+    margin-top: 0;
+    border-right: 2px solid $brand_primary;
+    border-bottom: 2px solid $brand_primary;
+    transform: rotate(-45deg);
+    transition: transform 0.15s ease-out;
+  }
+
+  &:focus { outline: none; }
+  &:focus-visible {
+    outline: 2px solid $brand_accent;
+    outline-offset: 2px;
+  }
+}
+
+.search-accordion__list {
+  list-style: none;
+  margin: 0;
+  padding: $ds-space-1 $ds-space-2 $ds-space-2;
+  border-top: 1px solid $color_light_grey;
+
+  li { margin: 0; }
+  a {
+    display: block;
+    padding: 8px 0;
+    color: $brand_primary;
+    text-decoration: none;
+    &:hover, &:focus { text-decoration: underline; }
+    &:focus-visible {
+      outline: 2px solid $brand_accent;
+      outline-offset: 2px;
+    }
+  }
+}
+
+.search-accordion__current {
+  display: block;
+  padding: 8px 8px 8px 12px;
+  font-weight: $font-weight-bold;
+  color: $brand_primary;
+  border-left: 3px solid $brand_accent;
 }
 
 // Result rows: name + count on the left, action buttons on the right (page 36)
@@ -1821,3 +2179,763 @@ form.user_search input[type="text"] {
     .body-listing__see-previous { white-space: nowrap; }
   }
 }
+
+// WordPress RSS teasers on the homepage (plain text; no orange fill)
+.frontpage__blog {
+  background-color: $color_bg;
+  padding: 56px 0;
+
+  h2 {
+    font-size: $font-size-h3;
+    margin: 0 0 1.5em;
+    color: $brand_primary;
+  }
+}
+
+.frontpage__blog-grid {
+  display: grid;
+  gap: 24px;
+  margin-bottom: 2em;
+  @include respond-min($main_menu-mobile_menu_cutoff) {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+.blog__post {
+  background-color: $color_white;
+  padding: 1.5em;
+  border-radius: 8px;
+  border-bottom: 3px solid $brand_accent;
+
+  h3 {
+    font-size: $font-size-h5;
+    margin: 0 0 0.5em;
+    a {
+      color: $brand_primary;
+      text-decoration: none;
+      &:hover, &:focus { color: $brand_accent; text-decoration: underline; }
+    }
+  }
+  p {
+    color: $color_text_gray;
+    margin: 0;
+    line-height: 1.5;
+  }
+}
+
+
+#frontpage_examples.frontpage_examples {
+  background-color: $color_white;
+  padding: 56px 0;
+}
+
+.frontpage_examples__inner {
+  @include respond-min($main_menu-mobile_menu_cutoff) {
+    display: flex;
+    gap: 48px;
+    align-items: flex-start;
+  }
+
+  .bodies-list,
+  .latest-requests {
+    flex: 1;
+    min-width: 0;
+    h3 { font-size: $font-size-h4; color: $brand_primary; margin: 0 0 0.5em; }
+    h4 {
+      font-size: $font-size-body;
+      color: $color_text_gray;
+      font-weight: $font-weight-semibold;
+      margin: 0 0 1.25em;
+    }
+    ul { list-style: none; margin: 0 0 1.5em; padding: 0; }
+    li { margin-bottom: 1em; }
+  }
+}
+
+// ---- Make a request (Demo 2 / vecka 7) --------------------------------------
+.new_info_request {
+  @include respond-min( $main_menu-mobile_menu_cutoff ) {
+    padding-left: $ds-page-margin;
+    padding-right: $ds-page-margin;
+  }
+  padding-bottom: 56px;
+}
+
+#request_header {
+  border-bottom: 1px solid $color_light_grey;
+  h1 {
+    font-size: $font-size-h2;
+    color: $brand_primary;
+    margin: 0 0 16px;
+  }
+}
+
+.to_public_body,
+.from_user {
+  font-size: $font-size-h5;
+  color: $brand_primary;
+}
+
+.to_public_body_label,
+.from_user_label {
+  color: $color_text_gray;
+  margin-right: 0.35em;
+}
+
+#request_advice {
+  .advice-panel {
+    h4 {
+      font-size: $font-size-h5;
+      font-weight: $font-weight-semibold;
+      color: $brand_primary;
+      margin: 0 0 8px;
+    }
+    a {
+      color: $brand_primary;
+      text-decoration: underline;
+      &:hover, &:focus { color: $brand_accent; }
+    }
+  }
+}
+
+.advice-panel.advice-panel--warning {
+  background-color: transparentize($brand_secondary, 0.82);
+  border: 1px solid $brand_accent;
+  border-radius: 4px;
+  padding: 16px;
+}
+
+.new_info_request {
+  input[type="text"],
+  textarea {
+    border: 1px solid $color_light_grey;
+    border-radius: 4px;
+    padding: 0.6em 0.75em;
+    &:focus {
+      border-color: $brand_primary;
+      outline: 2px solid transparentize($brand_accent, 0.5);
+      outline-offset: 1px;
+    }
+  }
+  .form_label {
+    font-weight: $font-weight-semibold;
+    color: $brand_primary;
+  }
+  .form_item_note {
+    color: $color_text_gray;
+  }
+}
+
+// ---- Select authority (start of make-a-request) -----------------------------
+.request-select {
+  background-color: $color_bg;
+  padding: 48px 0 40px;
+  .row {
+    @include respond-min( $main_menu-mobile_menu_cutoff ) {
+      padding-left: $ds-page-margin;
+      padding-right: $ds-page-margin;
+    }
+  }
+}
+
+.request-select__title {
+  font-size: $font-size-h2;
+  color: $brand_primary;
+  margin: 0 0 12px;
+}
+
+.request-select__lead {
+  color: $color_text_gray;
+  max-width: 40em;
+  margin: 0 0 24px;
+  a { color: $brand_primary; }
+}
+
+.request-select__search {
+  max-width: 40em;
+}
+
+.request-select__field {
+  display: flex;
+  align-items: stretch;
+  gap: 8px;
+  input[type="text"],
+  input[type="search"] {
+    flex: 1;
+    margin: 0;
+    min-height: 2.75em;
+    border: 1px solid $color_light_grey;
+    border-radius: 4px;
+    padding: 0 0.75em;
+  }
+  input[type="submit"] {
+    margin: 0;
+    min-height: 2.75em;
+  }
+}
+
+.request-select__help-wrap {
+  padding: 0 0 56px;
+  .row {
+    @include respond-min( $main_menu-mobile_menu_cutoff ) {
+      padding-left: $ds-page-margin;
+      padding-right: $ds-page-margin;
+    }
+  }
+}
+
+.request-select__help {
+  display: grid;
+  gap: 16px;
+  @include respond-min( $main_menu-mobile_menu_cutoff ) {
+    grid-template-columns: repeat(3, 1fr);
+    column-gap: 20px;
+  }
+  & > div {
+    margin-top: 0;
+    padding-top: 0;
+    border-top: 0;
+  }
+}
+
+.request-select__card {
+  background-color: $color_white;
+  border: 1px solid $color_light_grey;
+  border-radius: 4px;
+  padding: 24px;
+  h2 {
+    font-size: $font-size-h5;
+    color: $brand_primary;
+    margin: 0 0 8px;
+  }
+  p { margin: 0; color: $color_text_gray; }
+  a {
+    color: $brand_primary;
+    &:hover, &:focus { color: $brand_accent; }
+  }
+}
+
+#authority_search_ahead_results {
+  margin-top: 24px;
+}
+
+// ---- Preview request --------------------------------------------------------
+#preview_form {
+  padding-bottom: 56px;
+  @include respond-min( $main_menu-mobile_menu_cutoff ) {
+    padding-left: $ds-page-margin;
+    padding-right: $ds-page-margin;
+  }
+  h1 {
+    font-size: $font-size-h2;
+    color: $brand_primary;
+    margin: 24px 0 16px;
+  }
+}
+
+.message-preview {
+  .preview-advice .advice-panel {
+    background-color: transparentize($brand_secondary, 0.82);
+    border: 1px solid $brand_accent;
+    border-radius: 4px;
+    padding: 16px;
+    a { color: $brand_primary; }
+  }
+  .preview-pane .correspondence {
+    border: 1px solid $color_light_grey;
+    border-radius: 4px;
+    padding: 24px;
+  }
+  #reedit_button {
+    color: $brand_primary;
+    &:hover, &:focus { color: $brand_accent; }
+  }
+}
+
+// ---- Stripe checkout --------------------------------------------------------
+// Style the existing Elements mount only. Keep #card-element,
+// #js-stripe-subscription-form / #js-stripe-update-form, and #js-stripe-submit.
+form.stripe-form {
+  #card-element {
+    background-color: $color_white;
+    border: 1px solid $color_light_grey;
+    border-radius: 4px;
+    box-shadow: none;
+    color: $brand_primary;
+    font-family: $source-sans;
+    min-height: 48px;
+    padding: 14px 16px;
+    margin: 8px 0 0;
+    transition: border-color 0.2s ease-out;
+
+    &.StripeElement--focus {
+      border-color: $brand_primary;
+    }
+
+    &.StripeElement--invalid {
+      border-color: $color_red;
+    }
+  }
+
+  #card-errors {
+    color: $color_red;
+    font-size: $font-size-small;
+    height: auto;
+    min-height: 1.5em;
+    margin: 8px 0 0;
+    padding: 0;
+  }
+
+  #js-stripe-submit[disabled] {
+    opacity: 0.4;
+    cursor: not-allowed;
+  }
+
+  .form_label {
+    color: $brand_primary;
+    font-size: $font-size-body;
+    font-weight: $font-weight-semibold;
+  }
+}
+
+.inner-canvas.settings {
+  background-color: $color_bg;
+
+  .inner-canvas-header h1 {
+    font-size: $font-size-h3;
+    font-weight: $font-weight-bold;
+    color: $brand_primary;
+  }
+
+  .settings-right-column {
+    max-width: 36em;
+  }
+
+  .settings__section {
+    margin-bottom: $ds-space-4;
+  }
+
+  .plan-overview {
+    background-color: $color_white;
+    border: 1px solid $color_light_grey;
+    border-radius: 4px;
+    padding: 16px 20px;
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: 16px;
+  }
+
+  .plan-overview__desc {
+    font-weight: $font-weight-semibold;
+    color: $brand_primary;
+  }
+
+  .plan-overview__amount {
+    color: $color_text_gray;
+    white-space: nowrap;
+  }
+
+  .plan-coupon input[type="text"] {
+    width: 100%;
+    max-width: 100%;
+    border: 1px solid $color_light_grey;
+    border-radius: 4px;
+    margin-top: 8px;
+  }
+
+  .card-details {
+    margin-top: $ds-space-3;
+  }
+
+  .settings__terms {
+    background-color: $color_white;
+    border: 1px solid $color_light_grey;
+    border-radius: 4px;
+    max-height: 16em;
+    padding: 16px;
+  }
+
+  .settings__terms-content {
+    font-size: $font-size-body;
+    color: $color_text_gray;
+  }
+
+  .settings__terms__accept {
+    margin-top: 16px;
+
+    label {
+      display: flex;
+      align-items: flex-start;
+      gap: 8px;
+      font-size: $font-size-body;
+      color: $brand_primary;
+    }
+
+    input[type="checkbox"] {
+      margin-top: 4px;
+      flex-shrink: 0;
+    }
+  }
+
+  .settings__cancel-button {
+    color: $brand_primary;
+    font-size: $font-size-button-s;
+    margin-left: 16px;
+  }
+}
+
+@media (max-width: $main_menu-mobile_menu_cutoff) {
+  .inner-canvas.settings {
+    .plan-overview {
+      flex-direction: column;
+      align-items: flex-start;
+    }
+
+    .settings__cancel-button {
+      display: inline-block;
+      margin: 16px 0 0;
+    }
+
+    form.stripe-form #js-stripe-submit {
+      width: 100%;
+    }
+  }
+}
+
+// Captcha adapter: Friendly Captcha widget when CAPTCHA_PROVIDER=friendly_captcha
+.handlingar-captcha {
+  margin: 16px 0;
+}
+.handlingar-captcha__missing {
+  color: $color_red;
+  font-size: $font-size-small;
+}
+
+// ---- Help pages: sidebar chrome -------------------------------------------
+.help-sidebar {
+  background-color: $color_bg;
+  border-radius: 8px;
+  padding: 24px;
+  border-top: 3px solid $brand_accent;
+
+  h2 {
+    font-size: $font-size-h4;
+    margin: 0 0 12px;
+  }
+
+  ul.no_bullets {
+    margin: 0 0 24px;
+    padding: 0;
+    list-style: none;
+    li {
+      margin: 0 0 8px;
+      a { color: $brand_primary; }
+      &:not(:has(a)) {
+        font-weight: $font-weight-bold;
+        color: $brand_accent;
+      }
+    }
+  }
+
+  h2.contact { margin-top: 8px; }
+}
+
+// ---- WCAG 2.1 AA: focus, skip link, status ---------------------------------
+a.skip-to-link.show-with-keyboard-focus-only {
+  left: 0.5em;
+  top: 0.5em;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  clip-path: inset(50%);
+  white-space: nowrap;
+  &:focus,
+  &:focus-visible {
+    width: auto;
+    height: auto;
+    clip: auto;
+    clip-path: none;
+    overflow: visible;
+    z-index: 10000;
+    padding: 0.75em 1.25em;
+    background-color: $brand_primary;
+    color: $color_white;
+    font-weight: $font-weight-bold;
+    text-decoration: none;
+    outline: 3px solid $brand_accent;
+    outline-offset: 2px;
+  }
+}
+
+a:focus-visible,
+button:focus-visible,
+input:focus-visible,
+select:focus-visible,
+textarea:focus-visible,
+[tabindex]:focus-visible {
+  outline: 3px solid $brand_primary;
+  outline-offset: 2px;
+  box-shadow: 0 0 0 5px $color_white;
+}
+
+.ds-dark a:focus-visible,
+.ds-dark button:focus-visible,
+.ds-dark input:focus-visible,
+.homepage-hero a:focus-visible,
+.homepage-hero button:focus-visible,
+#footer a:focus-visible,
+#topnav a:focus-visible,
+#topnav button:focus-visible {
+  outline-color: $color_white;
+  box-shadow: 0 0 0 5px $brand_primary;
+}
+
+.rsp_menu_button a:focus-visible {
+  outline: 3px solid $brand_primary;
+  outline-offset: 2px;
+}
+
+#main-content:focus {
+  outline: 3px solid $color_white;
+  outline-offset: 4px;
+}
+
+.errorExplanation:focus {
+  outline: 3px solid $brand_primary;
+  outline-offset: 2px;
+}
+
+// ---- Pro dashboard (logged-in /pro chrome) ---------------------------------
+// Replace WDTK sand/beige with design-system surfaces. Scope is the inner
+// canvas used by the dashboard, request list and projects index — not Stripe.
+.alaveteli-pro .inner-canvas {
+  background-color: $color_white;
+}
+
+.alaveteli-pro .inner-canvas-header {
+  background-color: $brand_primary;
+  color: $color_white;
+  border-bottom: 3px solid $brand_accent;
+  h1 {
+    color: $color_white;
+    font-size: $font-size-h3;
+    font-weight: $font-weight-bold;
+    @include respond-min($main_menu-mobile_menu_cutoff) {
+      font-size: $font-size-h2;
+    }
+  }
+}
+
+.alaveteli-pro .dashboard-folder--top-level {
+  background-color: $color_bg;
+}
+
+.alaveteli-pro .dashboard-folder--selected {
+  background-color: $color_white;
+  border-color: $brand_accent;
+  border-left: 3px solid $brand_accent;
+}
+
+.alaveteli-pro a.vertical-navigation-menu__link {
+  &:link,
+  &:visited {
+    color: $brand_primary;
+    &:hover,
+    &:active,
+    &:focus {
+      background-color: $color_bg;
+    }
+  }
+}
+
+.alaveteli-pro .dashboard-todo__zero,
+.alaveteli-pro .dashboard__announcements {
+  background-color: $color_bg;
+  border: 1px solid $color_light_grey;
+  border-radius: 4px;
+}
+
+.alaveteli-pro .dashboard-todo__title,
+.alaveteli-pro .dashboard-activity__title {
+  font-size: $font-size-h4;
+  font-weight: $font-weight-bold;
+  color: $brand_primary;
+  border-bottom-color: $color_light_grey;
+}
+
+.alaveteli-pro .dashboard-todo__list__item,
+.alaveteli-pro .dashboard-activity__item {
+  border-bottom-color: $color_light_grey;
+}
+
+.alaveteli-pro .dashboard-activity__item__time {
+  color: $color_text_gray;
+}
+
+.alaveteli-pro .dashboard-right-column a.button,
+.alaveteli-pro .blank-slate a.button {
+  @extend %ds-primary;
+  @include ds-button-small;
+}
+
+.alaveteli-pro .blank-slate__message {
+  background-color: $brand_primary;
+  color: $color_white;
+  h2 { color: $color_white; }
+  a.button {
+    background-color: $brand_secondary;
+    border-color: $brand_secondary;
+    color: $brand_primary;
+    &:link, &:visited { color: $brand_primary; }
+    &:hover, &:active, &:focus {
+      background-color: darken($brand_secondary, 8%);
+      border-color: darken($brand_secondary, 8%);
+      color: $brand_primary;
+    }
+  }
+}
+
+.alaveteli-pro .requests__header {
+  background-color: $color_bg;
+  border-bottom-color: $color_light_grey;
+}
+
+.alaveteli-pro .request {
+  border-color: $color_light_grey;
+  background-color: $color_white;
+}
+
+// ---- Learn landing (/learn) ------------------------------------------------
+.learn-hero {
+  background-color: $brand_primary;
+  background-image: image-url('homepage-background.jpg');
+  background-size: cover;
+  background-position: center;
+  color: $color_white;
+  padding: 48px 0 56px;
+
+  .learn-hero__title {
+    display: inline;
+    -webkit-box-decoration-break: clone;
+    box-decoration-break: clone;
+    background-color: rgba(51, 51, 51, 0.9);
+    color: $color_white;
+    font-size: $font-size-h3;
+    line-height: 1.5;
+    padding: 0.15em 0.4em;
+    @include respond-min($main_menu-mobile_menu_cutoff) { font-size: $font-size-h2; }
+  }
+  .learn-hero__subtitle {
+    display: inline-block;
+    margin-top: 0.6em;
+    background-color: $brand_accent;
+    color: $color_white;
+    font-size: $font-size-h4;
+    font-weight: $font-weight-bold;
+    padding: 0.2em 0.5em;
+  }
+}
+
+.learn-intro {
+  background-color: $color_bg;
+  padding: 48px 0;
+  .learn-intro__text {
+    max-width: 46em;
+    color: $color_text_gray;
+    font-size: $font-size-subtitle;
+    line-height: 1.6;
+    margin: 0 0 24px;
+  }
+  .learn-intro__ctas { display: flex; flex-wrap: wrap; gap: 16px; }
+}
+
+.learn-steps {
+  padding: 8px 0 48px;
+  h2 { font-size: $font-size-h3; margin: 0 0 24px; }
+}
+
+.learn-steps__list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  gap: 20px;
+  @include respond-min($main_menu-mobile_menu_cutoff) {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+.learn-step {
+  background-color: $color_white;
+  border: 1px solid $color_light_grey;
+  border-radius: 4px;
+  padding: 24px;
+  h3 {
+    font-size: $font-size-h5;
+    font-weight: $font-weight-bold;
+    margin: 0 0 8px;
+  }
+  p {
+    color: $color_text_gray;
+    margin: 0;
+    line-height: 1.5;
+  }
+}
+
+.learn-step__num {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 32px;
+  height: 32px;
+  margin-bottom: 12px;
+  background-color: $brand_primary;
+  color: $color_white;
+  font-weight: $font-weight-bold;
+  font-size: $font-size-h5;
+  border-radius: 4px;
+}
+
+.learn-guides {
+  background-color: $color_bg;
+  padding: 48px 0 64px;
+  border-top: 1px solid $color_light_grey;
+  h2 { font-size: $font-size-h3; margin: 0 0 24px; }
+}
+
+.learn-guides__grid {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  gap: 20px;
+  @include respond-min($main_menu-mobile_menu_cutoff) {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+.learn-guide {
+  background-color: $color_white;
+  border: 1px solid $color_light_grey;
+  border-radius: 4px;
+  padding: 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  h3 {
+    font-size: $font-size-h5;
+    font-weight: $font-weight-bold;
+    margin: 0;
+  }
+  p {
+    color: $color_text_gray;
+    margin: 0;
+    line-height: 1.5;
+    flex: 1;
+  }
+  .button-tertiary { align-self: flex-start; padding: 0; }
+}
+

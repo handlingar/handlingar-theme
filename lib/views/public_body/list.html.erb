@@ -5,7 +5,7 @@
 <div class="search-hero ds-dark">
   <div class="row">
     <h1 class="search-hero__title"><%= _("Find authorities and public organisations") %></h1>
-    <p class="search-hero__subtitle"><%= _("&mdash; to make a request").html_safe %></p>
+    <p class="search-hero__subtitle"><%= _("to make a request") %></p>
   </div>
 </div>
 
@@ -22,7 +22,7 @@
       </div>
     </div>
     <div class="search-intro__illustration" aria-hidden="true">
-      <span class="material-symbols-outlined">contact_page</span>
+      <%= image_tag "illustrations/undraw_file-searching.svg", alt: "" %>
     </div>
   </div>
 </div>
@@ -35,7 +35,12 @@
     <%= form_tag(list_public_bodies_default_url, :method => "get", :id=>"search_form") do %>
       <div class="search-band__field">
         <label class="visually-hidden" for="public_body_query"><%=_('Find an authority')%></label>
-        <%= text_field_tag(:public_body_query, params[:public_body_query], { :title => "type your search term here", :placeholder => _("Search") } ) %>
+        <%= text_field_tag(:public_body_query, params[:public_body_query], {
+              :title => _("type your search term here"),
+              :placeholder => _("Search"),
+              :type => "search",
+              :autocomplete => "off"
+            }) %>
         <%= submit_tag(_("Search")) %>
       </div>
     <% end %>
@@ -47,7 +52,7 @@
     <% if @category %>
       <h2 class="publicbody_results"><%= @category.title %></h2>
       <%= render partial: 'category' %>
-      <p><i><%= @description %></i></p>
+      <p class="search-results__description"><%= @description %></p>
     <% else %>
       <h2 class="publicbody_results">
         <%= @description.presence || _("Search results") %>
@@ -55,33 +60,44 @@
     <% end %>
 
     <%= render :partial => 'body_listing', :locals => { :public_bodies => @public_bodies } %>
-    <%= will_paginate(@public_bodies) %><br/>
-    <%= link_to _("Can't find the one you want?"), help_requesting_path(:anchor => 'missing_body') %>
+    <%= will_paginate(@public_bodies) %>
+    <p class="search-results__missing">
+      <%= link_to _("Can't find the one you want?"), help_requesting_path(:anchor => 'missing_body') %>
+    </p>
   </div>
 
-  <div id="right_column_flip" class="right_column_flip">
+  <aside id="right_column_flip" class="right_column_flip search-filters" aria-label="<%= _('Show only...') %>">
     <h2><%=_('Show only...')%></h2>
+    <p class="search-filter__hint"><%= _("If you are not sure which organisation is responsible, use the categories below.") %></p>
 
     <h3><%=_('Beginning with') %></h3>
-    <ul>
-      <li><%= render :partial => 'alphabet' %></li>
-    </ul>
+    <div class="search-filters__alphabet">
+      <%= render :partial => 'alphabet' %>
+    </div>
 
     <% PublicBody.categories.each do |heading| %>
-      <h3><%= heading.title %></h3>
-      <ul>
-        <% heading.children.each do |category| %>
-          <% next unless category.category_tag.present? %>
-          <li>
-            <%= link_to_unless (@tag == category.category_tag),
-              category.title,
-              list_public_bodies_by_tag_path(category.category_tag) %>
-          </li>
-        <% end %>
-      </ul>
+      <% visible_children = heading.children.select { |category| category.category_tag.present? } %>
+      <% next if visible_children.empty? %>
+      <% heading_open = visible_children.any? { |category| @tag == category.category_tag } %>
+      <details class="search-accordion"<% if heading_open %> open<% end %>>
+        <summary class="search-accordion__summary">
+          <%= heading.title %>
+        </summary>
+        <ul class="search-accordion__list">
+          <% visible_children.each do |category| %>
+            <li>
+              <% if @tag == category.category_tag %>
+                <span class="search-accordion__current" aria-current="page"><%= category.title %></span>
+              <% else %>
+                <%= link_to category.title, list_public_bodies_by_tag_path(category.category_tag) %>
+              <% end %>
+            </li>
+          <% end %>
+        </ul>
+      </details>
     <% end %>
 
     <%= render :partial => "list_sidebar_extra",
                :locals => { :country_code => @country_code } %>
-  </div>
+  </aside>
 </div>

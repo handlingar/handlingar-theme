@@ -1,0 +1,22 @@
+<% @title = _('FOI Management for Researchers') %>
+
+<div class="marketing__section">
+  <div class="marketing__hero">
+    <h1><%= _('I’m a researcher') %></h1>
+    <h2>
+      <%= _('{{pro_site_name}} is here to help', pro_site_name: pro_site_name) %>
+    </h2>
+    <p class="marketing__subhead">
+      <%= _('Compare figures across authorities with batch requests, without maintaining a separate spreadsheet for every reply.') %>
+    </p>
+    <p>
+      <%= link_to _('Learn more about {{pro_site_name}} for researchers',
+                    pro_site_name: pro_site_name),
+                  help_pro_path %>
+    </p>
+  </div>
+</div>
+
+<div class="marketing__cta">
+  <%= render partial: 'alaveteli_pro/account_request/cta' %>
+</div>

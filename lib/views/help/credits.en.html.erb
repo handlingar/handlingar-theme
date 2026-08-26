@@ -22,9 +22,10 @@
 
   <dt id="donate">Make a donation <a href="#donate">#</a></dt>
   <dd>
-    <p>mySociety, Alaveteli's parent organisation, is a charity. WhatDoTheyKnow, our most-visited Alaveteli site, costs thousands of pounds each year, for overheads such as servers, maintenance and development.</p>
+    <p>Open Knowledge Sweden, the non-profit that runs <%= site_name %>, funds
+      servers, maintenance and development for the site.</p>
 
-    <p>Your contributions, however small, really help. <a href="https://www.mysociety.org/donate/">Donate here</a>.</p>
+    <p>Your contributions, however small, really help. <a href="https://okfn.se/donera">Donate here</a>.</p>
   </dd>
 
   <dt id="classification">Sort things out <a href="#classification">#</a></dt>
@@ -43,7 +44,7 @@
         <li>Tell friends about it.</li>
         <li>Let your local newspaper or community magazine know how useful we are.</li>
         <li>Give a talk.</li>
-        <li><%= mail_to 'hello@mysociety.org', 'Ask us for leaflets', :encode => "javascript" %> to leave in your local library or coffee shop.</li>
+        <li><%= link_to 'Ask us for leaflets', help_contact_path %> to leave in your local library or coffee shop.</li>
       </ul>
   </dd>
 </dd>

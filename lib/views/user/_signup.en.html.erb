@@ -4,10 +4,10 @@
 
     <p>
       <label class="form_label" for="user_signup_name"> <%= _('Your name:') %></label>
-      <%= text_field 'user_signup', 'name', { :size => 20, :tabindex => 10, :autocomplete => "off" } %>
+      <%= text_field 'user_signup', 'name', { :size => 20, :tabindex => 10, :autocomplete => "name", "aria-describedby" => "signup-name-hint" } %>
     </p>
 
-    <div class="form_item_note">
+    <div class="form_item_note" id="signup-name-hint">
       <%= _('Your <strong>name will appear publicly</strong> ' \
             '(<a href="{{why_url}}">why?</a>) on this website and in search ' \
             'engines. <a href="{{help_url}}">Thinking of using a ' \
@@ -18,10 +18,10 @@
 
     <p>
       <label class="form_label" for="user_signup_email"><%= _('Your e-mail:') %></label>
-      <%= text_field 'user_signup', 'email', { :size => 20, :tabindex => 20 } %>
+      <%= text_field 'user_signup', 'email', { :size => 20, :tabindex => 20, :autocomplete => "email", :type => "email", "aria-describedby" => "signup-email-hint" } %>
     </p>
 
-    <div class="form_item_note">
+    <div class="form_item_note" id="signup-email-hint">
       <%= _('We will not reveal your email address to anybody unless ' \
             '<a href="{{url}}">you or the law tell us to</a>.',
             :url => help_privacy_path) %>
@@ -29,25 +29,27 @@
 
     <p>
       <label class="form_label" for="user_signup_password"> <%= _('Password:') %></label>
-      <%= password_field 'user_signup', 'password', { :size => 15, :tabindex => 30, :autocomplete => "off" } %>
+      <%= password_field 'user_signup', 'password', { :size => 15, :tabindex => 30, :autocomplete => "new-password", "aria-describedby" => "signup-password-hint" } %>
     </p>
 
-    <div class="form_item_note">
+    <div class="form_item_note" id="signup-password-hint">
       <%= _('12 characters minimum. 72 characters maximum.') %>
     </div>
 
     <p>
       <label class="form_label" for="user_signup_password_confirmation"> <%= _('Confirm password:') %></label>
-      <%= password_field 'user_signup', 'password_confirmation', { :size => 15, :tabindex => 40, :autocomplete => "off" } %>
+      <%= password_field 'user_signup', 'password_confirmation', { :size => 15, :tabindex => 40, :autocomplete => "new-password" } %>
     </p>
 
-    <%= recaptcha_tags %>
+    <%= recaptcha_tags(nonce: content_security_policy_nonce) %>
 
     <div class="form_item_note signup__terms">
       <label class="signup__terms-label">
         <%= check_box_tag 'accepted_terms', '1', false, :tabindex => 45 %>
-        <%= _('I have read the <a href="{{url}}">terms of use</a>',
-              :url => help_terms_path).html_safe %>
+        <span>
+          <%= _('I have read the <a href="{{url}}">terms of use</a>',
+                :url => help_terms_path).html_safe %>
+        </span>
       </label>
     </div>
 
