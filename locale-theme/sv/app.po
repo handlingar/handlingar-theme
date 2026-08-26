@@ -18,7 +18,7 @@ msgstr "Skapa konto"
 msgid "We help you get in touch with public authorities"
 msgstr "Vi hjälper dig att få kontakt med myndigheter"
 
-msgid "&mdash; for your right to know"
+msgid "for your right to know"
 msgstr "för din rätt att veta"
 
 msgid "Learn more about us"
@@ -48,7 +48,7 @@ msgstr "Skapa enkelt en begäran genom att fylla i ditt ärende. Vi har hjälpt 
 msgid "Wait for a response"
 msgstr "Vänta på svar"
 
-msgid "While the authority works on providing the documents you requested, you can sit back &mdash; we will notify you by email when you get a response. In the meantime, you can read other requests our users have made."
+msgid "While the authority works on providing the documents you requested, you can sit back. We will notify you by email when you get a response. In the meantime, you can read other requests our users have made."
 msgstr "Medan myndigheten tar fram handlingarna du begärt kan du luta dig tillbaka. Vi meddelar dig via e-post när du får ett svar. Under tiden kan du läsa andra begäranden som våra användare har gjort."
 
 msgid "Browse requests"
@@ -57,13 +57,13 @@ msgstr "Bläddra bland begäranden"
 msgid "Published and done"
 msgstr "Publicerat och klart"
 
-msgid "The answer is published online for everyone. Now you have your answer, and everybody else can access it too &mdash; contributing to public benefit and your right to know."
+msgid "The answer is published online for everyone. Now you have your answer, and everybody else can access it too, contributing to public benefit and your right to know."
 msgstr "Svaret publiceras öppet för alla. Nu har du ditt svar, och alla andra kan ta del av det också, till nytta för det gemensamma och din rätt att veta."
 
 msgid "Learn more about how we work"
 msgstr "Läs mer om hur vi arbetar"
 
-msgid "Public records need to be easier to access, to contribute to the common good and give society value &mdash; for our right as citizens to know what happens with our tax money. Dive into how our entirely non-profit organisation works and handles the process of helping you make so-called requests for public records."
+msgid "Public records need to be easier to access, to contribute to the common good and give society value, for our right as citizens to know what happens with our tax money. Dive into how our entirely non-profit organisation works and handles the process of helping you make so-called requests for public records."
 msgstr "Allmänna handlingar behöver bli lättare att få ut, för att bidra till det gemensamma och ge samhället värde, för vår rätt som medborgare att veta vad som händer med våra skattepengar. Läs mer om hur vår ideella organisation arbetar och hjälper dig att göra så kallade begäranden om allmänna handlingar."
 
 msgid "Support our work"
@@ -117,7 +117,7 @@ msgstr "Ansvarig utgivare: Elenor Weijmar"
 msgid "Find authorities and public organisations"
 msgstr "Hitta myndigheter och offentliga organisationer"
 
-msgid "&mdash; to make a request"
+msgid "to make a request"
 msgstr "för att göra en begäran"
 
 msgid "We have contact details for {{count}} different authorities"

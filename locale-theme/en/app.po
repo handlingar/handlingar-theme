@@ -279,8 +279,8 @@ msgstr "I want to create a PRO account"
 msgid "We help you get in touch with public authorities"
 msgstr "We help you get in touch with public authorities"
 
-msgid "&mdash; for your right to know"
-msgstr "&mdash; for your right to know"
+msgid "for your right to know"
+msgstr "for your right to know"
 
 msgid "Learn more about us"
 msgstr "Learn more about us"
@@ -309,8 +309,8 @@ msgstr "Easily create a request by filling in your case. We have helped you by c
 msgid "Wait for a response"
 msgstr "Wait for a response"
 
-msgid "While the authority works on providing the documents you requested, you can sit back &mdash; we will notify you by email when you get a response. In the meantime, you can read other requests our users have made."
-msgstr "While the authority works on providing the documents you requested, you can sit back &mdash; we will notify you by email when you get a response. In the meantime, you can read other requests our users have made."
+msgid "While the authority works on providing the documents you requested, you can sit back. We will notify you by email when you get a response. In the meantime, you can read other requests our users have made."
+msgstr "While the authority works on providing the documents you requested, you can sit back. We will notify you by email when you get a response. In the meantime, you can read other requests our users have made."
 
 msgid "Browse requests"
 msgstr "Browse requests"
@@ -318,8 +318,8 @@ msgstr "Browse requests"
 msgid "Published and done"
 msgstr "Published and done"
 
-msgid "The answer is published online for everyone. Now you have your answer, and everybody else can access it too &mdash; contributing to public benefit and your right to know."
-msgstr "The answer is published online for everyone. Now you have your answer, and everybody else can access it too &mdash; contributing to public benefit and your right to know."
+msgid "The answer is published online for everyone. Now you have your answer, and everybody else can access it too, contributing to public benefit and your right to know."
+msgstr "The answer is published online for everyone. Now you have your answer, and everybody else can access it too, contributing to public benefit and your right to know."
 
 msgid "Search requests"
 msgstr "Search requests"
@@ -327,8 +327,8 @@ msgstr "Search requests"
 msgid "Learn more about how we work"
 msgstr "Learn more about how we work"
 
-msgid "Public records need to be easier to access, to contribute to the common good and give society value &mdash; for our right as citizens to know what happens with our tax money. Dive into how our entirely non-profit organisation works and handles the process of helping you make so-called requests for public records."
-msgstr "Public records need to be easier to access, to contribute to the common good and give society value &mdash; for our right as citizens to know what happens with our tax money. Dive into how our entirely non-profit organisation works and handles the process of helping you make so-called requests for public records."
+msgid "Public records need to be easier to access, to contribute to the common good and give society value, for our right as citizens to know what happens with our tax money. Dive into how our entirely non-profit organisation works and handles the process of helping you make so-called requests for public records."
+msgstr "Public records need to be easier to access, to contribute to the common good and give society value, for our right as citizens to know what happens with our tax money. Dive into how our entirely non-profit organisation works and handles the process of helping you make so-called requests for public records."
 
 msgid "Support our work"
 msgstr "Support our work"
@@ -387,8 +387,8 @@ msgstr "Responsible publisher: Elenor Weijmar"
 msgid "Find authorities and public organisations"
 msgstr "Find authorities and public organisations"
 
-msgid "&mdash; to make a request"
-msgstr "&mdash; to make a request"
+msgid "to make a request"
+msgstr "to make a request"
 
 msgid "We have contact details for {{count}} different authorities"
 msgstr "We have contact details for {{count}} different authorities"
