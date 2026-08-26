@@ -59,26 +59,37 @@
     <%= link_to _("Can't find the one you want?"), help_requesting_path(:anchor => 'missing_body') %>
   </div>
 
-  <div id="right_column_flip" class="right_column_flip">
+  <div id="right_column_flip" class="right_column_flip search-filter">
     <h2><%=_('Show only...')%></h2>
+    <p class="search-filter__hint"><%= _("If you are not sure which organisation is responsible, use the categories below.") %></p>
 
-    <h3><%=_('Beginning with') %></h3>
-    <ul>
-      <li><%= render :partial => 'alphabet' %></li>
-    </ul>
+    <div class="search-filter-alphabet">
+      <h3><%=_('Beginning with') %></h3>
+      <ul>
+        <li><%= render :partial => 'alphabet' %></li>
+      </ul>
+    </div>
 
     <% PublicBody.categories.each do |heading| %>
-      <h3><%= heading.title %></h3>
-      <ul>
-        <% heading.children.each do |category| %>
-          <% next unless category.category_tag.present? %>
-          <li>
-            <%= link_to_unless (@tag == category.category_tag),
-              category.title,
-              list_public_bodies_by_tag_path(category.category_tag) %>
-          </li>
-        <% end %>
-      </ul>
+      <% visible_children = heading.children.select { |category| category.category_tag.present? } %>
+      <% next if visible_children.empty? %>
+      <% heading_open = visible_children.any? { |category| @tag == category.category_tag } %>
+      <details class="search-accordion"<% if heading_open %> open<% end %>>
+        <summary class="search-accordion__summary">
+          <%= heading.title %>
+        </summary>
+        <ul class="search-accordion__list">
+          <% visible_children.each do |category| %>
+            <li>
+              <% if @tag == category.category_tag %>
+                <span class="search-accordion__current" aria-current="page"><%= category.title %></span>
+              <% else %>
+                <%= link_to category.title, list_public_bodies_by_tag_path(category.category_tag) %>
+              <% end %>
+            </li>
+          <% end %>
+        </ul>
+      </details>
     <% end %>
 
     <%= render :partial => "list_sidebar_extra",

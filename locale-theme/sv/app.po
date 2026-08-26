@@ -8,3 +8,6 @@
 
 msgid "Services"
 msgstr "Tjänster"
+
+msgid "If you are not sure which organisation is responsible, use the categories below."
+msgstr "Om du är osäker på vilken organisation som är ansvarig, använd kategorierna nedan."
