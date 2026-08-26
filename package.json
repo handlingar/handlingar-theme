@@ -1,0 +1,13 @@
+{
+  "name": "handlingar-theme-a11y",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "axe-smoke": "node script/axe-smoke.mjs",
+    "axe-smoke:fixtures": "node script/axe-smoke.mjs --fixtures"
+  },
+  "devDependencies": {
+    "@axe-core/playwright": "^4.10.2",
+    "playwright": "^1.54.2"
+  }
+}

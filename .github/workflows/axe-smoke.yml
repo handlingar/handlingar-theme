@@ -1,0 +1,46 @@
+name: Axe smoke
+
+on:
+  pull_request:
+  push:
+    branches: [new-design-system]
+  workflow_dispatch:
+    inputs:
+      base_url:
+        description: Live Alaveteli origin to scan (optional)
+        required: false
+        default: ""
+
+permissions:
+  contents: read
+
+jobs:
+  fixtures:
+    name: Design-system fixtures
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "22"
+          cache: npm
+      - run: npm ci
+      - run: npx playwright install --with-deps chromium
+      - run: npm run axe-smoke:fixtures
+
+  live:
+    name: Live core journeys
+    if: ${{ github.event.inputs.base_url != '' || vars.AXE_BASE_URL != '' }}
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "22"
+          cache: npm
+      - run: npm ci
+      - run: npx playwright install --with-deps chromium
+      - name: Scan core journeys
+        env:
+          AXE_BASE_URL: ${{ github.event.inputs.base_url || vars.AXE_BASE_URL }}
+        run: npm run axe-smoke
