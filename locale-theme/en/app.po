@@ -5,3 +5,28 @@
 #
 # msgid "Make and browse Freedom of Information (FOI) requests"
 # msgstr "Make and browse Right to Know (RTI) requests"
+
+msgid "Skip to content"
+msgstr "Skip to content"
+
+msgid "Skip navigation"
+msgstr "Skip navigation"
+
+msgid "Main navigation"
+msgstr "Main navigation"
+
+msgid "Language"
+msgstr "Language"
+
+msgid "Menu"
+msgstr "Menu"
+
+msgid "Footer"
+msgstr "Footer"
+
+msgid "Filter by letter"
+msgstr "Filter by letter"
+
+msgid "Your profile photo"
+msgstr "Your profile photo"
+

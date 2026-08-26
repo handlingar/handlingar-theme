@@ -1,7 +1,22 @@
 <script>
   jQuery('#user_locale_switcher').find('.locale-list-trigger').each(function() {
-    jQuery(this).click(function(){
-      jQuery(this).parent().toggleClass('active');
+    jQuery(this).on('click', function(){
+      var $list = jQuery(this).closest('.locale-list');
+      $list.toggleClass('active');
+      jQuery(this).attr('aria-expanded', $list.hasClass('active'));
     });
   });
+  jQuery(document).on('keydown', function(e) {
+    if (e.key === 'Escape' || e.keyCode === 27) {
+      jQuery('#user_locale_switcher')
+        .removeClass('active')
+        .find('.locale-list-trigger')
+        .attr('aria-expanded', 'false');
+    }
+  });
+  var $err = jQuery('.errorExplanation');
+  if ($err.length) {
+    $err.attr({ role: 'alert', tabindex: '-1' });
+    $err.first().trigger('focus');
+  }
 </script>
