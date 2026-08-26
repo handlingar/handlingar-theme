@@ -1821,3 +1821,134 @@ form.user_search input[type="text"] {
     .body-listing__see-previous { white-space: nowrap; }
   }
 }
+
+// ---- Learn landing (/learn) ------------------------------------------------
+.learn-hero {
+  background-color: $brand_primary;
+  background-image: image-url('homepage-background.jpg');
+  background-size: cover;
+  background-position: center;
+  color: $color_white;
+  padding: 48px 0 56px;
+
+  .learn-hero__title {
+    display: inline;
+    -webkit-box-decoration-break: clone;
+    box-decoration-break: clone;
+    background-color: rgba(51, 51, 51, 0.9);
+    color: $color_white;
+    font-size: $font-size-h3;
+    line-height: 1.5;
+    padding: 0.15em 0.4em;
+    @include respond-min($main_menu-mobile_menu_cutoff) { font-size: $font-size-h2; }
+  }
+  .learn-hero__subtitle {
+    display: inline-block;
+    margin-top: 0.6em;
+    background-color: $brand_accent;
+    color: $color_white;
+    font-size: $font-size-h4;
+    font-weight: $font-weight-bold;
+    padding: 0.2em 0.5em;
+  }
+}
+
+.learn-intro {
+  background-color: $color_bg;
+  padding: 48px 0;
+  .learn-intro__text {
+    max-width: 46em;
+    color: $color_text_gray;
+    font-size: $font-size-subtitle;
+    line-height: 1.6;
+    margin: 0 0 24px;
+  }
+  .learn-intro__ctas { display: flex; flex-wrap: wrap; gap: 16px; }
+}
+
+.learn-steps {
+  padding: 8px 0 48px;
+  h2 { font-size: $font-size-h3; margin: 0 0 24px; }
+}
+
+.learn-steps__list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  gap: 20px;
+  @include respond-min($main_menu-mobile_menu_cutoff) {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+.learn-step {
+  background-color: $color_white;
+  border: 1px solid $color_light_grey;
+  border-radius: 4px;
+  padding: 24px;
+  h3 {
+    font-size: $font-size-h5;
+    font-weight: $font-weight-bold;
+    margin: 0 0 8px;
+  }
+  p {
+    color: $color_text_gray;
+    margin: 0;
+    line-height: 1.5;
+  }
+}
+
+.learn-step__num {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 32px;
+  height: 32px;
+  margin-bottom: 12px;
+  background-color: $brand_primary;
+  color: $color_white;
+  font-weight: $font-weight-bold;
+  font-size: $font-size-h5;
+  border-radius: 4px;
+}
+
+.learn-guides {
+  background-color: $color_bg;
+  padding: 48px 0 64px;
+  border-top: 1px solid $color_light_grey;
+  h2 { font-size: $font-size-h3; margin: 0 0 24px; }
+}
+
+.learn-guides__grid {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  gap: 20px;
+  @include respond-min($main_menu-mobile_menu_cutoff) {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+.learn-guide {
+  background-color: $color_white;
+  border: 1px solid $color_light_grey;
+  border-radius: 4px;
+  padding: 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  h3 {
+    font-size: $font-size-h5;
+    font-weight: $font-weight-bold;
+    margin: 0;
+  }
+  p {
+    color: $color_text_gray;
+    margin: 0;
+    line-height: 1.5;
+    flex: 1;
+  }
+  .button-tertiary { align-self: flex-start; padding: 0; }
+}

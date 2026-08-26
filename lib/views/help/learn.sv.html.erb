@@ -1,0 +1,88 @@
+<% @title = "Lär dig mer" %>
+
+<div class="learn-page">
+  <div class="learn-hero ds-dark">
+    <div class="row">
+      <h1 class="learn-hero__title"><%= @title %></h1>
+      <p class="learn-hero__subtitle">för din rätt att veta</p>
+    </div>
+  </div>
+
+  <div class="learn-intro">
+    <div class="row">
+      <p class="learn-intro__text">
+        Allmänna handlingar behöver bli lättare att få ut, för allmän nytta och samhällsvärde,
+        för vår rätt som medborgare att veta vad som händer med våra skattepengar.
+        Här är en kort väg in: hur du gör en begäran, hur du hittar rätt myndighet, och hur
+        den ideella föreningen bakom <%= site_name %> arbetar.
+      </p>
+      <div class="learn-intro__ctas">
+        <%= link_to "Gör en begäran", select_authority_path, class: "link_button_green" %>
+        <%= link_to "Skapa konto", signup_path, class: "button-secondary" %>
+      </div>
+    </div>
+  </div>
+
+  <div class="learn-steps">
+    <div class="row">
+      <h2>Så här fungerar det</h2>
+      <ol class="learn-steps__list">
+        <li class="learn-step">
+          <span class="learn-step__num" aria-hidden="true">1</span>
+          <h3>Gör en begäran</h3>
+          <p>Välj en myndighet, beskriv vilka handlingar du vill ta del av och skicka. Begäran går som e-post och ska besvaras inom några veckor.</p>
+        </li>
+        <li class="learn-step">
+          <span class="learn-step__num" aria-hidden="true">2</span>
+          <h3>Vänta på svar</h3>
+          <p>Vi meddelar dig när myndigheten svarar, och om svaret blir försenat. Under tiden kan du läsa andras begäranden.</p>
+        </li>
+        <li class="learn-step">
+          <span class="learn-step__num" aria-hidden="true">3</span>
+          <h3>Publicerat och klart</h3>
+          <p>Svaret publiceras öppet. Du har fått din handling, och andra kan använda samma information, för din rätt att veta.</p>
+        </li>
+      </ol>
+    </div>
+  </div>
+
+  <div class="learn-guides">
+    <div class="row">
+      <h2>Guider</h2>
+      <ul class="learn-guides__grid">
+        <li class="learn-guide">
+          <h3>Att göra en begäran</h3>
+          <p>Hur du håller frågan fokuserad, vad du gör om myndigheten saknas, och hur uppföljningar fungerar.</p>
+          <%= link_to "Läs guiden", help_requesting_path, class: "button-tertiary" %>
+        </li>
+        <li class="learn-guide">
+          <h3>Hitta en myndighet</h3>
+          <p>Sök på namn, stad eller kategori. Finns inte den du söker kan du be oss lägga till kontaktuppgifterna.</p>
+          <%= link_to "Sök myndigheter", list_public_bodies_default_path, class: "button-tertiary" %>
+        </li>
+        <li class="learn-guide">
+          <h3>Om <%= site_name %></h3>
+          <p>Vem som driver tjänsten, hur offentlighetsprincipen hänger ihop med plattformen, och Handlingar Pro.</p>
+          <%= link_to "Läs introduktionen", help_about_path, class: "button-tertiary" %>
+        </li>
+        <li class="learn-guide">
+          <h3>Missnöjd med ett svar?</h3>
+          <p>Om du inte fick svar i tid, inte fick ut handlingarna, eller fick ett avslag utan giltig grund.</p>
+          <%= link_to "Vad du kan göra", help_unhappy_path, class: "button-tertiary" %>
+        </li>
+        <% if feature_enabled?(:alaveteli_pro) %>
+        <li class="learn-guide">
+          <h3>Handlingar Pro</h3>
+          <p>Privata begäranden, serieförfrågningar och en översikt för journalistik och granskning.</p>
+          <%= link_to "Mer om Pro", account_request_index_path, class: "button-tertiary" %>
+        </li>
+        <% end %>
+        <li class="learn-guide">
+          <h3>Kurser</h3>
+          <p>Utbildningar kring offentlighetsprincipen och allmänna handlingar, hos Open Knowledge Sverige.</p>
+          <%= link_to "Till Handlingar Kurser", "https://about.handlingar.se/kurser/", class: "button-tertiary" %>
+        </li>
+      </ul>
+    </div>
+  </div>
+</div>

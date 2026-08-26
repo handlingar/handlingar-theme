@@ -8,6 +8,7 @@
 Rails.configuration.to_prepare do
   HelpController.class_eval do
     def terms; end
+    def learn; end
   end
 end
   # Example adding an instance variable to the frontpage controller
