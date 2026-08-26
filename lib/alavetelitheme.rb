@@ -31,6 +31,8 @@ for patch in ['controller_patches.rb',
   require File.expand_path "../#{patch}", __FILE__
 end
 
+require File.expand_path('../handlingar_icons_helper', __FILE__)
+
 # Note you should rename the file at "config/custom-routes.rb" to
 # something unique (e.g. yourtheme-custom-routes.rb":
 $alaveteli_route_extensions << 'custom-routes.rb'
@@ -63,6 +65,7 @@ end
 
 Rails.application.config.to_prepare do
   prepend_theme_assets
+  ActionController::Base.helper HandlingarIconsHelper
 end
 
 # Tell FastGettext about the theme's translations: look in the theme's

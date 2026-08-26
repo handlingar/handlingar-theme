@@ -28,19 +28,19 @@
   <div class="row">
     <ul class="usp__list">
       <li class="usp__item">
-        <span class="usp__icon material-symbols-outlined" aria-hidden="true">settings_input_antenna</span>
+        <%= ds_icon('antenna-signal', html_class: 'ds-icon usp__icon') %>
         <h3 class="usp__title"><%= _("Streamline your work") %></h3>
         <p class="usp__text"><%= _("Send the same freedom-of-information request to several authorities at once and free up more time for journalism.") %></p>
         <%= link_to _("Read more"), account_request_index_path, class: "usp__link button-tertiary" %>
       </li>
       <li class="usp__item">
-        <span class="usp__icon material-symbols-outlined" aria-hidden="true">mark_email_read</span>
+        <%= ds_icon('mail-open', html_class: 'ds-icon usp__icon') %>
         <h3 class="usp__title"><%= _("Up-to-date details") %></h3>
         <p class="usp__text"><%= _("You have access to contact details for thousands of organisations covered by the principle of public access.") %></p>
         <%= link_to _("Read more"), list_public_bodies_default_path, class: "usp__link button-tertiary" %>
       </li>
       <li class="usp__item">
-        <span class="usp__icon material-symbols-outlined" aria-hidden="true">lock</span>
+        <%= ds_icon('lock', html_class: 'ds-icon usp__icon') %>
         <h3 class="usp__title"><%= _("Private requests") %></h3>
         <p class="usp__text"><%= _("Keep your requests private while you work on your project. You decide when you are ready to make them public.") %></p>
         <%= link_to _("Read more"), account_request_index_path, class: "usp__link button-tertiary" %>

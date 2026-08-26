@@ -13,16 +13,20 @@
         <ul>
           <% unless AlaveteliConfiguration::facebook_username.blank? %>
             <li>
-              <%= link_to "/#{AlaveteliConfiguration::facebook_username}",
-                          "https://facebook.com/#{AlaveteliConfiguration::facebook_username}",
-                          class: 'social-link social-link--facebook' %>
+              <%= link_to "https://facebook.com/#{AlaveteliConfiguration::facebook_username}",
+                          class: 'social-link social-link--facebook' do %>
+                <%= ds_icon('facebook', html_class: 'ds-icon ds-icon--social') %>
+                <span>/<%= AlaveteliConfiguration::facebook_username %></span>
+              <% end %>
             </li>
           <% end %>
           <% unless AlaveteliConfiguration::twitter_username.blank? %>
             <li>
-              <%= link_to "@#{AlaveteliConfiguration::twitter_username}",
-                          "https://twitter.com/#{AlaveteliConfiguration::twitter_username}",
-                          class: 'social-link social-link--twitter' %>
+              <%= link_to "https://twitter.com/#{AlaveteliConfiguration::twitter_username}",
+                          class: 'social-link social-link--twitter' do %>
+                <%= ds_icon('x', html_class: 'ds-icon ds-icon--social') %>
+                <span>@<%= AlaveteliConfiguration::twitter_username %></span>
+              <% end %>
             </li>
           <% end %>
         </ul>
