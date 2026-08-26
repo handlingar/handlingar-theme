@@ -1,0 +1,22 @@
+<% @title = _('FOI Management for Journalists') %>
+
+<div class="marketing__section">
+  <div class="marketing__hero">
+    <h1><%= _('I’m a journalist') %></h1>
+    <h2>
+      <%= _('{{pro_site_name}} is here to help', pro_site_name: pro_site_name) %>
+    </h2>
+    <p class="marketing__subhead">
+      <%= _('Send the same request to many authorities at once and build a nationwide picture from the answers.') %>
+    </p>
+    <p>
+      <%= link_to _('Learn more about {{pro_site_name}} for journalists',
+                    pro_site_name: pro_site_name),
+                  help_pro_path %>
+    </p>
+  </div>
+</div>
+
+<div class="marketing__cta">
+  <%= render partial: 'alaveteli_pro/account_request/cta' %>
+</div>
