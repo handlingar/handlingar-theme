@@ -108,9 +108,9 @@
 }
 
 .pro-pill {
-  color: #567386;
-  font-weight: 600;
-  background-color: #FFFF00;
+  color: $color_white;
+  font-weight: $font-weight-semibold;
+  background-color: $brand_primary;
 }
 
 /* General styles */
@@ -1820,4 +1820,104 @@ form.user_search input[type="text"] {
     .link_button_green { @include ds-button-small; white-space: nowrap; }
     .body-listing__see-previous { white-space: nowrap; }
   }
+}
+
+// ---- Pro dashboard (logged-in /pro chrome) ---------------------------------
+// Replace WDTK sand/beige with design-system surfaces. Scope is the inner
+// canvas used by the dashboard, request list and projects index — not Stripe.
+.alaveteli-pro .inner-canvas {
+  background-color: $color_white;
+}
+
+.alaveteli-pro .inner-canvas-header {
+  background-color: $brand_primary;
+  color: $color_white;
+  border-bottom: 3px solid $brand_accent;
+  h1 {
+    color: $color_white;
+    font-size: $font-size-h3;
+    font-weight: $font-weight-bold;
+    @include respond-min($main_menu-mobile_menu_cutoff) {
+      font-size: $font-size-h2;
+    }
+  }
+}
+
+.alaveteli-pro .dashboard-folder--top-level {
+  background-color: $color_bg;
+}
+
+.alaveteli-pro .dashboard-folder--selected {
+  background-color: $color_white;
+  border-color: $brand_accent;
+  border-left: 3px solid $brand_accent;
+}
+
+.alaveteli-pro a.vertical-navigation-menu__link {
+  &:link,
+  &:visited {
+    color: $brand_primary;
+    &:hover,
+    &:active,
+    &:focus {
+      background-color: $color_bg;
+    }
+  }
+}
+
+.alaveteli-pro .dashboard-todo__zero,
+.alaveteli-pro .dashboard__announcements {
+  background-color: $color_bg;
+  border: 1px solid $color_light_grey;
+  border-radius: 4px;
+}
+
+.alaveteli-pro .dashboard-todo__title,
+.alaveteli-pro .dashboard-activity__title {
+  font-size: $font-size-h4;
+  font-weight: $font-weight-bold;
+  color: $brand_primary;
+  border-bottom-color: $color_light_grey;
+}
+
+.alaveteli-pro .dashboard-todo__list__item,
+.alaveteli-pro .dashboard-activity__item {
+  border-bottom-color: $color_light_grey;
+}
+
+.alaveteli-pro .dashboard-activity__item__time {
+  color: $color_text_gray;
+}
+
+.alaveteli-pro .dashboard-right-column a.button,
+.alaveteli-pro .blank-slate a.button {
+  @extend %ds-primary;
+  @include ds-button-small;
+}
+
+.alaveteli-pro .blank-slate__message {
+  background-color: $brand_primary;
+  color: $color_white;
+  h2 { color: $color_white; }
+  a.button {
+    background-color: $brand_secondary;
+    border-color: $brand_secondary;
+    color: $brand_primary;
+    &:link, &:visited { color: $brand_primary; }
+    &:hover, &:active, &:focus {
+      background-color: darken($brand_secondary, 8%);
+      border-color: darken($brand_secondary, 8%);
+      color: $brand_primary;
+    }
+  }
+}
+
+.alaveteli-pro .requests__header {
+  background-color: $color_bg;
+  border-bottom-color: $color_light_grey;
+}
+
+.alaveteli-pro .request {
+  border-color: $color_light_grey;
+  background-color: $color_white;
 }
