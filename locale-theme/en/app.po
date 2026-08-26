@@ -5,3 +5,165 @@
 #
 # msgid "Make and browse Freedom of Information (FOI) requests"
 # msgstr "Make and browse Right to Know (RTI) requests"
+
+msgid "Language"
+msgstr "Language"
+
+msgid "Services"
+msgstr "Services"
+
+msgid "Pro"
+msgstr "Pro"
+
+msgid "Main navigation"
+msgstr "Main navigation"
+
+msgid "Create account"
+msgstr "Create account"
+
+msgid "Create a new account"
+msgstr "Create a new account"
+
+msgid "Create a free account to start sending requests for public records."
+msgstr "Create a free account to start sending requests for public records."
+
+msgid "I already have an account"
+msgstr "I already have an account"
+
+msgid "I want to create a PRO account"
+msgstr "I want to create a PRO account"
+
+msgid "We help you get in touch with public authorities"
+msgstr "We help you get in touch with public authorities"
+
+msgid "&mdash; for your right to know"
+msgstr "&mdash; for your right to know"
+
+msgid "Learn more about us"
+msgstr "Learn more about us"
+
+msgid "Streamline your work"
+msgstr "Streamline your work"
+
+msgid "Send the same freedom-of-information request to several authorities at once and free up more time for journalism."
+msgstr "Send the same freedom-of-information request to several authorities at once and free up more time for journalism."
+
+msgid "Up-to-date details"
+msgstr "Up-to-date details"
+
+msgid "You have access to contact details for thousands of organisations covered by the principle of public access."
+msgstr "You have access to contact details for thousands of organisations covered by the principle of public access."
+
+msgid "Private requests"
+msgstr "Private requests"
+
+msgid "Keep your requests private while you work on your project. You decide when you are ready to make them public."
+msgstr "Keep your requests private while you work on your project. You decide when you are ready to make them public."
+
+msgid "Easily create a request by filling in your case. We have helped you by creating a template where you only need to state which documents you want access to. The request is sent to the chosen authority as an email, which they must respond to within a few weeks."
+msgstr "Easily create a request by filling in your case. We have helped you by creating a template where you only need to state which documents you want access to. The request is sent to the chosen authority as an email, which they must respond to within a few weeks."
+
+msgid "Wait for a response"
+msgstr "Wait for a response"
+
+msgid "While the authority works on providing the documents you requested, you can sit back &mdash; we will notify you by email when you get a response. In the meantime, you can read other requests our users have made."
+msgstr "While the authority works on providing the documents you requested, you can sit back &mdash; we will notify you by email when you get a response. In the meantime, you can read other requests our users have made."
+
+msgid "Browse requests"
+msgstr "Browse requests"
+
+msgid "Published and done"
+msgstr "Published and done"
+
+msgid "The answer is published online for everyone. Now you have your answer, and everybody else can access it too &mdash; contributing to public benefit and your right to know."
+msgstr "The answer is published online for everyone. Now you have your answer, and everybody else can access it too &mdash; contributing to public benefit and your right to know."
+
+msgid "Search requests"
+msgstr "Search requests"
+
+msgid "Learn more about how we work"
+msgstr "Learn more about how we work"
+
+msgid "Public records need to be easier to access, to contribute to the common good and give society value &mdash; for our right as citizens to know what happens with our tax money. Dive into how our entirely non-profit organisation works and handles the process of helping you make so-called requests for public records."
+msgstr "Public records need to be easier to access, to contribute to the common good and give society value &mdash; for our right as citizens to know what happens with our tax money. Dive into how our entirely non-profit organisation works and handles the process of helping you make so-called requests for public records."
+
+msgid "Support our work"
+msgstr "Support our work"
+
+msgid "The premium service for journalists, researchers, associations and businesses"
+msgstr "The premium service for journalists, researchers, associations and businesses"
+
+msgid "Handlingar PRO is a powerful toolbox with everything you need when working with information and public records."
+msgstr "Handlingar PRO is a powerful toolbox with everything you need when working with information and public records."
+
+msgid "Get premium"
+msgstr "Get premium"
+
+msgid "Send the same request to several authorities at once and free up more time for journalism."
+msgstr "Send the same request to several authorities at once and free up more time for journalism."
+
+msgid "Access contact details for thousands of organisations covered by the principle of public access."
+msgstr "Access contact details for thousands of organisations covered by the principle of public access."
+
+msgid "Keep requests private while you work on your project, and publish them when you are ready."
+msgstr "Keep requests private while you work on your project, and publish them when you are ready."
+
+msgid "Batch requests"
+msgstr "Batch requests"
+
+msgid "Build and manage large batches of requests from a single dashboard."
+msgstr "Build and manage large batches of requests from a single dashboard."
+
+msgid "Action alerts"
+msgstr "Action alerts"
+
+msgid "Get notified the moment an authority responds so nothing slips through."
+msgstr "Get notified the moment an authority responds so nothing slips through."
+
+msgid "Save drafts"
+msgstr "Save drafts"
+
+msgid "Save your work and return to finish your requests whenever it suits you."
+msgstr "Save your work and return to finish your requests whenever it suits you."
+
+msgid "Handlingar.se in the media and news"
+msgstr "Handlingar.se in the media and news"
+
+msgid "Latest news and campaigns"
+msgstr "Latest news and campaigns"
+
+msgid "See all &rarr;"
+msgstr "See all &rarr;"
+
+msgid "Run by Open Knowledge Sweden with the Alaveteli software."
+msgstr "Run by Open Knowledge Sweden with the Alaveteli software."
+
+msgid "Responsible publisher: Elenor Weijmar"
+msgstr "Responsible publisher: Elenor Weijmar"
+
+msgid "Find authorities and public organisations"
+msgstr "Find authorities and public organisations"
+
+msgid "&mdash; to make a request"
+msgstr "&mdash; to make a request"
+
+msgid "We have contact details for {{count}} different authorities"
+msgstr "We have contact details for {{count}} different authorities"
+
+msgid "Before you make a request to your authority, you can browse requests already made by our users to see if you find your answer."
+msgstr "Before you make a request to your authority, you can browse requests already made by our users to see if you find your answer."
+
+msgid "Search by free text"
+msgstr "Search by free text"
+
+msgid "Type the name of the authority, city or similar to find the authority you are looking for."
+msgstr "Type the name of the authority, city or similar to find the authority you are looking for."
+
+msgid "Send request"
+msgstr "Send request"
+
+msgid "See previous requests"
+msgstr "See previous requests"
+
+msgid "None found."
+msgstr "None found."

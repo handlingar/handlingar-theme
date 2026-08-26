@@ -1230,7 +1230,7 @@ a.button-tertiary {
   button[type="submit"] { color: $brand_primary; }
 }
 
-// Language selector — dark-on-white in the top bar
+// Language selector: both locales always visible (no JS dropdown)
 #user_locale_switcher.locale-list {
   @include respond-min( $main_menu-mobile_menu_cutoff ) {
     order: 3;
@@ -1238,15 +1238,51 @@ a.button-tertiary {
     width: auto;
     padding-top: 0;
     margin-left: 1em;
+    left: auto;
   }
-  .locale-list-trigger,
-  .current-locale { color: $brand_primary; }
+
   .available-languages {
-    @include respond-min( $main_menu-mobile_menu_cutoff ) {
-      background-color: $color_white;
-      border: 1px solid $color_light_grey;
-    }
-    &__item a { color: $brand_primary; }
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 0.25em 0.75em;
+    position: static;
+    margin: 0;
+    padding: 0;
+    width: auto;
+    max-width: none;
+    background: transparent;
+    border: 0;
+    list-style: none;
+  }
+
+  .available-languages__item {
+    border: 0;
+    display: inline-block;
+  }
+
+  .current-locale,
+  .available-languages a {
+    display: inline-block;
+    min-height: 44px;
+    line-height: 44px;
+    padding: 0 0.25em;
+    color: $brand_primary;
+    font-size: 0.9375em;
+    font-weight: $font-weight-semibold;
+    text-decoration: none;
+    background: transparent;
+  }
+
+  .current-locale { cursor: default; }
+
+  .available-languages a:hover,
+  .available-languages a:focus {
+    color: $brand_accent;
+    background: transparent;
+    border-bottom: 0;
+    outline: 2px solid $brand_accent;
+    outline-offset: 2px;
   }
 }
 
