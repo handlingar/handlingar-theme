@@ -235,7 +235,7 @@ input.use-datepicker[type=text] {
 
 @mixin button-tertiary($args...) {
   @include button-base($args...);
-  background-color: desaturate(darken($color_sand, 5%), 5%);;
+  background-color: desaturate(darken($color_sand, 5%), 5%);
   color: $color_black;
   font-weight: normal;
   border: 1px solid desaturate(darken($color_sand, 15%),5%);
@@ -346,7 +346,7 @@ a.link_button_green_large {
   }
 }
 
-#navigation_search_button{
+#navigation_search_button {
   background-color: $color_white;
   border: none;
   transition: all 0.3s ease-out;

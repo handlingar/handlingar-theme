@@ -1,0 +1,49 @@
+/* Design tokens from app/assets/stylesheets/responsive/_settings.scss */
+:root {
+  --color-white: #fff;
+  --color-bg: #fbfbfb;
+  --brand-primary: #333;
+  --brand-secondary: #eb9c6a;
+  --brand-accent: #e6722a;
+  --text-black: #000;
+  --text-gray: #555;
+  --light-grey: #e6e6e6;
+  --page-margin: 50px;
+  --gutter: 20px;
+  --font-size-h1: 48px;
+  --font-size-body: 16px;
+}
+
+body {
+  margin: 0;
+  font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+  font-size: var(--font-size-body);
+  line-height: 1.5;
+  background: var(--color-bg);
+  color: var(--text-black);
+}
+
+.skip-to-link:focus {
+  outline: 2px solid var(--brand-accent);
+  outline-offset: 2px;
+}
+
+#topnav {
+  background-color: var(--brand-secondary);
+}
+
+.navigation a {
+  color: var(--brand-primary);
+  text-decoration: none;
+}
+
+h1 {
+  font-size: var(--font-size-h1);
+  color: var(--brand-primary);
+}
+
+footer {
+  border-top: 3px solid var(--brand-accent);
+  background: var(--brand-primary);
+  color: var(--color-white);
+}

@@ -1,0 +1,13 @@
+{
+  "name": "handlingar-theme",
+  "private": true,
+  "scripts": {
+    "html-validate": "html-validate spec/markup/fixtures/core-chrome.html",
+    "stylelint": "stylelint spec/markup/fixtures/design-tokens.css"
+  },
+  "devDependencies": {
+    "html-validate": "^9.7.1",
+    "stylelint": "^16.25.0",
+    "stylelint-config-standard": "^38.0.0"
+  }
+}

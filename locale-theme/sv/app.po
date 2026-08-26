@@ -8,3 +8,9 @@
 
 msgid "Services"
 msgstr "Tjänster"
+
+msgid "Main navigation"
+msgstr "Huvudmeny"
+
+msgid "Secondary navigation"
+msgstr "Undermeny"
