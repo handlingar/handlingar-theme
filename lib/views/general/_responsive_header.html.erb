@@ -9,8 +9,12 @@
       </div>
 
       <div class="rsp_menu_button">
-        <a href="#banner" class="open"> <i class="icon-menu"></i> Menu </a>
-        <a href="#" class="close"> <i class="icon-menu"></i> Close </a>
+        <a href="#banner" class="open" aria-label="<%= _('Open menu') %>">
+          <span class="rsp_menu_button__bars" aria-hidden="true"></span>
+        </a>
+        <a href="#" class="close" aria-label="<%= _('Close menu') %>">
+          <span class="rsp_menu_button__bars rsp_menu_button__bars--close" aria-hidden="true"></span>
+        </a>
       </div>
 
       <div id="navigation_search" class="navigation_search">
