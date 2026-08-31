@@ -19,19 +19,19 @@
   <div class="row">
     <ul class="usp__list">
       <li class="usp__item">
-        <%= ds_icon('antenna-signal', html_class: 'ds-icon usp__icon') %>
+        <%= ds_icon('antenna-signal', html_class: 'ds-icon ds-icon--usp usp__icon') %>
         <h2 class="usp__title"><%= _("Streamline your work") %></h2>
         <p class="usp__text"><%= _("Send the same public-records request to several authorities at once and get more time for journalism.") %></p>
         <%= link_to _("Read more"), account_request_index_path, class: "usp__link button-tertiary" %>
       </li>
       <li class="usp__item">
-        <%= ds_icon('mail-open', html_class: 'ds-icon usp__icon') %>
+        <%= ds_icon('mail-open', html_class: 'ds-icon ds-icon--usp usp__icon') %>
         <h2 class="usp__title"><%= _("Up-to-date details") %></h2>
         <p class="usp__text"><%= _("You have access to contact details for {{count}} organisations covered by the principle of public access.", :count => authority_count) %></p>
         <%= link_to _("Read more"), list_public_bodies_default_path, class: "usp__link button-tertiary" %>
       </li>
       <li class="usp__item">
-        <%= ds_icon('lock', html_class: 'ds-icon usp__icon') %>
+        <%= ds_icon('lock', html_class: 'ds-icon ds-icon--usp usp__icon') %>
         <h2 class="usp__title"><%= _("Private requests") %></h2>
         <p class="usp__text"><%= _("Keep case requests private while you work on your project. You choose when you are ready to make them public.") %></p>
         <%= link_to _("Read more"), account_request_index_path, class: "usp__link button-tertiary" %>

@@ -120,6 +120,24 @@ msgstr "Handlingar PRO är en kraftfull verktygslåda som har allt du behöver n
 msgid "Get premium"
 msgstr "Skaffa premium"
 
+msgid "Batch requests"
+msgstr "Batch-begäranden"
+
+msgid "Build and manage large batches of requests from a single dashboard."
+msgstr "Skapa och hantera stora batcher av begäranden från en enda panel."
+
+msgid "Action alerts"
+msgstr "Åtgärdsaviseringar"
+
+msgid "Get notified the moment an authority responds so nothing slips through."
+msgstr "Få besked direkt när en myndighet svarar så att inget missas."
+
+msgid "Save drafts"
+msgstr "Spara utkast"
+
+msgid "Save your work and return to finish your requests whenever it suits you."
+msgstr "Spara ditt arbete och återkom för att slutföra dina begäranden när det passar dig."
+
 msgid "Responsible publisher: Elenor Weijmar"
 msgstr "Ansvarig utgivare: Elenor Weijmar"
 

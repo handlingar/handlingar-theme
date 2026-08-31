@@ -2,7 +2,10 @@
 <% pro_usps = [
   { icon: 'antenna-signal', title: _("Streamline your work"), text: _("Send the same public-records request to several authorities at once and get more time for journalism.") },
   { icon: 'mail-open', title: _("Up-to-date details"), text: _("You have access to contact details for {{count}} organisations covered by the principle of public access.", :count => authority_count) },
-  { icon: 'lock', title: _("Private requests"), text: _("Keep case requests private while you work on your project. You choose when you are ready to make them public.") }
+  { icon: 'lock', title: _("Private requests"), text: _("Keep case requests private while you work on your project. You choose when you are ready to make them public.") },
+  { icon: 'view-grid', title: _("Batch requests"), text: _("Build and manage large batches of requests from a single dashboard.") },
+  { icon: 'bell', title: _("Action alerts"), text: _("Get notified the moment an authority responds so nothing slips through.") },
+  { icon: 'page', title: _("Save drafts"), text: _("Save your work and return to finish your requests whenever it suits you.") }
 ] %>
 
 <%# 3.1 Handlingar.se PRO marketing section (design booklet page 30) %>
@@ -21,14 +24,12 @@
     </div>
 
     <ul class="pro__usp-grid">
-      <% 2.times do %>
-        <% pro_usps.each do |usp| %>
-          <li class="pro__usp">
-            <%= ds_icon(usp[:icon], html_class: 'ds-icon usp__icon') %>
-            <h3 class="usp__title"><%= usp[:title] %></h3>
-            <p class="usp__text"><%= usp[:text] %></p>
-          </li>
-        <% end %>
+      <% pro_usps.each do |usp| %>
+        <li class="pro__usp">
+          <%= ds_icon(usp[:icon], html_class: 'ds-icon ds-icon--usp usp__icon') %>
+          <h3 class="usp__title"><%= usp[:title] %></h3>
+          <p class="usp__text"><%= usp[:text] %></p>
+        </li>
       <% end %>
     </ul>
 

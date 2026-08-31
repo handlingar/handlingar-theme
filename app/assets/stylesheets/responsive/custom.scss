@@ -196,22 +196,28 @@ input.use-datepicker[type=text] {
 /* Button styles */
 
 @mixin button-base($size: normal, $disabled: false) {
-  padding: 0.5em 1.25em;
-  border-radius: 3px;
-  display: inline-block;
-  font-weight: 600;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: $ds-space-1;
+  padding: 16px 32px;
+  border-radius: 4px;
+  font-weight: $font-weight-bold;
+  font-size: $font-size-button-m;
+  line-height: 1.2;
   text-decoration: none;
-  transition: background-color 300ms ease-out;
+  transition: background-color 0.2s ease-out, color 0.2s ease-out, border-color 0.2s ease-out;
   margin-bottom: 0;
   font-family: $font-family;
+  border: 2px solid transparent;
   @if $size == large {
-    font-size: 2.2em;
+    font-size: 1.375rem;
+    padding: 20px 40px;
   }
   &:hover,
   &:active,
   &:focus {
     text-decoration: none;
-    transition: background-color 300ms ease-out;
   }
   @if $disabled {
     opacity: 0.333;
@@ -230,43 +236,52 @@ input.use-datepicker[type=text] {
 @mixin button-primary($args...) {
   @include button-base($args...);
   color: $color_white;
-  background-color: $button-bg;
-  border: none;
+  background-color: $brand_primary;
+  border-color: $brand_primary;
+  &:link, &:visited { color: $color_white; }
   &:hover,
   &:active,
   &:focus,
   &:visited:hover,
   &:visited:active,
   &:visited:focus {
-    background-color: darken($button-bg, 10%);
+    background-color: $color_text_black;
+    border-color: $color_text_black;
     color: $color_white;
   }
 }
 
 @mixin button-secondary($args...) {
   @include button-base($args...);
-  background-color: desaturate(darken($color_sand, 10%), 5%);
-  color: $color_black;
-  font-weight: normal;
+  background-color: transparent;
+  color: $brand_primary;
+  border-color: $brand_primary;
+  font-weight: $font-weight-bold;
+  &:link, &:visited { color: $brand_primary; }
   &:hover,
   &:active,
   &:focus {
-    color: $color_black;
-    background-color: desaturate(darken($color_sand, 20%), 5%);
+    background-color: $brand_primary;
+    border-color: $brand_primary;
+    color: $color_white;
   }
 }
 
 @mixin button-tertiary($args...) {
   @include button-base($args...);
-  background-color: desaturate(darken($color_sand, 5%), 5%);
-  color: $color_black;
-  font-weight: normal;
-  border: 1px solid desaturate(darken($color_sand, 15%),5%);
+  background-color: transparent;
+  color: $brand_primary;
+  border-color: transparent;
+  font-weight: $font-weight-semibold;
+  text-decoration: underline;
+  &:link, &:visited { color: $brand_primary; }
   &:hover,
   &:active,
   &:focus {
-    background-color: darken($color_sand, 7.5%);
-    border: 1px solid desaturate(darken($color_sand, 25%),5%);
+    background-color: transparent;
+    border-color: transparent;
+    color: $color_text_black;
+    text-decoration: underline;
   }
 }
 
@@ -1017,6 +1032,7 @@ body {
   font-size: $base-font-size;
   line-height: 1.5;
   color: $body-font-color;
+  background-color: $color_bg;
   -webkit-font-smoothing: antialiased;
 }
 
@@ -1040,13 +1056,21 @@ small, .small-body { font-size: $font-size-small; }
   h4 { font-size: 1.25rem; }   // 20
 }
 
-// ---- 2.1 Spacing (8px base unit) -------------------------------------------
-$ds-space-1: 8px;
-$ds-space-2: 16px;
-$ds-space-3: 24px;
-$ds-space-4: 32px;
-$ds-space-5: 40px;
-$ds-space-6: 56px;
+// ---- 2.1 Spacing (tokens in _settings.scss) --------------------------------
+@mixin ds-page-padding {
+  padding-left: $ds-page-margin-mobile;
+  padding-right: $ds-page-margin-mobile;
+  @include respond-min( $main_menu-mobile_menu_cutoff ) {
+    padding-left: $ds-page-margin;
+    padding-right: $ds-page-margin;
+  }
+}
+
+@mixin ds-illustration-panel {
+  background-color: $brand_primary;
+  background-image: linear-gradient(160deg, $gradient_start, $gradient_end);
+  border-radius: $ds-space-1;
+}
 
 // ---- 1.1 Graphic element: the angled "dividing stroke" (Brand Accent) -------
 // The booklet's signature notch — a Brand Accent bar that slants at its right
@@ -1203,25 +1227,43 @@ a.button-tertiary {
 }
 
 // ---- 1.5 Iconography (self-hosted SVG, currentColor) ----------------------
+// Booklet page 15: icon box sizes with max glyph dimensions inside.
 .ds-icon {
   display: inline-block;
-  width: 1.5rem;
-  height: 1.5rem;
   flex-shrink: 0;
   vertical-align: middle;
   overflow: visible;
   color: inherit;
+  box-sizing: border-box;
 }
 
-// Small 24/16 · Big 32/20 · Social 26/26 · USP 100/80 (booklet page 15)
 .ds-icon--small,
-.icon--small  { width: 16px; height: 16px; }
+.icon--small {
+  width: 24px;
+  height: 24px;
+  padding: 4px;
+}
+
 .ds-icon--big,
-.icon--big    { width: 20px; height: 20px; }
+.icon--big {
+  width: 32px;
+  height: 32px;
+  padding: 6px;
+}
+
 .ds-icon--social,
-.icon--social { width: 26px; height: 26px; }
+.icon--social {
+  width: 26px;
+  height: 26px;
+}
+
 .ds-icon--usp,
-.icon--usp    { width: 80px; height: 80px; }
+.icon--usp,
+.usp__icon.ds-icon {
+  width: 100px;
+  height: 100px;
+  padding: 10px;
+}
 
 
 // ---- 3.1 Header: two-level navigation --------------------------------------
@@ -1231,13 +1273,17 @@ a.button-tertiary {
 .banner_inner {
   background-color: $color_white;
   border-bottom: 3px solid $brand_accent; // dividing stroke between the two bars
+  overflow: visible;
 }
 
 #banner_content {
+  overflow: visible;
+  @include ds-page-padding;
   @include respond-min( $main_menu-mobile_menu_cutoff ) {
     display: flex;
     align-items: center;
-    padding: 0.75em 50px; // 50px page margin from the grid spec
+    padding-top: 0.75em;
+    padding-bottom: 0.75em;
     .rsp_menu_button { display: none; } // mobile-only hamburger
   }
 }
@@ -1277,32 +1323,38 @@ a.button-tertiary {
     padding-top: 0;
     margin-left: auto;
     left: auto;
+    position: relative;
   }
 
-  .available-languages {
-    display: flex;
-    flex-wrap: wrap;
-    align-items: center;
-    gap: 0.5em;
-    position: static;
+  .locale-list__details {
+    position: relative;
+  }
+
+  .locale-list-trigger {
     margin: 0;
+    border: 1px solid $color_light_grey;
+    border-radius: 4px;
     padding: 0;
-    width: auto;
-    max-width: none;
+    cursor: pointer;
+    color: $brand_primary;
     background: transparent;
-    border: 0;
     list-style: none;
-  }
 
-  .available-languages__item {
-    border: 0;
-    display: inline-block;
+    &::-webkit-details-marker,
+    &::marker {
+      display: none;
+    }
 
-    &.is-current .current-locale {
-      border: 1px solid $color_light_grey;
-      border-radius: 4px;
+    .current-locale {
+      display: block;
+      min-height: 44px;
+      line-height: 44px;
       padding: 0 2em 0 0.75em;
+      color: $brand_primary;
+      font-size: 0.9375em;
+      font-weight: $font-weight-semibold;
       position: relative;
+      cursor: pointer;
 
       &::after {
         content: "";
@@ -1319,12 +1371,42 @@ a.button-tertiary {
     }
   }
 
-  .current-locale,
+  .locale-list__details[open] > .available-languages {
+    display: block;
+  }
+
+  .available-languages {
+    display: none;
+    position: absolute;
+    top: calc(100% + 2px);
+    right: 0;
+    z-index: 1000;
+    margin: 0;
+    padding: 0;
+    width: 100%;
+    min-width: 10em;
+    max-width: 14em;
+    background: $color_white;
+    border: 1px solid $color_light_grey;
+    border-radius: 4px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+    list-style: none;
+  }
+
+  .available-languages__item {
+    border: 0;
+    display: block;
+
+    &:not(:first-child) {
+      border-top: 1px solid $color_light_grey;
+    }
+  }
+
   .available-languages a {
-    display: inline-block;
+    display: block;
     min-height: 44px;
     line-height: 44px;
-    padding: 0 0.25em;
+    padding: 0 0.75em;
     color: $brand_primary;
     font-size: 0.9375em;
     font-weight: $font-weight-semibold;
@@ -1332,15 +1414,13 @@ a.button-tertiary {
     background: transparent;
   }
 
-  .current-locale { cursor: default; }
-
   .available-languages a:hover,
   .available-languages a:focus {
     color: $brand_accent;
-    background: transparent;
+    background: rgba($brand_accent, 0.06);
     border-bottom: 0;
     outline: 2px solid $brand_accent;
-    outline-offset: 2px;
+    outline-offset: -2px;
   }
 }
 
@@ -1351,7 +1431,7 @@ a.button-tertiary {
   @include respond-min( $main_menu-mobile_menu_cutoff ) {
     position: relative;
     min-height: 3.5em;
-    padding: 0 240px 0 50px; // reserve room on the right for the auth buttons
+    padding: 0 240px 0 $ds-page-margin; // reserve room on the right for the auth buttons
     nav { display: flex; align-items: center; min-height: 3.5em; }
     .navigation {
       width: auto;
@@ -1382,7 +1462,7 @@ a.button-tertiary {
 .topnav__auth {
   @include respond-min( $main_menu-mobile_menu_cutoff ) {
     position: absolute;
-    right: 50px;
+    right: $ds-page-margin;
     top: 50%;
     transform: translateY(-50%);
     display: flex;
@@ -1563,10 +1643,12 @@ a.button-tertiary {
   }
   .usp__icon {
     color: $brand_secondary;
-    width: 3.25rem;
-    height: 3.25rem;
+    width: 100px;
+    height: 100px;
+    padding: 10px;
     display: block;
-    margin: 0 auto 0.4em;
+    margin: 0 auto $ds-space-1;
+    box-sizing: border-box;
   }
   .usp__title { color: $color_white; font-size: $font-size-h4; margin: 0 0 0.4em; }
   .usp__text { color: transparentize($color_white, 0.15); font-size: $font-size-body; }
@@ -1594,12 +1676,21 @@ a.button-tertiary {
     }
   }
 
-  .pro__intro-illustration img {
-    display: block;
-    width: 100%;
-    max-width: 20em;
-    height: auto;
-    margin: 0 auto;
+  .pro__intro-illustration {
+    @include ds-illustration-panel;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 14em;
+    padding: $ds-space-3;
+
+    img {
+      display: block;
+      width: 100%;
+      max-width: 20em;
+      height: auto;
+      margin: 0 auto;
+    }
   }
 
   .pro__title { font-size: $font-size-h3; margin: 0 0 0.5em; max-width: 28em; }
@@ -1614,22 +1705,24 @@ a.button-tertiary {
 
   .pro__usp-grid {
     list-style: none;
-    margin: 3em 0 0;
+    margin: $ds-space-6 0 0;
     padding: 0;
+    display: grid;
+    gap: $ds-space-3;
     @include respond-min( $main_menu-mobile_menu_cutoff ) {
-      display: flex;
-      flex-wrap: wrap;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
     }
   }
   .pro__usp {
-    padding: 1em 1.5em 1.5em 0;
-    @include respond-min( $main_menu-mobile_menu_cutoff ) { flex: 0 0 33.333%; }
+    padding: 0 $ds-space-2 $ds-space-3 0;
     .usp__icon {
       color: $brand_accent;
-      width: 2.5rem;
-      height: 2.5rem;
+      width: 100px;
+      height: 100px;
+      padding: 10px;
       display: block;
-      margin-bottom: 0.3em;
+      margin-bottom: $ds-space-1;
+      box-sizing: border-box;
     }
     .usp__title { font-size: $font-size-h5; margin: 0 0 0.3em; color: $brand_primary; }
     .usp__text { color: $color_text_gray; }
@@ -1710,13 +1803,6 @@ form.user_search input[type="text"] {
   border-radius: 4px;
 }
 
-// ---- 1.5 Iconography — exact box sizes (booklet page 15) --------------------
-// USP icons sit in an ~80px glyph (100×100 box in the booklet)
-.homepage-usp .usp__icon {
-  width: 80px;
-  height: 80px;
-}
-
 // ---- 3.1 Footer — multi-column layout + solid social badges ----------------
 #footer.footer {
   padding: 48px 0 40px; // 8px-multiple spacing
@@ -1726,8 +1812,7 @@ form.user_search input[type="text"] {
       display: flex;
       justify-content: space-between;
       gap: 40px;
-      padding-left: $ds-page-margin;
-      padding-right: $ds-page-margin;
+      @include ds-page-padding;
     }
   }
   .footer__run-by,
@@ -1784,7 +1869,36 @@ form.user_search input[type="text"] {
   }
 }
 
-// ---- 2.2 Page margin (50px) on the home sections ---------------------------
+// ---- 2.2 Page margin (50px desktop · 20px mobile) ------------------------
+.homepage-hero .row,
+.homepage-usp .row,
+.homepage-pro .row,
+.homepage-how-it-works .row,
+.homepage-learn-more .row,
+.frontpage__blog .row,
+.frontpage_examples .row,
+.search-hero .row,
+.search-intro .row,
+.search-band .row,
+.search-results-row,
+.create-account .row,
+#wrapper #content > .wrapper,
+#topnav.topnav .navigation {
+  @include ds-page-padding;
+}
+
+// 12-column grid helper (booklet page 24: 12 cols · 20px gutter · 50px margin)
+.ds-grid-12 {
+  display: grid;
+  grid-template-columns: repeat($total-columns, minmax(0, 1fr));
+  gap: $column-gutter;
+  max-width: $row-width;
+  margin-left: auto;
+  margin-right: auto;
+  @include ds-page-padding;
+}
+
+// Legacy Foundation rows on booklet pages share the same horizontal rhythm.
 .homepage-hero .row,
 .homepage-usp .row,
 .homepage-pro .row,
@@ -1797,8 +1911,9 @@ form.user_search input[type="text"] {
 .search-band .row,
 .search-results-row {
   @include respond-min( $main_menu-mobile_menu_cutoff ) {
-    padding-left: $ds-page-margin;
-    padding-right: $ds-page-margin;
+    max-width: $row-width;
+    margin-left: auto;
+    margin-right: auto;
   }
 }
 
@@ -1875,15 +1990,13 @@ form.user_search input[type="text"] {
   }
 
   .create-account__illustration {
+    @include ds-illustration-panel;
     display: flex;
     align-items: center;
     justify-content: center;
     min-height: 18em;
-    padding: 24px;
-    background-color: $brand_primary;
-    background-image: linear-gradient(160deg, $gradient_start, $gradient_end);
-    border-radius: 8px;
-    margin-bottom: 24px;
+    padding: $ds-space-3;
+    margin-bottom: $ds-space-3;
     @include respond-min( $main_menu-mobile_menu_cutoff ) { margin-bottom: 0; }
     img {
       display: block;
