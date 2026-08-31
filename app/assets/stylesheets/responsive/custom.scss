@@ -1244,18 +1244,18 @@ a.button-tertiary {
 
 .banner_site-title {
   margin: 0;
-  @include respond-min( $main_menu-mobile_menu_cutoff ) { margin-right: auto; }
+  @include respond-min( $main_menu-mobile_menu_cutoff ) { margin-right: 0; }
   h1 { margin: 0; font-size: 0; }
 }
 
-// Search field — dark-on-white, square design, flush right in the top bar
+// Search field — dark-on-white, square design, left of the top bar (booklet 3.1)
 #navigation_search.navigation_search {
   @include respond-min( $main_menu-mobile_menu_cutoff ) {
     order: 2;
     float: none;      // neutralise core grid-column float…
     width: auto;      // …fixed 25% width…
     padding-top: 0;   // …and vertical-centring padding
-    margin: 0;
+    margin: 0 0 0 1.5em;
     form { width: auto; margin: 0; }
   }
   .navigation_search_button[type="search"] {
@@ -1268,14 +1268,14 @@ a.button-tertiary {
   button[type="submit"] { color: $brand_primary; }
 }
 
-// Language selector: both locales always visible (no JS dropdown)
+// Language selector: right side of the white top bar (booklet 3.1)
 #user_locale_switcher.locale-list {
   @include respond-min( $main_menu-mobile_menu_cutoff ) {
     order: 3;
     float: none;
     width: auto;
     padding-top: 0;
-    margin-left: 1em;
+    margin-left: auto;
     left: auto;
   }
 
@@ -1283,7 +1283,7 @@ a.button-tertiary {
     display: flex;
     flex-wrap: wrap;
     align-items: center;
-    gap: 0.25em 0.75em;
+    gap: 0.5em;
     position: static;
     margin: 0;
     padding: 0;
@@ -1297,6 +1297,26 @@ a.button-tertiary {
   .available-languages__item {
     border: 0;
     display: inline-block;
+
+    &.is-current .current-locale {
+      border: 1px solid $color_light_grey;
+      border-radius: 4px;
+      padding: 0 2em 0 0.75em;
+      position: relative;
+
+      &::after {
+        content: "";
+        position: absolute;
+        right: 0.65em;
+        top: 50%;
+        width: 0;
+        height: 0;
+        margin-top: -2px;
+        border-left: 4px solid transparent;
+        border-right: 4px solid transparent;
+        border-top: 5px solid $brand_primary;
+      }
+    }
   }
 
   .current-locale,

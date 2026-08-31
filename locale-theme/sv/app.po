@@ -129,6 +129,9 @@ msgstr "Innan du skickar en begäran till din myndighet kan du bläddra bland be
 msgid "Search by free text"
 msgstr "Sök med fritext"
 
+msgid "Search free text"
+msgstr "Sök fritext"
+
 msgid "Type the name of the authority, city or similar to find the authority you are looking for."
 msgstr "Skriv namnet på myndigheten, kommunen eller liknande för att hitta den du söker."
 

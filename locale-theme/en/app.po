@@ -399,6 +399,9 @@ msgstr "Before you make a request to your authority, you can browse requests alr
 msgid "Search by free text"
 msgstr "Search by free text"
 
+msgid "Search free text"
+msgstr "Search free text"
+
 msgid "Type the name of the authority, city or similar to find the authority you are looking for."
 msgstr "Type the name of the authority, city or similar to find the authority you are looking for."
 
