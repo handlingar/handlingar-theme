@@ -122,6 +122,8 @@ msgstr "Skaffa premium"
 
 msgid "Responsible publisher: Elenor Weijmar"
 msgstr "Ansvarig utgivare: Elenor Weijmar"
+
+msgid "Find authorities and public organisations"
 msgstr "Hitta myndigheter och offentliga organisationer"
 
 msgid "to make a request"
