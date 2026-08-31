@@ -111,4 +111,3 @@ These are not theme git changes:
   `config/custom-routes.rb` for local Docker, then restart.
 - Do not commit Alaveteli `config/general.yml`, generated theme-routes, or `.env`.
 - Theme `.po` files often need an **app restart**.
-- Homepage axe defaults skip `/` (orange how-it-works step number contrast).

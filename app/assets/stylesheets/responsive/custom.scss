@@ -1795,7 +1795,8 @@ form.user_search input[type="text"] {
 
   .hiw-step__content { flex: 1; }
   .hiw-step__title { font-size: $font-size-h4; margin: 0 0 8px; }
-  .hiw-step__num { color: $brand_accent; }
+  // Brand Accent on #FBFBFB fails WCAG AA; use Brand Primary for step numerals.
+  .hiw-step__num { color: $brand_primary; }
   .hiw-step__content p { margin-bottom: 16px; line-height: 1.6; }
 }
 

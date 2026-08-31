@@ -23,7 +23,7 @@
             <%= _("Search") %>
           </label>
           <%= text_field_tag 'query', params[:query], { :class => "navigation_search_button", :id => "navigation_search_button", :type => "search", :placeholder => _("Search"), :title => _("type your search term here") } %>
-          <button type="submit">
+          <button type="submit" aria-label="<%= _('Submit Search') %>">
             <span class="visually-hidden">
               <%= _("Submit Search") %>
             </span>

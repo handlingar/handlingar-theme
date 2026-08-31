@@ -1,0 +1,44 @@
+<% if @request_events.any? %>
+  <div class="frontpage-requests">
+    <h2>
+      <% if @request_events_all_successful %>
+        <%= _("What information has been released?") %>
+      <% else %>
+        <%= _("What information has been requested?") %>
+      <% end %>
+    </h2>
+
+    <p>
+      <%= n_("{{site_name}} users have made {{number_of_requests}} request, including:",
+             "{{site_name}} users have made {{number_of_requests}} requests, including:",
+             @number_of_requests,
+             :site_name => site_name,
+             :number_of_requests => number_with_delimiter(@number_of_requests)) %>
+    </p>
+
+    <ul class="frontpage-requests__list">
+      <% @request_events.each do |event| %>
+        <li>
+          <p>
+            <% if @request_events_all_successful %>
+              <%= _("{{public_body_link}} answered a request about",
+                    :public_body_link => public_body_link(event.info_request.public_body)) %>
+            <% else %>
+              <%= _("{{public_body_link}} was sent a request about",
+                    :public_body_link => public_body_link(event.info_request.public_body)) %>
+            <% end %>
+
+            <%= link_to h(event.info_request.title), request_path(event.info_request) %>
+          </p>
+
+          <p class="frontpage-requests__meta">
+            <%= _('{{length_of_time}} ago',
+                  :length_of_time => time_ago_in_words(event.described_at)) %>
+          </p>
+        </li>
+      <% end %>
+    </ul>
+
+    <%= link_to _("Browse all requests →"), request_list_path, :class => 'button-secondary' %>
+  </div>
+<% end %>

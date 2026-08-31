@@ -18,7 +18,7 @@ import { fileURLToPath, pathToFileURL } from "node:url";
 
 const FAIL_IMPACTS = new Set(["critical", "serious"]);
 const TAGS = ["wcag2a", "wcag2aa", "wcag21aa"];
-const DEFAULT_PATHS = ["/profile/sign_in", "/body", "/help/about"];
+const DEFAULT_PATHS = ["/", "/profile/sign_in", "/body", "/help/about"];
 
 const fixturesMode = process.argv.includes("--fixtures");
 const baseUrl = (process.env.AXE_BASE_URL || "http://localhost:3000").replace(
