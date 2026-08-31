@@ -4,11 +4,11 @@
 <% help_current = controller?('help') %>
 
 <li class="<%= 'selected' if request_current %>">
-  <%= link_to _("Make a request"), select_authority_path, :id => 'make-request-link', :aria => { :current => ('page' if request_current) } %>
+  <%= link_to _("Create a request"), select_authority_path, :id => 'make-request-link', :aria => { :current => ('page' if request_current) } %>
 </li>
 
 <li class="<%= 'selected' if bodies_current %>">
-  <%= link_to _("View authorities"), list_public_bodies_default_path, :aria => { :current => ('page' if bodies_current) } %>
+  <%= link_to _("Authorities"), list_public_bodies_default_path, :aria => { :current => ('page' if bodies_current) } %>
 </li>
 
 <% if feature_enabled?(:alaveteli_pro) %>
@@ -22,7 +22,7 @@
 </li>
 
 <% if Blog.enabled? %>
-  <li class="<%= 'selected' if blog_current %>"><%= link_to _("Read blog"), blog_path, :aria => { :current => ('page' if blog_current) } %></li>
+  <li class="<%= 'selected' if blog_current %>"><%= link_to _("Blog"), blog_path, :aria => { :current => ('page' if blog_current) } %></li>
 <% end %>
 
 <li class="<%= 'selected' if help_current %>">

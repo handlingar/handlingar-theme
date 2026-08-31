@@ -9,6 +9,36 @@
 msgid "Services"
 msgstr "Tjänster"
 
+msgid "Create a request"
+msgstr "Skapa begäran"
+
+msgid "Authorities"
+msgstr "Myndigheter"
+
+msgid "Blog"
+msgstr "Blogg"
+
+msgid "Help"
+msgstr "Hjälp"
+
+msgid "Sign in"
+msgstr "Logga in"
+
+msgid "Make a request"
+msgstr "Gör en begäran"
+
+msgid "How it works"
+msgstr "Så här går det till"
+
+msgid "Read more"
+msgstr "Läs mer"
+
+msgid "Contact us"
+msgstr "Kontakta oss"
+
+msgid "Privacy and cookies"
+msgstr "Integritet och kakor"
+
 msgid "I have read the <a href=\"{{url}}\">terms of use</a>"
 msgstr "Jag har läst <a href=\"{{url}}\">användarvillkoren</a>"
 
@@ -27,32 +57,29 @@ msgstr "Läs mer om oss"
 msgid "Streamline your work"
 msgstr "Effektivisera ditt arbete"
 
-msgid "Send the same freedom-of-information request to several authorities at once and free up more time for journalism."
-msgstr "Skicka samma begäran om allmän handling till flera myndigheter samtidigt och frigör mer tid för journalistik."
+msgid "Send the same public-records request to several authorities at once and get more time for journalism."
+msgstr "Skicka samma begäran om allmän handling till flera myndigheter samtidigt och få mer tid till journalistik."
 
 msgid "Up-to-date details"
-msgstr "Uppdaterade kontaktuppgifter"
+msgstr "Uppdaterade uppgifter"
 
-msgid "You have access to contact details for thousands of organisations covered by the principle of public access."
-msgstr "Du har tillgång till kontaktuppgifter för tusentals organisationer som omfattas av offentlighetsprincipen."
+msgid "You have access to contact details for {{count}} organisations covered by the principle of public access."
+msgstr "Du har tillgång till kontaktuppgifter till {{count}} organisationer som omfattas av offentlighetsprincipen."
 
 msgid "Private requests"
-msgstr "Privata begäranden"
+msgstr "Privata förfrågningar"
 
-msgid "Keep your requests private while you work on your project. You decide when you are ready to make them public."
-msgstr "Håll dina begäranden privata medan du arbetar med projektet. Du avgör när du är redo att göra dem offentliga."
+msgid "Keep case requests private while you work on your project. You choose when you are ready to make them public."
+msgstr "Håll förfrågningar om ärenden hemliga medan du arbetar på ditt projekt. Du väljer själv när du är redo att göra dem publika."
 
-msgid "Easily create a request by filling in your case. We have helped you by creating a template where you only need to state which documents you want access to. The request is sent to the chosen authority as an email, which they must respond to within a few weeks."
-msgstr "Skapa enkelt en begäran genom att fylla i ditt ärende. Vi har hjälpt dig med en mall där du bara behöver ange vilka handlingar du vill ta del av. Begäran skickas till den valda myndigheten som e-post, och de ska svara inom några veckor."
+msgid "Easily create a request by filling in your case. We have created a template where you only need to state which documents you want access to. The request is sent to the chosen authority by email, which they must respond to within a few weeks."
+msgstr "Skapa enkelt en begäran genom att fylla i ditt ärende. Vi har hjälpt dig genom att skapa en mall där du bara behöver ange vilka dokument du vill ta del av. Ärendet skickas till den valda myndigheten i form av ett mail där de måste svara inom några veckor."
 
-msgid "Wait for a response"
-msgstr "Vänta på svar"
-
-msgid "While the authority works on providing the documents you requested, you can sit back. We will notify you by email when you get a response. In the meantime, you can read other requests our users have made."
-msgstr "Medan myndigheten tar fram handlingarna du begärt kan du luta dig tillbaka. Vi meddelar dig via e-post när du får ett svar. Under tiden kan du läsa andra begäranden som våra användare har gjort."
+msgid "While the authority works on the documents you requested, you can sit back. We will notify you by email when you get a response. In the meantime, you can read other requests our users have made."
+msgstr "Medan myndigheten arbetar på att ge dig de dokumenten du begärt kan du luta dig tillbaka, vi meddelar dig på epost när du har fått svar. Under tiden kan du läsa andra förfrågningar som våra användare har gjort."
 
 msgid "Browse requests"
-msgstr "Bläddra bland begäranden"
+msgstr "Bläddra bland förfrågningar"
 
 msgid "Published and done"
 msgstr "Publicerat och klart"
@@ -63,58 +90,38 @@ msgstr "Svaret publiceras öppet för alla. Nu har du ditt svar, och alla andra 
 msgid "Learn more about how we work"
 msgstr "Läs mer om hur vi arbetar"
 
-msgid "Public records need to be easier to access, to contribute to the common good and give society value, for our right as citizens to know what happens with our tax money. Dive into how our entirely non-profit organisation works and handles the process of helping you make so-called requests for public records."
-msgstr "Allmänna handlingar behöver bli lättare att få ut, för att bidra till det gemensamma och ge samhället värde, för vår rätt som medborgare att veta vad som händer med våra skattepengar. Läs mer om hur vår ideella organisation arbetar och hjälper dig att göra så kallade begäranden om allmänna handlingar."
+msgid "Wait for a response"
+msgstr "Vänta på svar"
+
+msgid "You have the <strong>right</strong> to request information from publicly-funded bodies and get answers. {{site_name}} helps you make a request for public records and publishes the requests online."
+msgstr "Du har <strong>rätt</strong> att begära information från offentligt finansierade myndigheter och få svar. {{site_name}} hjälper dig att göra en begäran om allmän handling och publicerar begärandena öppet."
+
+msgid "Public records need to be easier to access, to contribute to the common good and give society value, for our right as citizens to know what happens with our tax money. Dive into how our entirely non-profit organisation works and handles the process of helping you make requests for public records. This is your right under the Freedom of the Press Act and the principle of public access dating back to 1766. We work to uphold it."
+msgstr "Allmänna handlingar behöver bli enklare att ta del av, för att bidra till allmän nytta och ge samhällsvärde, för vår rätt som medborgare att veta vad som händer med våra skattepengar. Djupdyk i hur vår helt ideella verksamhet arbetar och hanterar processen kring att hjälpa dig göra så kallad begäran om allmän handling. Detta enligt den rätt du har via grundlagen tryckfrihetsförordningen och offentlighetsprincipen från 1766. Vi ser till att den uppehålls."
 
 msgid "Support our work"
-msgstr "Stöd vårt arbete"
+msgstr "Stötta vårt arbete"
 
-msgid "The premium service for journalists, researchers, associations and businesses"
-msgstr "Premiumtjänsten för journalister, forskare, föreningar och företag"
+msgid "The premium service for journalists, researchers, associations and entrepreneurs"
+msgstr "Premiumtjänsten för journalister, forskare, föreningar och företagaren"
+
+msgid "Handlingar.se is a free service, run entirely on a non-profit basis, helping you get the information you need by making a request for public records from responsible authorities, regions, municipalities and organisations."
+msgstr "Handlingar.se är en kostnadsfri tjänst, driven helt ideellt och hjälper dig att få den information du behöver genom att göra en begäran om allmän handling från ansvariga myndigheter, regioner, kommuner och organisationer."
+
+msgid "Handlingar.se in the media and news"
+msgstr "Handlingar.se i media och nyheter"
+
+msgid "Run by Open Knowledge Sweden with the Alaveteli software."
+msgstr "Drivs av Open Knowledge Sverige med mjukvaran Alaveteli."
 
 msgid "Handlingar PRO is a powerful toolbox with everything you need when working with information and public records."
-msgstr "Handlingar PRO är en kraftfull verktygslåda med allt du behöver när du arbetar med information och allmänna handlingar."
+msgstr "Handlingar PRO är en kraftfull verktygslåda som har allt du behöver när du arbetar med information och allmänna handlingar."
 
 msgid "Get premium"
 msgstr "Skaffa premium"
 
-msgid "Send the same request to several authorities at once and free up more time for journalism."
-msgstr "Skicka samma begäran till flera myndigheter samtidigt och frigör mer tid för journalistik."
-
-msgid "Access contact details for thousands of organisations covered by the principle of public access."
-msgstr "Få tillgång till kontaktuppgifter för tusentals organisationer som omfattas av offentlighetsprincipen."
-
-msgid "Keep requests private while you work on your project, and publish them when you are ready."
-msgstr "Håll begäranden privata medan du arbetar med projektet, och publicera dem när du är redo."
-
-msgid "Batch requests"
-msgstr "Massutskick"
-
-msgid "Build and manage large batches of requests from a single dashboard."
-msgstr "Bygg och hantera stora utskick av begäranden från en och samma översikt."
-
-msgid "Action alerts"
-msgstr "Aviseringar"
-
-msgid "Get notified the moment an authority responds so nothing slips through."
-msgstr "Få en avisering så fort en myndighet svarar, så att inget glöms bort."
-
-msgid "Save drafts"
-msgstr "Spara utkast"
-
-msgid "Save your work and return to finish your requests whenever it suits you."
-msgstr "Spara ditt arbete och kom tillbaka och slutför begärandena när det passar dig."
-
-msgid "Handlingar.se in the media and news"
-msgstr "Handlingar.se i medier och nyheter"
-
-msgid "Run by Open Knowledge Sweden with the Alaveteli software."
-msgstr "Drivs av Open Knowledge Sweden med mjukvaran Alaveteli."
-
 msgid "Responsible publisher: Elenor Weijmar"
 msgstr "Ansvarig utgivare: Elenor Weijmar"
-
-msgid "Find authorities and public organisations"
 msgstr "Hitta myndigheter och offentliga organisationer"
 
 msgid "to make a request"
@@ -463,7 +470,7 @@ msgid "I want to create a PRO account"
 msgstr "Jag vill skapa ett PRO-konto"
 
 msgid "Search requests"
-msgstr "Sök bland begäranden"
+msgstr "Sök bland förfrågningar"
 
 msgid "Latest news and campaigns"
 msgstr "Senaste nyheter och kampanjer"

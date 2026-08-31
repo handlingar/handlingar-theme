@@ -11,6 +11,7 @@
                excerpt = excerpt.sub(/\s*The post .+ appeared first on .+\z/im, '')
                excerpt = truncate(excerpt.squish, length: 180) %>
             <p><%= excerpt %></p>
+            <%= link_to _('Read more'), post.url, class: 'blog__read-more button-tertiary' %>
           </article>
         <% end %>
       </div>

@@ -9,6 +9,66 @@
 msgid "How to make a request"
 msgstr "How to make a request"
 
+msgid "Create a request"
+msgstr "Create a request"
+
+msgid "Authorities"
+msgstr "Authorities"
+
+msgid "Blog"
+msgstr "Blog"
+
+msgid "Help"
+msgstr "Help"
+
+msgid "Sign in"
+msgstr "Sign in"
+
+msgid "Make a request"
+msgstr "Make a request"
+
+msgid "How it works"
+msgstr "How it works"
+
+msgid "Read more"
+msgstr "Read more"
+
+msgid "Contact us"
+msgstr "Contact us"
+
+msgid "Privacy and cookies"
+msgstr "Privacy and cookies"
+
+msgid "Send the same public-records request to several authorities at once and get more time for journalism."
+msgstr "Send the same public-records request to several authorities at once and get more time for journalism."
+
+msgid "You have access to contact details for {{count}} organisations covered by the principle of public access."
+msgstr "You have access to contact details for {{count}} organisations covered by the principle of public access."
+
+msgid "Keep case requests private while you work on your project. You choose when you are ready to make them public."
+msgstr "Keep case requests private while you work on your project. You choose when you are ready to make them public."
+
+msgid "You have the <strong>right</strong> to request information from publicly-funded bodies and get answers. {{site_name}} helps you make a request for public records and publishes the requests online."
+msgstr "You have the <strong>right</strong> to request information from publicly-funded bodies and get answers. {{site_name}} helps you make a request for public records and publishes the requests online."
+
+msgid "Easily create a request by filling in your case. We have created a template where you only need to state which documents you want access to. The request is sent to the chosen authority by email, which they must respond to within a few weeks."
+msgstr "Easily create a request by filling in your case. We have created a template where you only need to state which documents you want access to. The request is sent to the chosen authority by email, which they must respond to within a few weeks."
+
+msgid "While the authority works on the documents you requested, you can sit back. We will notify you by email when you get a response. In the meantime, you can read other requests our users have made."
+msgstr "While the authority works on the documents you requested, you can sit back. We will notify you by email when you get a response. In the meantime, you can read other requests our users have made."
+
+msgid "Public records need to be easier to access, to contribute to the common good and give society value, for our right as citizens to know what happens with our tax money. Dive into how our entirely non-profit organisation works and handles the process of helping you make requests for public records. This is your right under the Freedom of the Press Act and the principle of public access dating back to 1766. We work to uphold it."
+msgstr "Public records need to be easier to access, to contribute to the common good and give society value, for our right as citizens to know what happens with our tax money. Dive into how our entirely non-profit organisation works and handles the process of helping you make requests for public records. This is your right under the Freedom of the Press Act and the principle of public access dating back to 1766. We work to uphold it."
+
+msgid "The premium service for journalists, researchers, associations and entrepreneurs"
+msgstr "The premium service for journalists, researchers, associations and entrepreneurs"
+
+msgid "Handlingar.se is a free service, run entirely on a non-profit basis, helping you get the information you need by making a request for public records from responsible authorities, regions, municipalities and organisations."
+msgstr "Handlingar.se is a free service, run entirely on a non-profit basis, helping you get the information you need by making a request for public records from responsible authorities, regions, municipalities and organisations."
+
+msgid "Run by Open Knowledge Sweden with the Alaveteli software."
+msgstr "Run by Open Knowledge Sweden with the Alaveteli software."
+
 msgid "FOI Management Tools for journalists, campaigners and researchers"
 msgstr "Tools for journalists, campaigners and researchers working with public records"
 
