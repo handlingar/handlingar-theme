@@ -1742,15 +1742,43 @@ a.button-tertiary {
     display: flex;
     flex-wrap: wrap;
     justify-content: center;
-    gap: 2.5em;
-    li {
-      font-size: 1.5rem;
-      font-weight: $font-weight-bold;
-      color: $color_text_gray;
-      opacity: 0.85;
+    align-items: center;
+    gap: $ds-space-5;
+  }
+
+  .pro__media-logo-link {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: $ds-space-1;
+    text-decoration: none;
+    border-radius: $ds-space-1;
+    transition: opacity 0.2s ease-out;
+
+    &:hover,
+    &:focus {
+      opacity: 0.8;
+      outline: 2px solid $brand_accent;
+      outline-offset: 2px;
     }
-    .pro__media-logo--journalisten { font-family: Georgia, "Times New Roman", serif; }
-    .pro__media-logo--tranquillity { letter-spacing: 0.08em; text-transform: uppercase; font-size: 1.1rem; }
+  }
+
+  .pro__media-logo-image {
+    display: block;
+    width: auto;
+    height: 2.25rem;
+    max-width: 12rem;
+    color: $color_text_gray;
+  }
+
+  .pro__media-logo--journalisten .pro__media-logo-image {
+    height: 2rem;
+    max-width: 13rem;
+  }
+
+  .pro__media-logo--tranquillity .pro__media-logo-image {
+    height: 1.75rem;
+    max-width: 14rem;
   }
 }
 

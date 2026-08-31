@@ -22,8 +22,9 @@ First Sass compile after restart can take several minutes.
 
 1. **Startpage** `/` and `/en` — hero, how-it-works, Pro band. Booklet colours;
    no orange fill on a light background.
-2. **Blog teasers** (needs `BLOG_FEED` in Alaveteli `config/general.yml`) —
-   plain-text excerpts, no WordPress HTML or “appeared first on”.
+2. **Blog teasers** — set `BLOG_FEED: 'https://about.handlingar.se/feed/'` in
+   Alaveteli `config/general.yml` (see theme `config/alaveteli-general.snippet.yml`).
+   The theme syncs posts on the frontpage automatically.
 3. **Authorities** `/body` — search band, alphabet, category accordion.
    Swedish seed data may show **0 bodies**; that is locale filtering. Use
    English to show rows, Swedish to show copy.

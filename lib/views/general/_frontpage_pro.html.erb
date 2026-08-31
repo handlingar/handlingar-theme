@@ -36,9 +36,19 @@
     <div class="pro__media">
       <h2 class="pro__media-title"><%= _("Handlingar.se in the media and news") %></h2>
       <ul class="pro__media-logos">
-        <li class="pro__media-logo pro__media-logo--altinget">Altinget</li>
-        <li class="pro__media-logo pro__media-logo--journalisten">Journalisten</li>
-        <li class="pro__media-logo pro__media-logo--tranquillity">Tranquillity</li>
+        <% [
+          { slug: 'altinget', label: 'Altinget', url: 'https://www.altinget.se/' },
+          { slug: 'journalisten', label: 'Journalisten', url: 'https://www.journalisten.se/' },
+          { slug: 'tranquillity', label: 'Tranquillity', url: 'https://about.handlingar.se/' }
+        ].each do |logo| %>
+          <li class="pro__media-logo pro__media-logo--<%= logo[:slug] %>">
+            <%= link_to logo[:url], class: 'pro__media-logo-link', rel: 'noopener noreferrer' do %>
+              <%= image_tag "media-logos/logo-#{logo[:slug]}.svg",
+                            alt: logo[:label],
+                            class: 'pro__media-logo-image' %>
+            <% end %>
+          </li>
+        <% end %>
       </ul>
     </div>
   </div>

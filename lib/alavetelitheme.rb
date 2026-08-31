@@ -33,6 +33,7 @@ for patch in ['handlingar_captcha.rb',
 end
 
 require File.expand_path('../handlingar_icons_helper', __FILE__)
+require File.expand_path('../handlingar_blog_helper', __FILE__)
 
 # Alaveteli loads route extensions with `load File.join('config', name)`.
 # Copy this theme's routes into Rails config so Docker bind-mounts work.
@@ -71,6 +72,7 @@ end
 Rails.application.config.to_prepare do
   prepend_theme_assets
   ActionController::Base.helper HandlingarIconsHelper
+  BlogHelper.prepend(HandlingarBlogHelper)
 end
 
 # Tell FastGettext about the theme's translations: look in the theme's

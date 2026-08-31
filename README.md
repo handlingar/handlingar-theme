@@ -58,6 +58,12 @@ Resulting layout:
       config/general-alavetelitheme.yml > config/general-handlingar-theme.yml
     ln -sfn config/general-handlingar-theme.yml config/general.yml
 
+Enable the WordPress blog feed for homepage teasers (merge from the theme’s
+`config/alaveteli-general.snippet.yml` if needed):
+
+    # In config/general-handlingar-theme.yml
+    BLOG_FEED: 'https://about.handlingar.se/feed/'
+
 The setup script reads the `config/general.yml` symlink, derives the theme name
 (`handlingar-theme`) and switches to it automatically.
 

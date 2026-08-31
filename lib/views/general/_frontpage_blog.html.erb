@@ -7,10 +7,7 @@
         <% blog_posts_for_frontpage.each do |post| %>
           <article class="blog__post">
             <h3><%= link_to post.title, post.url %></h3>
-            <% excerpt = strip_tags(post.description.to_s)
-               excerpt = excerpt.sub(/\s*The post .+ appeared first on .+\z/im, '')
-               excerpt = truncate(excerpt.squish, length: 180) %>
-            <p><%= excerpt %></p>
+            <p><%= handlingar_blog_excerpt(post) %></p>
             <%= link_to _('Read more'), post.url, class: 'blog__read-more button-tertiary' %>
           </article>
         <% end %>
