@@ -29,6 +29,19 @@ Rails.configuration.to_prepare do
 
   ActionView::Base.prepend(HandlingarCaptcha::ViewMethods)
   ActionController::Base.prepend(HandlingarCaptcha::ControllerMethods)
+
+  # /pro/pricing calls Stripe for plan amounts. Staging may have the route on
+  # without valid Stripe keys — show the page instead of a 500.
+  if defined?(AlaveteliPro::PlansController)
+    AlaveteliPro::PlansController.class_eval do
+      def index
+        @pro_site_name = pro_site_name
+        @prices = Array(AlaveteliPro::Price.list).compact
+      rescue Stripe::StripeError, NoMethodError
+        @prices = []
+      end
+    end
+  end
 end
   # Example adding an instance variable to the frontpage controller
   # GeneralController.class_eval do

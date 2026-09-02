@@ -1872,27 +1872,34 @@ form.user_search input[type="text"] {
     display: flex;
     gap: 8px;
   }
-  .footer__social .social-link {
+  .footer__social .social-link,
+  .footer__social .social-link--facebook,
+  .footer__social .social-link--twitter {
     display: inline-flex;
     align-items: center;
     justify-content: center;
     gap: 0.4em;
     height: 2.4em;
     padding: 0 1em;
+    overflow: hidden;
     border-radius: 1.2em;
     background-color: $brand_secondary;
+    background-image: none;
     color: $brand_primary;
     font-weight: $font-weight-semibold;
     text-decoration: none;
     &:hover, &:active, &:focus {
       background-color: darken($brand_secondary, 8%);
+      background-image: none;
       color: $brand_primary;
       text-decoration: none;
     }
     .ds-icon {
       width: 1.15em;
       height: 1.15em;
+      flex-shrink: 0;
       fill: currentColor;
+      color: inherit;
     }
   }
 }
@@ -3000,6 +3007,38 @@ textarea:focus-visible,
 .alaveteli-pro .requests__header {
   background-color: $color_bg;
   border-bottom-color: $color_light_grey;
+}
+
+// ---- Pro marketing (/pro, journalists, pricing) — drop WDTK sand/teal/yellow
+.marketing__hero {
+  h1 { color: $brand_primary; }
+  h2 { color: $color_text_gray; }
+}
+
+.marketing__section__heading h2 {
+  color: $brand_primary;
+  border-top-color: $brand_accent;
+}
+
+.marketing__section__content-items,
+.marketing__section__feature-list li {
+  border-color: $color_light_grey;
+}
+
+.marketing-highlight:before {
+  background-color: $brand_secondary;
+  transform: none;
+}
+
+.marketing__roles a h3 {
+  color: $brand_primary;
+  &:hover, &:active, &:focus { color: $brand_accent; }
+}
+
+.marketing__cta .button,
+.marketing__hero__cta .button,
+.input-account-request-button {
+  @extend %ds-primary;
 }
 
 .alaveteli-pro .request {

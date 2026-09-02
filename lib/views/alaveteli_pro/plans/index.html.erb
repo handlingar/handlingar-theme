@@ -76,7 +76,10 @@
         <li><a href="<%= image_path("alaveteli-pro/screenshot-batch-list.jpg") %>"><%= image_tag("alaveteli-pro/screenshot-batch-list.jpg", :alt => _('Batch requests are part of a new workflow')) %></a></li>
       </ul>
 
-      <%= link_to _('Sign up'), plan_path('pro'), :class => 'button' %>
+      <% signup_plan = Array(@prices).compact.first %>
+      <%= link_to _('Sign up'),
+                  signup_plan ? plan_path(signup_plan) : account_request_index_path,
+                  class: 'button' %>
     </div>
   </div>
 </div>
