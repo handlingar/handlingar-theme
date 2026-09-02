@@ -1,0 +1,21 @@
+name: HTML and CSS validate
+
+on:
+  pull_request:
+  push:
+    branches:
+      - new-design-system
+
+jobs:
+  validate:
+    name: html-validate and stylelint
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+          cache: npm
+      - run: npm ci
+      - run: npm run html-validate
+      - run: npm run stylelint

@@ -1,0 +1,64 @@
+<div class="marketing__section marketing__roles">
+  <h2>
+    <%= _('Find out how {{pro_site_name}} can take the hard work out of FOI ' \
+          'investigations', pro_site_name: pro_site_name) %>
+  </h2>
+
+  <div class="row">
+    <div class="marketing__roles__columns">
+      <div class="marketing__roles__journalist">
+        <%= link_to pro_page_path('journalists') do %>
+          <%= image_tag('alaveteli-pro/pro-journalist.png',
+                        alt: _('FOI for journalists')) %>
+
+          <h3><%= _('I’m a journalist') %></h3>
+        <% end %>
+
+        <p>
+          <%= _('Send the same request to many authorities at once and build a nationwide picture from the answers.') %>
+        </p>
+
+        <%= link_to pro_page_path('journalists') do %>
+          <%= _('Learn more about {{pro_site_name}} for journalists',
+                pro_site_name: pro_site_name) %>
+        <% end %>
+      </div>
+
+      <div class="marketing__roles__campaigner">
+        <%= link_to pro_page_path('campaigners') do %>
+          <%= image_tag('alaveteli-pro/pro-campaigner.png',
+                        alt: _('FOI for campaigners')) %>
+
+          <h3><%= _('I’m a campaigner') %></h3>
+        <% end %>
+
+        <p>
+          <%= _('Collect information that has not been available as a single dataset, so you and your supporters can see the wider picture.') %>
+        </p>
+
+        <%= link_to pro_page_path('campaigners') do %>
+          <%= _('Learn more about {{pro_site_name}} for campaigners',
+                pro_site_name: pro_site_name) %>
+        <% end %>
+      </div>
+
+      <div class="marketing__roles__researcher">
+        <%= link_to pro_page_path('researchers') do %>
+          <%= image_tag('alaveteli-pro/pro-researcher.png',
+                        alt: _('FOI for researchers')) %>
+
+          <h3><%= _('I’m a researcher') %></h3>
+        <% end %>
+
+        <p>
+          <%= _('Compare figures across authorities with batch requests, without maintaining a separate spreadsheet for every reply.') %>
+        </p>
+
+        <%= link_to pro_page_path('researchers') do %>
+          <%= _('Learn more about {{pro_site_name}} for researchers',
+                pro_site_name: pro_site_name) %>
+        <% end %>
+      </div>
+    </div>
+  </div>
+</div>

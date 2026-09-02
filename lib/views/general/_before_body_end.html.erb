@@ -1,7 +1,12 @@
-<script>
-  jQuery('#user_locale_switcher').find('.locale-list-trigger').each(function() {
-    jQuery(this).click(function(){
-      jQuery(this).parent().toggleClass('active');
-    });
+<%= javascript_tag nonce: true do %>
+  jQuery(document).on('keydown', function(e) {
+    if (e.key === 'Escape' || e.keyCode === 27) {
+      jQuery('#user_locale_switcher .locale-list__details').removeAttr('open');
+    }
   });
-</script>
+  var $err = jQuery('.errorExplanation');
+  if ($err.length) {
+    $err.attr({ role: 'alert', tabindex: '-1' });
+    $err.first().trigger('focus');
+  }
+<% end %>

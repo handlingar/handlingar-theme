@@ -2,9 +2,14 @@
 <%= render :partial => 'sidebar' %>
 <div id="left_column_flip" class="left_column_flip">
   <h1 id="making_requests"><%= @title %> <a href="#making_requests">#</a></h1>
-  <strong>Never made a request before?</strong> Follow our
-  <a href="https://www.mysociety.org/2014/08/15/how-to-make-a-freedom-of-information-request-with-whatdotheyknow/"
-  title="How to make a Freedom of Information request with WhatDoTheyKnow">partner’s beginners’ guide (soon coming for Handlingar.se).</a>
+  <p>
+    <strong>Never made a request before?</strong>
+    Start with <a href="#which_authority">finding the right authority</a>,
+    keep the request <a href="#focused">focused</a>,
+    and read our <a href="#moderation">house rules</a>.
+    <%= site_name %> is for public records under the Principle of Public Access
+    (offentlighetsprincipen).
+  </p>
   <dl>
     <dt id="which_authority">
       I&rsquo;m not sure which authority to make my request to, how can I find
@@ -266,17 +271,15 @@
         </li>
       </ul>
       <p>
-        Here’s some further reading with more detail on how to make effective
-        FOI requests:
+        Here’s some further reading on requesting public records in Sweden:
       </p>
       <ul>
         <li>
-          <a href="http://www.foiman.com/foiguide1">FOI Man&rsquo;s Ten Top Tips</a>
+          <a href="https://www.riksdagen.se/sv/dokument-och-lagar/dokument/svensk-forfattningssamling/tryckfrihetsforordning-1949105_sfs-1949-105/#K2">Tryckfrihetsförordningen, chapter 2</a>
         </li>
         <li>
-          The Scottish Information Commissioner’s
-          <a href="http://www.itspublicknowledge.info/YourRights/tipsforrequesters.aspx">
-          Tips for requesting information</a>.
+          The Parliamentary Ombudsmen (JO):
+          <a href="https://www.jo.se/">jo.se</a>
         </li>
       </ul>
     </dd>
@@ -323,30 +326,12 @@
     </dt>
     <dd>
       <p>
-        <strong>Making an FOI request is nearly always free.</strong>
+        <strong>Making a request via <%= site_name %> is free.</strong>
       </p>
       <p>
-        Authorities often include standardised text in their acknowledgement
-        messages saying they “may” charge a fee, which, understandably, can be a
-        little frightening. Ignore such notices. They hardly ever will actually
-        charge a fee.
-      </p>
-      <p>
-        Most of the activities that authorities can charge for, such as
-        photocopying, and postage, don’t usually apply to requests made via
-        Handlingar.se, which are all conducted via email. Additionally, a
-        public body  can only charge you if you have specifically agreed in
-        advance to pay. See <a href="https://ico.org.uk/for-organisations/guide-to-freedom-of-information/receiving-a-request/#15">more details</a>
-        from the Information Commissioner.
-      </p>
-      <p>
-        Sometimes an authority will refuse your request, saying that the cost to
-        them of handling it exceeds <a
-        href="http://www.legislation.gov.uk/uksi/2004/3244/made"> the limits</a>
-        of £600 (for central government) or £450 (for all other public
-        authorities).  At this point you could choose to refine your request:
-        for example, it would be much cheaper for an authority to tell you the
-        amount spent on advertising in the past year than in the past ten years.
+        Authorities may charge a fee for paper copies according to their own
+        price list. Requests made via <%= site_name %> are sent by email, so
+        there is usually no copying or postage charge.
       </p>
     </dd>
     <dt id="format">
@@ -436,11 +421,9 @@
         volunteer support team to the problem.
       </li>
       <li>
-        <strong>If you&rsquo;re still having no luck,</strong>then you can first
-        ask for an internal review, and then complain to the Information
-        Commissioner about the authority. If you get no response at all then you
-        can ask the ICO for help without waiting for an internal review. Read
-        our page &lsquo;<a href="<%= help_general_path(:template => 'unhappy')
+        <strong>If you&rsquo;re still having no luck,</strong> then you can first
+        ask for an internal review, and then complain to the Parliamentary
+        Ombudsmen (JO). Read our page &lsquo;<a href="<%= help_general_path(:template => 'unhappy')
         %>">Unhappy about the response you got?</a>&rsquo;.
       </li>
     </ul>
@@ -489,17 +472,11 @@
     </dt>
     <dd>
     <p>
-      Have a look at the
-      <a href="https://ico.org.uk/for-the-public/official-information/">
-      access to official information</a> pages on the Information
-      Commissioner&rsquo;s website.
-    </p>
-    <p>If you&rsquo;re requesting information from a Scottish public authority,
-      the process is very similar, although are differences around time
-      limits for compliance.
-      See the
-      <a href="http://www.itspublicknowledge.info/YourRights/YourRights.aspx">
-      Scottish Information Commissioner&rsquo;s guidance</a> for details.
+      Have a look at
+      <a href="https://www.riksdagen.se/sv/dokument-och-lagar/dokument/svensk-forfattningssamling/tryckfrihetsforordning-1949105_sfs-1949-105/#K2">
+      chapter 2 of the Freedom of the Press Act</a>
+      and the
+      <a href="https://www.jo.se/">Parliamentary Ombudsmen (JO)</a>.
     </p>
     </dd>
     <dt id="data_protection">
@@ -516,9 +493,10 @@
       This website does not allow for such requests, not least because we
       publish correspondence online, where anyone would be able to see the
       potentially sensitive information that can result from such requests.
-      <a href="https://ico.org.uk/your-data-matters/your-right-to-get-copies-of-your-data/">
-      The Information Commissioner’s website</a> provides advice on how to make a
-      Subject Access request.
+      <a href="https://www.imy.se/">Integritetsskyddsmyndigheten (IMY)</a>
+      provides advice on how to access your own personal information.
+      You can also use
+      <a href="https://www.mydatadoneright.eu/">MyDataDoneRight</a>.
     </p>
     <p>
       If you see that somebody has included personal information, perhaps

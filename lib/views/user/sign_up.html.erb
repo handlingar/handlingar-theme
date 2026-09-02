@@ -1,0 +1,21 @@
+<% @title = _('Create a new account') %>
+<% auth_params = { r: params[:r], token: params[:token], modal: params[:modal] }.reject { |_, v| v.blank? } %>
+
+<div class="create-account">
+  <div class="create-account__illustration" aria-hidden="true">
+    <%= image_tag "illustrations/undraw_sign-up.svg", alt: "" %>
+  </div>
+
+  <div class="create-account__form">
+    <h1 class="create-account__title"><%= _('Create a new account') %></h1>
+    <p class="create-account__lead"><%= _('Create a free account to start sending requests for public records.') %></p>
+
+    <p class="create-account__alt-links">
+      <%= link_to _('I already have an account'), signin_path(auth_params), class: 'button-tertiary' %>
+      <%= _('or') %>
+      <%= link_to _('I want to create a PRO account'), account_request_index_path, class: 'button-tertiary' %>
+    </p>
+
+    <%= render :partial => 'signup' %>
+  </div>
+</div>

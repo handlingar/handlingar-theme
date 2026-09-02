@@ -8,6 +8,39 @@
 Rails.configuration.to_prepare do
   HelpController.class_eval do
     def terms; end
+    def learn; end
+  end
+
+  UserController.class_eval do
+    before_action :work_out_post_redirect, only: [:signup_form]
+    before_action :set_request_from_foreign_country, only: [:signup_form]
+    before_action :set_in_pro_area, only: [:signup_form]
+
+    def signup_form
+      if @user
+        redirect_path = params.fetch(:r) { frontpage_path }
+        redirect_to SafeRedirect.new(redirect_path).path
+        return
+      end
+
+      render template: 'user/sign_up'
+    end
+  end
+
+  ActionView::Base.prepend(HandlingarCaptcha::ViewMethods)
+  ActionController::Base.prepend(HandlingarCaptcha::ControllerMethods)
+
+  # /pro/pricing calls Stripe for plan amounts. Staging may have the route on
+  # without valid Stripe keys — show the page instead of a 500.
+  if defined?(AlaveteliPro::PlansController)
+    AlaveteliPro::PlansController.class_eval do
+      def index
+        @pro_site_name = pro_site_name
+        @prices = Array(AlaveteliPro::Price.list).compact
+      rescue Stripe::StripeError, NoMethodError
+        @prices = []
+      end
+    end
   end
 end
   # Example adding an instance variable to the frontpage controller

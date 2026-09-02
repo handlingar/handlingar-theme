@@ -1,6 +1,7 @@
-<div id="right_column_flip" class="right_column_flip">
+<div id="right_column_flip" class="right_column_flip help-sidebar">
 <h2>Help pages</h2>
 <ul class="no_bullets">
+  <li><%= link_to_unless_current "Learn more", learn_path %></li>
   <li><%= link_to_unless_current "Introduction", help_about_path %></li>
   <li><%= link_to_unless_current "Making requests", help_requesting_path %></li>
   <li><%= link_to_unless_current "Terms of use", help_terms_path %></li>

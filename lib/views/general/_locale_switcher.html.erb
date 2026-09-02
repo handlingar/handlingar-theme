@@ -1,0 +1,17 @@
+<nav id="user_locale_switcher" class="locale-list" aria-label="<%= _('Language') %>">
+  <% if @locales[:available].any? %>
+    <details class="locale-list__details">
+      <summary class="locale-list-trigger">
+        <span class="current-locale" aria-current="true"><%= locale_name(@locales[:current]) %></span>
+      </summary>
+
+      <ul class="available-languages">
+        <% @locales[:available].each do |locale| %>
+          <li class="available-languages__item">
+            <%= link_to locale_name(locale), current_path_with_locale(locale) %>
+          </li>
+        <% end %>
+      </ul>
+    </details>
+  <% end %>
+</nav>

@@ -1,3 +1,6 @@
+/node_modules
+/playwright-report
+/test-results
 /tmp
 /log
 /coverage
@@ -11,3 +14,4 @@
 TAGS
 *.sw[a-z]
 *DONT-CHECKIN*
+node_modules/
