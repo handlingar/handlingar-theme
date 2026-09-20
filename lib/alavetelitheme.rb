@@ -25,15 +25,23 @@ end
 end
 
 # Monkey patch app code
-for patch in ['controller_patches.rb',
+for patch in ['handlingar_captcha.rb',
+              'controller_patches.rb',
               'model_patches.rb',
               'patch_mailer_paths.rb']
   require File.expand_path "../#{patch}", __FILE__
 end
 
-# Note you should rename the file at "config/custom-routes.rb" to
-# something unique (e.g. yourtheme-custom-routes.rb":
-$alaveteli_route_extensions << 'custom-routes.rb'
+require File.expand_path('../handlingar_icons_helper', __FILE__)
+require File.expand_path('../handlingar_blog_helper', __FILE__)
+
+# Alaveteli loads route extensions with `load File.join('config', name)`.
+# Copy this theme's routes into Rails config so Docker bind-mounts work.
+require 'fileutils'
+theme_routes_src = File.expand_path('config/custom-routes.rb', File.dirname(__FILE__))
+theme_routes_name = 'handlingar-theme-routes.rb'
+FileUtils.cp(theme_routes_src, File.join(Rails.root.to_s, 'config', theme_routes_name))
+$alaveteli_route_extensions << theme_routes_name
 
 # Append individual theme assets to the asset path
 theme_asset_path = File.join(File.dirname(__FILE__),
@@ -50,7 +58,7 @@ Rails.application.config.assets.precompile.unshift(LOOSE_THEME_ASSETS)
 
 def prepend_theme_assets
   # Prepend the asset directories in this theme to the asset path:
-  ['stylesheets', 'images', 'javascripts'].each do |asset_type|
+  ['stylesheets', 'images', 'javascripts', 'fonts'].each do |asset_type|
     theme_asset_path = File.join(File.dirname(__FILE__),
                                  '..',
                                  'app',
@@ -63,6 +71,8 @@ end
 
 Rails.application.config.to_prepare do
   prepend_theme_assets
+  ActionController::Base.helper HandlingarIconsHelper
+  BlogHelper.prepend(HandlingarBlogHelper)
 end
 
 # Tell FastGettext about the theme's translations: look in the theme's

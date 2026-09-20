@@ -1,0 +1,8 @@
+# Merge these keys into Alaveteli config/general-handlingar-theme.yml
+# (or config/general.yml) so homepage blog teasers and the Blog nav item work.
+#
+#   BLOG_FEED: 'https://about.handlingar.se/feed/'
+#
+# WordPress RSS from Om Handlingar.se — same source as production handlingar.se/blog.
+
+BLOG_FEED: 'https://about.handlingar.se/feed/'

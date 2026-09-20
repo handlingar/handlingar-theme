@@ -1,14 +1,14 @@
 <% content_for :javascript_head do %>
-  <script src="https://js.stripe.com/v3/"></script>
+  <%= javascript_include_tag "https://js.stripe.com/v3/", nonce: true %>
 <% end %>
 
 <% content_for :javascript do %>
-  <%= javascript_tag do %>
+  <%= javascript_tag nonce: true do %>
     AlaveteliPro.stripe_publishable_key = '<%= AlaveteliConfiguration.stripe_publishable_key %>';
     AlaveteliPro.stripe_local = '<%= stripe_locale %>';
   <% end %>
 
-  <%= javascript_include_tag 'alaveteli_pro/stripe' %>
+  <%= javascript_include_tag 'alaveteli_pro/stripe', nonce: true %>
 <% end %>
 
 <div class="inner-canvas settings">
@@ -84,20 +84,8 @@
         <% if feature_enabled?(:pro_pricing_faqs) %>
           <div class="settings__section">
             <div class="pricing__faqs settings__faqs">
-              <h3>Frequently Asked Questions</h3>
-              <dl class="pricing__faqs__list">
-                <dt class="faqs__term">How do I cancel my account?</dt>
-                <dd class="faqs__def">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec at porttitor orci, nec sollicitudin turpis. Donec vel nisl justo. Praesent blandit ex ut massa faucibus, cursus tincidunt dui consectetur. In suscipit lorem felis. Sed elementum, augue euismod dignissim vulputate, ligula elit blandit sem, non vehicula nisl turpis ultricies nisi. Integer accumsan luctus hendrerit.</dd>
-
-                 <dt class="faqs__term">What does my subscription fee go towards?</dt>
-                 <dd class="faqs__def">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec at porttitor orci, nec sollicitudin turpis. Donec vel nisl justo. Praesent blandit ex ut massa faucibus, cursus tincidunt dui consectetur. In suscipit lorem felis. Sed elementum, augue euismod dignissim vulputate, ligula elit blandit sem, non vehicula nisl turpis ultricies nisi. Integer accumsan luctus hendrerit.</dd>
-
-                <dt class="faqs__term">How do I change my payment details?</dt>
-                <dd class="faqs__def">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec at porttitor orci, nec sollicitudin turpis. Donec vel nisl justo. Praesent blandit ex ut massa faucibus, cursus tincidunt dui consectetur. In suscipit lorem felis. Sed elementum, augue euismod dignissim vulputate, ligula elit blandit sem, non vehicula nisl turpis ultricies nisi. Integer accumsan luctus hendrerit.</dd>
-
-                <dt class="faqs__term">I’ve got a voucher code</dt>
-                <dd class="faqs__def">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec at porttitor orci, nec sollicitudin turpis. Donec vel nisl justo. Praesent blandit ex ut massa faucibus, cursus tincidunt dui consectetur. In suscipit lorem felis. Sed elementum, augue euismod dignissim vulputate, ligula elit blandit sem, non vehicula nisl turpis ultricies nisi. Integer accumsan luctus hendrerit.</dd>
-              </dl>
+              <h3><%= _('Frequently Asked Questions') %></h3>
+              <%= render partial: 'alaveteli_pro/plans/pricing_faqs' %>
             </div>
           </div>
         <% end %>

@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="<%= AlaveteliLocalization.html_lang %>" class="no-js">
+  <head>
+    <meta charset="utf-8">
+    <%= csrf_meta_tags %>
+
+    <title>
+      <% if @title %>
+        <%=@title%> - <%= site_name %>
+      <% else %>
+        <%= site_name %> - <%= _('Make and browse Freedom of Information (FOI) requests') %>
+      <% end %>
+    </title>
+
+    <%= render :partial => 'layouts/favicon' %>
+
+    <%= render :partial => 'general/stylesheet_includes' %>
+    <% if is_admin? %>
+      <%= stylesheet_link_tag "admin", :title => "Main", :rel => "stylesheet" %>
+    <% end %>
+
+    <% if @feed_autodetect %>
+      <% for feed in @feed_autodetect %>
+        <link rel="alternate" type="application/atom+xml" title="<%=h feed[:title] %>" href="<%=h feed[:url]%>">
+        <% if feed[:has_json] %>
+          <link rel="alternate" type="application/json" title="JSON version of <%=h feed[:title] %>" href="<%=h feed[:url]%>.json">
+        <% end %>
+      <% end %>
+    <% end %>
+    <% if @has_json %>
+      <link rel="alternate" type="application/json" title="JSON version of this page" href="<%= current_path_as_json %>">
+    <% end %>
+    <% if @no_crawl %>
+      <meta name="robots" content="noindex, nofollow">
+    <% end %>
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <%= render :partial => 'general/opengraph_tags' %>
+    <%= render :partial => 'general/before_head_end' %>
+    <%= javascript_tag nonce: true do %>
+      (function(H){
+        H.className = H.className.replace(/\bno-js\b/,'js-loaded')
+      })(document.documentElement);
+    <% end %>
+    <%= content_for :javascript_head %>
+  </head>
+  <body class="<%= yield :body_class -%> <% if @in_pro_area %>alaveteli-pro<% end %>">
+    <% if is_admin? %>
+      <%= render :partial => 'admin_general/admin_navbar' %>
+    <% end %>
+    <div class="entirebody">
+
+      <% skip_target = params[:action] == 'frontpage' ? 'main-content' : 'content' %>
+      <nav aria-label="<%= _('Skip navigation') %>">
+        <a href="#<%= skip_target %>" class="show-with-keyboard-focus-only skip-to-link"><%= _('Skip to content') %></a>
+      </nav>
+
+      <% unless @render_to_file %>
+        <%= render 'general/site_wide_announcement' if site_wide_announcement.present? %>
+        <div id="country-message">
+        </div>
+      <% end %>
+
+      <%= render :partial => 'general/responsive_header' %>
+
+      <div id="wrapper">
+        <div id="content" role="main">
+          <% unless params[:action] == 'frontpage' %>
+            <% if flash[:notice] %>
+              <div id="notice" role="status"><%= render_flash(flash[:notice]) %></div>
+            <% end %>
+            <% if flash[:error] %>
+              <div id="error" role="alert"><%= render_flash(flash[:error]) %></div>
+            <% end %>
+          <% end %>
+
+          <div id="<%= controller.controller_name + "_" + controller.action_name %>" class="controller_<%= controller.controller_name %>">
+            <%= yield :layout %>
+          </div>
+          <div style="clear:both"></div>
+        </div>
+      </div>
+
+      <nav aria-label="<%= _('Skip navigation') %>">
+        <a href="#<%= skip_target %>" class="show-with-keyboard-focus-only skip-to-link">
+          <%= _('Back to content') %>
+        </a>
+      </nav>
+
+      <%= render :partial => 'general/responsive_footer' %>
+    </div>
+
+    <% unless @render_to_file %>
+      <%= render partial: 'ga_code' unless @user&.is_admin? %>
+
+      <%= javascript_include_tag "application", nonce: true %>
+
+      <% if is_admin? %>
+        <%= javascript_include_tag "bootstrap-dropdown", nonce: true %>
+      <% end %>
+
+      <% if AlaveteliConfiguration::force_registration_on_new_request && !@user %>
+        <%= javascript_include_tag 'fancybox.js', nonce: true %>
+        <%= javascript_tag nonce: true do %>
+          $(document).ready(function() {
+            $("#make-request-link").fancybox({
+              'modal': false,
+              'width': 950,
+              'height': 400,
+              'type': 'iframe',
+              'href': '<%= signin_path(modal: 1) %>',
+              'onClosed': function() {
+                if (typeof modal_signin_successful != 'undefined' ) {
+                  window.location.href = '<%= select_authority_url %>';
+                }
+              }
+            });
+          });
+        <% end %>
+      <% end %>
+
+      <%= content_for :javascript %>
+    <% end %>
+
+    <%= render :partial => 'general/before_body_end' %>
+
+  </body>
+</html>

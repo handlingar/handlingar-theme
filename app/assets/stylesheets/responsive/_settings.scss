@@ -12,6 +12,16 @@ $row-width: 64em;
 $total-columns: 12;
 $column-gutter: 20px;   // Foundation gutter (default 30px) → design spec 20px
 $ds-page-margin: 50px;  // outer page margin
+$ds-page-margin-mobile: 20px;
+
+// -- 2.1 Spacing (8px base unit; 4px in tight areas) -------------------------
+$ds-space-half: 4px;
+$ds-space-1: 8px;
+$ds-space-2: 16px;
+$ds-space-3: 24px;
+$ds-space-4: 32px;
+$ds-space-5: 40px;
+$ds-space-6: 56px;
 
 // -- 1.2 Typography -----------------------------------------------------------
 // The design system uses a single typeface: Source Sans Pro.

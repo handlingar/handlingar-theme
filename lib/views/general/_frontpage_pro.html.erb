@@ -1,53 +1,54 @@
+<% authority_count = number_with_delimiter(PublicBody.visible.count) %>
+<% pro_usps = [
+  { icon: 'antenna-signal', title: _("Streamline your work"), text: _("Send the same public-records request to several authorities at once and get more time for journalism.") },
+  { icon: 'mail-open', title: _("Up-to-date details"), text: _("You have access to contact details for {{count}} organisations covered by the principle of public access.", :count => authority_count) },
+  { icon: 'lock', title: _("Private requests"), text: _("Keep case requests private while you work on your project. You choose when you are ready to make them public.") },
+  { icon: 'view-grid', title: _("Batch requests"), text: _("Build and manage large batches of requests from a single dashboard.") },
+  { icon: 'bell', title: _("Action alerts"), text: _("Get notified the moment an authority responds so nothing slips through.") },
+  { icon: 'page', title: _("Save drafts"), text: _("Save your work and return to finish your requests whenever it suits you.") }
+] %>
+
 <%# 3.1 Handlingar.se PRO marketing section (design booklet page 30) %>
 <div class="homepage-pro">
   <div class="row">
     <div class="pro__intro">
       <div class="pro__intro-text">
-        <h2 class="pro__title"><%= _("The premium service for journalists, researchers, associations and businesses") %></h2>
+        <h2 class="pro__title"><%= _("The premium service for journalists, researchers, associations and entrepreneurs") %></h2>
         <p class="pro__lead"><%= _("Handlingar PRO is a powerful toolbox with everything you need when working with information and public records.") %></p>
+        <p class="pro__lead pro__lead--secondary"><%= _("Handlingar.se is a free service, run entirely on a non-profit basis, helping you get the information you need by making a request for public records from responsible authorities, regions, municipalities and organisations.") %></p>
         <%= link_to _("Get premium"), account_request_index_path, class: "link_button_green" %>
+      </div>
+      <div class="pro__intro-illustration" aria-hidden="true">
+        <%= image_tag "illustrations/undraw_sign-up.svg", alt: "" %>
       </div>
     </div>
 
     <ul class="pro__usp-grid">
-      <li class="pro__usp">
-        <span class="usp__icon material-symbols-outlined" aria-hidden="true">settings_input_antenna</span>
-        <h3 class="usp__title"><%= _("Streamline your work") %></h3>
-        <p class="usp__text"><%= _("Send the same request to several authorities at once and free up more time for journalism.") %></p>
-      </li>
-      <li class="pro__usp">
-        <span class="usp__icon material-symbols-outlined" aria-hidden="true">mark_email_read</span>
-        <h3 class="usp__title"><%= _("Up-to-date details") %></h3>
-        <p class="usp__text"><%= _("Access contact details for thousands of organisations covered by the principle of public access.") %></p>
-      </li>
-      <li class="pro__usp">
-        <span class="usp__icon material-symbols-outlined" aria-hidden="true">lock</span>
-        <h3 class="usp__title"><%= _("Private requests") %></h3>
-        <p class="usp__text"><%= _("Keep requests private while you work on your project, and publish them when you are ready.") %></p>
-      </li>
-      <li class="pro__usp">
-        <span class="usp__icon material-symbols-outlined" aria-hidden="true">batch_prediction</span>
-        <h3 class="usp__title"><%= _("Batch requests") %></h3>
-        <p class="usp__text"><%= _("Build and manage large batches of requests from a single dashboard.") %></p>
-      </li>
-      <li class="pro__usp">
-        <span class="usp__icon material-symbols-outlined" aria-hidden="true">notifications_active</span>
-        <h3 class="usp__title"><%= _("Action alerts") %></h3>
-        <p class="usp__text"><%= _("Get notified the moment an authority responds so nothing slips through.") %></p>
-      </li>
-      <li class="pro__usp">
-        <span class="usp__icon material-symbols-outlined" aria-hidden="true">draft</span>
-        <h3 class="usp__title"><%= _("Save drafts") %></h3>
-        <p class="usp__text"><%= _("Save your work and return to finish your requests whenever it suits you.") %></p>
-      </li>
+      <% pro_usps.each do |usp| %>
+        <li class="pro__usp">
+          <%= ds_icon(usp[:icon], html_class: 'ds-icon ds-icon--usp usp__icon') %>
+          <h3 class="usp__title"><%= usp[:title] %></h3>
+          <p class="usp__text"><%= usp[:text] %></p>
+        </li>
+      <% end %>
     </ul>
 
     <div class="pro__media">
       <h2 class="pro__media-title"><%= _("Handlingar.se in the media and news") %></h2>
       <ul class="pro__media-logos">
-        <li>Altinget</li>
-        <li>Journalisten</li>
-        <li>Tranquillity</li>
+        <% [
+          { slug: 'altinget', label: 'Altinget', url: 'https://www.altinget.se/' },
+          { slug: 'journalisten', label: 'Journalisten', url: 'https://www.journalisten.se/' },
+          { slug: 'tranquillity', label: 'Tranquillity', url: 'https://about.handlingar.se/' }
+        ].each do |logo| %>
+          <li class="pro__media-logo pro__media-logo--<%= logo[:slug] %>">
+            <%= link_to logo[:url], class: 'pro__media-logo-link', rel: 'noopener noreferrer' do %>
+              <%= image_tag "media-logos/logo-#{logo[:slug]}.svg",
+                            alt: logo[:label],
+                            class: 'pro__media-logo-image' %>
+            <% end %>
+          </li>
+        <% end %>
       </ul>
     </div>
   </div>

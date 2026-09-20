@@ -1,27 +1,25 @@
-<!-- Source Sans Pro (Design System typeface) -->
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Source+Sans+3:wght@400;600;700&display=swap" rel="stylesheet">
+<!-- Source Sans 3 is self-hosted (app/assets/fonts, SIL OFL). -->
 
-<!-- Material Symbols (Design System iconography, outlined) -->
-<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" rel="stylesheet">
+<!-- Icons are self-hosted SVGs (app/assets/images/icons, see docs/icons.md). -->
 
-<!-- Matomo -->
-<script type="text/javascript">
-  if (window.location.hostname.indexOf('dev.handlingar.se') >= 0) {
-  var _paq = window._paq = window._paq || [];
-  /* tracker methods like "setCustomDimension" should be called before "trackPageView" */
-  _paq.push(["setDoNotTrack", true]);
-  _paq.push(["disableCookies"]);
-  _paq.push(['trackPageView']);
-  _paq.push(['enableLinkTracking']);
-  (function() {
-    var u="https://analytics.handlingar.se/";
-    _paq.push(['setTrackerUrl', u+'matomo.php']);
-    _paq.push(['setSiteId', '1']);
-    var d=document, g=d.createElement('script'), s=d.getElementsByTagName('script')[0];
-    g.type='text/javascript'; g.async=true; g.src=u+'matomo.js'; s.parentNode.insertBefore(g,s);
-  })();
-</script>
-<noscript><p><img src="https://analytics.handlingar.se/matomo.php?idsite=1&amp;rec=1" style="border:0;" alt="" /></p></noscript>
-<!-- End Matomo Code -->
+<%# Matomo analytics — staging only; omitted on localhost to avoid CSP noise and dev overhead. %>
+<% if request.host == 'dev.handlingar.se' %>
+  <%= javascript_tag nonce: true do %>
+    var _paq = window._paq = window._paq || [];
+    _paq.push(["setDoNotTrack", true]);
+    _paq.push(["disableCookies"]);
+    _paq.push(['trackPageView']);
+    _paq.push(['enableLinkTracking']);
+    (function() {
+      var u = "https://analytics.handlingar.se/";
+      _paq.push(['setTrackerUrl', u + 'matomo.php']);
+      _paq.push(['setSiteId', '1']);
+      var d = document, g = d.createElement('script'), s = d.getElementsByTagName('script')[0];
+      g.type = 'text/javascript';
+      g.async = true;
+      g.src = u + 'matomo.js';
+      s.parentNode.insertBefore(g, s);
+    })();
+  <% end %>
+  <noscript><p><img src="https://analytics.handlingar.se/matomo.php?idsite=1&amp;rec=1" style="border:0;" alt="" /></p></noscript>
+<% end %>

@@ -1,0 +1,18 @@
+{
+  "name": "handlingar-theme",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "axe-smoke": "node script/axe-smoke.mjs",
+    "axe-smoke:fixtures": "node script/axe-smoke.mjs --fixtures",
+    "html-validate": "html-validate spec/markup/fixtures/core-chrome.html",
+    "stylelint": "stylelint spec/markup/fixtures/design-tokens.css"
+  },
+  "devDependencies": {
+    "@axe-core/playwright": "^4.10.2",
+    "html-validate": "^9.7.1",
+    "playwright": "^1.54.2",
+    "stylelint": "^16.25.0",
+    "stylelint-config-standard": "^38.0.0"
+  }
+}

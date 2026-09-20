@@ -8,9 +8,33 @@
   </h1>
 
   <ul>
+    <li><%= link_to 'Terms', '#terms' %></li>
+    <li><%= link_to 'Handlingar Pro', '#handlingar' %></li>
     <li><%= link_to 'Private requests', '#private-requests' %></li>
     <li><%= link_to 'Batch', '#batch' %></li>
   </ul>
+
+  <h2 id="terms">
+    Terms
+   <a href="#terms">#</a>
+  </h2>
+
+  <p>
+    You can read the terms for Handlingar Pro
+    <%= link_to 'here', pro_page_path('legal') %>.
+  </p>
+
+  <h2 id="handlingar">
+    Handlingar Pro
+   <a href="#handlingar">#</a>
+  </h2>
+
+  <p>
+    With Handlingar Pro you can send unlimited requests to authorities and the
+    service organises the answers for you. You can set a privacy period on your
+    requests while you work on a project, and you can send the same request to
+    many authorities at once. The service is run by Digital Openers AB.
+  </p>
 
   <h2 id="private-requests">
     Private requests

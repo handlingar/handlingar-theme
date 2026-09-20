@@ -1,0 +1,96 @@
+/* Design tokens from app/assets/stylesheets/responsive/_settings.scss */
+:root {
+  --color-white: #fff;
+  --color-bg: #fbfbfb;
+  --brand-primary: #333;
+  --brand-secondary: #eb9c6a;
+  --brand-accent: #e6722a;
+  --text-black: #000;
+  --text-gray: #555;
+  --light-grey: #e6e6e6;
+  --gradient-start: #20384e;
+  --gradient-end: #000;
+  --page-margin: 50px;
+  --page-margin-mobile: 20px;
+  --gutter: 20px;
+  --space-half: 4px;
+  --space-1: 8px;
+  --space-2: 16px;
+  --space-3: 24px;
+  --space-4: 32px;
+  --space-5: 40px;
+  --space-6: 56px;
+  --font-family: "Source Sans 3", "Source Sans Pro", "Helvetica Neue", helvetica, arial, sans-serif;
+  --font-size-h1: 48px;
+  --font-size-h2: 36px;
+  --font-size-h3: 32px;
+  --font-size-h4: 24px;
+  --font-size-h5: 19px;
+  --font-size-subtitle: 18px;
+  --font-size-body: 16px;
+  --font-size-small: 12px;
+  --font-size-button-m: 16px;
+  --font-size-button-s: 14px;
+}
+
+body {
+  margin: 0;
+  font-family: var(--font-family);
+  font-size: var(--font-size-body);
+  line-height: 1.5;
+  background: var(--color-bg);
+  color: var(--brand-primary);
+}
+
+.skip-to-link:focus {
+  outline: 2px solid var(--brand-accent);
+  outline-offset: 2px;
+}
+
+#topnav {
+  background-color: var(--brand-secondary);
+}
+
+.navigation a {
+  color: var(--brand-primary);
+  text-decoration: none;
+}
+
+h1 {
+  font-size: var(--font-size-h1);
+  color: var(--brand-primary);
+}
+
+.button-primary {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 16px 32px;
+  font-size: var(--font-size-button-m);
+  font-weight: 700;
+  background: var(--brand-primary);
+  color: var(--color-white);
+  border: 2px solid var(--brand-primary);
+  border-radius: 4px;
+  text-decoration: none;
+}
+
+.button-secondary {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 16px 32px;
+  font-size: var(--font-size-button-m);
+  font-weight: 700;
+  background: transparent;
+  color: var(--brand-primary);
+  border: 2px solid var(--brand-primary);
+  border-radius: 4px;
+  text-decoration: none;
+}
+
+footer {
+  border-top: 3px solid var(--brand-accent);
+  background: var(--brand-primary);
+  color: var(--color-white);
+}

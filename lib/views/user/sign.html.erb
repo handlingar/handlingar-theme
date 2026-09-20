@@ -1,4 +1,6 @@
-<% if !@post_redirect.nil? && @post_redirect.reason_params[:user_name] %>
+<% if action_name == 'signup' %>
+  <%= render template: 'user/sign_up' %>
+<% elsif !@post_redirect.nil? && @post_redirect.reason_params[:user_name] %>
   <% @title = _("Sign in") %>
   <div id="sign_alone" class="sign_alone">
 
@@ -30,40 +32,22 @@
     <%= render :partial => 'signin', :locals => { :sign_in_as_existing_user => true } %>
   </div>
 <% else %>
-  <% @title = _('Create a new account') %>
+  <% @title = _('Sign in') %>
+  <% auth_params = { r: params[:r], token: params[:token], modal: params[:modal] }.reject { |_, v| v.blank? } %>
 
-  <div id="sign_together" class="sign_together create-account">
-    <div class="create-account__illustration" aria-hidden="true">
-      <span class="material-symbols-outlined">how_to_reg</span>
-    </div>
-
-    <div id="left_half" class="left_half create-account__form">
-      <h1 class="create-account__title"><%= _('Create a new account') %></h1>
-      <p class="create-account__lead"><%= _('Create a free account to start sending requests for public records.') %></p>
-
-      <p class="create-account__alt-links">
-        <%= link_to _('I already have an account'), '#sign-in-section', class: 'button-tertiary' %>
-        <%= _('or') %>
-        <%= link_to _('I want to create a PRO account'), account_request_index_path, class: 'button-tertiary' %>
+  <div class="sign-in-page">
+    <% if !@post_redirect.nil? && @post_redirect.reason_params[:web].present? %>
+      <p id="sign_in_reason" class="sign_in_reason">
+        <%= @post_redirect.reason_params[:web] %>
       </p>
+    <% end %>
 
-      <%= render :partial => 'signup' %>
-    </div>
+    <h1 class="sign-in-page__title"><%= _('Sign in') %></h1>
 
-    <div id="right_half" class="right_half create-account__signin" id="sign-in-section">
-      <div class="sign-in-wrapper">
-        <p class="pretitle">
-        <% if !@post_redirect.nil? && @post_redirect.reason_params[:pro] %>
-          <%= _('Got a {{site_name}} account?', :site_name => site_name) %>
-        <% else %>
-          <%= _('Got an account?') %>
-        <% end %>
-        </p>
-        <h2><%= _('Sign in') %></h2>
-        <%= render :partial => 'signin', :locals => { :sign_in_as_existing_user => false } %>
-      </div>
-    </div>
+    <p class="create-account__alt-links">
+      <%= link_to _('Create a new account'), signup_path(auth_params), class: 'button-tertiary' %>
+    </p>
 
-    <div style="clear:both"></div>
+    <%= render :partial => 'signin', :locals => { :sign_in_as_existing_user => false } %>
   </div>
 <% end %>

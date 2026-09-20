@@ -24,6 +24,9 @@ only contains view/style/Ruby overlays that are loaded *into* a running
 [Alaveteli](https://alaveteli.org) instance. To preview it locally you run
 Alaveteli's Docker development environment with this theme mounted in.
 
+Design-system tokens, type, icons, Stripe and captcha rules:
+[docs/theme-guide.md](docs/theme-guide.md).
+
 ### Prerequisites
 - [Docker Desktop](https://docs.docker.com/get-docker/) (v20+) running
 - `git`
@@ -54,6 +57,12 @@ Resulting layout:
     sed 's#https://github.com/mysociety/alavetelitheme.git#https://github.com/sameerabit/handlingar-theme.git#' \
       config/general-alavetelitheme.yml > config/general-handlingar-theme.yml
     ln -sfn config/general-handlingar-theme.yml config/general.yml
+
+Enable the WordPress blog feed for homepage teasers (merge from the theme’s
+`config/alaveteli-general.snippet.yml` if needed):
+
+    # In config/general-handlingar-theme.yml
+    BLOG_FEED: 'https://about.handlingar.se/feed/'
 
 The setup script reads the `config/general.yml` symlink, derives the theme name
 (`handlingar-theme`) and switches to it automatically.
@@ -90,6 +99,23 @@ Restart with `docker compose up -d app sidekiq`. SCSS recompiles on the next
 page load in development; if a stylesheet change isn't picked up, force it with:
 
     docker compose exec app bin/rails assets:clobber
+
+### Accessibility smoke (axe)
+
+Core journeys are not a Node app, so GitHub Actions runs axe-core against
+committed design-system HTML fixtures (`npm run axe-smoke:fixtures`). Against a
+running Alaveteli (Docker on port 3000, or another origin):
+
+    npm ci
+    npx playwright install chromium
+    npm run axe-smoke
+
+Optional: `AXE_BASE_URL`, `AXE_LOCALES` (default `en,sv`), `AXE_PATHS`
+(default `/,/profile/sign_in,/body,/help/about`). The live job in
+`.github/workflows/axe-smoke.yml` also runs when the repo variable
+`AXE_BASE_URL` is set, or via workflow_dispatch. Stripe and reCAPTCHA
+iframes are excluded. The scan fails on critical and serious WCAG 2.1 AA
+findings.
 
 ### Useful commands
 
@@ -133,9 +159,19 @@ You can then switch the theme the application is using:
 
 ## To run tests:
 
-To run tests, in the Alaveteli Rails.root (with this theme installed):
+From the Alaveteli Rails root, with this theme at `lib/themes/handlingar-theme`:
 
-        bundle exec rspec lib/themes/alavetelitheme/spec
+        bundle exec rspec lib/themes/handlingar-theme/spec
 
+In Docker:
+
+        docker compose exec -e RAILS_ENV=test app bundle exec rspec lib/themes/handlingar-theme/spec
+
+The suite loads the theme via `ALAVETELI_TEST_THEME`, checks Stripe and
+reCAPTCHA markup, and renders frontpage, sign-in and `/body`.
+
+Overlay contracts also run without Rails:
+
+        ruby script/check-overlay-contracts.rb
 
 Copyright (c) 2011 mySociety, released under the MIT license
