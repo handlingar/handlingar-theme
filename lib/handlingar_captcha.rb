@@ -17,18 +17,26 @@ module HandlingarCaptcha
 
   module ViewMethods
     def recaptcha_tags(options = {})
-      return super unless HandlingarCaptcha.friendly?
+      if HandlingarCaptcha.friendly?
+        return render partial: 'general/friendly_captcha',
+                      locals: { nonce: options[:nonce] }
+      end
+      # Alaveteli default is RECAPTCHA_SITE_KEY: 'x' — Google then shows
+      # "invalid site key". Skip the widget until a real key is configured.
+      return ''.html_safe unless HandlingarCaptcha.google_ready?
 
-      render partial: 'general/friendly_captcha',
-             locals: { nonce: options[:nonce] }
+      super
     end
   end
 
   module ControllerMethods
     def verify_recaptcha(options = {})
-      return super unless HandlingarCaptcha.friendly?
+      if HandlingarCaptcha.friendly?
+        return HandlingarCaptcha.verify(request)
+      end
+      return true unless HandlingarCaptcha.google_ready?
 
-      HandlingarCaptcha.verify(request)
+      super
     end
   end
 
@@ -41,6 +49,23 @@ module HandlingarCaptcha
 
   def friendly?
     provider == 'friendly_captcha'
+  end
+
+  def google_site_key
+    env_key = ENV['RECAPTCHA_SITE_KEY'].to_s.strip
+    return env_key if env_key.present?
+
+    if defined?(AlaveteliConfiguration) &&
+       AlaveteliConfiguration.respond_to?(:recaptcha_site_key)
+      return AlaveteliConfiguration.recaptcha_site_key.to_s.strip
+    end
+
+    ''
+  end
+
+  def google_ready?
+    key = google_site_key
+    key.start_with?('6L') && key.length >= 20
   end
 
   def site_key
