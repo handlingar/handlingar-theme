@@ -1,0 +1,16 @@
+<%# Business / consumer-data marketing band — links to /foretag %>
+<div class="homepage-customers">
+  <div class="row">
+    <div class="customers__intro">
+      <div class="customers__intro-text">
+        <h2 class="customers__title"><%= _("We know more about your customers") %></h2>
+        <p class="customers__lead"><%= _("Secure business with consumers") %></p>
+        <p class="customers__text"><%= _("Our solutions let you look up personal data through a web interface or API, and give your company access to customer information that makes a difference.") %></p>
+        <%= link_to _("Try an example search"), business_path(q: "Mustafa Salahuddin", country: "SE"), class: "link_button_green" %>
+      </div>
+      <div class="customers__intro-illustration" aria-hidden="true">
+        <%= image_tag "illustrations/undraw_file-searching.svg", alt: "" %>
+      </div>
+    </div>
+  </div>
+</div>

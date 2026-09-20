@@ -9,6 +9,13 @@ Rails.configuration.to_prepare do
   HelpController.class_eval do
     def terms; end
     def learn; end
+
+    def business
+      @query = params[:q].to_s.strip
+      @query = 'Mustafa Salahuddin' if @query.blank?
+      @country = params[:country].presence || 'SE'
+      @example_hit = @query.downcase.gsub(/\s+/, ' ') == 'mustafa salahuddin'
+    end
   end
 
   UserController.class_eval do

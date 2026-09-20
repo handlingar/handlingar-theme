@@ -1,0 +1,103 @@
+<% @title = "Vi vet mer om dina kunder" %>
+
+<div class="customers-page">
+  <div class="learn-hero ds-dark">
+    <div class="row">
+      <h1 class="learn-hero__title"><%= @title %></h1>
+      <p class="learn-hero__subtitle">Säkra affärer med konsumenter</p>
+    </div>
+  </div>
+
+  <div class="learn-intro">
+    <div class="row">
+      <p class="learn-intro__text">
+        Våra lösningar låter er söka fram personuppgifter direkt via webbgränssnitt eller API,
+        och ger ditt företag tillgång till information om dina kunder som gör skillnad.
+      </p>
+      <p class="learn-intro__text">
+        Ett företagskonto ger er tillgång till persondata från en av Sveriges mest omfattande databaser.
+      </p>
+      <div class="learn-intro__ctas">
+        <%= link_to "Skapa konto", signup_path, class: "link_button_green" %>
+        <%= link_to "Läs om API:t", help_api_path, class: "button-secondary" %>
+      </div>
+    </div>
+  </div>
+
+  <div class="customers-search ds-dark" id="sok">
+    <div class="row">
+      <h2 class="customers-search__title">Exempel: sök namn i Sverige</h2>
+      <p class="customers-search__hint">
+        Prova sökningen på Mustafa Salahuddin. Demot visar hur en träff kan se ut —
+        det hämtar inte uppgifter från folkbokföring, Bolagsverket eller rättsdatabaser.
+      </p>
+      <%= form_tag(business_path, method: "get", class: "customers-search__form", role: "search") do %>
+        <div class="customers-search__fields">
+          <p class="customers-search__field">
+            <label for="customer_query">Namn</label>
+            <%= text_field_tag :q, @query, id: "customer_query", type: "search", autocomplete: "off" %>
+          </p>
+          <p class="customers-search__field">
+            <label for="customer_country">Land</label>
+            <%= select_tag :country, options_for_select([["Sverige", "SE"]], @country), id: "customer_country" %>
+          </p>
+          <%= submit_tag "Sök" %>
+        </div>
+      <% end %>
+    </div>
+  </div>
+
+  <div class="customers-results">
+    <div class="row">
+      <% if @example_hit %>
+        <p class="customers-results__meta">1 träff i Sverige · exempel</p>
+        <article class="customers-hit" aria-labelledby="example-hit-name">
+          <header class="customers-hit__header">
+            <h2 id="example-hit-name">Mustafa Salahuddin</h2>
+            <p class="customers-hit__place">Sverige</p>
+            <p class="customers-hit__badge">Exempelträff</p>
+          </header>
+          <ul class="customers-hit__panels">
+            <li>
+              <h3>Personuppgifter</h3>
+              <p>Tillgängligt via webbgränssnitt eller API med ett företagskonto. Demot visar inte folkbokföringsdata.</p>
+            </li>
+            <li>
+              <h3>Bolagsengagemang</h3>
+              <p>Inga bolag visade i demot. Med bevakning notifieras ni om engagemang förändras.</p>
+            </li>
+            <li>
+              <h3>Rättsdokument</h3>
+              <p>Inga domslut eller strafförelägganden visade i demot.</p>
+            </li>
+          </ul>
+        </article>
+      <% else %>
+        <p class="customers-results__empty">
+          Inga träffar i demot för “<%= @query %>”.
+          <%= link_to "Sök Mustafa Salahuddin i Sverige", business_path(q: "Mustafa Salahuddin", country: "SE") %>.
+        </p>
+      <% end %>
+    </div>
+  </div>
+
+  <div class="learn-guides">
+    <div class="row">
+      <h2>Bakgrundskontroller och bevakningar</h2>
+      <ul class="learn-guides__grid">
+        <li class="learn-guide">
+          <h3>Rättsdatabas</h3>
+          <p>Vår rättsdatabas innehåller fullständiga domslut som har meddelats av landets samtliga tingsrätter och hovrätter i brottmål och tvistemål.</p>
+        </li>
+        <li class="learn-guide">
+          <h3>Strafförelägganden</h3>
+          <p>Därtill får du även tillgång till Åklagarmyndighetens meddelade strafförelägganden.</p>
+        </li>
+        <li class="learn-guide">
+          <h3>Bevakningslistor</h3>
+          <p>Ni kan placera personer på era bevakningslistor och blir då automatiskt via e-post notifierade om folkbokföringsinformation förändras, bolagsengagemang förändras eller rättsdokument tillkommer.</p>
+        </li>
+      </ul>
+    </div>
+  </div>
+</div>

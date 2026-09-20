@@ -473,3 +473,84 @@ msgstr "See previous requests"
 
 msgid "None found."
 msgstr "None found."
+
+msgid "We know more about your customers"
+msgstr "We know more about your customers"
+
+msgid "Secure business with consumers"
+msgstr "Secure business with consumers"
+
+msgid "Our solutions let you look up personal data through a web interface or API, and give your company access to customer information that makes a difference."
+msgstr "Our solutions let you look up personal data through a web interface or API, and give your company access to customer information that makes a difference."
+
+msgid "Try an example search"
+msgstr "Try an example search"
+
+msgid "A company account gives you access to personal data from one of Sweden’s most comprehensive databases."
+msgstr "A company account gives you access to personal data from one of Sweden’s most comprehensive databases."
+
+msgid "Example: search a name in Sweden"
+msgstr "Example: search a name in Sweden"
+
+msgid "Try searching for Mustafa Salahuddin. The demo shows how a hit can look — it does not fetch data from the population register, Companies Registration Office or court databases."
+msgstr "Try searching for Mustafa Salahuddin. The demo shows how a hit can look — it does not fetch data from the population register, Companies Registration Office or court databases."
+
+msgid "Name"
+msgstr "Name"
+
+msgid "Country"
+msgstr "Country"
+
+msgid "Sweden"
+msgstr "Sweden"
+
+msgid "1 hit in Sweden · example"
+msgstr "1 hit in Sweden · example"
+
+msgid "Example hit"
+msgstr "Example hit"
+
+msgid "Personal data"
+msgstr "Personal data"
+
+msgid "Available through the web interface or API with a company account. The demo does not show population-register data."
+msgstr "Available through the web interface or API with a company account. The demo does not show population-register data."
+
+msgid "Company engagements"
+msgstr "Company engagements"
+
+msgid "No companies shown in the demo. Monitoring notifies you if engagements change."
+msgstr "No companies shown in the demo. Monitoring notifies you if engagements change."
+
+msgid "Legal documents"
+msgstr "Legal documents"
+
+msgid "No judgments or prosecutor penalty orders shown in the demo."
+msgstr "No judgments or prosecutor penalty orders shown in the demo."
+
+msgid "No demo hits for “{{query}}”."
+msgstr "No demo hits for “{{query}}”."
+
+msgid "Search Mustafa Salahuddin in Sweden"
+msgstr "Search Mustafa Salahuddin in Sweden"
+
+msgid "Background checks and monitoring"
+msgstr "Background checks and monitoring"
+
+msgid "Legal database"
+msgstr "Legal database"
+
+msgid "Our legal database contains complete judgments issued by all of Sweden’s district courts and courts of appeal in criminal and civil cases."
+msgstr "Our legal database contains complete judgments issued by all of Sweden’s district courts and courts of appeal in criminal and civil cases."
+
+msgid "Penalty orders"
+msgstr "Penalty orders"
+
+msgid "You also get access to penalty orders issued by the Swedish Prosecution Authority."
+msgstr "You also get access to penalty orders issued by the Swedish Prosecution Authority."
+
+msgid "Watch lists"
+msgstr "Watch lists"
+
+msgid "You can place people on your watch lists and then be notified automatically by email if population-register information changes, company engagements change, or legal documents are added."
+msgstr "You can place people on your watch lists and then be notified automatically by email if population-register information changes, company engagements change, or legal documents are added."

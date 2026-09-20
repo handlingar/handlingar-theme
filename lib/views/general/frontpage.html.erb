@@ -3,6 +3,8 @@
 <% cache_if_caching_fragments("frontpage", expires_in: 5.minutes) do %>
   <%= render partial: 'frontpage_how_it_works' %>
 
+  <%= render partial: 'frontpage_customers' %>
+
   <%= render partial: 'frontpage_pro' %>
 
   <%= render partial: 'frontpage_blog' if Blog.enabled? %>

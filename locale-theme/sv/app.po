@@ -497,3 +497,84 @@ msgstr "Senaste nyheter och kampanjer"
 
 msgid "See all &rarr;"
 msgstr "Se alla &rarr;"
+
+msgid "We know more about your customers"
+msgstr "Vi vet mer om dina kunder"
+
+msgid "Secure business with consumers"
+msgstr "Säkra affärer med konsumenter"
+
+msgid "Our solutions let you look up personal data through a web interface or API, and give your company access to customer information that makes a difference."
+msgstr "Våra lösningar låter er söka fram personuppgifter direkt via webbgränssnitt eller API, och ger ditt företag tillgång till information om dina kunder som gör skillnad."
+
+msgid "Try an example search"
+msgstr "Prova en exempelsökning"
+
+msgid "A company account gives you access to personal data from one of Sweden’s most comprehensive databases."
+msgstr "Ett företagskonto ger er tillgång till persondata från en av Sveriges mest omfattande databaser."
+
+msgid "Example: search a name in Sweden"
+msgstr "Exempel: sök namn i Sverige"
+
+msgid "Try searching for Mustafa Salahuddin. The demo shows how a hit can look — it does not fetch data from the population register, Companies Registration Office or court databases."
+msgstr "Prova sökningen på Mustafa Salahuddin. Demot visar hur en träff kan se ut — det hämtar inte uppgifter från folkbokföring, Bolagsverket eller rättsdatabaser."
+
+msgid "Name"
+msgstr "Namn"
+
+msgid "Country"
+msgstr "Land"
+
+msgid "Sweden"
+msgstr "Sverige"
+
+msgid "1 hit in Sweden · example"
+msgstr "1 träff i Sverige · exempel"
+
+msgid "Example hit"
+msgstr "Exempelträff"
+
+msgid "Personal data"
+msgstr "Personuppgifter"
+
+msgid "Available through the web interface or API with a company account. The demo does not show population-register data."
+msgstr "Tillgängligt via webbgränssnitt eller API med ett företagskonto. Demot visar inte folkbokföringsdata."
+
+msgid "Company engagements"
+msgstr "Bolagsengagemang"
+
+msgid "No companies shown in the demo. Monitoring notifies you if engagements change."
+msgstr "Inga bolag visade i demot. Med bevakning notifieras ni om engagemang förändras."
+
+msgid "Legal documents"
+msgstr "Rättsdokument"
+
+msgid "No judgments or prosecutor penalty orders shown in the demo."
+msgstr "Inga domslut eller strafförelägganden visade i demot."
+
+msgid "No demo hits for “{{query}}”."
+msgstr "Inga träffar i demot för “{{query}}”."
+
+msgid "Search Mustafa Salahuddin in Sweden"
+msgstr "Sök Mustafa Salahuddin i Sverige"
+
+msgid "Background checks and monitoring"
+msgstr "Bakgrundskontroller och bevakningar"
+
+msgid "Legal database"
+msgstr "Rättsdatabas"
+
+msgid "Our legal database contains complete judgments issued by all of Sweden’s district courts and courts of appeal in criminal and civil cases."
+msgstr "Vår rättsdatabas innehåller fullständiga domslut som har meddelats av landets samtliga tingsrätter och hovrätter i brottmål och tvistemål."
+
+msgid "Penalty orders"
+msgstr "Strafförelägganden"
+
+msgid "You also get access to penalty orders issued by the Swedish Prosecution Authority."
+msgstr "Därtill får du även tillgång till Åklagarmyndighetens meddelade strafförelägganden."
+
+msgid "Watch lists"
+msgstr "Bevakningslistor"
+
+msgid "You can place people on your watch lists and then be notified automatically by email if population-register information changes, company engagements change, or legal documents are added."
+msgstr "Ni kan placera personer på era bevakningslistor och blir då automatiskt via e-post notifierade om folkbokföringsinformation förändras, bolagsengagemang förändras eller rättsdokument tillkommer."

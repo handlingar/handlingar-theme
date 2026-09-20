@@ -1,0 +1,101 @@
+<% @title = _("We know more about your customers") %>
+
+<div class="customers-page">
+  <div class="learn-hero ds-dark">
+    <div class="row">
+      <h1 class="learn-hero__title"><%= @title %></h1>
+      <p class="learn-hero__subtitle"><%= _("Secure business with consumers") %></p>
+    </div>
+  </div>
+
+  <div class="learn-intro">
+    <div class="row">
+      <p class="learn-intro__text">
+        <%= _("Our solutions let you look up personal data through a web interface or API, and give your company access to customer information that makes a difference.") %>
+      </p>
+      <p class="learn-intro__text">
+        <%= _("A company account gives you access to personal data from one of Sweden’s most comprehensive databases.") %>
+      </p>
+      <div class="learn-intro__ctas">
+        <%= link_to _("Create a new account"), signup_path, class: "link_button_green" %>
+        <%= link_to _("API"), help_api_path, class: "button-secondary" %>
+      </div>
+    </div>
+  </div>
+
+  <div class="customers-search ds-dark" id="search">
+    <div class="row">
+      <h2 class="customers-search__title"><%= _("Example: search a name in Sweden") %></h2>
+      <p class="customers-search__hint">
+        <%= _("Try searching for Mustafa Salahuddin. The demo shows how a hit can look — it does not fetch data from the population register, Companies Registration Office or court databases.") %>
+      </p>
+      <%= form_tag(business_path, method: "get", class: "customers-search__form", role: "search") do %>
+        <div class="customers-search__fields">
+          <p class="customers-search__field">
+            <label for="customer_query"><%= _("Name") %></label>
+            <%= text_field_tag :q, @query, id: "customer_query", type: "search", autocomplete: "off" %>
+          </p>
+          <p class="customers-search__field">
+            <label for="customer_country"><%= _("Country") %></label>
+            <%= select_tag :country, options_for_select([[_("Sweden"), "SE"]], @country), id: "customer_country" %>
+          </p>
+          <%= submit_tag _("Search") %>
+        </div>
+      <% end %>
+    </div>
+  </div>
+
+  <div class="customers-results">
+    <div class="row">
+      <% if @example_hit %>
+        <p class="customers-results__meta"><%= _("1 hit in Sweden · example") %></p>
+        <article class="customers-hit" aria-labelledby="example-hit-name">
+          <header class="customers-hit__header">
+            <h2 id="example-hit-name">Mustafa Salahuddin</h2>
+            <p class="customers-hit__place"><%= _("Sweden") %></p>
+            <p class="customers-hit__badge"><%= _("Example hit") %></p>
+          </header>
+          <ul class="customers-hit__panels">
+            <li>
+              <h3><%= _("Personal data") %></h3>
+              <p><%= _("Available through the web interface or API with a company account. The demo does not show population-register data.") %></p>
+            </li>
+            <li>
+              <h3><%= _("Company engagements") %></h3>
+              <p><%= _("No companies shown in the demo. Monitoring notifies you if engagements change.") %></p>
+            </li>
+            <li>
+              <h3><%= _("Legal documents") %></h3>
+              <p><%= _("No judgments or prosecutor penalty orders shown in the demo.") %></p>
+            </li>
+          </ul>
+        </article>
+      <% else %>
+        <p class="customers-results__empty">
+          <%= _("No demo hits for “{{query}}”.", :query => @query) %>
+          <%= link_to _("Search Mustafa Salahuddin in Sweden"), business_path(q: "Mustafa Salahuddin", country: "SE") %>.
+        </p>
+      <% end %>
+    </div>
+  </div>
+
+  <div class="learn-guides">
+    <div class="row">
+      <h2><%= _("Background checks and monitoring") %></h2>
+      <ul class="learn-guides__grid">
+        <li class="learn-guide">
+          <h3><%= _("Legal database") %></h3>
+          <p><%= _("Our legal database contains complete judgments issued by all of Sweden’s district courts and courts of appeal in criminal and civil cases.") %></p>
+        </li>
+        <li class="learn-guide">
+          <h3><%= _("Penalty orders") %></h3>
+          <p><%= _("You also get access to penalty orders issued by the Swedish Prosecution Authority.") %></p>
+        </li>
+        <li class="learn-guide">
+          <h3><%= _("Watch lists") %></h3>
+          <p><%= _("You can place people on your watch lists and then be notified automatically by email if population-register information changes, company engagements change, or legal documents are added.") %></p>
+        </li>
+      </ul>
+    </div>
+  </div>
+</div>
