@@ -27,6 +27,20 @@ Rails.configuration.to_prepare do
     end
   end
 
+  unless GeneralController.method_defined?(:frontpage_without_handlingar_authority_count)
+    GeneralController.class_eval do
+      alias_method :frontpage_without_handlingar_authority_count, :frontpage
+
+      def frontpage
+        frontpage_without_handlingar_authority_count
+        @number_of_authorities = PublicBody.visible.
+          with_translations(AlaveteliLocalization.locale).
+          distinct.
+          count(:id)
+      end
+    end
+  end
+
   ActionView::Base.prepend(HandlingarCaptcha::ViewMethods)
   ActionController::Base.prepend(HandlingarCaptcha::ControllerMethods)
 

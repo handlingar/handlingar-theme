@@ -1,4 +1,4 @@
-<% authority_count = number_with_delimiter(PublicBody.visible.count) %>
+<% authority_count = number_with_delimiter(@number_of_authorities) %>
 <% pro_usps = [
   { icon: 'antenna-signal', title: _("Streamline your work"), text: _("Send the same public-records request to several authorities at once and get more time for journalism.") },
   { icon: 'mail-open', title: _("Up-to-date details"), text: _("You have access to contact details for {{count}} organisations covered by the principle of public access.", :count => authority_count) },
