@@ -17,20 +17,6 @@
         </a>
       </div>
 
-      <div id="navigation_search" class="navigation_search">
-        <form id="navigation_search_form" class="navigation_search_form" method="get" action="<%= search_redirect_path %>" role="search">
-          <label class="visually-hidden" for="navigation_search_button">
-            <%= _("Search") %>
-          </label>
-          <%= text_field_tag 'query', params[:query], { :class => "navigation_search_button", :id => "navigation_search_button", :type => "search", :placeholder => _("Search free text"), :title => _("type your search term here") } %>
-          <button type="submit" aria-label="<%= _('Submit Search') %>">
-            <span class="visually-hidden">
-              <%= _("Submit Search") %>
-            </span>
-          </button>
-        </form>
-      </div>
-
       <%= render :partial => 'general/locale_switcher' %>
     </div>
 

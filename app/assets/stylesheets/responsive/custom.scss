@@ -1428,11 +1428,13 @@ a.button-tertiary {
 #topnav.topnav {
   background-color: $brand_secondary;
   box-shadow: none;
+  height: auto;
   @include respond-min( $main_menu-mobile_menu_cutoff ) {
     position: relative;
     min-height: 3.5em;
+    height: auto;
     padding: 0 240px 0 $ds-page-margin; // reserve room on the right for the auth buttons
-    nav { display: flex; align-items: center; min-height: 3.5em; }
+    nav { display: flex; align-items: center; min-height: 3.5em; height: auto; }
     .navigation {
       width: auto;
       max-width: none;
@@ -1441,6 +1443,7 @@ a.button-tertiary {
       flex-wrap: wrap;
       align-items: center;
       > li { float: none; display: inline-block; }
+      > li > a { padding: 0.85em 0.6em; }
     }
   }
   .navigation > li > a {
@@ -1463,8 +1466,8 @@ a.button-tertiary {
   @include respond-min( $main_menu-mobile_menu_cutoff ) {
     position: absolute;
     right: $ds-page-margin;
-    top: 50%;
-    transform: translateY(-50%);
+    top: 0;
+    height: 3.5em;
     display: flex;
     align-items: center;
     gap: $ds-space-1;
@@ -1611,7 +1614,18 @@ a.button-tertiary {
 
   .hero__browse,
   .hero__browse a { color: $color_white; }
-  .hero__browse { font-size: $font-size-subtitle; margin-bottom: 1.5em; }
+  .hero__browse a {
+    text-decoration: underline;
+    text-underline-offset: 0.12em;
+    &:hover, &:focus { color: $color_white; }
+  }
+  .hero__browse {
+    display: inline-block;
+    background-color: rgba(51, 51, 51, 0.9);
+    font-size: $font-size-subtitle;
+    margin-bottom: 1.5em;
+    padding: 0.15em 0.45em;
+  }
 
   .hero__ctas {
     display: flex;
@@ -1776,9 +1790,10 @@ a.button-tertiary {
     max-width: 13rem;
   }
 
-  .pro__media-logo--tranquillity .pro__media-logo-image {
-    height: 1.75rem;
-    max-width: 14rem;
+  .pro__media-logo--dn .pro__media-logo-image,
+  .pro__media-logo--dagens-samhalle .pro__media-logo-image {
+    height: 2.25rem;
+    max-width: 16rem;
   }
 }
 
@@ -1829,6 +1844,47 @@ a.button-tertiary {
 form.user_search input[type="text"] {
   border: 1px solid $color_light_grey;
   border-radius: 4px;
+}
+
+// Status icons on the request search filters, same marks as classification.
+.requests-subfilters .search-status-filter {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4em;
+  vertical-align: middle;
+
+  .icon-standalone {
+    position: static;
+    flex: 0 0 22px;
+  }
+}
+
+.search-empty {
+  display: grid;
+  gap: 24px;
+  align-items: center;
+  margin-top: 1.5em;
+
+  @include respond-min($main_menu-mobile_menu_cutoff) {
+    grid-template-columns: minmax(0, 1.4fr) minmax(10em, 0.7fr);
+    column-gap: 48px;
+  }
+
+  h2 { margin-top: 0; }
+
+  .search-empty__art {
+    @include ds-illustration-panel;
+    padding: $ds-space-3;
+    text-align: center;
+
+    img {
+      display: block;
+      width: 100%;
+      max-width: 14em;
+      height: auto;
+      margin: 0 auto;
+    }
+  }
 }
 
 // ---- 3.1 Footer — multi-column layout + solid social badges ----------------
@@ -2021,11 +2077,13 @@ form.user_search input[type="text"] {
 
 // ---- 3.2 Create account (booklet page 33) ----------------------------------
 .create-account {
+  padding: $ds-space-4 0 $ds-space-5;
   @include respond-min( $main_menu-mobile_menu_cutoff ) {
     display: grid;
     grid-template-columns: 1fr 1fr;
-    column-gap: 40px;
+    column-gap: $ds-space-6;
     align-items: start;
+    padding: $ds-space-6 0;
   }
 
   .create-account__illustration {
@@ -2045,15 +2103,15 @@ form.user_search input[type="text"] {
     }
   }
 
-  .create-account__title { font-size: $font-size-h2; margin: 0 0 8px; }
-  .create-account__lead { color: $color_text_gray; margin-bottom: 16px; }
+  .create-account__title { font-size: $font-size-h2; margin: 0 0 $ds-space-3; }
+  .create-account__lead { color: $color_text_gray; margin-bottom: $ds-space-3; }
 
   .create-account__alt-links {
     display: flex;
     flex-wrap: wrap;
     align-items: center;
-    gap: 8px;
-    margin-bottom: 24px;
+    gap: $ds-space-2;
+    margin-bottom: $ds-space-5;
     .button-tertiary { padding: 0; }
   }
 
@@ -2073,16 +2131,71 @@ form.user_search input[type="text"] {
 }
 
 .sign-in-page {
-  max-width: 32em;
-  .sign-in-page__title { font-size: $font-size-h2; margin: 0 0 16px; }
-  .sign_in_reason { margin-bottom: 16px; }
+  display: grid;
+  gap: $ds-space-5;
+  align-items: center;
+  padding: $ds-space-4 0 $ds-space-5;
+  @include respond-min( $main_menu-mobile_menu_cutoff ) {
+    grid-template-columns: minmax(0, 1fr) minmax(12em, 1fr);
+    column-gap: $ds-space-6;
+    padding: $ds-space-6 0;
+  }
+  .sign-in-page__form { max-width: 36em; }
+  .sign-in-page__title { font-size: $font-size-h2; margin: 0 0 $ds-space-3; }
+  .sign_in_reason { margin-bottom: $ds-space-3; }
+  .sign-in-page__illustration {
+    @include ds-illustration-panel;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 16em;
+    padding: $ds-space-3;
+    img {
+      display: block;
+      width: 100%;
+      max-width: 22em;
+      height: auto;
+    }
+  }
   .create-account__alt-links {
     display: flex;
     flex-wrap: wrap;
     align-items: center;
-    gap: 8px;
-    margin-bottom: 24px;
+    gap: $ds-space-2;
+    margin-bottom: $ds-space-5;
     .button-tertiary { padding: 0; }
+  }
+}
+
+.create-account,
+.sign-in-page {
+  label.form_label {
+    display: block;
+    margin: 0 0 $ds-space-1;
+  }
+
+  #signup p,
+  #signin p {
+    margin: 0 0 $ds-space-2;
+  }
+
+  p + .form_item_note {
+    position: static;
+    top: auto;
+    margin: 0 0 $ds-space-4;
+  }
+
+  .form_checkbox {
+    margin-bottom: $ds-space-4;
+  }
+
+  form input[type="text"],
+  form input[type="password"],
+  form input[type="email"] {
+    width: 100%;
+    max-width: none;
+    box-sizing: border-box;
+    padding: $ds-space-1 $ds-space-2;
   }
 }
 
@@ -2114,6 +2227,16 @@ form.user_search input[type="text"] {
     font-size: $font-size-h4;
     font-weight: $font-weight-bold;
     padding: 0.2em 0.5em;
+  }
+
+  .search-hero__search {
+    margin-top: 1.5em;
+    max-width: 36em;
+    .search-band__field {
+      justify-content: flex-start;
+      flex-wrap: nowrap;
+      input[type="search"] { width: auto; min-width: 0; flex: 1; }
+    }
   }
 }
 
@@ -2420,6 +2543,16 @@ form.user_search input[type="text"] {
       text-decoration: none;
       &:hover, &:focus { color: $brand_accent; text-decoration: underline; }
     }
+  }
+  .blog__image-link {
+    display: block;
+    margin: -1.5em -1.5em 1em;
+  }
+  .blog__image {
+    display: block;
+    width: 100%;
+    height: 9em;
+    object-fit: cover;
   }
   p {
     color: $color_text_gray;
@@ -3030,8 +3163,9 @@ textarea:focus-visible,
 }
 
 .marketing-highlight:before {
-  background-color: $brand_secondary;
-  transform: none;
+  content: none;
+  display: none;
+  background: none;
 }
 
 .marketing__roles a h3 {
@@ -3043,6 +3177,44 @@ textarea:focus-visible,
 .marketing__hero__cta .button,
 .input-account-request-button {
   @extend %ds-primary;
+}
+
+.button.button--add,
+.form_button > button.button {
+  background-color: $brand_accent;
+  border-color: $brand_accent;
+  color: $color_white;
+  &:hover, &:focus, &:active {
+    background-color: darken($brand_accent, 8%);
+    border-color: darken($brand_accent, 8%);
+    color: $color_white;
+  }
+}
+
+.request-to-guide {
+  display: grid;
+  gap: 24px;
+  align-items: center;
+  @include respond-min($main_menu-mobile_menu_cutoff) {
+    grid-template-columns: minmax(0, 1.4fr) minmax(10em, 0.8fr);
+    column-gap: 48px;
+  }
+  .request-to-guide__art {
+    @include ds-illustration-panel;
+    padding: $ds-space-3;
+    text-align: center;
+    img {
+      display: block;
+      width: 100%;
+      max-width: 16em;
+      height: auto;
+      margin: 0 auto 12px;
+    }
+    p {
+      margin: 0;
+      color: $color_text_gray;
+    }
+  }
 }
 
 .alaveteli-pro .request {
@@ -3247,6 +3419,15 @@ textarea:focus-visible,
   display: flex;
   flex-direction: column;
   gap: 12px;
+  .learn-guide__image {
+    display: block;
+    width: 100%;
+    height: 8em;
+    object-fit: contain;
+    background-color: transparentize($brand_secondary, 0.82);
+    border-radius: 8px;
+    padding: 12px;
+  }
   h3 {
     font-size: $font-size-h5;
     font-weight: $font-weight-bold;

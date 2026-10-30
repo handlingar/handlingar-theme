@@ -51,33 +51,39 @@
       <h2>Guides</h2>
       <ul class="learn-guides__grid">
         <li class="learn-guide">
+          <%= image_tag "illustrations/undraw_fill-forms.svg", alt: "", class: "learn-guide__image" %>
           <h3>Making a request</h3>
           <p>How to keep the request focused, what to do if the authority is missing, and how follow-ups work.</p>
           <%= link_to "Read the guide", help_requesting_path, class: "button-tertiary" %>
         </li>
         <li class="learn-guide">
+          <%= image_tag "illustrations/undraw_file-searching.svg", alt: "", class: "learn-guide__image" %>
           <h3>Find an authority</h3>
           <p>Search by name, city or category. If the body you need is missing, ask us to add the contact details.</p>
           <%= link_to "Search authorities", list_public_bodies_default_path, class: "button-tertiary" %>
         </li>
         <li class="learn-guide">
+          <%= image_tag "illustrations/undraw_sharing-knowledge.svg", alt: "", class: "learn-guide__image" %>
           <h3>About <%= site_name %></h3>
           <p>Who runs the service, how the Principle of Public Access fits the platform, and Handlingar Pro.</p>
           <%= link_to "Read the introduction", help_about_path, class: "button-tertiary" %>
         </li>
         <li class="learn-guide">
+          <%= image_tag "illustrations/undraw_mail-sent.svg", alt: "", class: "learn-guide__image" %>
           <h3>Unhappy with a reply?</h3>
           <p>If you got no answer in time, not the records you asked for, or a refusal without a valid reason.</p>
           <%= link_to "What you can do", help_unhappy_path, class: "button-tertiary" %>
         </li>
         <% if feature_enabled?(:alaveteli_pro) %>
         <li class="learn-guide">
+          <%= image_tag "illustrations/undraw_sign-up.svg", alt: "", class: "learn-guide__image" %>
           <h3>Handlingar Pro</h3>
           <p>Private requests, batch requests, and a dashboard for journalism and investigations.</p>
           <%= link_to "More about Pro", account_request_index_path, class: "button-tertiary" %>
         </li>
         <% end %>
         <li class="learn-guide">
+          <%= image_tag "illustrations/undraw_sharing-knowledge.svg", alt: "", class: "learn-guide__image" %>
           <h3>Courses</h3>
           <p>Training on the Principle of Public Access and public records, with Open Knowledge Sweden.</p>
           <%= link_to "Handlingar Courses", "https://about.handlingar.se/kurser/", class: "button-tertiary" %>

@@ -51,33 +51,39 @@
       <h2>Guider</h2>
       <ul class="learn-guides__grid">
         <li class="learn-guide">
+          <%= image_tag "illustrations/undraw_fill-forms.svg", alt: "", class: "learn-guide__image" %>
           <h3>Att göra en begäran</h3>
           <p>Hur du håller frågan fokuserad, vad du gör om myndigheten saknas, och hur uppföljningar fungerar.</p>
           <%= link_to "Läs guiden", help_requesting_path, class: "button-tertiary" %>
         </li>
         <li class="learn-guide">
+          <%= image_tag "illustrations/undraw_file-searching.svg", alt: "", class: "learn-guide__image" %>
           <h3>Hitta en myndighet</h3>
           <p>Sök på namn, stad eller kategori. Finns inte den du söker kan du be oss lägga till kontaktuppgifterna.</p>
           <%= link_to "Sök myndigheter", list_public_bodies_default_path, class: "button-tertiary" %>
         </li>
         <li class="learn-guide">
+          <%= image_tag "illustrations/undraw_sharing-knowledge.svg", alt: "", class: "learn-guide__image" %>
           <h3>Om <%= site_name %></h3>
           <p>Vem som driver tjänsten, hur offentlighetsprincipen hänger ihop med plattformen, och Handlingar Pro.</p>
           <%= link_to "Läs introduktionen", help_about_path, class: "button-tertiary" %>
         </li>
         <li class="learn-guide">
+          <%= image_tag "illustrations/undraw_mail-sent.svg", alt: "", class: "learn-guide__image" %>
           <h3>Missnöjd med ett svar?</h3>
           <p>Om du inte fick svar i tid, inte fick ut handlingarna, eller fick ett avslag utan giltig grund.</p>
           <%= link_to "Vad du kan göra", help_unhappy_path, class: "button-tertiary" %>
         </li>
         <% if feature_enabled?(:alaveteli_pro) %>
         <li class="learn-guide">
+          <%= image_tag "illustrations/undraw_sign-up.svg", alt: "", class: "learn-guide__image" %>
           <h3>Handlingar Pro</h3>
           <p>Privata begäranden, serieförfrågningar och en översikt för journalistik och granskning.</p>
           <%= link_to "Mer om Pro", account_request_index_path, class: "button-tertiary" %>
         </li>
         <% end %>
         <li class="learn-guide">
+          <%= image_tag "illustrations/undraw_sharing-knowledge.svg", alt: "", class: "learn-guide__image" %>
           <h3>Kurser</h3>
           <p>Utbildningar kring offentlighetsprincipen och allmänna handlingar, hos Open Knowledge Sverige.</p>
           <%= link_to "Till Handlingar Kurser", "https://about.handlingar.se/kurser/", class: "button-tertiary" %>

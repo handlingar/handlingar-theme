@@ -1,0 +1,237 @@
+<% @show_tips = @request_results.nil? || (@total_hits == 0) %>
+
+<%= render :partial => 'localised_datepicker'  %>
+
+<% if @query.nil? %>
+  <% @title = _("Search Freedom of Information requests, public authorities and users") %>
+<% elsif @total_hits == 0 %>
+  <% @title = _('There were no results matching your query.') %>
+<% else %>
+  <% @title = _("Results page {{page_number}}", :page_number => @page.to_s) %>
+<% end%>
+
+<div id="header_left" class="header_left">
+  <% if @query.nil? %>
+    <h1><%= _("Search") %></h1>
+  <% else %>
+    <h1><%= _("Search results") %></h1>
+  <% end%>
+
+  <% if @advanced %>
+    <div id="advanced-search" class="advanced-search">
+      <p><%= _('To use the advanced search, combine phrases and labels as described in the search tips below.') %></p>
+      <%= form_tag(advanced_search_url, :method => "get") do %>
+        <p>
+          <%= text_field_tag :query, @query, { :size => 60 } %>
+          <%= hidden_field_tag 'sortby', @inputted_sortby %>
+          <% if @bodies %>
+            <%= hidden_field_tag 'bodies', 1 %>
+          <% end %>
+          <%= submit_tag _("Search") %>
+          &nbsp;&nbsp;<%= link_to _('Simple search'), search_redirect_path %>
+      </p>
+    <% end %>
+    </div>
+  <% else %>
+
+
+    <%= form_tag(search_redirect_path, {:method => "get", :id => "search_form"}) do %>
+      <p>
+        <%= text_field_tag 'query', params[:query], { :size => 40, :title => "type your search term here" } %>
+
+        <%= submit_tag _("Search") %>
+        <%= link_to(_("Advanced search"), advanced_search_path) %>
+      </p>
+    <% end %>
+    <%= form_tag(request.url, {:method => "get", :id => "filter_form"}) do %>
+      <p>
+        <%= hidden_field_tag 'sortby', @inputted_sortby %>
+        <% if @bodies %>
+          <%= hidden_field_tag 'bodies', 1 %>
+        <% end %>
+
+      </p>
+
+      <div id="common-subfilters" class="list-filter-item">
+        <div id="variety-filter" class="filter-request-types">
+          <h3 class="title"><%= _("Showing") %></h3>
+          <ul>
+          <% labels = [
+            ["requests", _("requests")],
+            ["users", _("users")],
+            ["bodies", _("authorities")],
+            ["all", _("everything")]]%>
+          <% for variety, label in labels %>
+            <li>
+              <% if @variety_postfix != variety %>
+                <%=  link_to label, search_path([params[:query], variety, @sort_postfix]) %>
+              <% else %>
+                <span>
+                  <%= label %>
+                </span>
+              <% end %>
+            </li>
+          <% end %>
+          </ul>
+        </div>
+      </div>
+
+      <% if @variety_postfix == "requests" %>
+        <div id="requests-subfilters" class="requests-subfilters">
+          <div>
+            <h3 class="title"><%= _("Restrict to") %></h3>
+            <% status_icons = {
+                 "successful" => "icon_successful",
+                 "unsuccessful" => "icon_rejected",
+                 "awaiting" => "icon_waiting_response",
+                 "internal_review" => "icon_internal_review"
+               } %>
+            <% [["successful", _("successful requests")],
+                ["unsuccessful", _("unsuccessful requests")],
+                ["awaiting", _("unresolved requests")],
+                ["internal_review", _("internal reviews")]].each_with_index do |item, index|
+                  status, title = item %>
+
+                <%= check_box_tag "latest_status[]", status, params[:latest_status].nil? ? false : params[:latest_status].include?(status), :id => "latest_status_#{index}" %>
+                <%= label_tag("latest_status_#{index}", class: "search-status-filter") do %>
+                  <%= tag.i(class: "icon-standalone #{status_icons[status]}", aria: { hidden: true }) %>
+                  <%= tag.span(title) %>
+                <% end %>
+                <br/>
+              <% end %>
+          </div>
+
+          <div>
+            <h3 class="title"><%= _("Search in") %></h3>
+            <% filters = if feature_enabled?(:annotations)
+                 [["sent", _("messages from users")],
+                  ["response", _("messages from authorities")],
+                  ["comment", _("comments")]]
+               else
+                 [["sent", _("messages from users")],
+                  ["response", _("messages from authorities")]]
+               end %>
+
+            <% filters.each_with_index do |item, index| %>
+              <% variety, title = item %>
+
+              <%= check_box_tag "request_variety[]", variety, params[:request_variety].nil? ? true : params[:request_variety].include?(variety), :id => "request_variety_#{index}" %>
+              <%= label_tag("request_variety_#{index}", title) %> <br/>
+            <% end %>
+          </div>
+
+          <div id="date_range" class="date_range">
+            <label class="form_label title" for="query"><%= _("Made between") %></label>
+            <%= text_field_tag(:request_date_after, params[:request_date_after], {:class => "use-datepicker", :size => 10}) %>
+            <label class="form_label" for="query">&nbsp;<%= _("and") %></label>
+            <%= text_field_tag(:request_date_before, params[:request_date_before], {:class => "use-datepicker", :size => 10}) %>
+          </div>
+        </div>
+      <% end %>
+
+      <div>
+        <%= submit_tag _("Filter") if @variety_postfix == "requests"%>
+      </div>
+      <% end # Search form%>
+
+      <% end # if @advanced %>
+
+      <% if !@query.nil? && @total_hits > 0 %>
+        <p id="search_controls" class="search_controls">
+          <%=link_to_unless @sortby == 'relevant', _("Show most relevant results first"), search_path([params[:query], @variety_postfix, 'relevant'], params) %>
+          |
+          <%=link_to_unless @sortby == 'newest', _("Newest results first"), search_path([params[:query], @variety_postfix, 'newest'], params) %>
+          <% if @sortby == 'described' %>
+            | <%= _('Recently described results first') %>
+        <% end %>
+        </p>
+      <% end %>
+</div>  <!-- header left -->
+<% if !@track_thing.nil? %>
+  <div id="header_right" class="header_right">
+    <h2><%= _('Track this search')%></h2>
+    <%= render :partial => 'track/tracking_links', :locals => { :track_thing => @track_thing, :own_request => false, :location => 'main' } %>
+    <%= render :partial => 'track/rss_feed', :locals => { :track_thing => @track_thing, :location => 'main' } %>
+  </div>
+<% end %>
+
+<div style="clear:both;"></div>
+<% if @total_hits == 0 %>
+  <div class="results_section search-empty">
+    <div class="search-empty__copy">
+      <h2><%=@title %></h2>
+      <% if @spelling_correction %>
+        <p id="did_you_mean"><%= _('Did you mean: {{correction}}', :correction => search_link(@spelling_correction)) %></p>
+      <% end %>
+    </div>
+    <div class="search-empty__art" aria-hidden="true">
+      <%= image_tag "illustrations/undraw_file-searching.svg", alt: "" %>
+    </div>
+  </div>
+<% end %>
+
+<% if not @query.nil? %>
+
+  <% if @body_result_count > 0 %>
+    <div class="results_section">
+      <% if @body_result_count == 1 && @page == 1 %>
+        <h2 class="publicbody_results"><%= _('One public authority found') %></h2>
+      <% else %>
+        <h2 class="publicbody_results"><%= _('Public authorities {{start_count}} to {{end_count}} of {{total_count}}', :start_count => ((@page-1)*@bodies_per_page+1).to_s, :end_count => [@page*@bodies_per_page, @body_results.matches_estimated].min.to_s, :total_count => @body_results.matches_estimated.to_s) %></h2>
+      <% end %>
+
+      <div class="results_block">
+        <% for result in @body_results.results %>
+          <%= render :partial => 'public_body/body_listing_single',
+            :locals => { :public_body => result[:model],
+                         :request_link => true }  %>
+                     <% end %>
+      </div>
+
+      <%= will_paginate WillPaginate::Collection.new(@page, @bodies_per_page, @max_bodies) %>
+    </div>
+  <% elsif @variety_postfix == 'bodies' %>
+    <p><%= raw(_('<a href="{{browse_url}}">Browse all</a> or <a href="{{add_url}}">ask us to add one</a>.', :browse_url => list_public_bodies_default_path.html_safe, :add_url => help_requesting_path(:anchor => 'missing_body').html_safe)) %></p>
+  <% end %>
+
+  <% if @user_result_count > 0 %>
+    <div class="results_section">
+      <% if @user_result_count == 1 && @page == 1 %>
+        <h2 class="person_results"><%= _("One person found") %></h2>
+      <% else %>
+        <h2 class="person_results"><%= _("People {{start_count}} to {{end_count}} of {{total_count}}", :start_count => ((@page-1)*@users_per_page+1).to_s, :end_count =>  [@page*@users_per_page, @user_results.matches_estimated].min.to_s, :total_count =>  @user_results.matches_estimated.to_s) %></h2>
+      <% end %>
+
+      <div class="results_block">
+        <% for result in @user_results.results %>
+          <%= render :partial => 'user/user_listing_single', :locals => { :display_user => result[:model] } %>
+        <% end %>
+      </div>
+      <%= will_paginate WillPaginate::Collection.new(@page, @users_per_page, @max_users) %>
+
+    </div>
+  <% end %>
+
+
+  <% if @request_result_count > 0 %>
+    <div class="results_section">
+      <% if @request_result_count == 1 && @page == 1 %>
+        <h2 class="foi_results"><%= _("One FOI request found") %></h2>
+      <% else %>
+        <h2 class="foi_results"><%= _("FOI requests {{start_count}} to {{end_count}} of about {{total_count}}", :start_count => ((@page-1)*@requests_per_page+1).to_s, :end_count => [@page*@requests_per_page, @request_results.matches_estimated].min.to_s, :total_count =>  @request_results.matches_estimated.to_s) %></h2>
+      <% end %>
+
+      <div class="results_block">
+        <% for result in @request_results.results %>
+          <%= render :partial => 'request/request_listing_via_event', :locals => { :event => result[:model] } %>
+        <% end %>
+      </div>
+
+      <%= will_paginate WillPaginate::Collection.new(@page, @requests_per_page, @max_requests) %>
+    </div>
+  <% end %>
+<% end %>
+
+<% if @advanced %>
+  <%= render :partial => 'general/advanced_search_tips' %>
+<% end %>
