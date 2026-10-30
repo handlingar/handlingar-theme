@@ -1,10 +1,16 @@
 <% request_current = controller?('request') && action?('new', 'select_authority') %>
+<% requests_current = controller?('request') && action?('list', 'index') %>
 <% bodies_current = controller?('public_body') %>
 <% blog_current = controller?('general') && action?('blog') %>
-<% help_current = controller?('help') %>
+<% help_current = controller?('help') && action?('learn') %>
+<% about_current = controller?('help') && action?('about') %>
 
 <li class="<%= 'selected' if request_current %>">
   <%= link_to _("Create a request"), select_authority_path, :id => 'make-request-link', :aria => { :current => ('page' if request_current) } %>
+</li>
+
+<li class="<%= 'selected' if requests_current %>">
+  <%= link_to _("View requests"), request_list_successful_path, :aria => { :current => ('page' if requests_current) } %>
 </li>
 
 <li class="<%= 'selected' if bodies_current %>">
@@ -21,10 +27,18 @@
   <%= link_to _("Services"), 'https://about.handlingar.se/' %>
 </li>
 
+<li>
+  <%= link_to _("Companies"), 'https://about.handlingar.se/foretag/' %>
+</li>
+
 <% if Blog.enabled? %>
   <li class="<%= 'selected' if blog_current %>"><%= link_to _("Blog"), blog_path, :aria => { :current => ('page' if blog_current) } %></li>
 <% end %>
 
 <li class="<%= 'selected' if help_current %>">
-  <%= link_to _("Help"), help_about_path, :aria => { :current => ('page' if help_current) } %>
+  <%= link_to _("Help"), learn_path, :aria => { :current => ('page' if help_current) } %>
+</li>
+
+<li class="<%= 'selected' if about_current %>">
+  <%= link_to _("About"), help_about_path, :aria => { :current => ('page' if about_current) } %>
 </li>

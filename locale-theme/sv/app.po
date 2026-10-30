@@ -9,6 +9,9 @@
 msgid "Services"
 msgstr "Tjänster"
 
+msgid "Companies"
+msgstr "Företag"
+
 msgid "Create a request"
 msgstr "Skapa begäran"
 
@@ -20,6 +23,9 @@ msgstr "Blogg"
 
 msgid "Help"
 msgstr "Hjälp"
+
+msgid "About"
+msgstr "Om"
 
 msgid "Sign in"
 msgstr "Logga in"
@@ -93,8 +99,8 @@ msgstr "Läs mer om hur vi arbetar"
 msgid "Wait for a response"
 msgstr "Vänta på svar"
 
-msgid "You have the <strong>right</strong> to request information from publicly-funded bodies and get answers. {{site_name}} helps you make a request for public records and publishes the requests online."
-msgstr "Du har <strong>rätt</strong> att begära information från offentligt finansierade myndigheter och få svar. {{site_name}} hjälper dig att göra en begäran om allmän handling och publicerar begärandena öppet."
+msgid "You have the <strong>right</strong> to request information from publicly-funded bodies and get answers. {{site_name}} helps you make a request for public records and publishes the answers openly."
+msgstr "Du har <strong>rätt</strong> att begära information från offentligt finansierade myndigheter och få svar. {{site_name}} hjälper dig att göra en begäran om allmän handling och publicerar svaren öppet."
 
 msgid "Public records need to be easier to access, to contribute to the common good and give society value, for our right as citizens to know what happens with our tax money. Dive into how our entirely non-profit organisation works and handles the process of helping you make requests for public records. This is your right under the Freedom of the Press Act and the principle of public access dating back to 1766. We work to uphold it."
 msgstr "Allmänna handlingar behöver bli enklare att ta del av, för att bidra till allmän nytta och ge samhällsvärde, för vår rätt som medborgare att veta vad som händer med våra skattepengar. Djupdyk i hur vår helt ideella verksamhet arbetar och hanterar processen kring att hjälpa dig göra så kallad begäran om allmän handling. Detta enligt den rätt du har via grundlagen tryckfrihetsförordningen och offentlighetsprincipen från 1766. Vi ser till att den uppehålls."
@@ -578,3 +584,9 @@ msgstr "Bevakningslistor"
 
 msgid "You can place people on your watch lists and then be notified automatically by email if population-register information changes, company engagements change, or legal documents are added."
 msgstr "Ni kan placera personer på era bevakningslistor och blir då automatiskt via e-post notifierade om folkbokföringsinformation förändras, bolagsengagemang förändras eller rättsdokument tillkommer."
+
+msgid "What are you investigating using Freedom of Information?"
+msgstr "Vad är det du undersöker genom att använda offentlighetsprincipen?"
+
+msgid "Search for the authority, then write your request."
+msgstr "Sök fram myndigheten, och skriv sedan begäran."

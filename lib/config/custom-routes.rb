@@ -4,7 +4,7 @@
 Rails.application.routes.draw do
   get '/help/terms' => 'help#terms', :as => 'help_terms'
   get '/learn' => 'help#learn', :as => 'learn'
-  get '/foretag' => 'help#business', :as => 'business'
+  get '/foretag' => redirect('https://about.handlingar.se/foretag/')
 
   # Core only exposes POST /profile/sign_up. GET is the dedicated create-account page.
   get '/profile/sign_up' => 'user#signup_form'

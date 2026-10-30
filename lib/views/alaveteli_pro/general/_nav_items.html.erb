@@ -41,6 +41,8 @@
 
 <li><%= link_to _("Services"), 'https://about.handlingar.se/' %></li>
 
+<li><%= link_to _("Companies"), 'https://about.handlingar.se/foretag/' %></li>
+
 <% if Blog.enabled? %>
   <li class="<%= 'selected' if controller?('general') && action?('blog') %>">
     <%= link_to _("Read blog"),
@@ -51,10 +53,14 @@
   </li>
 <% end %>
 
-<li class="<%= 'selected' if controller?('help') %>">
+<li class="<%= 'selected' if controller?('help') && action?('learn') %>">
   <%= link_to _("Help"),
-              help_about_path,
+              learn_path,
               :onclick => track_analytics_event(
                 AnalyticsEvent::Category::PRO_NAV_CLICK,
                 AnalyticsEvent::Action::PRO_NAV_HELP) %>
+</li>
+
+<li class="<%= 'selected' if controller?('help') && action?('about') %>">
+  <%= link_to _("About"), help_about_path %>
 </li>

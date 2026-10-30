@@ -21,6 +21,9 @@ msgstr "Blog"
 msgid "Help"
 msgstr "Help"
 
+msgid "About"
+msgstr "About"
+
 msgid "Sign in"
 msgstr "Sign in"
 
@@ -48,8 +51,8 @@ msgstr "You have access to contact details for {{count}} organisations covered b
 msgid "Keep case requests private while you work on your project. You choose when you are ready to make them public."
 msgstr "Keep case requests private while you work on your project. You choose when you are ready to make them public."
 
-msgid "You have the <strong>right</strong> to request information from publicly-funded bodies and get answers. {{site_name}} helps you make a request for public records and publishes the requests online."
-msgstr "You have the <strong>right</strong> to request information from publicly-funded bodies and get answers. {{site_name}} helps you make a request for public records and publishes the requests online."
+msgid "You have the <strong>right</strong> to request information from publicly-funded bodies and get answers. {{site_name}} helps you make a request for public records and publishes the answers openly."
+msgstr "You have the <strong>right</strong> to request information from publicly-funded bodies and get answers. {{site_name}} helps you make a request for public records and publishes the answers openly."
 
 msgid "Easily create a request by filling in your case. We have created a template where you only need to state which documents you want access to. The request is sent to the chosen authority by email, which they must respond to within a few weeks."
 msgstr "Easily create a request by filling in your case. We have created a template where you only need to state which documents you want access to. The request is sent to the chosen authority by email, which they must respond to within a few weeks."
@@ -318,6 +321,9 @@ msgstr "Your profile photo"
 msgid "Services"
 msgstr "Services"
 
+msgid "Companies"
+msgstr "Companies"
+
 msgid "Pro"
 msgstr "Pro"
 
@@ -554,3 +560,6 @@ msgstr "Watch lists"
 
 msgid "You can place people on your watch lists and then be notified automatically by email if population-register information changes, company engagements change, or legal documents are added."
 msgstr "You can place people on your watch lists and then be notified automatically by email if population-register information changes, company engagements change, or legal documents are added."
+
+msgid "Search for the authority, then write your request."
+msgstr "Search for the authority, then write your request."
