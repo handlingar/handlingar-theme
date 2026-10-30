@@ -37,9 +37,10 @@
       <h2 class="pro__media-title"><%= _("Handlingar.se in the media and news") %></h2>
       <ul class="pro__media-logos">
         <% [
-          { slug: 'altinget', label: 'Altinget', url: 'https://www.altinget.se/' },
-          { slug: 'journalisten', label: 'Journalisten', url: 'https://www.journalisten.se/' },
-          { slug: 'tranquillity', label: 'Tranquillity', url: 'https://about.handlingar.se/' }
+          { slug: 'altinget', label: 'Altinget', url: 'https://www.altinget.se/artikel/skrs-roll-ar-en-ad-hoc-korporativism-utan-demokratiskt-ansvar' },
+          { slug: 'journalisten', label: 'Journalisten', url: 'https://www.journalisten.se/nyheter/de-vill-digitalisera-allmanna-handlingar/' },
+          { slug: 'dn', label: 'Dagens Nyheter', url: 'https://www.dn.se/debatt/en-dold-maktstruktur-i-den-svenska-demokratin/' },
+          { slug: 'dagens-samhalle', label: 'Dagens Samhälle', url: 'https://www.dagenssamhalle.se/opinion/debatt/det-ar-en-fraga-om-demokratisk-anstandighet-skr/' }
         ].each do |logo| %>
           <li class="pro__media-logo pro__media-logo--<%= logo[:slug] %>">
             <%= link_to logo[:url], class: 'pro__media-logo-link', rel: 'noopener noreferrer' do %>

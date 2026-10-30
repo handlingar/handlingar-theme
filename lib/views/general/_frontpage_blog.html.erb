@@ -6,6 +6,12 @@
       <div class="frontpage__blog-grid">
         <% blog_posts_for_frontpage.each do |post| %>
           <article class="blog__post">
+            <% image_url = handlingar_blog_image_url(post) %>
+            <% if image_url %>
+              <%= link_to post.url, class: 'blog__image-link' do %>
+                <%= image_tag image_url, alt: '', class: 'blog__image' %>
+              <% end %>
+            <% end %>
             <h3><%= link_to post.title, post.url %></h3>
             <p><%= handlingar_blog_excerpt(post) %></p>
             <%= link_to _('Read more'), post.url, class: 'blog__read-more button-tertiary' %>
